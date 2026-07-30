@@ -1,0 +1,78 @@
+{
+    "name": "business-class",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "serve": "vue-cli-service serve",
+        "build": "vue-cli-service build",
+        "lint": "vue-cli-service lint"
+    },
+    "dependencies": {
+        "@animxyz/core": "^0.6.6",
+        "@animxyz/vue3": "^0.6.7",
+        "@popperjs/core": "^2.11.8",
+        "axios": "^1.4.0",
+        "core-js": "^3.8.3",
+        "intl-tel-input": "^28.0.4",
+        "js-cookie": "^3.0.5",
+        "maz-ui": "3.32.0",
+        "radix-vue": "^1.2.4",
+        "sass-loader": "^13.3.1",
+        "v-calendar": "^3.0.3",
+        "vue": "^3.2.13",
+        "vue-meta": "^3.0.0-alpha.10",
+        "vue-router": "^4.2.1",
+        "vue-select": "^4.0.0-beta.6",
+        "vue-tel-input": "^8.1.1",
+        "vue3-carousel": "^0.3.3",
+        "vuex": "^4.1.0"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.12.16",
+        "@babel/eslint-parser": "^7.12.16",
+        "@babel/plugin-transform-class-properties": "^7.28.6",
+        "@babel/plugin-transform-private-methods": "^7.28.6",
+        "@vue/cli-plugin-babel": "~5.0.0",
+        "@vue/cli-plugin-eslint": "~5.0.0",
+        "@vue/cli-service": "~5.0.0",
+        "eslint": "^7.32.0",
+        "eslint-config-prettier": "^9.0.0",
+        "eslint-plugin-prettier": "^5.0.0",
+        "eslint-plugin-vue": "^8.0.3",
+        "prettier": "^3.0.3",
+        "sass": "^1.99.0",
+        "sharp": "^0.34.5"
+    },
+    "eslintConfig": {
+        "root": true,
+        "env": {
+            "node": true
+        },
+        "extends": [
+            "plugin:vue/vue3-essential",
+            "plugin:prettier/recommended",
+            "eslint:recommended"
+        ],
+        "parserOptions": {
+            "parser": "@babel/eslint-parser"
+        },
+        "rules": {
+            "prettier/prettier": [
+                "error",
+                {
+                    "endOfLine": "auto"
+                }
+            ]
+        }
+    },
+    "browserslist": [
+        ">0.5%",
+        "last 2 versions",
+        "not dead",
+        "not ie 11",
+        "not op_mini all",
+        "not kaios <= 2.5",
+        "not samsung < 13"
+    ],
+    "packageManager": "yarn@4.12.0+sha512.f45ab632439a67f8bc759bf32ead036a1f413287b9042726b7cc4818b7b49e14e9423ba49b18f9e06ea4941c1ad062385b1d8760a8d5091a1a31e5f6219afca8"
+}

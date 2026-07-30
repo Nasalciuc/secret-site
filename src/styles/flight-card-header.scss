@@ -1,0 +1,183 @@
+@import '@/styles/mixins.scss';
+
+.outer-block {
+    > .content.flight-header-content {
+        @include header-block;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-color: rgba(8, 9, 12, 0.72);
+        display: block;
+        align-items: center;
+        border-radius: 16px;
+        > .region {
+            position: absolute;
+            width: calc(100% - 88px * 2);
+            top: 100px;
+            margin: 0px 88px;
+            z-index: 110;
+        }
+        > .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(8, 9, 12, 0.72);
+            border-radius: inherit;
+        }
+        > .blocks {
+            padding: 208px 88px 108px 88px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: unset;
+            row-gap: 24px;
+            z-index: 100;
+            > * {
+                border-radius: 16px;
+                flex-basis: calc(50% - 16px);
+                justify-content: space-between;
+                flex-grow: unset;
+            }
+            > .adaptive-title {
+                display: none;
+                margin-bottom: 24px;
+                > p {
+                    color: #c2c7cc;
+                    font: {
+                        size: 12px;
+                        weight: 500;
+                        family: 'Inter', sans-serif;
+                    }
+                }
+                > span {
+                    color: #b4853b;
+                    text-transform: capitalize;
+                    display: block;
+                    font: {
+                        size: 24px;
+                        family: 'SSP-bold', sans-serif;
+                    }
+                }
+                > * {
+                    text-align: center;
+                }
+            }
+            > .second-block .reverse {
+                padding-top: 3.5px;
+            }
+            > .adaptive-dropdowns {
+                display: none;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1440px) {
+    .outer-block {
+        > .content {
+            > .blocks {
+                top: 60%;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .outer-block {
+        overflow: hidden;
+        > .content {
+            width: 100%;
+            height: 100%;
+            padding-bottom: 0;
+            min-height: unset !important;
+            background-size: auto 100% !important;
+            > .region{
+                display: none;
+            }
+            > .blocks {
+                padding: 108px 8px 8px 8px !important;
+                top: 0 !important;
+                transform: unset !important;
+                flex-direction: column;
+                > .first-block {
+                    & > .title {
+                        display: none;
+                    }
+                }
+                > .adaptive-title {
+                    display: block !important;
+                }
+                > .adaptive-dropdowns {
+                    display: flex !important;
+                    > div {
+                        > ul {
+                            right: unset;
+                            left: 0;
+                        }
+                    }
+                    .vs__selected {
+                        white-space: nowrap;
+                    }
+                    > .center-ul {
+                        > ul {
+                            left: 50%;
+                            transform: translateX(-50%);
+                        }
+                    }
+                    > .right-ul {
+                        > ul {
+                            left: unset;
+                            right: 0;
+                        }
+                    }
+                }
+                > * {
+                    width: -webkit-fill-available;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .outer-block {
+        .flight-header-content {
+            display: none;
+            margin-bottom: 8px;
+            > .blocks {
+                > .second-block {
+                    margin: 0 8px;
+                    padding: 16px;
+                    > .content {
+                        > .flight-options {
+                            display: none;
+                        }
+                        > .client-info {
+                            height: unset;
+                            > * {
+                                height: 40px;
+                            }
+                            > svg {
+                                margin-top: 0px !important;
+                            }
+                        }
+                        > .travellers {
+                            height: 40px;
+                            > .name {
+                                margin-top: 12px !important;
+                            }
+                        }
+                    }
+                }
+                > .adaptive-dropdowns .vs__selected-options {
+                    margin-right: 15px;
+                }
+            }
+            .second-block.flight-card-header .single-calendar {
+                transform: translateY(-63%);
+            }
+        }
+    }
+}

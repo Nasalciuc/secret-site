@@ -1,0 +1,187 @@
+.header-container {
+    z-index: 501;
+    display: flex;
+    padding: 24px;
+    align-items: center;
+    justify-content: space-between;
+    &.margin-layout {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(100% - 48px);
+    }
+    &.header-layout {
+        border-radius: 16px;
+        background: #272b30;
+        margin: 32px 32px 56px 32px;
+        > .trust-container > .logo {
+            margin-top: 4px;
+        }
+    }
+    > * {
+        display: flex;
+        align-items: center;
+
+        &.service {
+            font-family: 'Inter', sans-serif;
+
+            > .call-service {
+                display: flex;
+                flex-direction: row;
+                align-items: flex-start;
+                padding: 4px 8px;
+                background: #f4f4f4;
+                border-radius: 12px;
+                margin-left: 16px;
+                > .tel {
+                    margin-left: 10px;
+                    color: #111315;
+                    font: {
+                        weight: 600;
+                        size: 0.8vw;
+                    }
+                }
+            }
+            > .live-service {
+                color: #f4f4f4;
+                font-size: 0.8vw;
+            }
+        }
+        &.trust-container {
+            > .d-flex {
+                align-items: center;
+            }
+            > .logo {
+                margin-top: 8px;
+                > .burgher {
+                    display: none;
+                    background: #f4f4f4;
+                    border-radius: 12px;
+                    padding: 4px 8px;
+                    cursor: pointer;
+                    > svg {
+                        margin-top: 1.5px;
+                    }
+                }
+            }
+        }
+    }
+
+    @media screen and (max-width: 1440px) {
+        > .trust-container {
+            > .header-links > a {
+                font-size: 15px;
+            }
+        }
+        > .service .tel {
+            font-size: 12px !important;
+        }
+    }
+
+    @media screen and (max-width: 1200px) {
+        align-items: baseline;
+        padding: 12px 8px;
+        &.margin-layout {
+            width: 100%;
+        }
+        > .trust-container {
+            align-items: baseline;
+            justify-content: center;
+            flex-wrap: wrap;
+            width: 100%;
+            > .logo {
+                height: 32px;
+                margin-top: 0;
+                margin-bottom: 16px;
+                flex-basis: 100%;
+                display: flex;
+                column-gap: 16px;
+                > svg {
+                    width: 32px;
+                    height: 32px;
+                }
+                > .burgher {
+                    display: block;
+                }
+            }
+
+            > .header-links {
+                display: none;
+            }
+
+            svg:not(.logo-svg) {
+                height: 20px;
+            }
+
+            > .d-flex {
+                > * {
+                    margin: 0;
+                }
+                img {
+                    height: 20px;
+                }
+                > a > svg {
+                    margin-left: 0px;
+                }
+            }
+        }
+        > .service {
+            position: absolute;
+            right: 8px;
+            margin-top: 8px;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        align-items: normal;
+        width: 100%;
+        padding: 12px 8px;
+        left: 0;
+        transform: translate(0);
+        > .trust-container {
+            flex-direction: column;
+            align-items: baseline;
+            width: 100%;
+            > .logo {
+                height: 32px;
+                margin-bottom: 16px;
+                flex-basis: unset;
+                > svg {
+                    width: 32px;
+                    height: 32px;
+                }
+            }
+
+            > .header-links {
+                display: none;
+            }
+
+            > .d-flex {
+                flex-direction: row-reverse;
+                margin: auto;
+                > * {
+                    margin: 0;
+                }
+                img {
+                    height: 20px;
+                }
+            }
+        }
+        .service {
+            display: block;
+            position: absolute;
+            right: 8px;
+            top: 6px;
+            .live-service {
+                display: none;
+            }
+            .call-service {
+                white-space: nowrap;
+                align-items: center;
+                span {
+                    font-size: 16px !important;
+                }
+            }
+        }
+    }
+}

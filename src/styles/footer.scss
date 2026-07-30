@@ -1,0 +1,118 @@
+.footer-container {
+    padding: 60px 120px;
+    > .logos-container {
+        margin-bottom: 40px;
+    }
+    > .text-info {
+        margin-bottom: 24px;
+        > p {
+            color: #6f767e;
+            text-align: left;
+            font: {
+                family: 'Inter', sans-serif;
+                size: 13px;
+                weight: 400;
+            }
+        }
+    }
+    > .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 32px;
+        > .rights {
+            position: relative;
+            width: fit-content;
+            > p {
+                color: #6f767e;
+                font: {
+                    family: 'Inter', sans-serif;
+                    weight: 400;
+                    size: 13px;
+                }
+            }
+            &::after {
+                position: absolute;
+                content: '';
+                height: 100%;
+                width: 1px;
+                top: 0;
+                right: -16px;
+                background: #6f767e;
+            }
+        }
+        > .rules > a {
+            color: #6f767e;
+            text-decoration: underline;
+            font: {
+                family: 'Inter', sans-serif;
+                size: 13px;
+                weight: 400;
+            }
+            margin-left: 16px;
+
+            &:first-child {
+                margin-left: 0;
+            }
+        }
+    }
+
+    .icons-block {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 30px;
+        align-items: center;
+    }
+
+    .payment {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        .card-icon {
+            opacity: 0.24;
+        }
+    }
+
+    @media screen and (max-width: 1440px) {
+        padding: 0px 105px;
+        > .logos-container {
+            margin: 0 0 40px 0;
+        }
+    }
+
+    @media screen and (max-width: 1200px) {
+        padding: 0px 24px 60px 24px;
+    }
+
+    @media screen and (max-width: 768px) {
+        padding: 16px;
+        > .text-info > p {
+            font-size: 12px;
+        }
+        > .logos-container {
+            margin-bottom: 24px;
+        }
+        > .footer-links {
+            display: block;
+            > .rights {
+                margin: 0 auto 24px auto;
+                &::after {
+                    display: none;
+                }
+            }
+            > .rules {
+                text-align: center;
+                margin-bottom: 160px;
+            }
+        }
+
+        .icons-block {
+            flex-direction: column;
+
+            .services-logo {
+                flex-wrap: wrap;
+                margin-bottom: 20px;
+            }
+        }
+    }
+}

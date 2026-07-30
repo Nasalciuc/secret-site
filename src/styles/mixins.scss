@@ -1,0 +1,567 @@
+@mixin block-title {
+    > .main-title {
+        color: #dadde0;
+        text-align: center;
+        margin-bottom: 8px;
+        font: {
+            size: 2.12vw;
+            weight: 400;
+            family: 'SSP-regular';
+        }
+        > .accent,
+        > p > b {
+            color: #b4853b;
+            font: {
+                family: 'SSP-bold';
+            }
+        }
+    }
+    @media screen and (max-width: 1440px) {
+        .main-title {
+            font-size: 32px !important;
+        }
+        .subtitle {
+            font-size: 14px !important;
+        }
+    }
+    @media screen and (max-width: 768px) {
+        .main-title {
+            font-size: 24px !important;
+        }
+    }
+}
+
+@mixin carousel-controllers {
+    .carousel__pagination {
+        gap: 8px;
+        margin-top: 32px;
+        button {
+            position: relative;
+            border: 1px solid #dadde0;
+            border-radius: 50%;
+            width: 8px;
+            height: 8px;
+            padding: 0;
+            background: none;
+            &::after {
+                background: none;
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+            }
+            &.carousel__pagination-button--active {
+                &::after {
+                    background: #dadde0;
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 50%;
+                }
+            }
+        }
+    }
+    > button {
+        color: #dadde0;
+        border: 1px solid #33383f;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        > svg {
+            width: 24px;
+            height: 24px;
+        }
+        &.carousel__prev {
+            left: -48px;
+            > svg {
+                margin-left: -1px;
+            }
+        }
+        &.carousel__next {
+            right: -48px;
+            > svg {
+                margin-right: -3px;
+            }
+        }
+    }
+    .carousel__liveregion {
+        display: none;
+    }
+}
+
+@mixin form-mixin {
+    width: 100%;
+    > input,
+    > textarea {
+        width: 100%;
+        border: 1px solid #33383f;
+        outline: none;
+        padding: 16px;
+        border-radius: 8px;
+        background: none;
+        color: #dadde0;
+        font-family: 'Inter', sans-serif;
+    }
+
+    &.has-error {
+        > input,
+        > textarea {
+            border-color: #ff6a55;
+            color: #ff6a55;
+
+            &::placeholder {
+                color: #f68272;
+            }
+        }
+    }
+}
+
+@mixin header-block {
+    position: relative;
+
+    > .blocks {
+        position: relative;
+        display: flex;
+        gap: 32px;
+        justify-content: center;
+        align-items: center;
+        padding: 0px 88px;
+        width: 100%;
+        min-height: calc(100vh - 120px);
+    }
+
+    @media screen and (max-width: 1200px) {
+    }
+}
+
+@mixin calendar {
+    opacity: 0;
+    display: none;
+    z-index: -100;
+    position: absolute;
+    left: -9999;
+    &.vs-open {
+        opacity: 1;
+        display: block;
+        z-index: 1000;
+    }
+    > div {
+        background: #1a1d1f;
+        border: 1px solid #33383f;
+        padding: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        position: relative;
+        z-index: 400;
+        .vc-arrow {
+            border-radius: 50%;
+            background: #272b30;
+            color: #efefef;
+            padding: 8px;
+            height: unset;
+            width: unset;
+            > svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+        .vc-weekday {
+            color: #6f767e;
+            font: {
+                family: 'Inter', sans-serif;
+                weight: 700;
+                size: 12px;
+            }
+        }
+        .vc-title {
+            background: none;
+            color: #fcfcfc;
+            > span {
+                font: {
+                    size: 18px;
+                }
+            }
+        }
+        .vc-day-content {
+            color: #fcfcfc;
+            font: {
+                weight: 600;
+                family: 'Inter', sans-serif;
+                size: 15px;
+            }
+            &[aria-disabled='true'] {
+                color: grey;
+            }
+        }
+        .vc-pane-header-wrapper {
+            padding: 2px;
+            > .vc-header {
+                padding: 0;
+                margin: 0;
+                height: unset;
+            }
+        }
+        .vc-pane > .vc-header {
+            margin: 4px 0 24px 0;
+            padding: 0 0 24px 0;
+            height: unset;
+            border-bottom: 1px solid #272b30;
+        }
+        .vc-weeks {
+            padding: 0;
+        }
+        .vc-highlight-content-solid {
+            background-color: #b4853b !important;
+            color: #fcfcfc !important;
+        }
+        .vc-highlight-bg-light {
+            background: none;
+        }
+        .vc-highlight-content-light {
+            border: 1px solid #b4853b;
+        }
+        .vc-highlight-bg-outline {
+            background-color: #b4853b !important;
+            border: none;
+        }
+        .vc-day-content:hover {
+            background-color: unset;
+        }
+        .vc-focus:focus-within {
+            outline: unset;
+            box-shadow: none;
+        }
+        .vc-disabled,
+        [aria-disabled='true'] {
+            pointer-events: none;
+            &:hover {
+                background: none;
+            }
+            &:focus-within {
+                box-shadow: none;
+            }
+        }
+    }
+    .vc-popover-content-wrapper.is-interactive {
+        display: none;
+    }
+}
+
+@mixin calendar-buttons {
+    .calendar-buttons {
+        padding: 16px !important;
+        border-radius: 8px;
+        border: 1px solid #33383f;
+        margin-bottom: 8px;
+        transition: 0.2s ease-in;
+        position: relative;
+        gap: 43px;
+
+        > button {
+            display: flex;
+            background: none;
+            color: #c2c7cc;
+            line-height: 24px;
+            gap: 12px;
+            width: 0;
+            flex-grow: 1;
+            font: {
+                family: 'Inter', sans-serif;
+                size: 14px;
+                weight: 400;
+            }
+            > svg {
+                > * {
+                    transition: 0.2s ease-in;
+                    fill: #6f767e;
+                }
+            }
+        }
+        &.disabled {
+            //background: none;
+        }
+        &.active {
+            background: #111315;
+            svg.fill {
+                > * {
+                    fill: #b4853b;
+                }
+            }
+        }
+        &.round-trip::before {
+            content: '';
+            position: absolute;
+            height: 50%;
+            width: 1px;
+            background: #33383f;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        > .select-options-adaptive {
+            display: none;
+        }
+
+        &.has-error {
+            border-color: #ff6a55;
+        }
+
+        .date-button.has-error {
+            color: #ff6a55;
+
+            > svg > * {
+                fill: #ff6a55;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            > button {
+                width: 100%;
+                justify-content: center;
+                > svg {
+                    display: none;
+                }
+            }
+            > .first-button {
+                grid-row-start: 1;
+                grid-row-end: 2;
+            }
+            > .second-button {
+                grid-row-start: 2;
+                grid-row-end: 3;
+                margin-left: 0 !important;
+            }
+        }
+    }
+}
+
+@mixin select-header {
+    .v-select {
+        flex-grow: 1;
+        width: 0;
+        .vs__selected {
+            margin-top: 1.5px;
+        }
+        .vs__dropdown-toggle {
+            border: none;
+            > .vs__actions {
+                padding: 0;
+            }
+            > .vs__selected-options {
+                overflow: hidden;
+                > span {
+                    color: #dadde0;
+                    margin-left: 46px;
+                    white-space: nowrap;
+                    font: {
+                        family: 'Inter', sans-serif;
+                        weight: 600;
+                        size: 14px;
+                    }
+                }
+            }
+            input {
+                color: #c2c7cc;
+                font: {
+                    family: 'Inter', sans-serif;
+                    weight: 400;
+                    size: 14px;
+                }
+            }
+        }
+        .vs--searching {
+            opacity: unset;
+        }
+        > ul {
+            background: #1a1d1f;
+            color: #c2c7cc;
+            font-family: 'Inter', sans-serif;
+            z-index: 200;
+            position: absolute;
+        }
+        &.second-select {
+            span.vs__selected {
+                margin-left: 48px;
+            }
+
+            .vs__dropdown-toggle input {
+                padding-left: 52px;
+            }
+        }
+        .vs__open-indicator {
+            margin-top: 2px;
+            margin-right: 10px;
+        }
+        .vs__clear {
+            display: none;
+        }
+    }
+}
+
+@mixin after-active {
+    &::after {
+        position: absolute;
+        content: '';
+        width: calc(100% + 24px);
+        height: 4px;
+        background-color: #b4853b;
+        border-radius: 4px;
+        bottom: -14px;
+        left: -12px;
+    }
+}
+
+@mixin v-select-list {
+    background: #111315;
+    border: 1px solid #6f767e;
+    border-radius: 16px;
+    padding: 8px;
+    > li {
+        transition: 0.2s ease-in;
+        padding: 8px;
+        color: #6f767e;
+        text-align: left;
+        border-radius: 12px;
+        background: none;
+        font: {
+            family: 'Inter', sans-serif;
+            size: 15px;
+            weight: 600;
+        }
+        &:hover {
+            color: #efefef;
+            background: #1a1d1f;
+        }
+    }
+}
+
+@mixin vue-tel {
+    > .vue-tel-input {
+        width: 0;
+        flex-grow: 2;
+        position: relative;
+        border: 1px solid #33383f;
+        border-radius: 8px;
+        box-shadow: none;
+        > .vti__dropdown {
+            background: none;
+            position: unset;
+            &:hover {
+                background: none;
+            }
+            &::after {
+                content: '';
+                position: absolute;
+                height: 50%;
+                width: 1px;
+                background: #6f767e;
+                margin-left: 54px;
+            }
+        }
+        .vti__dropdown-list {
+            @include v-select-list;
+            max-width: 100%;
+            z-index: 200;
+            top: 100%;
+            bottom: unset;
+            border-radius: 8px;
+            background: #1a1d1f;
+            border: 1px solid #33383f;
+            > li {
+                color: #dadde0;
+                background: none;
+                > .vti__flag {
+                    margin-left: 0;
+                }
+            }
+        }
+        > .vti__input {
+            padding: 16px;
+            color: #dadde0;
+            background: none;
+            outline: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            border: none;
+        }
+
+        &.has-error {
+            border-color: #ff6a55;
+
+            .vti__input {
+                color: #ff6a55;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            > .vti__input {
+                padding: 10px;
+            }
+            .vti__dropdown::after {
+                margin-left: 49px;
+            }
+        }
+    }
+}
+
+@mixin deals {
+    .deals-container {
+        background: linear-gradient(102.21deg, #1a1d1f 0%, rgba(26, 29, 31, 0) 100%);
+        border-radius: 16px;
+        padding: 40px 176px;
+        margin-bottom: 80px;
+        > .title {
+            @include block-title;
+            margin-bottom: 32px;
+            > .subtitle {
+                text-align: center;
+                color: #6f767e;
+                font: {
+                    weight: 600;
+                    family: 'Inter';
+                    size: 13px;
+                }
+            }
+        }
+        > .cards-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            row-gap: 32px;
+            column-gap: 5%;
+            justify-content: space-evenly;
+            flex-wrap: wrap;
+            margin-bottom: 80px;
+            > .offer-content > .img-block {
+                aspect-ratio: 3/2;
+                width: 100%;
+            }
+        }
+
+        @media screen and (max-width: 1440px) {
+            > .cards-container {
+                column-gap: 32px;
+                > .offer-content > .img-block {
+                    width: 320px;
+                    height: 232px;
+                }
+            }
+        }
+
+        @media screen and (max-width: 1200px) {
+            padding: 16px;
+            > .cards-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            background: none;
+            > .title {
+                display: none;
+            }
+            > .cards-container {
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
+    }
+}

@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta
+            name="description"
+            content="Find the best deals on business class flights and save up to 60% on air tickets. Compare cheap business class airfare and book premium tickets today!"
+        />
+        <meta property="og:title" content="Business Class Flight Deals - Save Up To 60% on Air Tickets" />
+        <meta
+            property="og:description"
+            content="Find the best deals on business class flights and save up to 60% on air tickets. Compare cheap business class airfare and book premium tickets today!"
+        />
+        <meta property="og:url" content="https://buybusinessclass.com/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://buybusinessclass.com/bbc-cover.jpg" />
+
+        <!-- Twitter Card Meta Tags -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Business Class Flight Deals - Save Up To 60% on Air Tickets" />
+        <meta
+            name="twitter:description"
+            content="Find the best deals on business class flights and save up to 60% on air tickets. Compare cheap business class airfare and book premium tickets today!"
+        />
+        <meta name="twitter:image" content="https://buybusinessclass.com/bbc-cover.jpg" />
+
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, maximum-scale=1" />
+        <% if (VUE_APP_BASE_URL) {%>
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="<%= VUE_APP_BASE_URL %>" />
+        <meta property="og:image" content="<%= VUE_APP_BASE_URL %>/bbc-cover.jpg" />
+        <meta property="og:image:alt" content="BuyBusinessClass" />
+        <meta property="og:site_name" content="BuyBusinessClass" />
+        <% } %>
+
+        <!-- Preconnect to third-party origins used after load -->
+        <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+        <link rel="preconnect" href="https://static.hotjar.com" crossorigin />
+        <link rel="preconnect" href="https://embed.tawk.to" crossorigin />
+        <link rel="preconnect" href="https://connect.facebook.net" crossorigin />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+
+        <!-- Google Fonts: load non-blocking via preload+swap (was render-blocking ~1.5s). -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            rel="preload"
+            as="style"
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap"
+            onload="this.onload=null;this.rel='stylesheet'"
+        />
+        <noscript>
+            <link
+                rel="stylesheet"
+                href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap"
+            />
+        </noscript>
+
+        <!--
+            Defer non-critical CSS chunks (calendar, animxyz). Webpack injects
+            them as render-blocking <link rel="stylesheet">; we swap them to
+            non-blocking by setting media="print" until load. Runs before the
+            browser's preload scanner kicks in by being placed early in <head>.
+        -->
+        <script>
+            ;(function () {
+                var deferPatterns = [/vendor-calendar/, /vendor-animxyz/]
+                function defer(link) {
+                    if (link.dataset.deferred) return
+                    link.dataset.deferred = '1'
+                    var orig = link.media || 'all'
+                    link.media = 'print'
+                    link.onload = function () {
+                        link.onload = null
+                        link.media = orig
+                    }
+                }
+                function scan() {
+                    var links = document.querySelectorAll('link[rel="stylesheet"]')
+                    for (var i = 0; i < links.length; i++) {
+                        var href = links[i].href || ''
+                        for (var j = 0; j < deferPatterns.length; j++) {
+                            if (deferPatterns[j].test(href)) {
+                                defer(links[i])
+                                break
+                            }
+                        }
+                    }
+                }
+                // Run repeatedly during head parse so we catch links as webpack injects them.
+                scan()
+                var mo = new MutationObserver(scan)
+                mo.observe(document.documentElement, { childList: true, subtree: true })
+                document.addEventListener('DOMContentLoaded', function () {
+                    mo.disconnect()
+                    scan()
+                })
+            })()
+        </script>
+
+        <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+        <link rel="icon" href="<%= BASE_URL %>favicon-32x32.png" sizes="32x32" />
+        <link rel="icon" href="<%= BASE_URL %>favicon-192x192.png" sizes="192x192" />
+        <link rel="apple-touch-icon" href="<%= BASE_URL %>favicon-180x180.png" />
+        <meta name="msapplication-TileImage" content="<%= BASE_URL %>favicon-270x270.png" />
+        <title>Business Class Flight Deals - Save Up To 60% on Air Tickets</title>
+        <meta
+            name="description"
+            content="Find the best deals on business class flights and save up to 60% on air tickets. Compare cheap business class airfare and book premium tickets today!"
+        />
+
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org/",
+                "@type": "WebSite",
+                "name": "BuyBusinessClass",
+                "url": "https://buybusinessclass.com/",
+                "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": "{search_term_string}",
+                    "query-input": "required name=search_term_string"
+                }
+            }
+        </script>
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "Airline",
+                "name": "BuyBusinessClass",
+                "alternateName": "Buy Business Class",
+                "url": "https://buybusinessclass.com/",
+                "logo": "https://blog.buybusinessclass.com/wp-content/uploads/2024/06/After-click-614-x-240-2-layers.jpg",
+                "sameAs": [
+                    "https://www.facebook.com/BuyBusinessClass",
+                    "https://x.com/BuyBusinessClas",
+                    "https://www.instagram.com/buy_businessclass/",
+                    "https://www.youtube.com/@BuyBusinessClass",
+                    "https://www.linkedin.com/company/buybusinessclass"
+                ]
+            }
+        </script>
+
+        <!--
+            Third-party scripts (GTM, Hotjar, Tawk.to, Facebook Pixel, reCAPTCHA)
+            are loaded after window.load + a small idle delay to keep them off the
+            critical path. This drastically improves TBT and LCP on PageSpeed.
+        -->
+        <script>
+            ;(function () {
+                var GTM_ID = '<%= typeof VUE_APP_GTM_ID !== "undefined" ? VUE_APP_GTM_ID : "" %>'
+                var FB_PIXEL_ID =
+                    '<%= typeof VUE_APP_FACEBOOK_PIXEL_ID !== "undefined" ? VUE_APP_FACEBOOK_PIXEL_ID : "" %>'
+                var RECAPTCHA_KEY =
+                    '<%= typeof VUE_APP_RECAPTCHA_SITE_KEY !== "undefined" ? VUE_APP_RECAPTCHA_SITE_KEY : "" %>'
+
+                function loadScript(src, opts) {
+                    opts = opts || {}
+                    var s = document.createElement('script')
+                    s.src = src
+                    s.async = true
+                    if (opts.crossorigin) s.setAttribute('crossorigin', opts.crossorigin)
+                    if (opts.charset) s.charset = opts.charset
+                    document.head.appendChild(s)
+                    return s
+                }
+
+                function loadThirdParty() {
+                    // Google Tag Manager
+                    if (GTM_ID) {
+                        window.dataLayer = window.dataLayer || []
+                        window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' })
+                        loadScript('https://www.googletagmanager.com/gtm.js?id=' + GTM_ID)
+                    }
+
+                    // Hotjar
+                    ;(function (h, o, t, j) {
+                        h.hj =
+                            h.hj ||
+                            function () {
+                                ;(h.hj.q = h.hj.q || []).push(arguments)
+                            }
+                        h._hjSettings = { hjid: 5087460, hjsv: 6 }
+                        var r = o.createElement('script')
+                        r.async = 1
+                        r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv
+                        o.head.appendChild(r)
+                    })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=')
+
+                    // Facebook Pixel
+                    if (FB_PIXEL_ID) {
+                        ;(function (f, b, e, v, n, t, s) {
+                            if (f.fbq) return
+                            n = f.fbq = function () {
+                                n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+                            }
+                            if (!f._fbq) f._fbq = n
+                            n.push = n
+                            n.loaded = !0
+                            n.version = '2.0'
+                            n.queue = []
+                            t = b.createElement(e)
+                            t.async = !0
+                            t.src = v
+                            s = b.getElementsByTagName(e)[0]
+                            s.parentNode.insertBefore(t, s)
+                        })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js')
+                        fbq('init', FB_PIXEL_ID)
+                        fbq('track', 'PageView')
+                    }
+                }
+
+                // Tawk.to is heavy (~300 KB). Load only after first interaction or 5s idle.
+                // function loadTawk() {
+                //     if (window.__tawkLoaded) return
+                //     window.__tawkLoaded = true
+                //     window.Tawk_API = window.Tawk_API || {}
+                //     window.Tawk_LoadStart = new Date()
+                //     var s = document.createElement('script')
+                //     s.async = true
+                //     s.src = 'https://embed.tawk.to/67ffc3bcd825181910e0cc1c/1iovh962s'
+                //     s.charset = 'UTF-8'
+                //     s.setAttribute('crossorigin', '*')
+                //     document.head.appendChild(s)
+                // }
+
+                // reCAPTCHA — lazy-load on first form interaction or after idle.
+                function loadRecaptcha() {
+                    if (!RECAPTCHA_KEY || window.__recaptchaLoaded) return
+                    window.__recaptchaLoaded = true
+                    loadScript('https://www.google.com/recaptcha/api.js?render=' + RECAPTCHA_KEY)
+                }
+
+                function onIdle(cb, timeout) {
+                    if ('requestIdleCallback' in window) {
+                        window.requestIdleCallback(cb, { timeout: timeout || 4000 })
+                    } else {
+                        setTimeout(cb, timeout || 2000)
+                    }
+                }
+
+                function start() {
+                    onIdle(loadThirdParty, 2000)
+
+                    // Defer Tawk and reCAPTCHA until interaction or longer idle
+                    var interactionEvents = ['scroll', 'mousemove', 'touchstart', 'keydown', 'click']
+                    var triggered = false
+                    function onInteract() {
+                        if (triggered) return
+                        triggered = true
+                        interactionEvents.forEach(function (e) {
+                            window.removeEventListener(e, onInteract, { passive: true })
+                        })
+                        // loadTawk()
+                        loadRecaptcha()
+                    }
+                    interactionEvents.forEach(function (e) {
+                        window.addEventListener(e, onInteract, { passive: true })
+                    })
+                    // Fallback: load after 6s even without interaction
+                    setTimeout(onInteract, 6000)
+                }
+
+                if (document.readyState === 'complete') {
+                    start()
+                } else {
+                    window.addEventListener('load', start)
+                }
+            })()
+        </script>
+    </head>
+
+    <body>
+        <% if (VUE_APP_GTM_ID) {%>
+        <!-- Google Tag Manager (noscript) -->
+        <noscript>
+            <iframe
+                src="https://www.googletagmanager.com/ns.html?id=<%= VUE_APP_GTM_ID %>"
+                height="0"
+                width="0"
+                style="display: none; visibility: hidden"
+            ></iframe>
+        </noscript>
+        <!-- End Google Tag Manager (noscript) -->
+        <% } %> <% if (VUE_APP_FACEBOOK_PIXEL_ID) {%>
+        <!-- Facebook Pixel Code -->
+        <noscript>
+            <img
+                height="1"
+                width="1"
+                style="display: none"
+                src="https://www.facebook.com/tr?id=<%= VUE_APP_FACEBOOK_PIXEL_ID %>&ev=PageView&noscript=1"
+            />
+        </noscript>
+        <!-- End Facebook Pixel Code -->
+        <% } %>
+
+        <noscript>
+            <strong
+                >We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript
+                enabled. Please enable it to continue.</strong
+            >
+        </noscript>
+        <div id="app"></div>
+        <!-- built files will be auto injected -->
+
+        <a
+            id="wa-btn"
+            href="https://wa.me/12243469633"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Chat on WhatsApp"
+            style="
+                position: fixed;
+                right: 26px;
+                bottom: 100px;
+                width: 56px;
+                height: 56px;
+                border-radius: 50%;
+                background: #25d366;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+                z-index: 9999;
+                text-decoration: none;
+                display: none;
+            "
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 32 32"
+                width="32"
+                height="32"
+                fill="#ffffff"
+                aria-hidden="true"
+            >
+                <path
+                    d="M19.11 17.205c-.372 0-1.088 1.39-1.518 1.39a.63.63 0 0 1-.315-.1c-.802-.402-1.504-.817-2.163-1.447-.545-.516-1.146-1.29-1.46-1.963a.426.426 0 0 1-.073-.215c0-.33.99-.945.99-1.49 0-.143-.73-2.09-.832-2.335-.143-.372-.214-.487-.6-.487-.187 0-.36-.043-.53-.043-.302 0-.53.115-.746.315-.688.645-1.032 1.318-1.06 2.264v.114c-.015.99.472 1.977 1.017 2.78 1.23 1.82 2.506 3.41 4.554 4.34.616.287 2.035.888 2.722.888.817 0 2.15-.515 2.478-1.318.13-.33.13-.658.158-1.02 0-.16-.058-.158-.158-.246-.16-.142-1.45-.83-1.764-.83Zm-3.323 6.92c-1.83 0-3.62-.515-5.16-1.532l-3.582 1.146 1.16-3.498A9.227 9.227 0 0 1 6.45 14.61c0-5.144 4.193-9.317 9.336-9.317 5.144 0 9.337 4.173 9.337 9.317 0 5.143-4.193 9.515-9.337 9.515Zm0-20.41c-6.075 0-11.025 4.95-11.025 11.025 0 1.964.515 3.884 1.504 5.583L4.5 26.7l5.49-1.762a11.054 11.054 0 0 0 5.798 1.633c6.075 0 11.026-5.144 11.026-11.218S21.862 3.715 15.787 3.715Z"
+                />
+            </svg>
+        </a>
+        <script>
+            ;(function () {
+                // CRM source slugs (must match values in admin panel exactly)
+                var UTM_MAP = {
+                    bing: 'bing',
+                    google: 'google',
+                    facebook: 'facebook',
+                    fb: 'facebook',
+                    fb_bct: 'fb_bct',
+                    instagram: 'instagram',
+                    ig: 'instagram',
+                    kayak: 'kayak',
+                    cheapflights: 'cheapflights',
+                    skyscanner: 'skyscanner',
+                    trustpilot: 'trustpilot',
+                    mailchimp: 'mailchimp',
+                    ota: 'ota',
+                }
+                var REF_MAP = {
+                    'bing.com': 'bing',
+                    'google.': 'google',
+                    'facebook.com': 'facebook',
+                    'fb.com': 'facebook',
+                    'instagram.com': 'instagram',
+                    'kayak.': 'kayak',
+                    'cheapflights.': 'cheapflights',
+                    'skyscanner.': 'skyscanner',
+                    'trustpilot.': 'trustpilot',
+                    'mailchimp.': 'mailchimp',
+                }
+                function getSource() {
+                    try {
+                        var p = new URLSearchParams(location.search)
+                        var utm = (p.get('utm_source') || '').toLowerCase().trim()
+                        if (utm) return UTM_MAP[utm] || 'other'
+                        var ref = document.referrer
+                        if (!ref) return 'whatsapp'
+                        var host = new URL(ref).hostname.replace(/^www\./, '').toLowerCase()
+                        if (host.indexOf(location.hostname.replace(/^www\./, '')) > -1) return 'whatsapp'
+                        for (var k in REF_MAP) if (host.indexOf(k) > -1) return REF_MAP[k]
+                        return 'other'
+                    } catch (e) {
+                        return 'whatsapp'
+                    }
+                }
+                function getCampaign() {
+                    try {
+                        var p = new URLSearchParams(location.search)
+                        var c = (p.get('utm_campaign') || '').toLowerCase().trim()
+                        if (!c) return 'none'
+                        c = c.replace(/[^a-z0-9]/g, '').slice(0, 12)
+                        return c || 'none'
+                    } catch (e) {
+                        return 'none'
+                    }
+                }
+                function getPage() {
+                    var seg = location.pathname.split('/').filter(Boolean)[0]
+                    if (!seg) return 'HOM'
+                    var parts = seg.split('-')
+                    return (parts[parts.length - 1] || 'HOM')
+                        .replace(/[^a-z0-9]/gi, '')
+                        .slice(0, 3)
+                        .toUpperCase()
+                }
+                function getDate() {
+                    var d = new Date()
+                    return ('0' + d.getDate()).slice(-2) + ('0' + (d.getMonth() + 1)).slice(-2)
+                }
+                var ref = 'BBC-' + getSource() + '-' + getCampaign() + '-' + getPage() + '-' + getDate()
+                var msg = "Hi! I'd like a quote — ref " + ref
+                var btn = document.getElementById('wa-btn')
+                if (btn) btn.href = 'https://wa.me/12243469633?text=' + encodeURIComponent(msg)
+
+                // Show the WhatsApp widget only between 3:00pm and 5:00am Chisinau time
+                // (every day); hidden otherwise (between 5:00am and 3:00pm).
+                function chisinauHour() {
+                    try {
+                        var s = new Intl.DateTimeFormat('en-US', {
+                            timeZone: 'Europe/Chisinau',
+                            hour: 'numeric',
+                            hour12: false,
+                        }).format(new Date())
+                        var h = parseInt(s, 10)
+                        return h === 24 ? 0 : h
+                    } catch (e) {
+                        return new Date().getHours()
+                    }
+                }
+                function withinSchedule() {
+                    var h = chisinauHour()
+                    return h >= 15 || h < 5
+                }
+                function updateVisibility() {
+                    if (!btn) return
+                    btn.style.display = withinSchedule() ? 'flex' : 'none'
+                }
+                updateVisibility()
+                // Re-check every minute so it appears/disappears without a page reload.
+                setInterval(updateVisibility, 60000)
+            })()
+        </script>
+
+        <script src="https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" defer></script>
+        <script
+            src="https://bbc-widget.vercel.app/bbc-widget.js"
+            data-api="https://admin-panel-error-production.up.railway.app"
+        ></script>
+    </body>
+</html>

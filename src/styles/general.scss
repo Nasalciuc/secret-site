@@ -1,0 +1,111 @@
+// Inter & Poppins are loaded non-blocking from public/index.html via
+// preload+swap; importing them here would re-introduce them on the critical
+// CSS path and block rendering (~1.5s on mobile).
+@import './reset.scss';
+
+@font-face {
+    font-family: 'SSP-bold';
+    src:
+        url('@/assets/fonts/SSP-bold.woff2') format('woff2'),
+        url('@/assets/fonts/SSP-bold.woff') format('woff');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'SSP-regular';
+    src:
+        url('@/assets/fonts/SSP-regular.woff2') format('woff2'),
+        url('@/assets/fonts/SSP-regular.woff2') format('woff');
+    font-display: swap;
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src:
+        url('@/assets/fonts/OpenSans.woff2') format('woff2'),
+        url('@/assets/fonts/OpenSans.woff') format('woff');
+    font-display: swap;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#app {
+    overflow: hidden;
+}
+
+html {
+    background: #111315;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+.margin-container {
+    position: relative;
+    margin: 32px;
+
+    &.hide-bars {
+        overflow: hidden;
+        height: 0;
+    }
+
+    @media screen and (max-width: 1200px) {
+        margin: 24px;
+    }
+
+    @media screen and (max-width: 768px) {
+        margin: 8px;
+    }
+}
+
+.header-content {
+    z-index: 500;
+    position: relative;
+}
+
+.weight-700 {
+    font-weight: 700;
+}
+
+.d-flex {
+    display: flex;
+
+    &.justify-center {
+        justify-content: center;
+    }
+
+    &.align-center {
+        align-items: center;
+    }
+}
+
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+    opacity: 0;
+}
+
+span.capitalize {
+    font-family: inherit;
+    text-transform: capitalize;
+}
+
+.grecaptcha-badge { visibility: hidden; }

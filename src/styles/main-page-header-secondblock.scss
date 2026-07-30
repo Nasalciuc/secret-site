@@ -1,0 +1,326 @@
+@import '@/styles/mixins.scss';
+
+.order-fly {
+    width: 100%;
+    padding: 24px;
+    position: relative;
+    > .choose-option {
+        display: flex;
+        justify-content: space-around;
+        border: 1px solid #33383f;
+        background: #1a1d1f;
+        padding: 12px 16px;
+        border-radius: 8px;
+        margin-bottom: 8px;
+        > button {
+            background: none;
+            color: #6f767e;
+            position: relative;
+            font: {
+                family: 'Inter', sans-serif;
+                size: 15px;
+            }
+            &.active {
+                @include after-active;
+
+                font-weight: 700;
+                color: #dadde0;
+            }
+        }
+    }
+    > .content {
+        > .round-trip,
+        > .one-way,
+        > .multi-city {
+            @include calendar-buttons;
+
+            .search-flight,
+            .calendar-buttons,
+            .choose-properties .adaptive-select-options-buttons,
+            .select-options-adaptive,
+            .client-info .input-name,
+            .client-info .input-email,
+            .client-info .vue-tel-input {
+                background: #1a1d1f;
+            }
+
+            .d-flex {
+                @include select-header;
+
+                padding: 12px 0px;
+            }
+            &.multi-city {
+                @import 'vue-tel-input/vue-tel-input.css';
+
+                &.overlap {
+                    @media screen and (min-width: 1200px) {
+                        .calendar-buttons {
+                            padding: 8px !important;
+                            > button {
+                                align-items: center;
+                            }
+                        }
+                        .remove-flight {
+                            position: absolute !important;
+                            right: -6px;
+                            top: calc(50% - 2.5px) !important;
+                            transform: translateY(-50%);
+                        }
+                    }
+                }
+                > .multi-city-container {
+                    display: flex;
+                    gap: 8px;
+                    position: relative;
+                    &.xyz-nested {
+                        z-index: 100;
+                    }
+                    > .calendar-buttons {
+                        display: flex;
+                        padding: 16px;
+                        transition: 0.4s ease-in;
+                        > button {
+                            justify-content: center;
+                            width: fit-content;
+                            gap: 8px;
+                        }
+                    }
+                    > .remove-flight {
+                        background: none;
+                        position: relative;
+                        top: -2px;
+                    }
+                }
+                > .button-container {
+                    width: fit-content;
+                    margin-bottom: 8px;
+
+                    button,
+                    a {
+                        background: #1a1d1f;
+
+                        &:hover {
+                            background: #b4853b;
+                        }
+                    }
+                }
+                > .client-info {
+                    > .first-row {
+                        @include vue-tel;
+                        flex-wrap: wrap;
+
+                        margin-bottom: 8px;
+                        > .input-email,
+                        > .input-name {
+                            min-width: 160px;
+                            width: 30%;
+
+                            &.has-error {
+                                border-color: #ff6a55;
+                                color: #ff6a55;
+
+                                &::placeholder {
+                                    color: #f68272;
+                                }
+                            }
+                        }
+                        > .vue-tel-input {
+                            min-width: 232px;
+                            width: 40%;
+                        }
+                        > * {
+                            flex: 1;
+                        }
+                    }
+                    > .second-row {
+                        align-items: center;
+                        flex-wrap: wrap;
+                        > .choose-properties {
+                            border: none !important;
+                            min-width: 400px;
+                            flex-wrap: wrap;
+                            flex: 1;
+                            margin: 0;
+                        }
+                        > .orange-filled-button {
+                            width: 160px;
+                            white-space: nowrap;
+                            flex-grow: 1;
+                            > button {
+                                height: 48px;
+                            }
+                        }
+                        > * {
+                            flex: 1;
+                        }
+                    }
+                    > * {
+                        display: flex;
+                        gap: 8px;
+                    }
+                    > .first-row {
+                        input {
+                            padding: 16px;
+                            color: #dadde0;
+                            outline: none;
+                            border: 1px solid #33383f;
+                            border-radius: 8px;
+                            font: {
+                                size: 14px;
+                                weight: 600;
+                                family: 'Inter', sans-serif;
+                            }
+                            &::placeholder {
+                                color: #c2c7cc;
+                            }
+                        }
+                    }
+                }
+                > .select-options-adaptive > .form {
+                    margin-top: 41px;
+                }
+            }
+            > .orange-filled-button {
+                &.xyz-nested {
+                    z-index: 1;
+                    position: relative;
+                }
+
+
+                &.search-submit {
+                    box-shadow: 0 0 8px #101214;
+                    
+                    button {
+                        text-transform: uppercase;
+                        font-weight: 700;
+                        letter-spacing: 1.2px;
+                    }
+                }
+            }
+        }
+        > .orange-filled-button {
+            &.show {
+                opacity: 1;
+                height: 40px;
+            }
+            &.hide {
+                opacity: 0;
+                height: 0px;
+            }
+        }
+    }
+
+    @media screen and (max-width: 1440px) {
+        .multi-city .calendar-buttons svg {
+            display: none;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        padding: 0;
+        > .choose-option {
+            padding: 8px 16px;
+            margin-bottom: 16px;
+            justify-content: space-between;
+            > button {
+                font-size: 14px;
+                &::after {
+                    bottom: -10px !important;
+                }
+            }
+        }
+        > .content {
+            > div:not(.orange-filled-button) {
+                > .search-flight {
+                    padding: 12px 0;
+                    .vs__selected,
+                    .vs__search {
+                        margin-top: 2px;
+                    }
+                }
+            }
+            > .multi-city {
+                .multi-city-container {
+                    .calendar-buttons {
+                        align-items: center;
+                    }
+                    > .remove-flight {
+                        position: absolute !important;
+                        right: -6px;
+                        top: calc(50% - 2.5px) !important;
+                        transform: translateY(-50%);
+                    }
+                    > .search-flight {
+                        .vs__selected {
+                            margin-left: 0 !important;
+                        }
+                    }
+                }
+                > .button-container {
+                    width: 100% !important;
+                    margin-top: 8px;
+                    margin-bottom: 16px !important;
+                    > button {
+                        width: 100%;
+                    }
+                }
+                > .client-info {
+                    > .first-row {
+                        flex-direction: row;
+                        flex-wrap: wrap;
+                        > * {
+                            width: 100% !important;
+                        }
+                        > div.vue-tel-input {
+                            order: 3;
+                        }
+                        > .input-name {
+                            order: 2;
+                        }
+                        > .input-email {
+                            order: 1;
+                        }
+                        > input {
+                            padding: 10px !important;
+                        }
+                    }
+                    > .second-row {
+                        > .orange-filled-button {
+                            width: 100% !important;
+                        }
+                        > .choose-properties {
+                            display: none;
+                        }
+                    }
+                }
+                > .select-options-adaptive {
+                    display: block !important;
+                    border: 1px solid #33383f;
+                    padding: 8px;
+                    border-radius: 8px;
+                    margin-bottom: 16px;
+                    > .adaptive-select-options-buttons {
+                        display: flex;
+                        justify-content: center;
+                        gap: 16px;
+                        > button {
+                            width: fit-content;
+                        }
+                    }
+                }
+            }
+            > .one-way {
+                .calendar-buttons {
+                    > .first-button {
+                        grid-row-start: 1;
+                        grid-row-end: 3;
+                        align-items: center;
+                    }
+                }
+            }
+            > * > .calendar-buttons {
+                z-index: 150;
+            }
+        }
+    }
+}
