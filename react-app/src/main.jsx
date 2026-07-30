@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import { initThirdParty } from '@/utils/thirdParty'
+import '@animxyz/core/dist/animxyz.min.css'
 import '@/styles/general.scss'
 
 initThirdParty()

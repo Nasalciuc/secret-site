@@ -46,21 +46,21 @@ export default function InnerBlogPage() {
                 </div>
             </div>
             {isLoaded && (
-                <div className="inner-blog-page">
+                <div className="inner-blog-page" xyz="fade small stagger">
                     <AirlinesLogos />
                     <div className="cards-container">
                         {currentBlog.map((block, index) => {
                             if (block.type === 'header') {
                                 const Tag = `h${Math.min(Math.max(Number(block.data?.level) || 2, 1), 6)}`
                                 return (
-                                    <div key={index} className="blog-block content text-from-editor">
+                                    <div key={index} className="blog-block content text-from-editor xyz-in">
                                         <Tag className="header" dangerouslySetInnerHTML={{ __html: block.data?.text ?? '' }} />
                                     </div>
                                 )
                             }
                             if (block.type === 'image') {
                                 return (
-                                    <div key={index} className="blog-block content text-from-editor">
+                                    <div key={index} className="blog-block content text-from-editor xyz-in">
                                         <img
                                             src={block.data?.file?.url || block.data?.url}
                                             alt="image"
@@ -72,14 +72,14 @@ export default function InnerBlogPage() {
                             }
                             if (block.type === 'paragraph') {
                                 return (
-                                    <div key={index} className="blog-block content text-from-editor">
+                                    <div key={index} className="blog-block content text-from-editor xyz-in">
                                         <p dangerouslySetInnerHTML={{ __html: block.data?.text ?? '' }} />
                                     </div>
                                 )
                             }
                             if (block.type === 'list') {
                                 return (
-                                    <div key={index} className="blog-block content text-from-editor">
+                                    <div key={index} className="blog-block content text-from-editor xyz-in">
                                         <ul>
                                             {(block.data?.items ?? []).map((item, i) => (
                                                 <li key={i} dangerouslySetInnerHTML={{ __html: item }} />

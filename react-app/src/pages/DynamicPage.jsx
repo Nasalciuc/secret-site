@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react'
-import { useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { useAppStore } from '@/store/useAppStore'
 import HeaderContainer from '@/components/DynamicPage/HeaderContainer'
 import DescriptionVue from '@/components/DynamicPage/DescriptionVue'
@@ -12,9 +12,9 @@ import Error404 from '@/pages/404Error'
 import dynamicPagesData from '@/dynamicPages.json'
 
 export default function DynamicPage() {
-    const { suffix } = useParams()
+    const location = useLocation()
     const { stopQuoteLoading } = useAppStore()
-    const pageSlug = `business-class-${suffix}`
+    const pageSlug = location.pathname.replace(/^\//, '').replace(/\/$/, '')
     const page = useMemo(() => dynamicPagesData[pageSlug] || null, [pageSlug])
 
     useEffect(() => {

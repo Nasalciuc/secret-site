@@ -81,10 +81,10 @@ export default function AboutSection() {
                 {aboutUsIsLoaded && (
                     <img src={image} alt="About BuyBusinessClass" loading="lazy" decoding="async" />
                 )}
-                <div className="about-text">
+                <div className="about-text xyz-in" xyz="fade down duration-10">
                     <div className="text-from-editor">{renderBlocks(aboutUs?.body)}</div>
                 </div>
-                <div className="black-orange-button">
+                <div className="black-orange-button xyz-in" xyz="fade down duration-10">
                     {isHome ? (
                         <button type="button" onClick={scrollToTop}>
                             Book your Flight Now
