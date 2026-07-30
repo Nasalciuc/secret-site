@@ -1,8 +1,25 @@
 import { useEffect } from 'react'
 
+const TRUSTPILOT_URL = 'https://www.trustpilot.com/review/buybusinessclass.com'
+
+function loadTrustpilotWidget(el) {
+    if (!el || !window.Trustpilot?.loadFromElement) return false
+    window.Trustpilot.loadFromElement(el, true)
+    return true
+}
+
 export default function ReviewsSection() {
     useEffect(() => {
-        window.Trustpilot?.loadFromElement?.(document.querySelector('.trustpilot-widget'), true)
+        const el = document.querySelector('.reviews-container .trustpilot-widget')
+        if (!el) return undefined
+
+        if (loadTrustpilotWidget(el)) return undefined
+
+        const id = window.setInterval(() => {
+            if (loadTrustpilotWidget(el)) window.clearInterval(id)
+        }, 100)
+
+        return () => window.clearInterval(id)
     }, [])
 
     return (
@@ -10,10 +27,12 @@ export default function ReviewsSection() {
             <div className="reviews-tittle">
                 <div className="title">
                     <h3 className="main-title">
-                        <span className="accent">99%</span> of Travelers <span className="accent">Recommend</span> BuyBusinessClass
+                        <span className="accent">99%</span> of Travelers <span className="accent">Recommend</span>{' '}
+                        BuyBusinessClass
                     </h3>
                 </div>
                 <div className="subtitle-block">
+                    {/* TrustBox widget - Micro Combo */}
                     <div
                         className="trustpilot-widget"
                         data-locale="en-US"
@@ -22,19 +41,14 @@ export default function ReviewsSection() {
                         data-style-height="52px"
                         data-style-width="100%"
                     >
-                        <a href="https://www.trustpilot.com/review/buybusinessclass.com" target="_blank" rel="noopener noreferrer">
+                        <a href={TRUSTPILOT_URL} target="_blank" rel="noopener noreferrer">
                             Trustpilot
                         </a>
                     </div>
                 </div>
             </div>
-            <div className="text-center">
-                <a
-                    href="https://www.trustpilot.com/review/buybusinessclass.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="transparent-button"
-                >
+            <div className="button-container">
+                <a href={TRUSTPILOT_URL} target="_blank" rel="noopener noreferrer">
                     Read more
                 </a>
             </div>

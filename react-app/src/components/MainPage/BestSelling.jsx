@@ -54,15 +54,32 @@ export default function BestSelling() {
 
     useEffect(() => {
         if (!emblaApi) return
-        setScrollSnaps(emblaApi.scrollSnapList())
-        onSelect(emblaApi)
-        emblaApi.on('select', onSelect)
+
+        const updateSnaps = () => {
+            setScrollSnaps(emblaApi.scrollSnapList())
+            onSelect(emblaApi)
+        }
+
         emblaApi.reInit()
-    }, [emblaApi, onSelect, slides.length])
+        updateSnaps()
+        emblaApi.on('select', onSelect)
+        emblaApi.on('reInit', updateSnaps)
+
+        return () => {
+            emblaApi.off('select', onSelect)
+            emblaApi.off('reInit', updateSnaps)
+        }
+    }, [emblaApi, onSelect, slides.length, columns, rows])
 
     const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi])
     const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi])
     const scrollTo = useCallback((index) => emblaApi?.scrollTo(index), [emblaApi])
+
+    const cardTo = (item) => {
+        if (!item?.type || item?.name == null) return undefined
+        // Spaces stay literal; React Router encodes the pathname (matches Vue / live).
+        return `/flight/${item.type}/${String(item.name).toLowerCase()}/${item.id}`
+    }
 
     return (
         <div className="best-selling-container">
@@ -91,11 +108,7 @@ export default function BestSelling() {
                                                 price={item.minPrice?.price_today ?? item.price_today}
                                                 imgUrl={returnImgUrl(item.image)}
                                                 extraInfo={item.extra_info ?? '60% off on business class flights'}
-                                                to={
-                                                    item.type
-                                                        ? `/flight/${item.type}/${item.name.toLowerCase()}/${item.id}`
-                                                        : undefined
-                                                }
+                                                to={cardTo(item)}
                                             />
                                         ))}
                                     </div>

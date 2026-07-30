@@ -710,8 +710,14 @@
                     border-radius: 8px;
 
                     > button {
+                        width: 100%;
                         height: 100%;
                         text-align: left;
+                        background: none;
+                        color: #dadde0;
+                        font-family: 'Inter', sans-serif;
+                        font-size: 14px;
+                        font-weight: 600;
 
                         > svg {
                             margin-left: 18px;

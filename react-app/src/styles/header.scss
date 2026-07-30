@@ -13,7 +13,6 @@
         color: #fff;
         font-size: 0.8vw;
         font-family: 'Inter', sans-serif;
-        white-space: nowrap;
 
         &.active {
             @include after-active;
@@ -93,6 +92,13 @@
     }
 }
 
+.logo {
+    &-svg {
+        width: auto;
+        height: 32px;
+    }
+}
+
 .header-container {
     z-index: 501;
     display: flex;
@@ -113,24 +119,60 @@
             margin-top: 4px;
         }
     }
+    &.fixed {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        transform: unset;
+        padding: 20px 16px;
+        background-color: #1a1d1f;
+        animation: header-slide-down 250ms;
+
+        .logo {
+            margin-bottom: 0;
+        }
+
+        @media screen and (max-width: 768px) {
+            .logos-items {
+                display: none;
+            }
+        }
+
+        @media screen and (min-width: 769px) {
+            padding-inline: 30px;
+
+            .service {
+                right: 30px;
+            }
+        }
+
+        @media screen and (min-width: 1201px) {
+            padding-inline: 80px;
+        }
+    }
     > * {
         display: flex;
         align-items: center;
 
         &.service {
             font-family: 'Inter', sans-serif;
+            flex-shrink: 0;
 
             > .call-service {
                 display: flex;
                 flex-direction: row;
-                align-items: flex-start;
+                align-items: center;
                 padding: 4px 8px;
                 background: #f4f4f4;
                 border-radius: 12px;
                 margin-left: 16px;
+                white-space: nowrap;
+                flex-shrink: 0;
                 > .tel {
                     margin-left: 10px;
                     color: #111315;
+                    white-space: nowrap;
                     font: {
                         weight: 600;
                         size: 0.8vw;
@@ -140,6 +182,7 @@
             > .live-service {
                 color: #f4f4f4;
                 font-size: 0.8vw;
+                white-space: nowrap;
             }
         }
         &.trust-container {
@@ -287,5 +330,14 @@
         .service {
             display: none;
         }
+    }
+}
+
+@keyframes header-slide-down {
+    from {
+        translate: 0 -100%;
+    }
+    to {
+        translate: 0 0;
     }
 }

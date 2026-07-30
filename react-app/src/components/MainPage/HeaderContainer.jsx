@@ -24,10 +24,22 @@ export default function HeaderContainer() {
                 setVideoPoster(poster)
             }
 
+            const playVideo = () => {
+                const playPromise = video.play()
+                if (playPromise?.catch) {
+                    playPromise.catch(() => {})
+                }
+            }
+
             const loadVideo = () => {
                 if (video.getAttribute('src') !== source) {
                     video.src = source
                     video.load()
+                }
+                if (video.readyState >= 2) {
+                    playVideo()
+                } else {
+                    video.addEventListener('loadeddata', playVideo, { once: true })
                 }
             }
             if ('requestIdleCallback' in window) {

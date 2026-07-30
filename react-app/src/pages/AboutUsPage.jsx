@@ -6,11 +6,18 @@ import ThirdBlock from '@/components/AboutUs/ThirdBlock'
 
 export default function AboutUsPage() {
     useEffect(() => {
-        const link = document.createElement('link')
-        link.rel = 'canonical'
+        let link = document.querySelector('link[rel="canonical"]')
+        let created = false
+        if (!link) {
+            link = document.createElement('link')
+            link.rel = 'canonical'
+            document.head.appendChild(link)
+            created = true
+        }
         link.href = 'https://buybusinessclass.com/about-us'
-        document.head.appendChild(link)
-        return () => document.head.removeChild(link)
+        return () => {
+            if (created) link?.remove()
+        }
     }, [])
 
     return (

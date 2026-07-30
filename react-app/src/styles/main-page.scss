@@ -156,35 +156,13 @@
     }
 }
 
-// Works Container
+// Works Container — hide steps until AnimXYZ `xyz-in` is applied on viewport enter
 .describe-container {
-    .steps > .first-step,
-    .steps > .second-step,
-    .steps > .third-step {
+    .steps > .first-step:not(.xyz-in),
+    .steps > .second-step:not(.xyz-in),
+    .steps > .third-step:not(.xyz-in),
+    .steps > .fourth-step:not(.xyz-in) {
         opacity: 0;
-        transform: translateX(-40px);
-        transition:
-            opacity 0.7s ease,
-            transform 0.7s ease;
-    }
-
-    .steps > .second-step {
-        transform: translateY(30px);
-        transition-delay: 0.12s;
-    }
-
-    .steps > .third-step {
-        transform: translateX(40px);
-        transition-delay: 0.24s;
-    }
-
-    &.is-visible {
-        .steps > .first-step,
-        .steps > .second-step,
-        .steps > .third-step {
-            opacity: 1;
-            transform: translate(0, 0);
-        }
     }
 }
 
@@ -348,18 +326,10 @@
     border-radius: 16px;
     margin-bottom: 80px;
     > .title {
-        text-align: center;
+        @include block-title;
         margin-bottom: 32px;
-        > .main-title {
-            font-size: 2.12vw;
-            color: #dadde0;
-            font-family: 'SSP-bold';
-
-            .accent {
-                color: #b4853b;
-            }
-        }
         > .subtitle {
+            text-align: center;
             color: #6f767e;
             font: {
                 weight: 600;
@@ -373,8 +343,8 @@
         margin-bottom: 24px;
     }
 
+    // Base OfferCard styles live globally (remaining-pages.scss); BestSelling only adds hover / sizing
     .offer-content {
-        position: relative;
         transition: transform ease-in-out 0.3s;
 
         &:hover {
@@ -382,62 +352,24 @@
         }
 
         > .img-block {
-            display: flex;
-            align-items: flex-end;
-            margin: 0 auto;
-            position: relative;
             width: 100%;
             aspect-ratio: 3/2;
-            border-radius: 16px;
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
-            background-position: center;
-
-            > .content-info {
-                padding: 24px;
-                > .title {
-                    color: #fff;
-                    text-align: left;
-                    font: {
-                        weight: 400;
-                        size: 24px;
-                        family: 'SSP-regular', sans-serif;
-                    }
-                }
-                > .price {
-                    color: #fff;
-                    text-align: left;
-                    margin-bottom: 12px;
-                    font: {
-                        family: 'OpenSans', sans-serif;
-                        weight: 700;
-                        size: 24px;
-                    }
-                }
-                > .extra-info {
-                    color: #fff;
-                    font: {
-                        family: 'Inter', sans-serif;
-                        size: 13px;
-                    }
-                }
-            }
         }
+
         > a {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            opacity: 0;
-            cursor: pointer;
+            z-index: 1;
         }
     }
 
     > .all-deals-button {
         width: fit-content;
-        margin: 24px auto 0;
+        margin-inline: auto;
+        margin-top: 24px;
         text-align: center;
+
+        a {
+            display: block;
+        }
 
         .orange-filled-button {
             display: block;
@@ -476,7 +408,7 @@
     }
 }
 
-// Reviews Section
+// Reviews Section (match Vue ReviewsVue + ReviewsTittle)
 .reviews-container {
     background: linear-gradient(0deg, rgba(8, 9, 12, 0.48), rgba(8, 9, 12, 0.48)),
         url('../assets/images/static/plane.webp');
@@ -488,17 +420,13 @@
     margin-bottom: 80px;
 
     .reviews-tittle {
-        text-align: center;
-        margin-bottom: 48px;
+        .title {
+            @include block-title;
+            margin-bottom: 48px;
+        }
 
-        .main-title {
-            font-size: 2.12vw;
-            color: #dadde0;
-            font-family: 'SSP-bold';
-
-            .accent {
-                color: #b4853b;
-            }
+        .subtitle-block {
+            margin-bottom: 48px;
         }
     }
 
@@ -574,35 +502,44 @@
         }
     }
 
-    .transparent-button {
-        display: inline-block;
+    // Match Vue TransparentButton scoped styles
+    .button-container {
         text-align: center;
-        border: 2px solid #b4853b;
-        padding: 6px 48px;
-        background: none;
-        color: #b4853b;
-        border-radius: 8px;
-        text-decoration: none;
-        transition: 0.4s ease-in;
-        font: {
-            weight: 600;
-            family: 'Poppins', sans-serif;
-            size: 15px;
-        }
-        &:hover {
-            color: #111315;
-            background: #b4853b;
+
+        > a {
+            text-align: center;
+            border: 2px solid #b4853b;
+            padding: 6px 48px;
+            background: none;
+            color: #b4853b;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: 0.4s ease-in;
+            font: {
+                weight: 600;
+                family: 'Poppins', sans-serif;
+                size: 15px;
+            }
+            &:hover {
+                color: #111315;
+                background: #b4853b;
+            }
         }
     }
 
     @media screen and (max-width: 1440px) {
         padding: 40px 56px;
+
+        .button-container > a {
+            font-size: 15px !important;
+        }
     }
 
     @media screen and (max-width: 1200px) {
         background-size: auto 100%;
         padding: 48px 56px;
-        .transparent-button {
+
+        .button-container {
             margin: auto;
         }
     }
@@ -1095,7 +1032,72 @@
     border: 0;
 }
 
-// Contact Section
+// Contact Section — matches Vue ContactVue.vue (+ interactive map iframe)
+.contacts {
+    display: grid;
+}
+
+.customer-service {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+    height: 160px;
+    padding: 16px;
+    border-radius: 8px;
+    background-color: #b4853b;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    margin-top: 32px;
+
+    .title {
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .accent {
+        color: #dadde0;
+    }
+
+    a {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: inherit;
+        text-decoration: none;
+
+        .content {
+            display: grid;
+        }
+
+        svg {
+            width: 32px;
+            padding: 8px;
+            border-radius: 50%;
+            background-color: #dadde0;
+        }
+    }
+
+    &__contacts {
+        display: grid;
+        gap: 16px;
+    }
+
+    img {
+        display: block;
+        height: 80%;
+        object-fit: contain;
+    }
+
+    @media screen and (max-width: 768px) {
+        font-size: 14px;
+
+        .title {
+            font-size: 16px;
+        }
+    }
+}
+
 .contact-container {
     padding: 40px 176px 80px 176px;
     justify-content: center;
@@ -1121,17 +1123,10 @@
         }
 
         > .title {
-            text-align: center;
-            margin-bottom: 32px;
+            @include block-title;
 
-            .main-title {
-                font-size: 2.12vw;
-                color: #dadde0;
-                font-family: 'SSP-bold';
-
-                .accent {
-                    color: #b4853b;
-                }
+            > .main-title {
+                text-align: left;
             }
         }
 
@@ -1144,43 +1139,13 @@
             flex-direction: column;
             gap: 8px;
 
-            > input {
+            > .input-container > input {
                 height: 56px;
-                padding: 16px;
-                border: 1px solid #33383f;
-                border-radius: 8px;
-                background: none;
-                color: #dadde0;
-                font-family: 'Inter', sans-serif;
             }
 
             > .leave-message {
                 textarea {
                     height: 200px;
-                    padding: 16px;
-                    border: 1px solid #33383f;
-                    border-radius: 8px;
-                    background: none;
-                    color: #dadde0;
-                    font-family: 'Inter', sans-serif;
-                    width: 100%;
-                }
-            }
-
-            .orange-filled-button {
-                padding: 12px 24px;
-                background: #b4853b;
-                color: #111315;
-                border: none;
-                border-radius: 8px;
-                font-family: 'Poppins', sans-serif;
-                font-weight: 600;
-                font-size: 15px;
-                cursor: pointer;
-                transition: background 0.3s ease;
-
-                &:hover {
-                    background: #d5a474;
                 }
             }
         }
@@ -1196,6 +1161,7 @@
             background: #111315;
 
             > .position-relative {
+                position: relative;
                 display: flex;
                 flex-direction: column;
                 gap: 16px;
@@ -1203,12 +1169,37 @@
                 > div {
                     display: flex;
                     justify-content: space-between;
-                    align-items: center;
 
                     > .instructions {
-                        display: flex;
-                        align-items: center;
-                        gap: 12px;
+                        position: relative;
+
+                        > .title,
+                        .body {
+                            flex-grow: 1;
+                            position: absolute;
+                            left: 50px;
+                            top: 0;
+                            width: max-content;
+                            font: {
+                                family: 'Inter', sans-serif;
+                                weight: 600;
+                            }
+
+                            &.title {
+                                color: #8e969e;
+                                font-size: 14px;
+                            }
+
+                            &.body {
+                                color: #dadde0;
+                                font-size: 13px;
+                                top: 20px;
+
+                                > .tel {
+                                    color: #dadde0;
+                                }
+                            }
+                        }
 
                         > .svg {
                             background: #272b30;
@@ -1218,40 +1209,19 @@
                             align-items: center;
                             justify-content: center;
                             border-radius: 50%;
-                        }
-
-                        > .title {
-                            color: #8e969e;
-                            font-size: 14px;
-                            font-weight: 600;
-                            font-family: 'Inter', sans-serif;
-                        }
-
-                        > .body {
-                            color: #dadde0;
-                            font-size: 13px;
-
-                            > .tel {
-                                color: #dadde0;
-                            }
+                            margin-bottom: 8px;
                         }
                     }
 
-                    .transparent-button {
-                        border: 2px solid #b4853b;
-                        padding: 6px 20px;
-                        background: none;
-                        color: #b4853b;
-                        border-radius: 8px;
-                        text-decoration: none;
-                        font-size: 13px;
-                        font-weight: 600;
-                        font-family: 'Poppins', sans-serif;
-                        transition: 0.4s ease-in;
+                    > .button-container {
+                        display: none;
+                        position: absolute;
+                        right: 0;
 
-                        &:hover {
-                            color: #111315;
-                            background: #b4853b;
+                        > button,
+                        > a {
+                            font-size: 13px;
+                            padding: 6px 20px 8px 20px;
                         }
                     }
                 }
@@ -1259,77 +1229,16 @@
         }
     }
 
-    .contacts {
-        display: grid;
-    }
-
     .google-map {
         width: fit-content;
         margin-top: auto;
 
-        > img {
+        > img,
+        > iframe {
             display: block;
+            border: 0;
             border-radius: 16px;
             object-fit: cover;
-        }
-    }
-
-    .customer-service {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        overflow: hidden;
-        height: 160px;
-        padding: 16px;
-        border-radius: 8px;
-        background-color: #b4853b;
-        font-family: 'Inter', sans-serif;
-        font-weight: 600;
-        margin-top: 32px;
-
-        .title {
-            font-size: 18px;
-            font-weight: 700;
-
-            .accent {
-                color: #dadde0;
-            }
-        }
-
-        a {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-
-            .content {
-                display: grid;
-            }
-
-            svg {
-                width: 32px;
-                padding: 8px;
-                border-radius: 50%;
-                background-color: #dadde0;
-            }
-        }
-
-        &__contacts {
-            display: grid;
-            gap: 16px;
-        }
-
-        img {
-            display: block;
-            height: 80%;
-            object-fit: contain;
-        }
-
-        @media screen and (max-width: 768px) {
-            font-size: 14px;
-
-            .title {
-                font-size: 16px;
-            }
         }
     }
 
@@ -1375,7 +1284,8 @@
             }
         }
         .google-map {
-            > img {
+            > img,
+            > iframe {
                 width: 406px;
                 height: 448px;
             }
@@ -1394,7 +1304,7 @@
                 flex-direction: row;
                 flex-wrap: wrap;
 
-                > input {
+                > .input-container {
                     flex-basis: calc(33.333% - 5.35px);
                 }
 
@@ -1451,7 +1361,7 @@
                             }
                         }
 
-                        > .transparent-button {
+                        > .button-container {
                             display: inline-block;
                         }
                     }
@@ -1512,7 +1422,6 @@
         > div {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(auto-fit, minmax(225px, 450px));
             width: 100%;
             row-gap: 32px;
             column-gap: 5%;
@@ -1598,21 +1507,6 @@
                     }
                 }
             }
-        }
-    }
-}
-
-.reviews-container {
-    margin-bottom: 80px;
-
-    .reviews-tittle {
-        .title {
-            @include block-title;
-            margin-bottom: 48px;
-        }
-
-        .subtitle-block {
-            margin-bottom: 48px;
         }
     }
 }
@@ -1767,30 +1661,3 @@
     }
 }
 
-.contact-container {
-    .google-map {
-        width: fit-content;
-        margin-top: auto;
-
-        > img,
-        > iframe {
-            border-radius: 16px;
-        }
-    }
-
-    @media screen and (max-width: 1440px) {
-        .google-map {
-            > img,
-            > iframe {
-                width: 406px;
-                height: 448px;
-            }
-        }
-    }
-
-    @media screen and (max-width: 1200px) {
-        .google-map {
-            display: none;
-        }
-    }
-}

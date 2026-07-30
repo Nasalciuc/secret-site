@@ -43,7 +43,7 @@ export default function RegionsSection() {
                 {(Array.isArray(items) ? items : []).slice(0, 7).map((item) => (
                     <Link
                         key={`${type}-${item.id}`}
-                        to={`/flight/${routeType}/${item.name.toLowerCase()}/${item.id}`}
+                        to={`/flight/${routeType}/${String(item.name).toLowerCase()}/${item.id}`}
                         className={`${routeType}-card`}
                     >
                         Business class flights to {item.name}

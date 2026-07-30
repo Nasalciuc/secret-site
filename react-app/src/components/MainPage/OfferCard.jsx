@@ -16,7 +16,7 @@ export default function OfferCard({ title, price, imgUrl, extraInfo = '', to }) 
                     <p className="extra-info">{extraInfo}</p>
                 </div>
             </div>
-            {to && <Link aria-label={`View ${title} page`} to={to} />}
+            {to ? <Link aria-label={`View ${title} page`} to={to} /> : null}
         </div>
     )
 }
