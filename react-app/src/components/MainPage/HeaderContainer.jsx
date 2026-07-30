@@ -56,7 +56,7 @@ export default function HeaderContainer() {
                 />
             </div>
             <div className="blocks">
-                <div className="first-block">
+                <div className="first-block xyz-in" xyz="fade left-50% duration-15 delay-5">
                     <h1>
                         <span className="weight-700">Cheap Business Class</span> Airline Tickets <br />
                         & <span className="weight-700">Flight Deals</span> — Save up to 60%
