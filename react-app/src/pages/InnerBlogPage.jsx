@@ -49,20 +49,47 @@ export default function InnerBlogPage() {
                 <div className="inner-blog-page">
                     <AirlinesLogos />
                     <div className="cards-container">
-                        {currentBlog.map((block, index) => (
-                            <div key={index} className="blog-block">
-                                {block.type === 'paragraph' && <p>{block.data.text}</p>}
-                                {block.type === 'header' && <h2>{block.data.text}</h2>}
-                                {block.type === 'image' && <img src={block.data.url} alt="" />}
-                                {block.type === 'list' && (
-                                    <ul>
-                                        {block.data.items.map((item, i) => (
-                                            <li key={i}>{item}</li>
-                                        ))}
-                                    </ul>
-                                )}
-                            </div>
-                        ))}
+                        {currentBlog.map((block, index) => {
+                            if (block.type === 'header') {
+                                const Tag = `h${Math.min(Math.max(Number(block.data?.level) || 2, 1), 6)}`
+                                return (
+                                    <div key={index} className="blog-block content text-from-editor">
+                                        <Tag className="header" dangerouslySetInnerHTML={{ __html: block.data?.text ?? '' }} />
+                                    </div>
+                                )
+                            }
+                            if (block.type === 'image') {
+                                return (
+                                    <div key={index} className="blog-block content text-from-editor">
+                                        <img
+                                            src={block.data?.file?.url || block.data?.url}
+                                            alt="image"
+                                            loading="lazy"
+                                            decoding="async"
+                                        />
+                                    </div>
+                                )
+                            }
+                            if (block.type === 'paragraph') {
+                                return (
+                                    <div key={index} className="blog-block content text-from-editor">
+                                        <p dangerouslySetInnerHTML={{ __html: block.data?.text ?? '' }} />
+                                    </div>
+                                )
+                            }
+                            if (block.type === 'list') {
+                                return (
+                                    <div key={index} className="blog-block content text-from-editor">
+                                        <ul>
+                                            {(block.data?.items ?? []).map((item, i) => (
+                                                <li key={i} dangerouslySetInnerHTML={{ __html: item }} />
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )
+                            }
+                            return null
+                        })}
                     </div>
                 </div>
             )}

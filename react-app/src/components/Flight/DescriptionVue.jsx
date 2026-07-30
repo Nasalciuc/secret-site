@@ -23,6 +23,24 @@ const renderBlock = (block, index) => {
         return <blockquote key={block.id ?? index} dangerouslySetInnerHTML={{ __html: data.text ?? '' }} />
     }
 
+    if (block?.type === 'image') {
+        const src = data.file?.url || data.url
+        if (!src) return null
+        return (
+            <img
+                key={block.id ?? index}
+                src={src}
+                alt="image"
+                loading="lazy"
+                decoding="async"
+            />
+        )
+    }
+
+    if (block?.type === 'paragraph') {
+        return <p key={block?.id ?? index} dangerouslySetInnerHTML={{ __html: data.text ?? '' }} />
+    }
+
     return <p key={block?.id ?? index} dangerouslySetInnerHTML={{ __html: data.text ?? '' }} />
 }
 

@@ -1,12 +1,17 @@
 import { create } from 'zustand'
 import axios from 'axios'
 
-const BACK = import.meta.env.VITE_BACK
+const API_URL = import.meta.env.VITE_API_URL
 
 export const useReviewsStore = create((set) => ({
     reviews: [],
+    reviewsIsLoaded: false,
     reviewCount: 0,
     score: 0,
+    reviewsAddition: {
+        reviewsCount: 0,
+        score: 0,
+    },
 
     setReviews: (reviews) => set({ reviews }),
     setReviewCount: (count) => set({ reviewCount: count }),
@@ -14,13 +19,24 @@ export const useReviewsStore = create((set) => ({
 
     getReviews: async () => {
         try {
-            const result = await axios.get(`${BACK}/api/reviews/getAll`)
-            if (result?.data?.responseCode?.responseCode === '1') {
-                const { reviews, reviewCount, score } = result.data.data
-                set({ reviews, reviewCount, score })
-            }
+            const result = await axios.get(`${API_URL}/trustpilot`)
+            const data = result?.data?.data ?? {}
+            const reviews = Array.isArray(data.last_reviews) ? data.last_reviews.slice(0, 10) : []
+            const reviewsCount = data.reviews_count ?? 0
+            const score = data.score ?? 0
+
+            set({
+                reviews,
+                reviewsIsLoaded: true,
+                reviewCount: reviewsCount,
+                score,
+                reviewsAddition: {
+                    reviewsCount,
+                    score,
+                },
+            })
         } catch (error) {
-            console.error('Failed to load reviews:', error)
+            set({ reviewsIsLoaded: true })
         }
     },
 }))

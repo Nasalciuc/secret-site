@@ -13,23 +13,28 @@ export const useBlogStore = create((set) => ({
 
     getBlogs: async () => {
         try {
-            const result = await axios.get(`${BACK}/api/blogs/getAll`)
-            if (result.data.responseCode.responseCode === '1') {
-                set({ blogs: result.data.data, blogsIsLoaded: true })
+            const result = await axios.get(`${BACK}/api/articles/getAll`)
+            if (result.data.responseCode.responseCode !== '1') {
+                throw new Error('')
             }
+            set({ blogs: result.data.data, blogsIsLoaded: true })
         } catch (error) {
-            console.error('Failed to load blogs:', error)
+            set({ blogsIsLoaded: true })
         }
     },
 
     getBlogById: async (id) => {
         try {
-            const result = await axios.get(`${BACK}/api/blogs/getOne?id=${id}`)
-            if (result.data.responseCode.responseCode === '1') {
-                set({ blog: result.data.data })
+            const result = await axios.get(`${BACK}/api/articles/getOne`, {
+                params: { id },
+            })
+            if (result.data.responseCode.responseCode !== '1') {
+                throw new Error('')
             }
+            set({ blog: result.data.data })
+            return result.data.data
         } catch (error) {
-            console.error('Failed to load blog:', error)
+            return null
         }
     },
 }))

@@ -67,26 +67,4 @@ export const useAppStore = create((set, get) => ({
             console.error('Failed to load about us:', error)
         }
     },
-
-    getDestinationsFlights: async () => {
-        try {
-            const result = await axios.get(`${BACK}/api/destinationsFlights/getAll`)
-            if (result?.data?.responseCode?.responseCode === '1') {
-                set({ destinationsFlights: result.data.data })
-            }
-        } catch (error) {
-            console.error('Failed to load destinations flights:', error)
-        }
-    },
-
-    getFlightPrices: async () => {
-        try {
-            const result = await axios.get(`${BACK}/api/flightPrices/getAll`)
-            if (result?.data?.responseCode?.responseCode === '1') {
-                set({ flightPrices: result.data.data })
-            }
-        } catch (error) {
-            console.error('Failed to load flight prices:', error)
-        }
-    },
 }))
