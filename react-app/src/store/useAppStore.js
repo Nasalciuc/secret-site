@@ -60,11 +60,19 @@ export const useAppStore = create((set, get) => ({
     getAboutUs: async () => {
         try {
             const result = await axios.get(`${BACK}/api/aboutUs/getAll`)
-            if (result?.data?.responseCode?.responseCode === '1') {
-                set({ aboutUs: result.data.data, aboutUsIsLoaded: true })
+
+            if (result?.data?.responseCode?.responseCode !== '1') {
+                throw new Error('')
             }
+
+            const copy = { ...result.data.data }
+            copy.title = JSON.parse(copy.title).blocks
+            copy.body = JSON.parse(copy.body).blocks
+            copy.image = `${BACK}/storage/${copy.image}`
+
+            set({ aboutUs: copy, aboutUsIsLoaded: true })
         } catch (error) {
-            console.error('Failed to load about us:', error)
+            set({ aboutUsIsLoaded: true })
         }
     },
 }))

@@ -1,29 +1,61 @@
-import { useEffect } from 'react'
+import { createElement, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useAppStore } from '@/store/useAppStore'
 import aboutFallback from '@/assets/images/static/about-image.webp'
 
-const renderBlocks = (body) => {
-    if (!body) return null
-    if (typeof body === 'string') {
-        return body.split('\n').filter(Boolean).map((paragraph, index) => <p key={index}>{paragraph}</p>)
-    }
+const renderBlocks = (blocks) => {
+    if (!Array.isArray(blocks)) return null
 
-    if (Array.isArray(body)) {
-        return body.map((block, index) => {
-            if (typeof block === 'string') return <p key={index}>{block}</p>
-            if (block?.type === 'paragraph') {
-                const text = Array.isArray(block.data?.text)
-                    ? block.data.text.join(' ')
-                    : block.data?.text || block.text || ''
-                return text ? <p key={index}>{text}</p> : null
-            }
-            const text = block?.data?.text || block?.text
-            return text ? <p key={index}>{text}</p> : null
-        })
-    }
+    return blocks.map((item, index) => {
+        if (!item?.type) return null
 
-    return null
+        if (item.type === 'header') {
+            const level = Math.min(Math.max(Number(item.data?.level) || 2, 1), 6)
+            return (
+                <div className="content" key={`editor-${index}-about-us-body`}>
+                    {createElement(`h${level}`, { className: 'header' }, item.data?.text ?? '')}
+                </div>
+            )
+        }
+
+        if (item.type === 'image') {
+            return (
+                <div className="content" key={`editor-${index}-about-us-body`}>
+                    <img
+                        src={item.data?.file?.url}
+                        alt="image"
+                        loading="lazy"
+                        decoding="async"
+                    />
+                </div>
+            )
+        }
+
+        if (item.type === 'paragraph') {
+            return (
+                <div className="content" key={`editor-${index}-about-us-body`}>
+                    <p dangerouslySetInnerHTML={{ __html: item.data?.text ?? '' }} />
+                </div>
+            )
+        }
+
+        if (item.type === 'list') {
+            return (
+                <div className="content" key={`editor-${index}-about-us-body`}>
+                    <ul>
+                        {(item.data?.items ?? []).map((list, listIndex) => (
+                            <li
+                                key={`list-${listIndex}`}
+                                dangerouslySetInnerHTML={{ __html: list }}
+                            />
+                        ))}
+                    </ul>
+                </div>
+            )
+        }
+
+        return null
+    })
 }
 
 export default function AboutSection() {
@@ -34,7 +66,7 @@ export default function AboutSection() {
         if (!aboutUsIsLoaded) getAboutUs()
     }, [aboutUsIsLoaded, getAboutUs])
 
-    const image = aboutUs?.image || aboutFallback
+    const image = aboutUs?.image ?? aboutFallback
     const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
     const isHome = location.pathname === '/'
 
@@ -49,7 +81,9 @@ export default function AboutSection() {
                 {aboutUsIsLoaded && (
                     <img src={image} alt="About BuyBusinessClass" loading="lazy" decoding="async" />
                 )}
-                <div className="about-text">{renderBlocks(aboutUs?.body)}</div>
+                <div className="about-text">
+                    <div className="text-from-editor">{renderBlocks(aboutUs?.body)}</div>
+                </div>
                 <div className="black-orange-button">
                     {isHome ? (
                         <button type="button" onClick={scrollToTop}>
