@@ -1,0 +1,452 @@
+@import './mixins.scss';
+
+.content.best-deals-content {
+    @include header-block;
+    width: 100%;
+    height: 100%;
+    min-height: 640px;
+    border-radius: 16px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+
+    > .blocks {
+        position: relative;
+        z-index: 100;
+        display: flex;
+        width: 100%;
+        padding: 134px 88px 78px;
+
+        > * {
+            flex-grow: 1;
+            height: fit-content;
+            justify-content: space-between;
+        }
+
+        > .imported-second-block {
+            margin-top: unset;
+            padding: 24px !important;
+            border-radius: 16px;
+            background: #1a1d1f;
+
+            > .second-block {
+                padding: 0;
+            }
+        }
+
+        > .first-block-best-deals > .v-select {
+            display: none;
+        }
+    }
+
+    > .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: inherit;
+        background-color: rgba(8, 9, 12, 0.72);
+    }
+
+    @media screen and (max-width: 1440px) {
+        > .blocks {
+            padding: 134px 44px 78px;
+        }
+    }
+
+    @media screen and (max-width: 1200px) {
+        background-size: auto 100%;
+
+        > .blocks {
+            flex-direction: column;
+            transform: unset;
+
+            > .first-block-best-deals {
+                width: 100%;
+
+                > .description {
+                    display: flex;
+                    align-items: flex-end;
+                    gap: 8px;
+                    margin-bottom: 24px;
+
+                    > .orange-filled-button {
+                        width: fit-content;
+
+                        a {
+                            white-space: nowrap;
+                        }
+                    }
+
+                    > p {
+                        margin-bottom: 0;
+
+                        > br {
+                            display: none;
+                        }
+                    }
+                }
+            }
+
+            > .imported-second-block {
+                width: 100%;
+            }
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        > .blocks {
+            padding-right: 8px !important;
+            padding-bottom: 8px !important;
+            padding-left: 8px !important;
+
+            > .first-block-best-deals {
+                > .region {
+                    display: none;
+                }
+
+                > .v-select {
+                    display: block;
+                    width: fit-content;
+                }
+
+                > .description {
+                    display: block;
+
+                    > p {
+                        margin-bottom: 8px;
+                        font-size: 32px;
+                        line-height: 40px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.first-block-best-deals {
+    background: none;
+
+    > .region {
+        width: fit-content;
+        margin-bottom: 16px;
+
+        > .v-select {
+            display: none;
+        }
+    }
+
+    > .description {
+        > p {
+            margin-bottom: 32px;
+            color: #c2c7cc;
+            text-align: left;
+            font-family: 'SSP-regular', sans-serif;
+            font-size: 56px;
+            line-height: 64px;
+
+            > span {
+                color: #fff;
+                font-family: 'SSP-bold', sans-serif;
+                text-transform: capitalize;
+            }
+        }
+
+        > .orange-filled-button {
+            width: fit-content;
+        }
+    }
+}
+
+.all-deals-page {
+    min-height: 100vh;
+    padding-top: 32px;
+
+    @include deals;
+
+    .img-block {
+        aspect-ratio: 3 / 2;
+    }
+
+    .cards-container {
+        margin-bottom: 0 !important;
+    }
+}
+
+.required-page {
+    > .blocks {
+        margin: 0 296px 80px;
+        padding: 40px 88px 80px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #1a1d1f 0%, rgba(26, 29, 31, 0) 100%);
+
+        > .title {
+            margin-bottom: 48px;
+            color: #8e969e;
+            font-family: 'SSP-bold', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        > .block {
+            margin-bottom: 24px;
+
+            &.header {
+                margin-top: 48px;
+                color: #b4853b;
+                font-family: 'SSP-bold', sans-serif;
+            }
+
+            &.text {
+                color: #c2c7cc;
+                font-family: 'Inter', sans-serif;
+                font-size: 14px;
+                font-weight: 300;
+                letter-spacing: -0.15px;
+
+                a {
+                    text-decoration: underline;
+                }
+
+                b {
+                    font-weight: 800;
+                }
+            }
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    @media screen and (max-width: 1440px) {
+        > .blocks {
+            margin: 0 74px 80px;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        > .blocks {
+            margin: 0 8px 80px;
+            padding: 40px 16px 80px;
+        }
+    }
+}
+
+.promo-page {
+    .container-airline {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        min-height: 100vh;
+        overflow: hidden;
+        border-radius: 16px;
+        background-image: url('@/assets/images/static/europe.jpg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .content-wrapper {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 20px;
+        width: 100%;
+        max-width: 100%;
+        padding: 96px 20px 60px;
+    }
+
+    .airline-details {
+        display: flex;
+        justify-content: flex-end;
+        width: 50%;
+    }
+
+    .second-block {
+        width: 35%;
+        height: 30%;
+    }
+
+    .promo-container {
+        max-width: 800px;
+        padding: 62px;
+        border-radius: 12px;
+        background-color: #f9f6f3;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .promo-title {
+        margin-bottom: 12px;
+        color: #001b47;
+        font-size: 34px;
+        font-weight: 700;
+        line-height: 1.4;
+
+        span {
+            display: inline;
+            font-weight: 600;
+        }
+    }
+
+    .promo-description {
+        margin-bottom: 20px;
+        color: #444;
+        font-size: 15px;
+    }
+
+    .promo-price-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .promo-price .from-text {
+        color: #b4853b;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    .price-amount {
+        color: #001b47;
+        font-size: 36px;
+        font-weight: 700;
+        line-height: 1;
+    }
+
+    .asterisk {
+        vertical-align: super;
+        font-size: 18px;
+    }
+
+    .price-note {
+        margin-top: 4px;
+        color: #444;
+        font-size: 14px;
+    }
+
+    @media (max-width: 1024px) {
+        .second-block {
+            width: 45%;
+            height: auto;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .container-airline {
+            flex-direction: column;
+            gap: 10px;
+            height: auto;
+            padding: 20px;
+        }
+
+        .content-wrapper {
+            flex-direction: column;
+            gap: 10px;
+            padding-top: 30%;
+        }
+
+        .airline-details,
+        .second-block {
+            width: 80%;
+            height: auto;
+            margin: 0 auto;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .container-airline {
+            padding: 30px;
+            background-size: cover;
+        }
+
+        .content-wrapper {
+            padding: 30% 0 0;
+        }
+
+        .airline-details,
+        .second-block {
+            width: 100%;
+        }
+
+        .promo-container {
+            padding: 32px;
+        }
+    }
+}
+
+.seasonal-sale-page {
+    .regions-friday {
+        padding-top: 7%;
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+    }
+
+    .container-friday {
+        display: flex;
+        flex-direction: row;
+        min-height: 100vh;
+        padding-top: 5%;
+    }
+
+    .left-image-friday,
+    .right-component {
+        flex: 1;
+    }
+
+    .left-image-friday img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .right-component {
+        padding: 20px;
+    }
+
+    .review-friday {
+        margin-top: -10%;
+    }
+
+    &--xmas {
+        .right-component {
+            max-width: 35%;
+            margin-top: 7%;
+            padding: 0;
+        }
+
+        .review-friday {
+            margin-top: -2%;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .container-friday {
+            flex-direction: column;
+            height: auto;
+            padding-top: 5%;
+        }
+
+        .left-image-friday {
+            height: 50vh;
+            margin-left: 5%;
+        }
+
+        .right-component {
+            padding: 10px;
+        }
+
+        &--xmas .right-component {
+            max-width: 100%;
+            padding: 10px;
+        }
+
+        .review-friday {
+            padding-top: 30%;
+        }
+    }
+}

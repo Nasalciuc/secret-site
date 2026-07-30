@@ -1,0 +1,117 @@
+// Burger Menu styles
+.fade-in {
+    --index: 0;
+    transition-property: opacity;
+
+    .show & {
+        opacity: 1;
+        transition-duration: 300ms;
+        transition-timing-function: linear;
+        transition-delay: calc(75ms * var(--index) + 350ms);
+    }
+
+    .hide & {
+        opacity: 0;
+        transition-duration: 150ms;
+        transition-timing-function: linear;
+    }
+}
+
+.burgher-menu {
+    background: #1a1d1f;
+    height: 100vh;
+    height: 100dvh;
+    width: 100vw;
+    position: fixed;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    &.transition {
+        transition: 0.4s ease-in-out;
+    }
+    &.hide {
+        height: 0px;
+    }
+    &.show {
+        height: 100vh;
+        height: 100dvh;
+    }
+    > .burgher-header {
+        display: flex;
+        padding: 16px 32px;
+        border-bottom: 1px solid #000;
+        justify-content: space-between;
+        > button {
+            background: none;
+        }
+    }
+    > .content {
+        padding: 24px 16px 48px 16px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: calc(100% - 72px);
+        > .links {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            flex-grow: 1;
+            > a {
+                position: relative;
+                text-decoration: none;
+                text-align: center;
+                padding: 12px;
+                color: #6f767e;
+                display: block;
+                background: #272b30;
+                margin-inline: -16px;
+                font: {
+                    family: 'Inter', sans-serif;
+                    weight: 600;
+                    size: 24px;
+                }
+
+                &::after {
+                    position: absolute;
+                    content: '';
+                    width: calc(100% + 24px);
+                    height: 4px;
+                    background-color: #b4853b;
+                    border-radius: 4px;
+                    bottom: -14px;
+                    left: -12px;
+                }
+
+                &.router-link-exact-active {
+                    color: #fcfcfc;
+                }
+            }
+        }
+        > .footer {
+            text-align: center;
+            > p {
+                color: #fff;
+                margin-bottom: 10px;
+                font: {
+                    family: 'Inter', sans-serif;
+                    weight: 600;
+                    size: 13px;
+                }
+            }
+            > .tel {
+                display: block;
+                width: 100%;
+                padding: 16px 0;
+                background: #f4f4f4;
+                color: #111315;
+                border-radius: 48px;
+                font: {
+                    family: 'Inter', sans-serif;
+                    weight: 600;
+                    size: 12px;
+                }
+            }
+        }
+    }
+}

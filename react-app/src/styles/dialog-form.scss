@@ -1,0 +1,132 @@
+.form-header {
+    color: #dadde0;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+}
+
+.call-block {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Inter', sans-serif;
+    align-items: center;
+    gap: 32px;
+
+    a {
+        width: 80%;
+        text-align: center;
+        font-size: 24px;
+        border-radius: 8px;
+        font-weight: 700;
+        padding-block: 10px;
+        color: #b4853b;
+        background-color: #1a1d1f;
+        box-shadow: 0 0 10px #dbdde0;
+    }
+}
+
+.call-block__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100px;
+    width: 100%;
+    color: #dadde0;
+    font-weight: 700;
+    font-size: 14px;
+
+    .content {
+        display: grid;
+        gap: 16px;
+    }
+
+    .title {
+        font-size: 16px;
+    }
+
+    img {
+        display: block;
+        height: 80%;
+        object-fit: contain;
+    }
+}
+
+.separator {
+    position: relative;
+    color: #dadde0;
+    text-align: center;
+    margin-inline: -2rem;
+
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        width: 40%;
+        height: 2px;
+        background-color: #dadde0;
+        transform: translateY(-50%);
+    }
+
+    &::before {
+        left: 0;
+    }
+
+    &::after {
+        right: 0;
+    }
+}
+
+.trigger {
+    align-self: flex-start;
+    padding: 6px 16px;
+    white-space: nowrap;
+    background-color: #b4853b;
+    border-radius: 0.5rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+        height: 20px;
+        width: auto;
+    }
+
+    @media screen and (min-width: 768px) {
+        display: none;
+    }
+}
+
+.dialog-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 599;
+    background: rgba(0, 0, 0, 0.55);
+}
+
+.dialog-content {
+    position: fixed;
+    z-index: 600;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2rem;
+    background-color: #111315;
+    overflow-y: auto;
+}
+
+.close {
+    align-self: flex-end;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+    svg {
+        fill: #dadde0;
+    }
+}

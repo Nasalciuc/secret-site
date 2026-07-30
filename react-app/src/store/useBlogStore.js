@@ -1,0 +1,35 @@
+import { create } from 'zustand'
+import axios from 'axios'
+
+const BACK = import.meta.env.VITE_BACK
+
+export const useBlogStore = create((set) => ({
+    blogs: [],
+    blogsIsLoaded: false,
+    blog: null,
+
+    setBlogs: (blogs) => set({ blogs, blogsIsLoaded: true }),
+    setBlog: (blog) => set({ blog }),
+
+    getBlogs: async () => {
+        try {
+            const result = await axios.get(`${BACK}/api/blogs/getAll`)
+            if (result.data.responseCode.responseCode === '1') {
+                set({ blogs: result.data.data, blogsIsLoaded: true })
+            }
+        } catch (error) {
+            console.error('Failed to load blogs:', error)
+        }
+    },
+
+    getBlogById: async (id) => {
+        try {
+            const result = await axios.get(`${BACK}/api/blogs/getOne?id=${id}`)
+            if (result.data.responseCode.responseCode === '1') {
+                set({ blog: result.data.data })
+            }
+        } catch (error) {
+            console.error('Failed to load blog:', error)
+        }
+    },
+}))

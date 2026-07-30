@@ -1,0 +1,80 @@
+.orange-filled-button {
+    width: 100%;
+
+    > button,
+    a {
+        width: 100%;
+        padding: 12px 24px;
+        background: #b4853b;
+        border-radius: 8px;
+        font-family: 'Poppins', sans-serif;
+        transition: background 0.3s ease;
+        color: #111315;
+        font-weight: 600;
+        font-size: 15px;
+
+        &:hover {
+            background: #d5a474;
+        }
+    }
+}
+
+.transparent-button.button-container {
+    text-align: center;
+
+    > button,
+    a {
+        text-align: center;
+        border: 2px solid #b4853b;
+        padding: 6px 48px;
+        background: none;
+        color: #b4853b;
+        border-radius: 8px;
+        transition: 0.4s ease-in;
+        font-weight: 600;
+        font-family: 'Poppins', sans-serif;
+        font-size: 15px;
+
+        &:hover {
+            color: #111315;
+            background: #b4853b;
+        }
+    }
+}
+
+// react-day-picker dark theme (match Vue v-calendar mixins)
+.calendar,
+.single-calendar {
+    @include calendar;
+
+    .rdp-root {
+        --rdp-accent-color: #b4853b;
+        --rdp-accent-background-color: rgba(180, 133, 59, 0.25);
+        --rdp-range_middle-background-color: rgba(180, 133, 59, 0.15);
+        color: #efefef;
+    }
+
+    .rdp-month_caption,
+    .rdp-weekday,
+    .rdp-day_button {
+        color: #efefef;
+    }
+
+    .rdp-day_button:hover {
+        background: #272b30;
+    }
+
+    .rdp-selected .rdp-day_button,
+    .rdp-range_start .rdp-day_button,
+    .rdp-range_end .rdp-day_button {
+        background: #b4853b;
+        color: #111315;
+    }
+
+    .rdp-button_previous,
+    .rdp-button_next {
+        border-radius: 50%;
+        background: #272b30;
+        color: #efefef;
+    }
+}

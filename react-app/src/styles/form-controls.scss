@@ -1,0 +1,236 @@
+.choose-cabin-type {
+    position: relative;
+    border-radius: 16px;
+    min-width: 250px;
+    background: #111315;
+    border: 1px solid #6f767e;
+    z-index: 300;
+
+    > .cabin-buttons {
+        margin-top: 8px;
+        border: 1px solid #1a1d1f;
+        width: fit-content;
+        border-radius: 12px;
+        display: flex;
+        gap: 8px;
+
+        > button {
+            color: #a5aaaf;
+            border-radius: 12px;
+            padding: 8px;
+            transition: background-color 0.2s ease-in;
+            background: none;
+            font-size: 15px;
+            font-weight: 600;
+
+            &.active {
+                color: #b4853b;
+                background: #272b30;
+            }
+        }
+    }
+
+    label {
+        color: #6f767e;
+        font-weight: 700;
+        font-size: 12px;
+    }
+
+    * {
+        font-family: 'Inter', sans-serif;
+    }
+}
+
+.choose-ammount-travelers {
+    transition: 0.4s ease-in;
+    border-radius: 16px;
+    min-width: 250px;
+    background: #111315;
+    border: 1px solid #6f767e;
+    z-index: 300;
+
+    > .travelers-buttons {
+        margin-top: 8px;
+        display: flex;
+        align-items: center;
+
+        > .adults {
+            color: #efefef;
+            font-weight: 600;
+        }
+
+        > .right-block {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            > button {
+                background: #272b30;
+                border-radius: 50%;
+                width: 32px;
+                height: 32px;
+                font-size: 24px;
+                padding-bottom: 12px;
+
+                &.minus {
+                    color: #6f767e;
+                }
+
+                &.plus {
+                    color: #b4853b;
+                }
+            }
+
+            > .ammount {
+                color: #efefef;
+                font-weight: 600;
+            }
+        }
+
+        > * {
+            flex-grow: 1;
+            width: 0;
+        }
+    }
+
+    label {
+        color: #6f767e;
+        font-weight: 700;
+        font-size: 12px;
+    }
+
+    * {
+        font-family: 'Inter', sans-serif;
+    }
+}
+
+.choose-properties {
+    position: relative;
+    width: 100%;
+    border: none;
+    padding: 0 !important;
+    margin-bottom: 10px;
+    align-items: center;
+    z-index: 100;
+    gap: 8px;
+
+    > div:not(.adaptive-select-options-buttons) {
+        position: absolute;
+        padding: 24px;
+        top: 100%;
+        width: calc(50% - 4px);
+    }
+
+    > .hide {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    > .show {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    > .adaptive-select-options-buttons {
+        width: 0;
+        flex-grow: 1;
+        height: 56px;
+        border: 1px solid #33383f;
+        border-radius: 8px;
+
+        > button {
+            width: 100%;
+            height: 100%;
+            text-align: left;
+            background: none;
+            color: #efefef;
+
+            > svg {
+                margin-left: 18px;
+                margin-bottom: -7px;
+            }
+
+            > span {
+                margin-left: 12px;
+            }
+        }
+    }
+
+    > .choose-ammount-travelers {
+        right: 0;
+    }
+
+    @media screen and (max-width: 768px) {
+        > .adaptive-select-options-buttons {
+            > button {
+                > svg {
+                    display: none;
+                }
+
+                > span {
+                    margin: 0;
+                    padding: 16px;
+                    width: 100%;
+                    display: block;
+                    text-align: center;
+                }
+            }
+        }
+    }
+}
+
+.select-options-adaptive {
+    position: relative;
+    width: 100%;
+    margin-bottom: 10px;
+
+    > .adaptive-select-options-buttons {
+        display: flex;
+        gap: 8px;
+
+        > button {
+            flex: 1;
+            height: 56px;
+            border: 1px solid #33383f;
+            border-radius: 8px;
+            background: none;
+            color: #efefef;
+        }
+    }
+
+    > .form {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        z-index: 300;
+        background: #111315;
+        border: 1px solid #6f767e;
+        border-radius: 16px;
+        padding: 16px;
+        display: flex;
+        gap: 16px;
+
+        &.collapse {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        &.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        > .choose-cabin-type,
+        > .choose-ammount-travelers {
+            background: none;
+            box-shadow: unset;
+            border: none;
+            min-width: 0;
+            flex: 1;
+        }
+    }
+}

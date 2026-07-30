@@ -1,0 +1,61 @@
+import { useEffect, useMemo } from 'react'
+import { useParams } from 'react-router-dom'
+import { useAppStore } from '@/store/useAppStore'
+import HeaderContainer from '@/components/DynamicPage/HeaderContainer'
+import DescriptionVue from '@/components/DynamicPage/DescriptionVue'
+import WorksContainer from '@/components/MainPage/WorksContainer'
+import BestSelling from '@/components/MainPage/BestSelling'
+import ReviewsSection from '@/components/MainPage/ReviewsSection'
+import ContactSection from '@/components/MainPage/ContactSection'
+import AirlinesLogos from '@/components/Footer/AirlinesLogos'
+import Error404 from '@/pages/404Error'
+import dynamicPagesData from '@/dynamicPages.json'
+
+export default function DynamicPage() {
+    const { suffix } = useParams()
+    const { stopQuoteLoading } = useAppStore()
+    const pageSlug = `business-class-${suffix}`
+    const page = useMemo(() => dynamicPagesData[pageSlug] || null, [pageSlug])
+
+    useEffect(() => {
+        stopQuoteLoading?.()
+    }, [stopQuoteLoading])
+
+    useEffect(() => {
+        if (!page) return
+
+        document.title = page.meta?.title || document.title
+
+        let metaDesc = document.querySelector('meta[name="description"]')
+        if (!metaDesc) {
+            metaDesc = document.createElement('meta')
+            metaDesc.setAttribute('name', 'description')
+            document.head.appendChild(metaDesc)
+        }
+        metaDesc.setAttribute('content', page.meta?.description || '')
+
+        let metaKeywords = document.querySelector('meta[name="keywords"]')
+        if (!metaKeywords) {
+            metaKeywords = document.createElement('meta')
+            metaKeywords.setAttribute('name', 'keywords')
+            document.head.appendChild(metaKeywords)
+        }
+        metaKeywords.setAttribute('content', (page.meta?.keywords || []).join(', '))
+    }, [page])
+
+    if (!page) return <Error404 />
+
+    return (
+        <div className="main-page">
+            <div className="header-content">
+                <HeaderContainer title={page.mainTitle} />
+            </div>
+            <AirlinesLogos />
+            <WorksContainer />
+            <BestSelling />
+            <ReviewsSection />
+            <DescriptionVue title={page.about?.title} text={page.about?.body} />
+            <ContactSection />
+        </div>
+    )
+}

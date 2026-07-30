@@ -1,0 +1,129 @@
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
+import useEmblaCarousel from 'embla-carousel-react'
+import { useAppStore } from '@/store/useAppStore'
+import { useRegionStore } from '@/store/useRegionStore'
+import OfferCard from './OfferCard'
+
+export default function BestSelling() {
+    const { appWidth } = useAppStore()
+    const { bestSelling, getBestSelling } = useRegionStore()
+    const [columns, setColumns] = useState(3)
+    const [rows, setRows] = useState(2)
+    const [selectedIndex, setSelectedIndex] = useState(0)
+    const [scrollSnaps, setScrollSnaps] = useState([])
+    const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, align: 'start' })
+
+    useEffect(() => {
+        getBestSelling()
+    }, [getBestSelling])
+
+    useEffect(() => {
+        if (appWidth <= 768) {
+            setColumns(1)
+            setRows(1)
+        } else if (appWidth <= 1200) {
+            setColumns(2)
+            setRows(2)
+        } else {
+            setColumns(3)
+            setRows(2)
+        }
+    }, [appWidth])
+
+    const chunkSize = columns * rows
+    const slides = useMemo(() => {
+        const totalItems = Math.ceil(bestSelling.length / chunkSize)
+        return Array.from({ length: totalItems }, (_, index) =>
+            bestSelling.slice(index * chunkSize, (index + 1) * chunkSize),
+        )
+    }, [bestSelling, chunkSize])
+
+    const returnImgUrl = (url) => {
+        if (!url) return ''
+        if (/^(https?:)?\/\//.test(url) || url.startsWith('data:')) return url
+        const path = url.startsWith('/') ? url : `/${url}`
+        const storagePath = path.startsWith('/storage/') ? path : `/storage${path}`
+        return `${import.meta.env.VITE_BACK || ''}${storagePath}`
+    }
+
+    const onSelect = useCallback((api) => {
+        if (!api) return
+        setSelectedIndex(api.selectedScrollSnap())
+    }, [])
+
+    useEffect(() => {
+        if (!emblaApi) return
+        setScrollSnaps(emblaApi.scrollSnapList())
+        onSelect(emblaApi)
+        emblaApi.on('select', onSelect)
+        emblaApi.reInit()
+    }, [emblaApi, onSelect, slides.length])
+
+    const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi])
+    const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi])
+    const scrollTo = useCallback((index) => emblaApi?.scrollTo(index), [emblaApi])
+
+    return (
+        <div className="best-selling-container">
+            <div className="title">
+                <h2 className="main-title">
+                    <span className="accent">Discounted</span> Business Class <span className="accent">Flights</span>
+                </h2>
+                <p className="subtitle">Save up to 60%</p>
+            </div>
+            <div className="cards-container">
+                <div className="carousel">
+                    <button className="carousel__prev" type="button" aria-label="Previous" onClick={scrollPrev}>
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M15 19L8 12L15 5" />
+                        </svg>
+                    </button>
+                    <div className="carousel__viewport" ref={emblaRef}>
+                        <div className="carousel__track">
+                            {slides.map((slide, index) => (
+                                <div className="carousel__slide card-container" key={`best-selling-${index}`}>
+                                    <div>
+                                        {slide.map((item) => (
+                                            <OfferCard
+                                                key={item.id}
+                                                title={item.name}
+                                                price={item.minPrice?.price_today ?? item.price_today}
+                                                imgUrl={returnImgUrl(item.image)}
+                                                extraInfo={item.extra_info ?? '60% off on business class flights'}
+                                                to={
+                                                    item.type
+                                                        ? `/flight/${item.type}/${item.name.toLowerCase()}/${item.id}`
+                                                        : undefined
+                                                }
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <button className="carousel__next" type="button" aria-label="Next" onClick={scrollNext}>
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M9 5L16 12L9 19" />
+                        </svg>
+                    </button>
+                    <div className="carousel__pagination">
+                        {scrollSnaps.map((_, index) => (
+                            <button
+                                key={`best-selling-dot-${index}`}
+                                className={`carousel__pagination-button ${selectedIndex === index ? 'carousel__pagination-button--active' : ''}`}
+                                type="button"
+                                aria-label={`Go to slide ${index + 1}`}
+                                onClick={() => scrollTo(index)}
+                            />
+                        ))}
+                    </div>
+                </div>
+            </div>
+            <div className="all-deals-button">
+                <Link to="/all-deals" className="orange-filled-button">See All Deals</Link>
+            </div>
+        </div>
+    )
+}

@@ -23,3 +23,7 @@ pnpm-debug.log*
 *.sln
 *.sw?
 node_modules
+
+react-app/dist
+react-app/.vite-verify
+

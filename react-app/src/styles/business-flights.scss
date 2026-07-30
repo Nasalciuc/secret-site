@@ -1,0 +1,558 @@
+@import '@/styles/mixins.scss';
+
+.business-flights {
+    .business-flight-description {
+        margin-bottom: 5%;
+        padding-top: 10%;
+        background: url('@/assets/images/static/bg-business.png') no-repeat center center;
+        background-size: cover;
+        background-position: center 20%;
+
+        > .title {
+            @include block-title;
+
+            > .main-title {
+                > .capitalize {
+                    display: inline-block;
+                    white-space: nowrap;
+                    text-transform: capitalize;
+
+                    &::before {
+                        content: '\00a0';
+                    }
+                }
+            }
+        }
+
+        > .content {
+            color: #8e969e;
+            padding-top: 50px;
+            margin: 0 25%;
+            line-height: 24px;
+            font: {
+                weight: 400;
+                family: 'Inter', sans-serif;
+            }
+        }
+    }
+
+    .business-order-fly {
+        margin-bottom: 5%;
+
+        .header-form-business {
+            max-width: 600px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .header-form.order-fly {
+            padding: 24px;
+            border-radius: 16px;
+            background: rgba(26, 29, 31, 0.56);
+        }
+    }
+
+    .business-flight-second-description {
+        margin-bottom: 3%;
+        padding-top: 5%;
+
+        > .title {
+            @include block-title;
+
+            > .main-title {
+                > .capitalize {
+                    display: inline-block;
+                    white-space: nowrap;
+                    text-transform: capitalize;
+
+                    &::before {
+                        content: '\00a0';
+                    }
+                }
+            }
+        }
+
+        > .content {
+            color: #8e969e;
+            padding-top: 50px;
+            margin: 0 25%;
+            line-height: 24px;
+            font: {
+                weight: 400;
+                family: 'Inter', sans-serif;
+            }
+        }
+    }
+
+    .airlines-carousel {
+        position: relative;
+        padding-top: 50px;
+    }
+
+    .airlines-carousel .carousel {
+        overflow: hidden;
+        max-width: 1200px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .carousel-track {
+        display: flex;
+    }
+
+    .carousel-slide {
+        flex: 0 0 33.333%;
+        min-width: 0;
+        padding: 0 10px;
+    }
+
+    .carousel-prev,
+    .carousel-next {
+        position: absolute;
+        top: 55%;
+        z-index: 10;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 20px;
+        cursor: pointer;
+        font-size: 1.5em;
+
+        &:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+    }
+
+    .carousel-prev {
+        left: 10%;
+    }
+
+    .carousel-next {
+        right: 10%;
+    }
+
+    .testimonial-card {
+        min-height: 100%;
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+        border: 1px solid white;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        color: white;
+    }
+
+    .testimonial-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: auto;
+        margin-left: auto;
+
+        h3 {
+            font-size: 24px;
+        }
+    }
+
+    .trustpilot-stars {
+        margin-left: 10px;
+    }
+
+    .star {
+        color: gold;
+        font-size: 20px;
+    }
+
+    .testimonial-location {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .location-icon,
+    .calendar-icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 5px;
+    }
+
+    .testimonial-calendar {
+        display: flex;
+        align-items: center;
+        padding-left: 25px;
+    }
+
+    .testimonial-text {
+        padding-top: 25px;
+        padding-bottom: 25px;
+        margin: 30px;
+        color: #8e969e;
+        line-height: 24px;
+        font-family: 'Inter', sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+    }
+
+    .trust-bg {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 50px;
+    }
+
+    .trust-image {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .seo-content {
+        padding: 60px 16px;
+        color: #c2c7cc;
+        font-family: 'Inter', sans-serif;
+        font-size: 15px;
+        line-height: 1.7;
+
+        .seo-inner {
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            margin-bottom: 24px;
+            color: #dadde0;
+            text-align: center;
+            font-family: 'SSP-bold', sans-serif;
+            font-size: 32px;
+        }
+
+        h3 {
+            margin: 32px 0 12px;
+            color: #b4853b;
+            font-family: 'SSP-bold', sans-serif;
+            font-size: 22px;
+        }
+
+        p {
+            margin: 0 0 16px;
+        }
+
+        strong {
+            color: #dadde0;
+            font-weight: 600;
+        }
+
+        .seo-list {
+            margin: 0 0 16px;
+            padding-left: 22px;
+            list-style: disc;
+
+            li {
+                margin-bottom: 8px;
+            }
+        }
+    }
+
+    @media screen and (max-width: 992px) {
+        .carousel-slide {
+            flex-basis: 50%;
+            padding: 0 5px;
+        }
+
+        .airlines-carousel .carousel {
+            max-width: 100%;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .business-flight-description {
+            padding-top: 30%;
+
+            > .title > .main-title {
+                font: {
+                    weight: 400;
+                    family: 'Inter', sans-serif;
+                    size: 16px !important;
+                }
+            }
+
+            > .content {
+                margin: 0 16px;
+                font-size: 14px;
+            }
+        }
+
+        .business-order-fly {
+            margin: 0 8px 48px;
+        }
+
+        .business-flight-second-description {
+            padding-top: 30%;
+
+            > .title > .main-title {
+                font: {
+                    weight: 400;
+                    family: 'Inter', sans-serif;
+                    size: 16px !important;
+                }
+            }
+
+            > .content {
+                margin: 0 16px;
+                font-size: 14px;
+            }
+        }
+
+        .carousel-slide {
+            flex: 0 0 80%;
+            padding: 0 7.5px;
+        }
+
+        .carousel-prev,
+        .carousel-next {
+            display: none;
+        }
+
+        .testimonial-card {
+            padding: 15px;
+            background-color: rgb(0, 0, 0);
+        }
+
+        .testimonial-header h3 {
+            font-size: 18px;
+        }
+
+        .testimonial-text {
+            margin: 0 10px;
+            font-size: 12px;
+        }
+
+        .testimonial-location {
+            font-size: 12px;
+        }
+
+        .seo-content {
+            padding: 40px 16px;
+            font-size: 14px;
+
+            h2 {
+                font-size: 24px;
+            }
+
+            h3 {
+                font-size: 18px;
+            }
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .business-flight-description {
+            > .title > .main-title {
+                font: {
+                    weight: 400;
+                    family: 'Inter', sans-serif;
+                    size: 38px !important;
+                }
+            }
+
+            > .content {
+                font-size: 12px;
+            }
+        }
+
+        .business-flight-second-description {
+            > .title > .main-title {
+                font: {
+                    weight: 400;
+                    family: 'Inter', sans-serif;
+                    size: 38px !important;
+                }
+            }
+
+            > .content {
+                font-size: 12px;
+            }
+        }
+
+        .testimonial-card {
+            padding: 10px;
+        }
+
+        .testimonial-header h3 {
+            font-size: 14px;
+        }
+
+        .star {
+            font-size: 16px;
+        }
+
+        .testimonial-text {
+            margin: 0 5px;
+            font-size: 11px;
+        }
+    }
+}
+
+.student-flights-page {
+    .container-airline {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        min-height: 100vh;
+        overflow: hidden;
+        background-image: url('@/assets/images/static/europe.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        border-radius: 16px;
+    }
+
+    .content-wrapper {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 20px;
+        max-width: 100%;
+        width: 100%;
+        padding: 96px 20px 60px;
+    }
+
+    .airline-details {
+        display: flex;
+        justify-content: flex-end;
+        width: 50%;
+    }
+
+    .second-block {
+        width: 35%;
+        height: 30%;
+    }
+
+    .promo-container {
+        max-width: 800px;
+        padding: 62px;
+        border-radius: 12px;
+        background-color: #f9f6f3;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .promo-title {
+        margin-bottom: 12px;
+        color: #001b47;
+        font-size: 34px;
+        font-weight: 700;
+        line-height: 1.4;
+
+        span {
+            display: inline;
+            font-weight: 600;
+        }
+    }
+
+    .promo-description {
+        margin-bottom: 20px;
+        color: #444;
+        font-size: 15px;
+    }
+
+    .promo-price-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .promo-price .from-text {
+        color: #b4853b;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    .price-amount {
+        color: #001b47;
+        font-size: 36px;
+        font-weight: 700;
+        line-height: 1;
+    }
+
+    .asterisk {
+        vertical-align: super;
+        font-size: 18px;
+    }
+
+    .price-note {
+        margin-top: 4px;
+        color: #444;
+        font-size: 14px;
+    }
+
+    .request-button {
+        padding: 12px 20px;
+        border: none;
+        border-radius: 8px;
+        background-color: #b4853b;
+        color: white;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background 0.3s ease;
+
+        &:hover {
+            background-color: #946c2f;
+        }
+    }
+
+    @media (max-width: 1024px) {
+        .second-block {
+            width: 45%;
+            height: auto;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .container-airline {
+            flex-direction: column;
+            gap: 10px;
+            height: auto;
+            padding: 20px;
+        }
+
+        .content-wrapper {
+            flex-direction: column;
+            gap: 10px;
+            padding-top: 30%;
+        }
+
+        .airline-details,
+        .second-block {
+            width: 80%;
+            height: auto;
+            margin: 0 auto;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .container-airline {
+            flex-direction: column;
+            gap: 10px;
+            height: auto;
+            padding: 30px;
+            background-size: cover;
+        }
+
+        .content-wrapper {
+            padding: 30% 0 0;
+        }
+
+        .airline-details,
+        .second-block {
+            width: 100%;
+            height: auto;
+        }
+
+        .promo-container {
+            padding: 32px;
+        }
+    }
+}

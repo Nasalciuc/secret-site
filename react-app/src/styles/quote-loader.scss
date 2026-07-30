@@ -1,0 +1,124 @@
+.loader-quote {
+    min-height: 100vh;
+    min-width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    background: #111315;
+    z-index: 100;
+    > .content {
+        width: fit-content;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        gap: 60px;
+        > .globe {
+            position: relative;
+            min-width: 208px;
+            height: 208px;
+            border-radius: 50%;
+            background: radial-gradient(43.41% 41.52% at 52.72% 44.98%, #545c68 0%, #33383f 100%);
+            > .map {
+                padding: 50%;
+                background-image: url('@/assets/images/static/map.webp');
+                background-position: left;
+                border-radius: 50%;
+                animation-name: rotate-globus;
+                animation-iteration-count: infinite;
+                animation-timing-function: linear;
+                animation-duration: 4s;
+            }
+            > svg {
+                position: absolute;
+                top: -28%;
+                left: -28%;
+                animation-name: rotate-airplane;
+                animation-iteration-count: infinite;
+                animation-timing-function: linear;
+                animation-duration: 4s;
+            }
+            > .percent {
+                color: #6f767e;
+                text-align: center;
+                margin-top: 88px;
+                font: {
+                    family: 'Inter', sans-serif;
+                    size: 10px;
+                    weight: 700;
+                }
+            }
+        }
+        > .from,
+        > .to {
+            text-transform: uppercase;
+            color: #1a1d1f;
+            width: fit-content;
+            flex-grow: 1;
+            font: {
+                family: 'Inter', sans-serif;
+                weight: 900;
+                size: 232px;
+            }
+            &.from {
+                text-align: right;
+                animation:
+                    appear-text 0.25s linear,
+                    transform-right 0.6s linear;
+            }
+            &.to {
+                text-align: left;
+                animation:
+                    appear-text 0.25s linear,
+                    transform-left 0.6s linear;
+            }
+        }
+    }
+
+    @keyframes rotate-globus {
+        0% {
+            background-position-x: 0%;
+        }
+        100% {
+            background-position-x: 225%;
+        }
+    }
+
+    @keyframes appear-text {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @keyframes transform-right {
+        0% {
+            transform: translateX(-50%);
+        }
+        100% {
+            transform: translateX(0%);
+        }
+    }
+
+    @keyframes transform-left {
+        0% {
+            transform: translateX(50%);
+        }
+        100% {
+            transform: translateX(0%);
+        }
+    }
+
+    @keyframes rotate-airplane {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+}
