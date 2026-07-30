@@ -1,3 +1,32 @@
+/* Matches Vue `InputVue.vue` — dark bordered fields used in flight quote forms */
+.input-container {
+    @include form-mixin;
+
+    position: relative;
+
+    > input:focus:invalid + span::after {
+        content: 'Invalid';
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #fff;
+        font: {
+            family: 'Inter', sans-serif;
+            size: 13px;
+        }
+    }
+}
+
+/* Matches Vue `TextArea.vue` */
+.textarea-container {
+    @include form-mixin;
+
+    > textarea {
+        resize: none;
+    }
+}
+
 .choose-cabin-type {
     position: relative;
     border-radius: 16px;

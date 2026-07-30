@@ -22,11 +22,17 @@ export default function MainPage() {
     }, [getAboutUs])
 
     useEffect(() => {
-        // Set canonical URL
-        const canonicalLink = document.createElement('link')
-        canonicalLink.rel = 'canonical'
+        // Reuse existing canonical if MetaUpdater (or another page) already created one.
+        // Never hard-removeChild a node that may already have been detached — that crashes React.
+        let canonicalLink = document.querySelector('link[rel="canonical"]')
+        let createdCanonical = false
+        if (!canonicalLink) {
+            canonicalLink = document.createElement('link')
+            canonicalLink.rel = 'canonical'
+            document.head.appendChild(canonicalLink)
+            createdCanonical = true
+        }
         canonicalLink.href = 'https://buybusinessclass.com/'
-        document.head.appendChild(canonicalLink)
 
         // Set JSON-LD schema
         const schema = {
@@ -40,16 +46,18 @@ export default function MainPage() {
                 'query-input': ['required name=fly_from', 'required name=fly_to'],
             },
         }
-        const script = document.createElement('script')
-        script.type = 'application/ld+json'
-        script.id = 'homepage-schema'
+        let script = document.getElementById('homepage-schema')
+        if (!script) {
+            script = document.createElement('script')
+            script.type = 'application/ld+json'
+            script.id = 'homepage-schema'
+            document.head.appendChild(script)
+        }
         script.text = JSON.stringify(schema)
-        document.head.appendChild(script)
 
         return () => {
-            document.head.removeChild(canonicalLink)
-            const existing = document.getElementById('homepage-schema')
-            if (existing) existing.remove()
+            if (createdCanonical) canonicalLink?.remove()
+            document.getElementById('homepage-schema')?.remove()
         }
     }, [])
 

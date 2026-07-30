@@ -37,6 +37,17 @@ export default function HeaderContainer({ destination = [], onAbout, onCards }) 
     useEffect(() => {
         let cancelled = false
 
+        // Clear previous destination so prices don't flash from the prior page.
+        setRoot('')
+        setRootCountry('')
+        setRootCity('')
+        setCountries([])
+        setCities([])
+        setPrice(null)
+        setImage('')
+        onAbout?.(null)
+        onCards?.([])
+
         const loadDeal = async () => {
             const [result, error] = await getBestDeal(params.id)
             if (cancelled || error !== null || !result) return

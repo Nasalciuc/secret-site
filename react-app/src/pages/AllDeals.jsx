@@ -6,12 +6,13 @@ import OfferCard from '@/components/MainPage/OfferCard'
 import WorksContainer from '@/components/MainPage/WorksContainer'
 import ContactSection from '@/components/MainPage/ContactSection'
 
-const BACK = import.meta.env.VITE_BACK || ''
-
-const storageUrl = (path) => {
-    if (!path) return ''
-    if (/^(https?:)?\/\//.test(path) || path.startsWith('data:')) return path
-    return `${BACK}/storage/${path.replace(/^\/?storage\//, '')}`
+// Match Vue helpers/functions.js returnImgUrl + BestSelling
+const returnImgUrl = (url) => {
+    if (!url) return ''
+    if (/^(https?:)?\/\//.test(url) || url.startsWith('data:')) return url
+    const path = url.startsWith('/') ? url : `/${url}`
+    const storagePath = path.startsWith('/storage/') ? path : `/storage${path}`
+    return `${import.meta.env.VITE_BACK || ''}${storagePath}`
 }
 
 export default function AllDeals() {
@@ -51,7 +52,7 @@ export default function AllDeals() {
             setRegionsArr(
                 (Array.isArray(result) ? result : []).map((item) => ({
                     ...item,
-                    image: storageUrl(item.image),
+                    image: returnImgUrl(item.image),
                 })),
             )
         }

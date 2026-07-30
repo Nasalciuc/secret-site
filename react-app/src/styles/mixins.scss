@@ -531,9 +531,22 @@
             justify-content: space-evenly;
             flex-wrap: wrap;
             margin-bottom: 80px;
-            > .offer-content > .img-block {
-                aspect-ratio: 3/2;
-                width: 100%;
+            > .offer-content {
+                position: relative;
+                > .img-block {
+                    aspect-ratio: 3/2;
+                    width: 100%;
+                }
+                > a {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    z-index: 1;
+                    opacity: 0;
+                    cursor: pointer;
+                }
             }
         }
 

@@ -1,10 +1,18 @@
+import { XyzTransitionGroup } from '@animxyz/react'
 import { Link, useParams } from 'react-router-dom'
 
 const formatPrice = (price) => (price ? `$${price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}*` : 'No price is set')
 
+const flightPath = (type, name, id) => {
+    if (!type || name == null || id == null) return undefined
+    // Keep spaces raw — React Router encodes the pathname (avoid %2520 double-encoding).
+    return `/flight/${type}/${String(name).toLowerCase()}/${id}`
+}
+
 export default function FirstBlock({ destination, price, departure = [] }) {
     const params = useParams()
     const isCity = Boolean(params.city)
+    const nestedType = params.region ? 'country' : 'city'
 
     const renderContent = (item) => (
         <>
@@ -23,7 +31,11 @@ export default function FirstBlock({ destination, price, departure = [] }) {
                 </div>
                 <div className="second-row">
                     <h2 className="destination">{destination}</h2>
-                    {price !== null && price !== undefined && <p className="xyz-in">${price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>}
+                    {price !== null && price !== undefined && (
+                        <p className="xyz-in" xyz="fade">
+                            ${price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                        </p>
+                    )}
                 </div>
                 <p style={{ color: '#c2c7cc', fontSize: 12, fontFamily: "'Inter', sans-serif" }}>
                     Up to 60-70% discount on business class
@@ -35,23 +47,30 @@ export default function FirstBlock({ destination, price, departure = [] }) {
                     <div className="flex-grow-1">Old Price</div>
                     <div className="flex-grow-1">Price Today</div>
                 </div>
+                {/* Match Vue xyz-transition-group: per-row --xyz-index + appear-stagger */}
                 {departure.length > 0 && (
-                    <div className="content">
+                    <XyzTransitionGroup
+                        key={params.id ?? 'departure-list'}
+                        className="content"
+                        xyz="fade small appear-stagger"
+                        appearVisible
+                    >
                         {departure.slice(0, 10).map((item) => {
-                            const type = params.region ? 'country' : 'city'
-                            const to = `/flight/${type}/${item.name.toLowerCase()}/${item.id}`
+                            const to = flightPath(nestedType, item.name, item.id)
 
                             return (
-                                <div key={item.id} className="list">
-                                    {isCity ? (
+                                <div key={item.id ?? item.name} className="list">
+                                    {isCity || !to ? (
                                         <div className="container">{renderContent(item)}</div>
                                     ) : (
-                                        <Link to={to} className="container">{renderContent(item)}</Link>
+                                        <Link to={to} className="container">
+                                            {renderContent(item)}
+                                        </Link>
                                     )}
                                 </div>
                             )
                         })}
-                    </div>
+                    </XyzTransitionGroup>
                 )}
             </div>
         </div>
