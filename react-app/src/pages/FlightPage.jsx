@@ -17,6 +17,11 @@ export default function FlightPage() {
     const handleCards = useCallback((value) => setDestination(value), [])
 
     useEffect(() => {
+        setText(null)
+        setDestination([])
+    }, [params.id])
+
+    useEffect(() => {
         let canonicalUrl = null
 
         if (params.region) {

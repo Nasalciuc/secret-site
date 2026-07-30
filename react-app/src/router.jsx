@@ -99,7 +99,7 @@ const routes = [
     })),
     { path: '/facebook-leads', element: SendFacebookPage, layout: MarginLayout },
     { path: '/sitemap', element: SitemapPage, layout: HeaderLayout },
-    { path: '/all-deals', element: AllDeals, layout: HeaderLayout, meta: { canonical: true, description: 'Discover luxury business class travel at BuyBusinessClass. Personalized service, spacious seating, and unbeatable fares to all destinations worldwide. Book now!' } },
+    { path: '/all-deals', element: AllDeals, layout: HeaderLayout, meta: { canonical: true, title: 'All-Deals | BuyBusinessClass', description: 'Discover luxury business class travel at BuyBusinessClass. Personalized service, spacious seating, and unbeatable fares to all destinations worldwide. Book now!' } },
     { path: '/terms', element: TermsPrivacyPage, layout: HeaderLayout, meta: { description: 'Discover luxury business class travel at BuyBusinessClass. Personalized service, spacious seating, and unbeatable fares to all destinations worldwide. Book now!' } },
     { path: '/terms-and-conditions', element: TermsPrivacyPage, layout: HeaderLayout, meta: { description: 'Discover luxury business class travel at BuyBusinessClass. Personalized service, spacious seating, and unbeatable fares to all destinations worldwide. Book now!' } },
     { path: '/privacy', element: TermsPrivacyPage, layout: HeaderLayout, meta: { description: 'Discover luxury business class travel at BuyBusinessClass. Personalized service, spacious seating, and unbeatable fares to all destinations worldwide. Book now!' } },
@@ -118,25 +118,24 @@ function MetaUpdater() {
         let description = defaultDescription
         let canonical = false
 
-        // Handle dynamic flight meta
+        // Handle dynamic flight meta (region / country / city)
         const pathParts = location.pathname.split('/').filter(Boolean)
-        if (pathParts[0] === 'flight' && pathParts.length === 4) {
+        if (pathParts[0] === 'flight' && pathParts.length === 4 && ['region', 'country', 'city'].includes(pathParts[1])) {
             const type = pathParts[1]
             const slug = pathParts[2]
             const id = pathParts[3]
             const key = `${slug}-${id}`
+            // All flight detail routes use a canonical URL (matches router meta.canonical).
+            canonical = true
             if (type === 'city' && staticCityMeta[key]) {
                 title = staticCityMeta[key].title
                 description = staticCityMeta[key].description
-                canonical = true
             } else if (type === 'country' && staticCountryMeta[key]) {
                 title = staticCountryMeta[key].title
                 description = staticCountryMeta[key].description
-                canonical = true
             } else if (type === 'region' && staticRegionMeta[key]) {
                 title = staticRegionMeta[key].title
                 description = staticRegionMeta[key].description
-                canonical = true
             }
         } else {
             const route = routes.find((r) => {

@@ -10,7 +10,10 @@ const returnImgUrl = (url) => {
     return `${import.meta.env.VITE_BACK || ''}${storagePath}`
 }
 
-const cardRoute = (item) => (item.type ? `/flight/${item.type}/${item.name.toLowerCase()}/${item.id}` : undefined)
+const cardRoute = (item) => {
+    if (!item?.type || item?.name == null) return undefined
+    return `/flight/${item.type}/${String(item.name).toLowerCase()}/${item.id}`
+}
 
 export default function FlightCards({ arr = false }) {
     const { bestSelling, bestSellingIsLoaded, getBestSelling } = useRegionStore()
