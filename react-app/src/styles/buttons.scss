@@ -19,7 +19,9 @@
     }
 }
 
-.transparent-button.button-container {
+// Doubled class keeps the border from being reset by `.header-form.order-fly button`,
+// which has equal specificity and is loaded later. Vue relied on scoped styles here.
+.transparent-button.button-container.button-container {
     text-align: center;
 
     > button,

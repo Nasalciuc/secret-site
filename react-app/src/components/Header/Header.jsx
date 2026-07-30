@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAppStore } from '@/store/useAppStore'
 import { useRegionStore } from '@/store/useRegionStore'
 import SvgContainer from './SvgContainer'
@@ -82,10 +82,10 @@ export default function Header({ layout = 'margin' }) {
                     <DialogForm />
                 </div>
                 <nav className="header-links">
-                    <Link className="page-link" to="/" title="Home">Home</Link>
-                    <Link className="page-link" to="/about-us" title="About Us">About Us</Link>
-                    <Link className="page-link" to="/airlines" title="Airlines">Airlines</Link>
-                    <Link className="page-link" to="/business-class-flights" title="Business Class Flights">Business Class Flights</Link>
+                    <NavLink end className="page-link" to="/" title="Home">Home</NavLink>
+                    <NavLink end className="page-link" to="/about-us" title="About Us">About Us</NavLink>
+                    <NavLink end className="page-link" to="/airlines" title="Airlines">Airlines</NavLink>
+                    <NavLink end className="page-link" to="/business-class-flights" title="Business Class Flights">Business Class Flights</NavLink>
                     <a href="https://blog.buybusinessclass.com/" className="page-link" title="Blog">Blog</a>
                 </nav>
                 <SvgContainer />

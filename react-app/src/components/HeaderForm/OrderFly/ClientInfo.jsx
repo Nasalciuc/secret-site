@@ -72,7 +72,7 @@ export default function ClientInfo({ errors, onButtonClick }) {
                     onChange={(e) => setName(e.target.value)}
                 />
                 <div className={`iti-group ${valid === true ? 'valid' : ''} ${valid === false ? 'not-valid' : ''} ${errors?.phone ? 'has-error' : ''}`}>
-                    <input ref={phoneRef} type="tel" placeholder="Phone" autoComplete="tel" />
+                    <input ref={phoneRef} type="tel" autoComplete="tel" />
                 </div>
                 <input
                     name="email"

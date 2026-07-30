@@ -370,17 +370,7 @@
     }
 
     .cards-container {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 32px;
         margin-bottom: 24px;
-
-        .card-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 32px;
-            grid-column: 1 / -1;
-        }
     }
 
     .offer-content {
@@ -1543,6 +1533,17 @@
 
                 > .img-block {
                     width: 280px;
+
+                    > .content-info {
+                        > .title {
+                            margin-top: 94px;
+                        }
+
+                        > .price {
+                            font-size: 24px;
+                            margin-bottom: 8px;
+                        }
+                    }
                 }
             }
         }
@@ -1563,6 +1564,17 @@
 
                 > .offer-content > .img-block {
                     width: 260px !important;
+
+                    > .content-info {
+                        > .title {
+                            margin-top: 94px;
+                        }
+
+                        > .price {
+                            font-size: 24px;
+                            margin-bottom: 8px;
+                        }
+                    }
                 }
             }
         }

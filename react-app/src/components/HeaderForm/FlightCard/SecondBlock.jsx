@@ -406,7 +406,7 @@ export default function SecondBlock({
                         />
                     </svg>
                     <div className={`iti-group ${valid === true ? 'valid' : ''} ${valid === false ? 'not-valid' : ''} ${formErrors.phone ? 'has-error' : ''}`}>
-                        <input ref={phoneRef} type="tel" placeholder="Phone" autoComplete="tel" />
+                        <input ref={phoneRef} type="tel" autoComplete="tel" />
                     </div>
                     <div className={`input-container ${formErrors.email ? 'has-error' : ''}`}>
                         <input name="email" placeholder="Email" value={email} onChange={(event) => setEmail(event.target.value)} />

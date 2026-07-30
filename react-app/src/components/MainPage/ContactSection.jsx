@@ -88,7 +88,7 @@ export default function ContactSection() {
                                     <a className="tel" href={`tel:${settings?.number}`}>{settings?.number}</a>
                                 </div>
                             </div>
-                            <a href="tel:+18883227999" className="transparent-button">Let\u2019s have a chat</a>
+                            <a href="tel:+18883227999" className="transparent-button">Let’s have a chat</a>
                         </div>
                         <div className="d-flex">
                             <div className="instructions">
