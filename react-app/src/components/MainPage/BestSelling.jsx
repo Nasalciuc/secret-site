@@ -83,7 +83,7 @@ export default function BestSelling() {
                         <div className="carousel__track">
                             {slides.map((slide, index) => (
                                 <div className="carousel__slide card-container" key={`best-selling-${index}`}>
-                                    <div>
+                                    <div className="xyz-in" xyz="fade small out-down out-rotate-right appear-stagger">
                                         {slide.map((item) => (
                                             <OfferCard
                                                 key={item.id}

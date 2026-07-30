@@ -4,6 +4,7 @@ import { Routes, Route, useLocation } from 'react-router-dom'
 // Layouts
 import MarginLayout from '@/layouts/MarginLayout'
 import HeaderLayout from '@/layouts/HeaderLayout'
+import dynamicPagesData from '@/dynamicPages.json'
 
 // Critical pages (eager load)
 import MainPage from '@/pages/MainPage'
@@ -88,7 +89,14 @@ const routes = [
     { path: '/black-friday-busines-class-seat-sale', element: BlackFridayPage, layout: MarginLayout, meta: { description: 'Discover luxury business class travel at BuyBusinessClass. Personalized service, spacious seating, and unbeatable fares to all destinations worldwide. Book now!' } },
     { path: '/xmas-new-year-flight-sale', element: XmasPage, layout: MarginLayout, meta: { description: 'Discover luxury business class travel at BuyBusinessClass. Personalized service, spacious seating, and unbeatable fares to all destinations worldwide. Book now!' } },
     { path: '/flight', element: FlightQuotePage, layout: MarginLayout },
-    { path: '/business-class-:suffix', element: DynamicPage, layout: MarginLayout, meta: { canonical: true } },
+    // React Router v6 does not support partial dynamic segments ("/business-class-:suffix"
+    // never matches). Enumerate the known dynamic pages explicitly instead.
+    ...Object.keys(dynamicPagesData).map((slug) => ({
+        path: `/${slug}`,
+        element: DynamicPage,
+        layout: MarginLayout,
+        meta: { canonical: true },
+    })),
     { path: '/facebook-leads', element: SendFacebookPage, layout: MarginLayout },
     { path: '/sitemap', element: SitemapPage, layout: HeaderLayout },
     { path: '/all-deals', element: AllDeals, layout: HeaderLayout, meta: { canonical: true, description: 'Discover luxury business class travel at BuyBusinessClass. Personalized service, spacious seating, and unbeatable fares to all destinations worldwide. Book now!' } },
