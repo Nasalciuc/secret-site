@@ -1,6 +1,7 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import { initHelpers } from '@/utils/helpers'
+import { ensureRecaptcha } from '@/utils/thirdParty'
 
 const API_URL = import.meta.env.VITE_API_URL
 const BACK = import.meta.env.VITE_BACK
@@ -102,7 +103,9 @@ export const searchFlight = async (from, to, trip_type) => {
     }
 }
 
-const withRecaptchaToken = (siteKey, func) => {
+const withRecaptchaToken = async (siteKey, func) => {
+    await ensureRecaptcha()
+
     return new Promise((resolve, reject) => {
         if (!window.grecaptcha) {
             return reject('missing grecaptcha')
