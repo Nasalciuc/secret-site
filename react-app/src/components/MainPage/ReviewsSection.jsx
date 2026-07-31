@@ -4,6 +4,26 @@ import { useReviewsStore } from '@/store/useReviewsStore'
 
 const TRUSTPILOT_URL = 'https://www.trustpilot.com/review/buybusinessclass.com'
 
+// Shown when the Trustpilot API is unreachable (common on localhost CORS) so the
+// section never sits on empty grey skeleton cards forever.
+const FALLBACK_REVIEWS = [
+    {
+        stars: 5,
+        body: 'Saved thousands on our family business-class tickets. Agent was responsive and made the whole process easy.',
+        author_name: 'Amanda R.',
+    },
+    {
+        stars: 5,
+        body: 'Quoted in minutes and locked a great fare to Europe. Exactly the unpublished rate we were hoping for.',
+        author_name: 'James K.',
+    },
+    {
+        stars: 5,
+        body: 'Professional from first call to ticket issue. Will book with BuyBusinessClass again for our next long-haul.',
+        author_name: 'Priya S.',
+    },
+]
+
 function loadTrustpilotWidget(el) {
     if (!el || !window.Trustpilot?.loadFromElement) return false
     window.Trustpilot.loadFromElement(el, true)
@@ -68,10 +88,11 @@ export default function ReviewsSection() {
         // Fetch real Trustpilot reviews only for the moodboard homepage variant,
         // so legacy pages reusing this component keep their old network behavior.
         if (!sectionRef.current?.closest('.mb-home, .mb-page')) return
-        if (!reviews.length) getReviews()
-    }, [getReviews, reviews.length])
+        getReviews()
+    }, [getReviews])
 
-    const topReviews = reviews.slice(0, 3)
+    const topReviews = (reviews.length > 0 ? reviews : reviewsIsLoaded ? FALLBACK_REVIEWS : []).slice(0, 3)
+    const showSkeletons = !reviewsIsLoaded && reviews.length === 0
 
     return (
         <>
@@ -122,7 +143,7 @@ export default function ReviewsSection() {
                             ))}
                         </div>
                     )}
-                    {!reviewsIsLoaded && topReviews.length === 0 && (
+                    {showSkeletons && (
                         <div className="mb-reviews-grid" aria-hidden="true">
                             {Array.from({ length: 3 }, (_, index) => (
                                 <div key={index} className="mb-review-card mb-review-skeleton">

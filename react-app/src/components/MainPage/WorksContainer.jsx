@@ -7,7 +7,7 @@ import BlackWithOrangeTextButton from '@/components/common/Buttons/BlackWithOran
 const mbSteps = [
     { number: '01', title: 'Request a quote', body: 'Request a FREE quote by completing the form above.' },
     { number: '02', title: 'Fill in your information', body: 'Fill in your personal and contact information.' },
-    { number: '03', title: 'Find the best deal', body: 'A friendly travel concierge will quicky find the best deals for you.' },
+    { number: '03', title: 'Find the best deal', body: 'A friendly travel concierge will quickly find the best deals for you.' },
     { number: '04', title: 'Book your flight', body: 'Book your flight and save up to 60% OFF retail prices.', gold: true },
 ]
 
@@ -32,6 +32,10 @@ export default function WorksContainer() {
     }, [appWidth])
 
     useEffect(() => {
+        // Re-attach when the mb/legacy variant flips: the flip swaps the root DOM
+        // node, and an observer bound to the detached node never fires (steps
+        // would stay at opacity 0 on non-homepage .mb-page routes).
+        if (visible) return
         const el = rootRef.current
         if (!el) return
         const observer = new IntersectionObserver(
@@ -45,7 +49,7 @@ export default function WorksContainer() {
         )
         observer.observe(el)
         return () => observer.disconnect()
-    }, [])
+    }, [isMbHome, visible])
 
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -129,7 +133,7 @@ export default function WorksContainer() {
                     </svg>
                     <div className="info">
                         <p className="step-title">Find the best deal</p>
-                        <p className="step-body">A friendly travel concierge will quicky find the best deals for you.</p>
+                        <p className="step-body">A friendly travel concierge will quickly find the best deals for you.</p>
                     </div>
                     <svg width="71" height="103" viewBox="0 0 71 103" fill="none" xmlns="http://www.w3.org/2000/svg" className="number">
                         <path d="M32.3075 102.44C20.2115 102.44 9.2675 98.696 0.9155 91.64L5.3795 84.872C11.8595 87.752 19.6355 89.48 26.2595 89.48C37.7795 89.48 44.9795 82.856 44.9795 72.488C44.9795 60.536 35.9075 54.344 19.7795 54.344L18.6275 46.136C34.4675 44.696 42.3875 38.792 42.3875 28.28C42.3875 20.648 37.2035 15.608 29.2835 15.608C22.9475 15.608 16.1795 18.344 7.8275 24.392L3.0755 18.056C12.1475 7.256 24.5315 0.919992 36.6275 0.919992C55.4915 0.919992 68.1635 11.432 68.1635 26.84C68.1635 36.632 62.1155 44.408 50.7395 49.304C63.4115 54.056 70.8995 62.552 70.8995 73.352C70.8995 90.488 54.9155 102.44 32.3075 102.44Z" fill="#1A1D1F" />

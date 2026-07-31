@@ -19,6 +19,13 @@
 
 .main-page.mb-home {
     background: var(--mb-bg);
+    // Clearance for the sticky Call Us pill at the bottom of the viewport.
+    padding-bottom: 72px;
+}
+
+#root,
+.app {
+    background: var(--mb-bg);
 }
 
 // The whole app now ships the moodboard theme: page frame goes slate too

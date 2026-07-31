@@ -86,8 +86,13 @@
                 position: relative;
                 aspect-ratio: 3 / 2;
                 background: var(--mb-deep);
+                overflow: hidden;
 
                 img {
+                    // Absolute so tall intrinsic images can't stretch the box past
+                    // the 3/2 ratio (kept cards — and embla slides — equal height).
+                    position: absolute;
+                    inset: 0;
                     display: block;
                     width: 100%;
                     height: 100%;
@@ -160,10 +165,19 @@
 
             .carousel__pagination {
                 button {
-                    border-color: var(--mb-border);
+                    border-color: rgba(226, 232, 240, 0.55);
+                    background: rgba(226, 232, 240, 0.18);
 
-                    &.carousel__pagination-button--active::after {
-                        background: var(--mb-gold);
+                    &::after {
+                        background: transparent;
+                    }
+
+                    &.carousel__pagination-button--active {
+                        border-color: var(--mb-gold);
+
+                        &::after {
+                            background: var(--mb-gold);
+                        }
                     }
                 }
             }

@@ -18,10 +18,12 @@
     border-radius: 16px;
     max-width: 900px;
     width: 100%;
-    max-height: 90vh;
+    max-height: min(92vh, 820px);
+    overflow-x: hidden;
     overflow-y: auto;
     position: relative;
     border: 1px solid #33383f;
+    scrollbar-width: thin;
 }
 
 .close-button {
