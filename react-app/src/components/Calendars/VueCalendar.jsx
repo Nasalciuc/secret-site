@@ -1,14 +1,35 @@
+import { useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { DayPicker } from 'react-day-picker'
 import 'react-day-picker/style.css'
-import { useState } from 'react'
+import useCalendarPopper from './useCalendarPopper'
 
 const formatDate = (date) => date.toLocaleDateString('fr-CH')
 
-export default function VueCalendar({ calendarCollapse, minDate, onUpdateValue, defaultDate = true }) {
+export default function VueCalendar({
+    calendarCollapse,
+    minDate,
+    onUpdateValue,
+    onDoCalendarCollapse,
+    defaultDate = true,
+    target = null,
+    dataIndex = null,
+}) {
+    const popRef = useRef(null)
     const [selected, setSelected] = useState(defaultDate ? new Date() : undefined)
 
-    return (
-        <div className={`single-calendar ${calendarCollapse ? '' : 'vs-open'}`}>
+    useCalendarPopper({
+        target,
+        calendarCollapse,
+        popRef,
+        onDoCalendarCollapse,
+        dataIndex,
+    })
+
+    if (typeof document === 'undefined') return null
+
+    return createPortal(
+        <div ref={popRef} className={`single-calendar ${calendarCollapse ? '' : 'vs-open'}`}>
             <div>
                 <DayPicker
                     mode="single"
@@ -21,6 +42,7 @@ export default function VueCalendar({ calendarCollapse, minDate, onUpdateValue, 
                     }}
                 />
             </div>
-        </div>
+        </div>,
+        document.body,
     )
 }

@@ -12,6 +12,7 @@
   "dependencies": {
     "@animxyz/core": "^0.6.7",
     "@animxyz/react": "^0.6.9",
+    "@popperjs/core": "^2.11.8",
     "axios": "^1.7.0",
     "date-fns": "^4.4.0",
     "embla-carousel-react": "^8.6.0",

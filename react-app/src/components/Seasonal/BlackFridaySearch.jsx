@@ -66,6 +66,7 @@ export default function BlackFridaySearch({
     const phoneRef = useRef(null)
     const itiRef = useRef(null)
     const rootRef = useRef(null)
+    const [calendarTarget, setCalendarTarget] = useState(null)
 
     const [flight, setFlight] = useState(propType === 'one_way' ? 'One Way' : 'Round Trip')
     const [type, setType] = useState(propClass)
@@ -142,19 +143,31 @@ export default function BlackFridaySearch({
 
     useEffect(() => {
         const onPointerDown = (event) => {
-            if (!rootRef.current?.contains(event.target)) {
+            const inCalendar = event.target.closest?.('.calendar, .single-calendar, .rdp')
+            if (!rootRef.current?.contains(event.target) && !inCalendar) {
                 setShowClass(false)
                 setShowPassengers(false)
                 setTripOpen(false)
-                if (!calendarCollapse && !event.target.closest?.('.calendar-buttons') && !event.target.closest?.('.rdp')) {
-                    setCalendarCollapse(true)
-                    setSelectReturn(false)
-                }
             }
         }
         document.addEventListener('pointerdown', onPointerDown)
         return () => document.removeEventListener('pointerdown', onPointerDown)
-    }, [calendarCollapse])
+    }, [])
+
+    const openCalendar = (asReturn = false) => {
+        setShowClass(false)
+        setShowPassengers(false)
+        setTripOpen(false)
+        setCalendarCollapse(false)
+        setSelectReturn(asReturn)
+    }
+
+    const doCalendarCollapse = (event) => {
+        if (!calendarCollapse && !event.target.closest?.('.calendar-buttons')) {
+            setCalendarCollapse(true)
+            setSelectReturn(false)
+        }
+    }
 
     const updateMultiDatePicker = (date) => {
         if (date.start === 'Invalid Date' || date.end === 'Invalid Date') return
@@ -275,6 +288,8 @@ export default function BlackFridaySearch({
                                 event.stopPropagation()
                                 setShowClass(true)
                                 setShowPassengers(false)
+                                setCalendarCollapse(true)
+                                setSelectReturn(false)
                             }}
                         >
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="first-svg">
@@ -306,13 +321,14 @@ export default function BlackFridaySearch({
                 />
 
                 <div
+                    ref={setCalendarTarget}
                     className={`d-flex calendar-buttons ${flight === 'Round Trip' ? 'round-trip' : ''} ${
                         !calendarCollapse ? 'active' : 'disabled'
                     } ${
                         flight === 'Round Trip' && (formErrors.departureDate || formErrors.returnDate) ? 'has-error' : ''
                     } ${flight !== 'Round Trip' && formErrors.departureDate ? 'has-error' : ''}`}
                 >
-                    <button type="button" onClick={() => setCalendarCollapse(false)} className={formErrors.departureDate ? 'has-error' : ''}>
+                    <button type="button" onClick={() => openCalendar(false)} className={formErrors.departureDate ? 'has-error' : ''}>
                         <CalendarIcon fill={Boolean(flight === 'One Way' ? singleDatePicker : multiDatePicker?.start)} />
                         {flight === 'One Way' ? singleDatePicker || 'Departure' : multiDatePicker?.start || 'Departure'}
                     </button>
@@ -320,10 +336,7 @@ export default function BlackFridaySearch({
                         <button
                             type="button"
                             className={formErrors.returnDate ? 'has-error' : ''}
-                            onClick={() => {
-                                setCalendarCollapse(false)
-                                setSelectReturn(true)
-                            }}
+                            onClick={() => openCalendar(true)}
                         >
                             <CalendarIcon fill={Boolean(multiDatePicker?.end)} />
                             {multiDatePicker?.end || 'Select return'}
@@ -340,6 +353,8 @@ export default function BlackFridaySearch({
                                 event.stopPropagation()
                                 setShowPassengers(true)
                                 setShowClass(false)
+                                setCalendarCollapse(true)
+                                setSelectReturn(false)
                             }}
                         >
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="second-svg">
@@ -418,30 +433,30 @@ export default function BlackFridaySearch({
                 </div>
             </div>
 
-            <div className="calendar">
-                {!calendarCollapse && (
-                    <Suspense fallback={null}>
-                        {flight === 'One Way' ? (
-                            <VueCalendar
-                                calendarCollapse={calendarCollapse}
-                                minDate={Date.now()}
-                                defaultDate={false}
-                                onUpdateValue={(date) => {
-                                    setSingleDatePicker(date)
-                                    setCalendarCollapse(true)
-                                }}
-                            />
-                        ) : (
-                            <DatePicker
-                                calendarCollapse={calendarCollapse}
-                                selectReturn={selectReturn}
-                                minDate={Date.now()}
-                                onUpdateValue={updateMultiDatePicker}
-                            />
-                        )}
-                    </Suspense>
+            <Suspense fallback={null}>
+                {flight === 'One Way' ? (
+                    <VueCalendar
+                        target={calendarTarget}
+                        calendarCollapse={calendarCollapse}
+                        minDate={Date.now()}
+                        defaultDate={false}
+                        onUpdateValue={(date) => {
+                            setSingleDatePicker(date)
+                            setCalendarCollapse(true)
+                        }}
+                        onDoCalendarCollapse={doCalendarCollapse}
+                    />
+                ) : (
+                    <DatePicker
+                        target={calendarTarget}
+                        calendarCollapse={calendarCollapse}
+                        selectReturn={selectReturn}
+                        minDate={Date.now()}
+                        onUpdateValue={updateMultiDatePicker}
+                        onDoCalendarCollapse={doCalendarCollapse}
+                    />
                 )}
-            </div>
+            </Suspense>
         </div>
     )
 }
