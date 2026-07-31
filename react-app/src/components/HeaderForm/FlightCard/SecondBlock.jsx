@@ -11,6 +11,7 @@ import ChooseAirport from '@/components/HeaderForm/OrderFly/ChooseAirport'
 import VueSelectAdaptive from '@/components/HeaderForm/VueSelectAdaptive'
 import ChooseClass from '@/components/HeaderForm/ChooseClass'
 import ChoosePassengers from '@/components/HeaderForm/ChoosePassengers'
+import chevronImg from '@/assets/images/static/chevron.webp'
 
 const emptyErrors = {
     airportFrom: null,
@@ -61,6 +62,8 @@ export default function SecondBlock({
     leadSender = defaultSendLead,
     trackDataLayer = true,
     contentStyle,
+    className = '',
+    xyz,
 }) {
     const location = useLocation()
     const navigate = useNavigate()
@@ -240,7 +243,7 @@ export default function SecondBlock({
     }
 
     return (
-        <div className="second-block flight-card-header" ref={rootRef}>
+        <div className={`second-block flight-card-header${className ? ` ${className}` : ''}`} ref={rootRef} xyz={xyz}>
             <div className="content" style={contentStyle}>
                 <div className="d-flex flight-options">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="first-svg">
@@ -251,17 +254,24 @@ export default function SecondBlock({
                             fill="#6F767E"
                         />
                     </svg>
-                    <div className={`v-select first-select trip-type-select ${tripOpen ? 'open' : ''}`}>
-                        <button
-                            type="button"
+                    <div className={`v-select vs--single vs--unsearchable first-select ${tripOpen ? 'vs--open' : ''}`}>
+                        <div
                             className="vs__dropdown-toggle"
+                            role="combobox"
+                            aria-expanded={tripOpen}
                             onClick={() => {
                                 setCalendarCollapse(true)
                                 setTripOpen((open) => !open)
                             }}
                         >
-                            <span className="vs__selected">{flight}</span>
-                        </button>
+                            <div className="vs__selected-options">
+                                <span className="vs__selected">{flight}</span>
+                                <input className="vs__search" type="search" readOnly tabIndex={-1} aria-label="Trip type" />
+                            </div>
+                            <div className="vs__actions">
+                                <img src={chevronImg} role="presentation" className="vs__open-indicator" alt="" />
+                            </div>
+                        </div>
                         {tripOpen && (
                             <ul>
                                 {['Round Trip', 'One Way'].map((option) => (
@@ -416,6 +426,7 @@ export default function SecondBlock({
                 <div className="sms-toggle">
                     <label>
                         <input type="checkbox" checked={sms} onChange={(event) => setSms(event.target.checked)} />
+                        {' '}
                         By checking this box, I consent to receive text messages related to customer care and marketing from
                         BuyBusinessClass. You can reply &quot;STOP&quot; at any time to opt-out. Message and data rates may apply.
                         Message frequency may vary, text HELP for assistance. For more information, please visit our{' '}

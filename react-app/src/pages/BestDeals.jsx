@@ -4,9 +4,9 @@ import { getBestDeal } from '@/services/api'
 import { useRegionStore } from '@/store/useRegionStore'
 import AirlinesLogos from '@/components/Footer/AirlinesLogos'
 import FlightCards from '@/components/Flight/FlightCards'
+import FirstBlock from '@/components/Flight/FirstBlock'
 import RegionVue from '@/components/Flight/RegionVue'
 import TransparentSelect from '@/components/Flight/TransparentSelect'
-import SecondBlock from '@/components/HeaderForm/FlightCard/SecondBlock'
 import WorksContainer from '@/components/MainPage/WorksContainer'
 import ContactSection from '@/components/MainPage/ContactSection'
 
@@ -56,7 +56,7 @@ function FirstBlockBestDeals({ name = '', price, selector = {} }) {
     )
 }
 
-function HeaderContainer({ onCards }) {
+function HeaderContainer() {
     const params = useParams()
     const [flights, setFlights] = useState({})
     const image = useMemo(() => storageUrl(flights.image), [flights.image])
@@ -69,7 +69,6 @@ function HeaderContainer({ onCards }) {
             if (cancelled || error !== null || !result) return
 
             setFlights(result)
-            onCards?.(result.bestDeals ?? [])
 
             if (result.meta?.title) document.title = result.meta.title
             Object.entries(result.meta?.meta ?? {}).forEach(([name, content]) => {
@@ -89,7 +88,7 @@ function HeaderContainer({ onCards }) {
         return () => {
             cancelled = true
         }
-    }, [onCards, params.id])
+    }, [params.id])
 
     return (
         <div className="content best-deals-content" style={image ? { backgroundImage: `url(${image})` } : undefined}>
@@ -100,9 +99,12 @@ function HeaderContainer({ onCards }) {
                     price={flights?.minPrice?.price_today}
                     selector={flights.selector ?? {}}
                 />
-                <div className="imported-second-block">
-                    <SecondBlock propTo={params.region} />
-                </div>
+                <FirstBlock
+                    className="imported-second-block"
+                    price={flights?.minPrice?.price_today ?? null}
+                    destination={params.region}
+                    departure={flights?.bestDeals ?? []}
+                />
             </div>
         </div>
     )
@@ -110,7 +112,6 @@ function HeaderContainer({ onCards }) {
 
 export default function BestDeals() {
     const params = useParams()
-    const [cards, setCards] = useState([])
 
     useEffect(() => {
         let canonicalLink = document.querySelector('link[rel="canonical"]')
@@ -125,10 +126,10 @@ export default function BestDeals() {
     return (
         <div className="best-deals-page">
             <div className="header-content">
-                <HeaderContainer onCards={setCards} />
+                <HeaderContainer />
             </div>
             <AirlinesLogos />
-            <FlightCards arr={cards} />
+            <FlightCards />
             <WorksContainer />
             <ContactSection />
         </div>

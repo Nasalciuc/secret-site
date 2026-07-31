@@ -1,3 +1,4 @@
+import { XyzTransitionGroup } from '@animxyz/react'
 import { Link, useParams } from 'react-router-dom'
 import SecondBlock from '@/components/HeaderForm/FlightCard/SecondBlock'
 import WorksContainer from '@/components/MainPage/WorksContainer'
@@ -23,17 +24,24 @@ function FirstBlockAirline({ airlineName, departure }) {
                     <div className="flex-grow-1">Old Price</div>
                     <div className="flex-grow-1">Price Today</div>
                 </div>
-                <div className="content">
-                    {departure.slice(0, 10).map((item) => (
-                        <div key={item.id} className="list">
-                            <Link to={`/flight/city/${item.name.toLowerCase()}/${item.id}`} className="container">
-                                <div className="flex-grow-2">{item.name}</div>
-                                <div className="flex-grow-1 old-price">{formatPrice(item.old_price)}</div>
-                                <div className="flex-grow-1 new-price">{item.old_price ? 'Get a Quote' : 'No price is set'}</div>
-                            </Link>
-                        </div>
-                    ))}
-                </div>
+                {departure.length > 0 && (
+                    <XyzTransitionGroup
+                        className="content"
+                        xyz="fade small appear-stagger"
+                        appear={false}
+                        appearVisible
+                    >
+                        {departure.slice(0, 10).map((item) => (
+                            <div key={item.id} className="list">
+                                <Link to={`/flight/city/${item.name.toLowerCase()}/${item.id}`} className="container">
+                                    <div className="flex-grow-2">{item.name}</div>
+                                    <div className="flex-grow-1 old-price">{formatPrice(item.old_price)}</div>
+                                    <div className="flex-grow-1 new-price">{item.old_price ? 'Get a Quote' : 'No price is set'}</div>
+                                </Link>
+                            </div>
+                        ))}
+                    </XyzTransitionGroup>
+                )}
             </div>
         </div>
     )
@@ -83,7 +91,7 @@ export default function AirlineDetail() {
     }
 
     return (
-        <>
+        <div className="airline-detail-page">
             <div className="container-airline">
                 <div className="content-wrapper">
                     <div className="airline-details">
@@ -93,6 +101,6 @@ export default function AirlineDetail() {
                 </div>
             </div>
             <AirlineDescription airline={airline} />
-        </>
+        </div>
     )
 }
