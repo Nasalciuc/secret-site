@@ -4,6 +4,7 @@ import intlTelInput from 'intl-tel-input'
 import 'intl-tel-input/styles'
 import { useAppStore } from '@/store/useAppStore'
 import { sendCouponLead } from '@/services/api'
+import couponHeroImg from '@/assets/images/static/about-image.webp'
 
 export default function CouponForm({ autoOpen = false }) {
     const { setModal } = useAppStore()
@@ -195,7 +196,7 @@ export default function CouponForm({ autoOpen = false }) {
                 <div className="modal-columns">
                     <div className="modal-image">
                         <img
-                            src="https://i.imgur.com/VcWTka1.jpeg"
+                            src={couponHeroImg}
                             alt="Business Class Discount"
                             loading="lazy"
                             decoding="async"
