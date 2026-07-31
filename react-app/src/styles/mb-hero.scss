@@ -161,7 +161,7 @@
 // var(--mb-border); gold accents (#b4853b) already equal var(--mb-gold) and stay put.
 // Error reds (#ff6a55) are preserved via :not(.has-error) guards wherever the legacy
 // error rules have lower specificity than these scoped overrides.
-.mb-home .content.main-page-header .header-form.order-fly {
+:is(.mb-home .content.main-page-header, .mb-page .mb-orderfly-card) .header-form.order-fly {
     padding: 0; // the hero card supplies its own 32px padding
 
     > .choose-option {

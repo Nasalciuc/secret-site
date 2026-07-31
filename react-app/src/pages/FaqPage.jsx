@@ -34,7 +34,11 @@ export default function FaqPage() {
     }, [])
 
     return (
-        <div style={{ paddingTop: '30px' }} className="faq-page">
+        <div className="faq-page mb-page">
+            <div className="mb-cl-hero">
+                <span className="mb-eyebrow">Support</span>
+                <h1 className="mb-serif">Frequently asked <span className="gold">questions</span></h1>
+            </div>
             <FaqSection limit={null} showMoreLink={false} />
         </div>
     )

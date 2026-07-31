@@ -152,7 +152,7 @@ export default function BestDeals() {
     }, [params.id, params.region])
 
     return (
-        <div className="best-deals-page">
+        <div className="best-deals-page mb-page">
             <div className="header-content">
                 <HeaderContainer dealMetaAppliedRef={dealMetaAppliedRef} />
             </div>

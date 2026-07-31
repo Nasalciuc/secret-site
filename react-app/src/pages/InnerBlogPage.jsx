@@ -41,7 +41,7 @@ export default function InnerBlogPage() {
     }, [id, navigate])
 
     return (
-        <>
+        <div className="mb-page mb-inner-blog-page">
             <div className="header-content">
                 <div className="inner-blog-header">
                     {headerBlog.imgUrl && <img src={headerBlog.imgUrl} alt={headerBlog.name} />}
@@ -96,6 +96,6 @@ export default function InnerBlogPage() {
                     </div>
                 </div>
             )}
-        </>
+        </div>
     )
 }

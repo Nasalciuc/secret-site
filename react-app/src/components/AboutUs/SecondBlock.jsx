@@ -35,55 +35,49 @@ const services = [
 export default function SecondBlock() {
     return (
         <div>
-            <div className="choose-description xyz-in" xyz="fade left-50% duration-15 delay-5">
-                <div className="title">
-                    <h2 className="main-title" style={{ color: '#dadde0', fontFamily: 'SSP-bold' }}>
-                        Why Choose Buy Business Class?
-                    </h2>
+            <section className="mb-about-why xyz-in" xyz="fade duration-15 delay-5">
+                <span className="mb-eyebrow">Why choose us</span>
+                <h2 className="mb-serif mb-about-why__title">
+                    Why Choose <span className="accent">Buy Business Class?</span>
+                </h2>
+                <div className="mb-about-story">
+                    <div className="mb-about-story__media">
+                        <img
+                            src={secondImg}
+                            alt="Descrierea imaginii"
+                            loading="lazy"
+                            decoding="async"
+                        />
+                    </div>
+                    <div className="mb-about-story__body">
+                        <p>
+                            With over 7 years of expertise in the industry, our passionate team of travel specialists have
+                            helped countless clients secure luxury business class experiences and affordable business and
+                            first-class tickets to European destinations and beyond. <br />
+                            <br />
+                            We offer exclusive business class offers and discount business class fares, ensuring you receive
+                            the best possible value for your premium air travel. Our partnerships with all major airlines
+                            allow us to offer competitive fares you won't find elsewhere.
+                        </p>
+                    </div>
                 </div>
-            </div>
-            <div className="card xyz-in" xyz="fade left-50% duration-15 delay-5">
-                <div className="card-left">
-                    <img
-                        src={secondImg}
-                        alt="Descrierea imaginii"
-                        className="card-image"
-                        loading="lazy"
-                        decoding="async"
-                    />
-                </div>
-                <div className="card-right">
-                    <p className="card-text">
-                        With over 7 years of expertise in the industry, our passionate team of travel specialists have
-                        helped countless clients secure luxury business class experiences and affordable business and
-                        first-class tickets to European destinations and beyond. <br />
-                        <br />
-                        We offer exclusive business class offers and discount business class fares, ensuring you receive
-                        the best possible value for your premium air travel. Our partnerships with all major airlines
-                        allow us to offer competitive fares you won't find elsewhere.
-                    </p>
-                </div>
-            </div>
-            <div className="services-section xyz-in" xyz="fade left-50% duration-15 delay-25">
-                <h2 className="section-title">Our Services Include</h2>
-                <div className="services-list">
-                    {services.map((service) => (
-                        <div className="service-item" key={service.number}>
-                            <h3 className="service-number">{service.number}</h3>
-                            <div className="divider-container">
-                                <div className="divider" />
-                                <div className="circle" />
-                                <div className="divider" />
+            </section>
+            <section className="mb-about-services xyz-in" xyz="fade duration-15 delay-25">
+                <div className="mb-about-services__inner">
+                    <span className="mb-eyebrow">What we do</span>
+                    <h2 className="mb-about-services__title">Our Services Include</h2>
+                    <div className="mb-about-services__grid">
+                        {services.map((service) => (
+                            <div className="mb-about-services__item" key={service.number}>
+                                <p className="mb-serif mb-about-services__num">{service.number}</p>
+                                <h3 className="mb-about-services__item-title">{service.title}</h3>
+                                <p className="mb-about-services__item-body">{service.description}</p>
                             </div>
-                            <h4 className="service-title">{service.title}</h4>
-                            <p className="service-description">{service.description}</p>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
-            </div>
-            <div style={{ paddingBottom: '5%', paddingTop: '5%' }}>
-                <ReviewsSection />
-            </div>
+            </section>
+            <ReviewsSection />
         </div>
     )
 }

@@ -2,7 +2,7 @@
 // Everything is scoped under .mb-home so shared components (BestSelling,
 // OfferCard) keep their legacy look on DynamicPage / AllDeals / FlightCards.
 
-.mb-home {
+:is(.mb-home, .mb-page) {
     // ------------------------------------------------------------------
     // Stats strip: 4 rounded tiles under the hero
     // ------------------------------------------------------------------

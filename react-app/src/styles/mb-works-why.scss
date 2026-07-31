@@ -2,7 +2,7 @@
 // Scoped under .mb-home so the legacy WorksContainer look (main-page.scss
 // .describe-container) on all other pages stays untouched.
 
-.mb-home {
+:is(.mb-home, .mb-page) {
     // ------------------------------------------------------------------
     // How it works — full-width white section
     // ------------------------------------------------------------------

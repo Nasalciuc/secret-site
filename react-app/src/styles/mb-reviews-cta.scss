@@ -21,7 +21,7 @@
     }
 }
 
-.mb-home {
+:is(.mb-home, .mb-page) {
     // Homepage swaps the legacy Trustpilot block for the moodboard grid.
     .reviews-container {
         display: none;

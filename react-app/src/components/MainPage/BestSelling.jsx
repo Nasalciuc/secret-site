@@ -21,7 +21,7 @@ export default function BestSelling() {
     const [mbHome, setMbHome] = useState(false)
 
     useLayoutEffect(() => {
-        setMbHome(Boolean(rootRef.current?.closest('.mb-home')))
+        setMbHome(Boolean(rootRef.current?.closest('.mb-home, .mb-page')))
     }, [])
 
     useEffect(() => {

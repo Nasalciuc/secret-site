@@ -132,7 +132,7 @@ export default function FlightQuotePage() {
     }
 
     return (
-        <div className="quote-page">
+        <div className="quote-page mb-page">
             <CallUsForm />
             <div className="header-content">
                 <HeaderContainer from={fromAirport || storedAirports.from} to={toAirport || storedAirports.to} success={success} />

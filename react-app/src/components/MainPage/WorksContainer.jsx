@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useAppStore } from '@/store/useAppStore'
 import BlackWithOrangeTextButton from '@/components/common/Buttons/BlackWithOrangeTextButton'
@@ -19,9 +19,13 @@ export default function WorksContainer() {
     const rootRef = useRef(null)
     // Match Vue: `$route.fullPath === '/' ? '' : '/'`
     const isHome = `${location.pathname}${location.search}${location.hash}` === '/'
-    // Moodboard variant renders only on the homepage (MainPage root carries `.mb-home`);
-    // every other page keeps the legacy dark layout styled by main-page.scss.
-    const isMbHome = location.pathname === '/'
+    // Moodboard variant renders on any page carrying the .mb-home/.mb-page scope;
+    // pages not yet redesigned keep the legacy dark layout styled by main-page.scss.
+    const [isMbHome, setIsMbHome] = useState(location.pathname === '/')
+
+    useLayoutEffect(() => {
+        setIsMbHome(Boolean(rootRef.current?.closest('.mb-home, .mb-page')))
+    }, [location.pathname])
 
     useEffect(() => {
         setDisplayPlaneAdaptive(appWidth <= 420)

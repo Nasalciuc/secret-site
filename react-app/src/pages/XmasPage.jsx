@@ -16,9 +16,19 @@ export default function XmasPage() {
     }, [])
 
     return (
-        <div className="xmas-page seasonal-sale-page seasonal-sale-page--xmas">
+        <div className="xmas-page seasonal-sale-page seasonal-sale-page--xmas mb-page">
             <div className="regions-friday">
                 <RegionVue />
+            </div>
+            <div className="mb-seasonal-hero">
+                <span className="mb-seasonal-badge">
+                    <span className="dot" />
+                    Holiday season sale
+                </span>
+                <h1 className="mb-serif">
+                    Christmas &amp; New Year <span className="accent">Flight Sale</span>
+                </h1>
+                <p>Fly business class for the holidays with fares from $2,499 — get your free quote today.</p>
             </div>
             <div className="container-friday d-flex">
                 <div className="left-image-friday">

@@ -13,12 +13,12 @@ export default function PromoPage() {
     }, [])
 
     return (
-        <div className="promo-page">
+        <div className="promo-page mb-page mb-promo">
             <div className="container-airline">
                 <div className="content-wrapper">
                     <div className="airline-details">
                         <div className="promo-container">
-                            <h2 className="promo-title">
+                            <h2 className="promo-title mb-serif">
                                 EXCLUSIVE SENIOR DISCOUNTS on <br />
                                 <span>Business Class Flights</span>
                             </h2>

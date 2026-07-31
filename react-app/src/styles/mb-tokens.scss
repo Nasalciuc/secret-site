@@ -21,6 +21,84 @@
     background: var(--mb-bg);
 }
 
+// The whole app now ships the moodboard theme: page frame goes slate too
+// (legacy #111315 set earlier in general.scss loses to this later import).
+html,
+body {
+    background: var(--mb-bg);
+}
+
+// Base skin for every redesigned page: put .mb-page on the page root element.
+// Shared components (BestSelling, ReviewsSection, WorksContainer, OrderFly card
+// via .mb-orderfly-card) detect this scope and render their moodboard variant.
+.mb-page {
+    background: var(--mb-bg);
+    color: var(--mb-text);
+    font-family: 'Inter', sans-serif;
+
+    a {
+        color: inherit;
+    }
+}
+
+// Low-specificity global skins for shared sections no workstream owns.
+// Page-scoped variants (.mb-page.mb-xxx …) are more specific and win.
+.mb-page .contact-container {
+    background: var(--mb-surface);
+    border: 1px solid var(--mb-border);
+    border-radius: var(--mb-radius-card);
+
+    .contactus-label {
+        color: var(--mb-gold);
+    }
+
+    .main-title,
+    .main-title .accent {
+        color: #fff;
+    }
+
+    .subtitle {
+        color: var(--mb-text-muted);
+    }
+
+    input,
+    textarea {
+        background: var(--mb-deep);
+        border-color: var(--mb-border);
+        color: var(--mb-text);
+    }
+
+    .adaptive,
+    .info-block {
+        background: var(--mb-deep);
+        border-color: var(--mb-border);
+    }
+}
+
+.mb-page .about-container {
+    .header,
+    h2,
+    h3 {
+        color: #fff;
+    }
+
+    p {
+        color: var(--mb-text);
+    }
+}
+
+.mb-page .about-text {
+    background: var(--mb-surface);
+    border: 1px solid var(--mb-border);
+    border-radius: var(--mb-radius-card);
+}
+
+// Airline logo strips read too faint on slate (tuned for the old near-black bg).
+.mb-page .logos-container img,
+.mb-home .logos-container img {
+    opacity: 0.55;
+}
+
 .mb-serif {
     font-family: 'Playfair Display', Georgia, serif;
     font-weight: 700;

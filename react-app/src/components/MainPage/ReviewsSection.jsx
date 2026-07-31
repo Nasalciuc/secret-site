@@ -67,7 +67,7 @@ export default function ReviewsSection() {
     useEffect(() => {
         // Fetch real Trustpilot reviews only for the moodboard homepage variant,
         // so legacy pages reusing this component keep their old network behavior.
-        if (!sectionRef.current?.closest('.mb-home')) return
+        if (!sectionRef.current?.closest('.mb-home, .mb-page')) return
         if (!reviews.length) getReviews()
     }, [getReviews, reviews.length])
 

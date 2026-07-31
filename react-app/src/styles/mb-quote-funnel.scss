@@ -1,0 +1,501 @@
+// Moodboard revenue funnel (slate + gold): /flight quote header, per-cabin price
+// cards, congrats state, the canonical SecondBlock lead-form skin shared by every
+// .mb-home / .mb-page surface, and the /facebook-leads page frame.
+// Re-skin only — colors, borders, radii, typography. Validation reds (#ff6a55)
+// survive through :not(.has-error) / :not(.invalid-svg) guards mirroring
+// mb-hero.scss's OrderFly technique. QuoteLoader is owned elsewhere; untouched.
+
+// ---------------------------------------------------------------------------
+// /flight — quote hero band, route + per-cabin price cards
+// ---------------------------------------------------------------------------
+.mb-page .block-discount {
+    background-color: rgba(15, 23, 42, 0.72);
+    border: 1px solid var(--mb-border);
+    border-radius: var(--mb-radius-input);
+}
+
+.mb-page .content.qoute-header {
+    background-color: var(--mb-deep);
+    background-image:
+        linear-gradient(rgba(15, 23, 42, 0.82), rgba(15, 23, 42, 0.64)),
+        url('@/assets/images/static/quote.webp');
+    border-radius: var(--mb-radius-card);
+
+    > .blocks {
+        > .first-block {
+            > .destination-qoute {
+                > * {
+                    background: var(--mb-surface);
+                    border: 1px solid var(--mb-border);
+                    border-radius: var(--mb-radius-card);
+                }
+
+                // Plane pictograms carry an inline #33383F fill — invisible on slate
+                .from-to-block svg path {
+                    fill: var(--mb-text-muted);
+                }
+
+                > .from-to-block {
+                    > .round-trip,
+                    > .one-way {
+                        > .block > .info {
+                            > .from,
+                            .to {
+                                > .city {
+                                    color: var(--mb-text);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                > .deals-block > * {
+                    background: var(--mb-deep);
+                    border: 1px solid var(--mb-border);
+                    border-radius: var(--mb-radius-input);
+                    transition:
+                        border-color 0.3s ease,
+                        background 0.3s ease,
+                        transform 0.3s ease;
+
+                    > p {
+                        color: var(--mb-text-muted);
+                    }
+
+                    > .d-flex > .checkbox {
+                        border-color: var(--mb-border);
+                    }
+
+                    &:hover {
+                        border-color: var(--mb-gold);
+                        transform: translateY(-2px);
+                    }
+
+                    &.best-deal::after {
+                        color: #fff;
+                    }
+
+                    &.active {
+                        border-color: var(--mb-gold);
+                        background: var(--mb-surface);
+                    }
+                }
+
+                > .flight-null > .info {
+                    color: var(--mb-text);
+                }
+            }
+
+            > .personal-assistant {
+                margin-top: 16px;
+            }
+        }
+
+        // Standalone assistant card (visible ≤1400px per legacy layout)
+        > .personal-assistant {
+            flex-direction: column;
+            justify-content: center;
+            background: var(--mb-surface);
+            border: 1px solid var(--mb-border);
+            border-radius: var(--mb-radius-card);
+            padding: 24px;
+        }
+    }
+
+    // Success state — slate card, serif thank-you, gold links
+    > .congratulations > .content {
+        background: var(--mb-surface);
+        border: 1px solid var(--mb-border);
+        border-radius: var(--mb-radius-card);
+
+        > .title-thank {
+            color: #fff;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 700;
+            line-height: 1.15;
+        }
+
+        > .subtitle {
+            color: var(--mb-text-muted);
+            line-height: 1.6;
+
+            > a {
+                color: var(--mb-gold);
+            }
+        }
+
+        > .line {
+            background: var(--mb-border);
+        }
+    }
+}
+
+// 24/7 assistant typography (all placements: in-hero, congrats, outer-mobile)
+.mb-page.quote-page .personal-assistant {
+    font-family: 'Inter', sans-serif;
+
+    h5 {
+        color: var(--mb-gold);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font: 600 12px/1.4 'Inter', sans-serif;
+        margin-bottom: 8px;
+    }
+
+    > .d-flex {
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 8px;
+
+        > p {
+            color: #fff;
+            font-weight: 600;
+        }
+    }
+
+    > .call {
+        color: var(--mb-text-muted);
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    > .phone {
+        color: var(--mb-gold);
+        font: 700 22px/1.3 'Inter', sans-serif;
+    }
+}
+
+.mb-page.quote-page .quote-outer-assistance {
+    background: var(--mb-surface);
+    border: 1px solid var(--mb-border);
+    border-radius: var(--mb-radius-card);
+    padding: 24px;
+}
+
+// ---------------------------------------------------------------------------
+// Canonical moodboard skin for the SecondBlock lead form
+// (.second-block.flight-card-header). The quote page, /facebook-leads, and any
+// airline / promo page that opts into .mb-page inherit this automatically.
+// Legacy grays #1a1d1f / #33383f / #dadde0 / #6f767e map onto slate tokens;
+// gold #b4853b already equals var(--mb-gold) and stays put.
+// ---------------------------------------------------------------------------
+:is(.mb-home, .mb-page) .second-block.flight-card-header {
+    background: var(--mb-surface);
+    border: 1px solid var(--mb-border);
+
+    > .content {
+        > .d-flex {
+            &.travellers,
+            &.flight-options {
+                .v-select {
+                    background: var(--mb-deep);
+                    border-color: var(--mb-border);
+                    border-radius: var(--mb-radius-input);
+
+                    .vs__selected {
+                        color: var(--mb-text);
+                    }
+
+                    > ul {
+                        background: var(--mb-deep);
+                        border-color: var(--mb-border);
+                        color: var(--mb-text);
+
+                        > li {
+                            color: var(--mb-text-muted);
+
+                            &:hover {
+                                color: var(--mb-text);
+                                background: var(--mb-surface);
+                            }
+                        }
+                    }
+                }
+
+                > .adaptive-select-options-buttons {
+                    background: var(--mb-deep);
+                    border-color: var(--mb-border);
+                    border-radius: var(--mb-radius-input);
+
+                    > button {
+                        color: var(--mb-text);
+                    }
+
+                    svg path {
+                        fill: var(--mb-text-muted);
+                    }
+                }
+            }
+
+            &.flight-options > .first-svg path {
+                fill: var(--mb-text-muted);
+            }
+
+            // Guards keep the legacy .invalid-svg error red intact
+            &.travellers > svg:not(.invalid-svg) path,
+            &.client-info > svg:not(.invalid-svg) path {
+                fill: var(--mb-text-muted);
+            }
+        }
+
+        .search-flight {
+            background: var(--mb-deep);
+            border-radius: var(--mb-radius-input);
+
+            // Legacy border declaration carries !important — mirror it, guarding error reds
+            &:not(.has-error) {
+                border-color: var(--mb-border) !important;
+            }
+
+            &.first-active:not(.has-error),
+            &.second-active:not(.has-error) {
+                background: var(--mb-deep);
+                border-color: var(--mb-gold) !important;
+            }
+
+            .v-select > ul {
+                background: var(--mb-deep);
+                border-color: var(--mb-border);
+                color: var(--mb-text);
+
+                > li {
+                    color: var(--mb-text-muted);
+
+                    &:hover {
+                        color: var(--mb-text);
+                        background: var(--mb-surface);
+                    }
+                }
+            }
+
+            .vs__search {
+                color: var(--mb-text);
+            }
+
+            .vs__actions > .vs__spinner {
+                border-color: var(--mb-border);
+                border-top-color: var(--mb-gold);
+            }
+
+            > button.reverse {
+                border-color: var(--mb-border);
+            }
+        }
+
+        .calendar-buttons {
+            background: var(--mb-deep);
+            border-radius: var(--mb-radius-input);
+
+            &:not(.has-error) {
+                border-color: var(--mb-border);
+            }
+
+            &.active:not(.has-error) {
+                background: var(--mb-deep);
+                border-color: var(--mb-gold);
+            }
+
+            &.round-trip::before {
+                background: var(--mb-border);
+            }
+
+            > button:not(.has-error) {
+                color: var(--mb-text);
+
+                > svg:not(.fill) > * {
+                    fill: var(--mb-text-muted);
+                }
+            }
+        }
+
+        .choose-cabin-type,
+        .choose-ammount-travelers {
+            background: var(--mb-deep);
+            border-color: var(--mb-border);
+
+            label {
+                color: var(--mb-text-muted);
+            }
+        }
+
+        .choose-cabin-type .cabin-buttons {
+            border-color: var(--mb-surface);
+
+            > button {
+                color: var(--mb-text-muted);
+
+                &.active {
+                    color: var(--mb-gold);
+                    background: var(--mb-surface);
+                }
+            }
+        }
+
+        .choose-ammount-travelers > .travelers-buttons {
+            > .adults {
+                color: var(--mb-text);
+            }
+
+            > .right-block {
+                > button {
+                    background: var(--mb-surface);
+
+                    &.minus {
+                        color: var(--mb-text-muted);
+                    }
+                }
+
+                > .ammount {
+                    color: var(--mb-text);
+                }
+            }
+        }
+
+        .select-options-adaptive > .form {
+            background: var(--mb-deep);
+            border-color: var(--mb-border);
+
+            > .choose-cabin-type,
+            > .choose-ammount-travelers {
+                background: none;
+            }
+
+            > .choose-cabin-type::after {
+                background: var(--mb-border);
+            }
+        }
+
+        .input-container {
+            > input {
+                background: var(--mb-deep);
+                border-radius: var(--mb-radius-input);
+            }
+
+            &:not(.has-error) > input {
+                border-color: var(--mb-border);
+                color: var(--mb-text);
+
+                &::placeholder {
+                    color: var(--mb-text-muted);
+                }
+            }
+        }
+
+        .sms-toggle {
+            color: var(--mb-text-muted);
+
+            input[type='checkbox'] {
+                accent-color: var(--mb-gold);
+            }
+        }
+
+        .orange-filled-button > button {
+            border-radius: var(--mb-radius-input);
+            color: #fff;
+
+            &:hover {
+                background: var(--mb-gold-dark);
+            }
+        }
+    }
+}
+
+// Doubled class outranks legacy container rules like
+// `.content.qoute-header > .blocks > .second-block { border-radius: 16px }`
+:is(.mb-home, .mb-page) .second-block.flight-card-header.flight-card-header {
+    border-radius: var(--mb-radius-card);
+}
+
+// ---------------------------------------------------------------------------
+// intl-tel-input on moodboard pages — deep input + slate dropdown. Overrides
+// the #1a1d1f grays from iti-dark.scss with scoped selectors only (that file
+// stays untouched); gold focus and error red are re-asserted, never removed.
+// ---------------------------------------------------------------------------
+:is(.mb-home, .mb-page) {
+    .iti-group .iti__tel-input {
+        background: var(--mb-deep) !important;
+        border-radius: var(--mb-radius-input) !important;
+    }
+
+    .iti-group:not(.has-error) .iti__tel-input {
+        border-color: var(--mb-border) !important;
+        color: var(--mb-text) !important;
+    }
+
+    .iti-group:not(.has-error) .iti__tel-input::placeholder {
+        color: var(--mb-text-muted) !important;
+    }
+
+    .iti-group .iti__tel-input:focus {
+        border-color: var(--mb-gold) !important;
+    }
+
+    // Declared after :focus so the error red wins their specificity tie
+    .iti-group.has-error .iti__tel-input {
+        border-color: #ff6a55 !important;
+    }
+
+    .iti-group .iti__selected-dial-code {
+        color: var(--mb-text) !important;
+    }
+
+    .iti__country-list,
+    .iti__dropdown-content {
+        background: var(--mb-deep) !important;
+        background-color: var(--mb-deep) !important;
+        border-color: var(--mb-border) !important;
+        color: var(--mb-text) !important;
+    }
+
+    .iti__country,
+    .iti__country .iti__country-name {
+        color: var(--mb-text) !important;
+    }
+
+    .iti__country.iti__highlight,
+    .iti__country:hover {
+        background: var(--mb-surface) !important;
+    }
+
+    .iti__country.iti__active {
+        color: var(--mb-gold) !important;
+    }
+
+    .iti__dial-code {
+        color: var(--mb-text-muted) !important;
+    }
+
+    .iti__search-input-wrapper {
+        background: var(--mb-deep) !important;
+    }
+
+    .iti__search-input,
+    input.iti__search-input {
+        background: var(--mb-deep) !important;
+        border-color: var(--mb-border) !important;
+        color: var(--mb-text) !important;
+        -webkit-box-shadow: 0 0 0 1000px var(--mb-deep) inset !important;
+        -webkit-text-fill-color: var(--mb-text) !important;
+    }
+}
+
+// ---------------------------------------------------------------------------
+// /facebook-leads — slate frame around the same canonical form skin
+// ---------------------------------------------------------------------------
+.mb-page.send-facebook-page {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    background: var(--mb-bg);
+    padding: 160px 24px 80px;
+
+    > .second-block.flight-card-header {
+        width: 100%;
+        max-width: 640px;
+    }
+
+    @media screen and (max-width: 768px) {
+        padding: 120px 8px 48px;
+    }
+}

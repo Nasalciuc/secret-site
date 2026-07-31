@@ -38,7 +38,7 @@ export default function FirstBlock({ destination, price, departure = [], classNa
                         </p>
                     )}
                 </div>
-                <p style={{ color: '#c2c7cc', fontSize: 12, fontFamily: "'Inter', sans-serif" }}>
+                <p className="discount-note">
                     Up to 60-70% discount on business class
                 </p>
             </div>

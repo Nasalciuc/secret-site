@@ -44,7 +44,7 @@ export default function FlightPage() {
     }, [params.city, params.country, params.id, params.region])
 
     return (
-        <div className="flight-page">
+        <div className="flight-page mb-page">
             <div className="header-content">
                 <HeaderContainer destination={destination} onAbout={handleAbout} onCards={handleCards} />
             </div>
