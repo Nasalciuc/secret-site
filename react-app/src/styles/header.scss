@@ -443,3 +443,62 @@
         translate: 0 0;
     }
 }
+
+// --- Trust topbar: slim badge strip above the nav row -----------------------
+// The badges (Trustpilot / TRUE / IATA / BBB) used to sit inline between the
+// nav links and the phone block, crowding the main row. They now live in a
+// quiet full-width strip at the top of the header bar.
+.header-container {
+    flex-wrap: wrap;
+}
+
+.header-container > .header-topbar {
+    flex-basis: 100%;
+    order: -1;
+    display: flex;
+    justify-content: center;
+    margin: -16px -24px 12px;
+    padding: 8px 24px;
+    border-bottom: 1px solid var(--mb-border);
+
+    .logos-items {
+        justify-content: center;
+        gap: 20px;
+        opacity: 0.7;
+        transition: opacity 0.2s ease-in;
+
+        &:hover {
+            opacity: 1;
+        }
+
+        .logos-item {
+            margin: 0;
+
+            img,
+            svg {
+                height: 15px !important;
+            }
+
+            &.logo-bbb svg {
+                height: 20px !important;
+            }
+        }
+    }
+
+    .image-text {
+        font-size: 10px;
+        color: var(--mb-text-muted);
+    }
+}
+
+// Sticky state keeps only the essential row; tablets/phones use the burger.
+.header-container.fixed > .header-topbar,
+:is(.header-container.fixed) > .header-topbar {
+    display: none;
+}
+
+@media screen and (max-width: 1200px) {
+    .header-container > .header-topbar {
+        display: none;
+    }
+}
