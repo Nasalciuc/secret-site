@@ -1,11 +1,12 @@
-import { useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import intlTelInput from 'intl-tel-input/intlTelInputWithUtils'
+import intlTelInput from 'intl-tel-input'
 import 'intl-tel-input/styles'
 import { sendLead as defaultSendLead } from '@/services/api'
 import { useAppStore } from '@/store/useAppStore'
-import DatePicker from '@/components/Calendars/DatePicker'
-import VueCalendar from '@/components/Calendars/VueCalendar'
+
+const DatePicker = lazy(() => import('@/components/Calendars/DatePicker'))
+const VueCalendar = lazy(() => import('@/components/Calendars/VueCalendar'))
 import OrangeFilledButton from '@/components/common/Buttons/OrangeFilledButton'
 import ChooseAirport from '@/components/HeaderForm/OrderFly/ChooseAirport'
 import VueSelectAdaptive from '@/components/HeaderForm/VueSelectAdaptive'
@@ -113,6 +114,7 @@ export default function SecondBlock({
         if (!phoneRef.current || itiRef.current) return
 
         itiRef.current = intlTelInput(phoneRef.current, {
+            loadUtils: () => import('intl-tel-input/utils'),
             initialCountry: 'us',
             countryOrder: ['us', 'gb', 'ca', 'au'],
             separateDialCode: true,
@@ -438,6 +440,8 @@ export default function SecondBlock({
             </div>
 
             <div className="calendar">
+                {!calendarCollapse && (
+                <Suspense fallback={null}>
                 {flight === 'One Way' ? (
                     <VueCalendar
                         calendarCollapse={calendarCollapse}
@@ -455,6 +459,8 @@ export default function SecondBlock({
                         minDate={Date.now()}
                         onUpdateValue={updateMultiDatePicker}
                     />
+                )}
+                </Suspense>
                 )}
             </div>
         </div>

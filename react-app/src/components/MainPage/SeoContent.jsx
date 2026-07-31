@@ -6,7 +6,7 @@ export default function SeoContent() {
             <div className="seo-inner">
                 <h2>Book Business Class Airline Tickets at Exclusive Discounts</h2>
                 <p>
-                    At BuyBusinessClass, we make premium travel effortless and affordable. Whether you\u2019re flying for work or
+                    At BuyBusinessClass, we make premium travel effortless and affordable. Whether you're flying for work or
                     leisure, our team sources <strong>Business Class Airline Tickets</strong> to destinations across Europe,
                     Asia, the Middle East, Africa and the Americas at prices the general public rarely sees. Our direct
                     relationships with major carriers allow us to offer <strong>Cheap Business Class Air Tickets</strong>
@@ -14,9 +14,9 @@ export default function SeoContent() {
                 </p>
                 <p>
                     Looking for last-minute <strong>Business Class Flight Tickets</strong> to New York, London, Dubai, Tokyo
-                    or Sydney? We\u2019ve got you covered. Every <strong>Discount Business Class Ticket</strong> we book comes
+                    or Sydney? We've got you covered. Every <strong>Discount Business Class Ticket</strong> we book comes
                     with full airline inventory access, flexible routing options and human agents who negotiate your
-                    itinerary — not a faceless engine. That\u2019s how we consistently deliver a genuinely
+                    itinerary — not a faceless engine. That's how we consistently deliver a genuinely
                     <strong>Cheap Business Class Fare</strong> without cutting corners on service or seat selection.
                 </p>
 
@@ -51,7 +51,7 @@ export default function SeoContent() {
                     fares—often comparable to premium economy offerings found elsewhere.
                 </p>
                 <p>
-                    If your dates are flexible, even better. Shift your departure by a day or two and we\u2019ll almost always
+                    If your dates are flexible, even better. Shift your departure by a day or two and we'll almost always
                     find you a <strong>Cheap Business Class Airfare</strong> that fits both your itinerary and your budget.
                     Travelling with family or a small group? Ask us about multi-passenger discounts — the more seats you
                     book, the deeper your savings on each <strong>Business Class Air Ticket</strong>.

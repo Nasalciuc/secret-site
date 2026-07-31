@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import OrderFly from './OrderFly'
 
-import mobilePoster from '@/assets/video/background-mobile-poster.jpg'
-import desktopPoster from '@/assets/video/background-desktop-poster.jpg'
+const mobilePoster = '/hero-poster-mobile.jpg'
+const desktopPoster = '/hero-poster-desktop.jpg'
 import mobileVideo from '@/assets/video/background-mobile.mp4'
 import desktopVideo from '@/assets/video/background-desktop.mp4'
 

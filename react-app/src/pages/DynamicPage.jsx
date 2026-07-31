@@ -24,7 +24,7 @@ export default function DynamicPage() {
     useEffect(() => {
         if (!page) return
 
-        document.title = page.meta?.title || document.title
+        document.title = page.meta?.title ? `${page.meta.title} | BuyBusinessClass` : document.title
 
         let metaDesc = document.querySelector('meta[name="description"]')
         if (!metaDesc) {

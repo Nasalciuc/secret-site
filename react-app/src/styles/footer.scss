@@ -87,12 +87,41 @@
         align-items: center;
     }
 
+    .secure-3d {
+        display: inline-block;
+        margin-inline: 10px;
+        width: 50px;
+        height: 50px;
+        object-fit: contain;
+        opacity: 1;
+        visibility: visible;
+        flex-shrink: 0;
+    }
+
     .payment {
         display: flex;
         justify-content: center;
         gap: 16px;
         .card-icon {
             opacity: 0.24;
+        }
+    }
+
+    .socials {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        color: white;
+        padding-bottom: 2rem;
+        font-size: 1.5rem;
+
+        a {
+            opacity: 0.24;
+
+            &:hover {
+                opacity: 1;
+            }
         }
     }
 
