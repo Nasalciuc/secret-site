@@ -42,11 +42,6 @@ export default function Header({ layout = 'margin' }) {
 
     return (
         <div ref={headerRef} className={`header-container ${layout}-layout`}>
-            {/* Slim trust strip: keeps Trustpilot/TRUE/IATA/BBB visible without
-                crowding the nav row; hidden once the header goes sticky. */}
-            <div className="header-topbar">
-                <SvgContainer />
-            </div>
             <div className="trust-container">
                 <div className="logo">
                     <Link aria-label="Go to main page" className="logo-link" to="/">
@@ -95,6 +90,7 @@ export default function Header({ layout = 'margin' }) {
                     <NavLink end className="page-link" to="/business-class-flights" title="Business Class Flights">Business Class Flights</NavLink>
                     <a href="https://blog.buybusinessclass.com/" className="page-link" title="Blog">Blog</a>
                 </nav>
+                <SvgContainer />
             </div>
             <div className="service">
                 <span className="live-service">24/7 LIVE SERVICE</span>
