@@ -32,6 +32,16 @@
             > .second-block {
                 padding: 0;
             }
+
+            /* Match homepage phone field width so "+1 …" placeholder is not clipped */
+            .iti-group {
+                min-width: 232px;
+                flex: 1 1 40%;
+            }
+
+            .iti-group .iti__tel-input {
+                min-width: 0;
+            }
         }
 
         > .first-block-best-deals > .v-select {
@@ -434,74 +444,3 @@
     }
 }
 
-.seasonal-sale-page {
-    .regions-friday {
-        padding-top: 7%;
-        margin-right: 0 !important;
-        margin-left: 0 !important;
-    }
-
-    .container-friday {
-        display: flex;
-        flex-direction: row;
-        min-height: 100vh;
-        padding-top: 5%;
-    }
-
-    .left-image-friday,
-    .right-component {
-        flex: 1;
-    }
-
-    .left-image-friday img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .right-component {
-        padding: 20px;
-    }
-
-    .review-friday {
-        margin-top: -10%;
-    }
-
-    &--xmas {
-        .right-component {
-            max-width: 35%;
-            margin-top: 7%;
-            padding: 0;
-        }
-
-        .review-friday {
-            margin-top: -2%;
-        }
-    }
-
-    @media (max-width: 768px) {
-        .container-friday {
-            flex-direction: column;
-            height: auto;
-            padding-top: 5%;
-        }
-
-        .left-image-friday {
-            height: 50vh;
-            margin-left: 5%;
-        }
-
-        .right-component {
-            padding: 10px;
-        }
-
-        &--xmas .right-component {
-            max-width: 100%;
-            padding: 10px;
-        }
-
-        .review-friday {
-            padding-top: 30%;
-        }
-    }
-}
