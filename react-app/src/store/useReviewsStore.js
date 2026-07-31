@@ -3,7 +3,9 @@ import axios from 'axios'
 
 const API_URL = import.meta.env.VITE_API_URL
 
-export const useReviewsStore = create((set) => ({
+let fetchInFlight = null
+
+export const useReviewsStore = create((set, get) => ({
     reviews: [],
     reviewsIsLoaded: false,
     reviewCount: 0,
@@ -18,25 +20,44 @@ export const useReviewsStore = create((set) => ({
     setScore: (score) => set({ score }),
 
     getReviews: async () => {
-        try {
-            const result = await axios.get(`${API_URL}/trustpilot`)
-            const data = result?.data?.data ?? {}
-            const reviews = Array.isArray(data.last_reviews) ? data.last_reviews.slice(0, 10) : []
-            const reviewsCount = data.reviews_count ?? 0
-            const score = data.score ?? 0
+        if (get().reviewsIsLoaded) return
+        if (fetchInFlight) return fetchInFlight
 
-            set({
-                reviews,
-                reviewsIsLoaded: true,
-                reviewCount: reviewsCount,
-                score,
-                reviewsAddition: {
-                    reviewsCount,
+        fetchInFlight = (async () => {
+            try {
+                const result = await axios.get(`${API_URL}/trustpilot`, { timeout: 8000 })
+                const data = result?.data?.data ?? {}
+                const reviews = Array.isArray(data.last_reviews) ? data.last_reviews.slice(0, 10) : []
+                const reviewsCount = data.reviews_count ?? 0
+                const score = data.score ?? 0
+
+                set({
+                    reviews,
+                    reviewsIsLoaded: true,
+                    reviewCount: reviewsCount,
                     score,
-                },
-            })
-        } catch (error) {
-            set({ reviewsIsLoaded: true })
-        }
+                    reviewsAddition: {
+                        reviewsCount,
+                        score,
+                    },
+                })
+            } catch {
+                // CORS / network failures on localhost must not leave perpetual skeletons.
+                set({
+                    reviews: [],
+                    reviewsIsLoaded: true,
+                    reviewCount: 0,
+                    score: 0,
+                    reviewsAddition: {
+                        reviewsCount: 0,
+                        score: 0,
+                    },
+                })
+            } finally {
+                fetchInFlight = null
+            }
+        })()
+
+        return fetchInFlight
     },
 }))

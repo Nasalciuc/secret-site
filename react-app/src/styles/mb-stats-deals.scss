@@ -160,10 +160,19 @@
 
             .carousel__pagination {
                 button {
-                    border-color: var(--mb-border);
+                    border-color: rgba(226, 232, 240, 0.55);
+                    background: rgba(226, 232, 240, 0.18);
 
-                    &.carousel__pagination-button--active::after {
-                        background: var(--mb-gold);
+                    &::after {
+                        background: transparent;
+                    }
+
+                    &.carousel__pagination-button--active {
+                        border-color: var(--mb-gold);
+
+                        &::after {
+                            background: var(--mb-gold);
+                        }
                     }
                 }
             }

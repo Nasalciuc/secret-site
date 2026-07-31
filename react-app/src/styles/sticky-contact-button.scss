@@ -1,17 +1,21 @@
 .btn-container {
     position: fixed;
     bottom: 20px;
-    padding: 15px;
-    width: 20%;
+    padding: 12px 18px;
+    width: auto;
+    min-width: 220px;
+    max-width: min(320px, calc(100vw - 48px));
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 0;
-    z-index: 1000;
+    // Below deal cards / search CTA hit targets; still above page chrome.
+    z-index: 40;
     background-color: #d1cece;
     overflow: hidden;
     border-radius: 10px;
-    animation: glow-border 1.5s infinite;
+    animation: glow-border 2.4s ease-in-out infinite;
+    pointer-events: auto;
 }
 
 .btn-container a {
@@ -36,7 +40,7 @@
 }
 
 .btn-container:hover a {
-    letter-spacing: 3px;
+    letter-spacing: 2px;
 }
 
 .btn-container::before {
@@ -64,14 +68,22 @@
 .btn-container.is-desktop {
     left: 50%;
     transform: translateX(-50%);
+    // Clear mid-page deal cards; content can scroll past without being covered.
+    bottom: 28px;
 }
 
 .btn-container.is-mobile {
-    left: 20px;
-    width: 50px;
-    height: 50px;
+    // Bottom-left, clear of Search Flight + WhatsApp / CRM widget pile-up.
+    left: 16px;
+    right: auto;
+    bottom: 88px;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    max-width: 48px;
     padding: 10px;
     border-radius: 50%;
+    z-index: 40;
 }
 
 .btn-container.is-mobile a {
@@ -83,8 +95,8 @@
 }
 
 .btn-container.is-mobile a .phone-icon {
-    width: 30px;
-    height: 30px;
+    width: 22px;
+    height: 22px;
     margin: 0;
     display: block;
 }
@@ -93,30 +105,26 @@
     0%,
     100% {
         box-shadow:
-            0 0 10px #b4853b,
-            0 0 20px #b4853b;
+            0 0 6px rgba(180, 133, 59, 0.45),
+            0 0 12px rgba(180, 133, 59, 0.25);
     }
     50% {
         box-shadow:
-            0 0 20px #b4853b,
-            0 0 40px #b4853b;
+            0 0 10px rgba(180, 133, 59, 0.55),
+            0 0 18px rgba(180, 133, 59, 0.3);
     }
 }
 @keyframes glow-border-mobile {
     0%,
     100% {
         box-shadow:
-            0 0 20px #b4853b,
-            0 0 40px #b4853b,
-            0 0 60px #b4853b,
-            0 0 100px #b4853b;
+            0 0 8px rgba(180, 133, 59, 0.5),
+            0 0 14px rgba(180, 133, 59, 0.28);
     }
     50% {
         box-shadow:
-            0 0 40px #b4853b,
-            0 0 80px #b4853b,
-            0 0 100px #b4853b,
-            0 0 200px #b4853b;
+            0 0 12px rgba(180, 133, 59, 0.6),
+            0 0 20px rgba(180, 133, 59, 0.35);
     }
 }
 .btn-container a .phone-icon {
@@ -124,4 +132,27 @@
     height: 24px;
     margin-right: 8px;
     display: none;
+}
+
+.btn-container.is-mobile {
+    animation: glow-border-mobile 2.4s ease-in-out infinite;
+}
+
+.btn-container.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 12px);
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+}
+
+.btn-container.is-mobile.is-hidden {
+    transform: translateY(12px);
+}
+
+.btn-container:not(.is-hidden) {
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
 }

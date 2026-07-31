@@ -64,11 +64,11 @@ export default function Footer() {
                 </div>
             </div>
             <AirlinesLogos />
-            <h2 className="seo-keywords">
+            <h2 className="seo-keywords sr-only">
                 Business Class Travel Agent | First Class Airfare | Book Business Class Airline Tickets | Discount
                 Business Class Flights | Deals On Business Class Flights
             </h2>
-            <h2 className="seo-keywords">
+            <h2 className="seo-keywords sr-only">
                 Cheap Business Class Airfare | Discount Business Class Travel | Deals On Business Class Flights |
                 Flight Deals Business Class | Business Class Flight Tickets | Cheap Business Class Air Tickets
             </h2>

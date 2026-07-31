@@ -182,13 +182,16 @@
         }
 
         .submit-button {
+            // Dark ink on gold — readable Claim CTA (white-on-gold was muddy).
             background: var(--mb-gold);
-            color: #fff;
+            color: var(--mb-ink);
             border-radius: var(--mb-radius-input);
             box-shadow: none;
+            font-weight: 700;
 
             &:not(:disabled):hover {
                 background: var(--mb-gold-dark);
+                color: #fff;
                 box-shadow: 0 12px 28px rgba(180, 133, 59, 0.3);
             }
 
@@ -197,6 +200,32 @@
                 color: var(--mb-text-muted);
             }
         }
+    }
+
+    // Prefer growing the modal over an awkward internal scrollbar when content fits.
+    .modal-content {
+        max-height: min(92vh, 820px);
+        overflow-x: hidden;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: var(--mb-border) transparent;
+
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: var(--mb-border);
+            border-radius: 999px;
+        }
+    }
+
+    .modal-form {
+        padding: 28px 28px 24px;
+    }
+
+    .modal-image {
+        min-height: 0;
     }
 
     // intl-tel-input inside the coupon card — legacy iti-dark.scss carries
@@ -364,11 +393,23 @@
     background-color: var(--mb-surface);
     border: 1px solid var(--mb-gold);
     border-radius: 999px;
+    z-index: 40;
 
     a {
         color: #fff;
         font-family: 'Inter', sans-serif;
         font-weight: 600;
+    }
+}
+
+// Keep WhatsApp clear of the Search Flight CTA + mobile Call Us pill.
+@media screen and (max-width: 767px) {
+    #wa-btn {
+        right: 16px !important;
+        bottom: 160px !important;
+        width: 48px !important;
+        height: 48px !important;
+        z-index: 45 !important;
     }
 }
 

@@ -252,15 +252,17 @@
         }
     }
 
-    > .seo-keywords {
-        text-align: center;
-        color: var(--mb-text-muted);
-        font: 400 13px/2 'Inter', sans-serif;
-        margin-bottom: 8px;
-
-        &:last-of-type {
-            margin-bottom: 40px;
-        }
+    // SEO-only keyword H2s: keep in DOM for crawlers, visually hidden.
+    > .seo-keywords.sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 1px, 1px);
+        white-space: nowrap;
+        border: 0;
     }
 
     > .text-info > p {
@@ -268,7 +270,8 @@
     }
 
     .payment .card-icon {
-        opacity: 0.45;
+        opacity: 0.9;
+        filter: brightness(1.15);
     }
 
     .socials a {
@@ -293,12 +296,14 @@
             }
         }
 
-        > .rules > a {
+        > .rules > a,
+        > .rules > a:link,
+        > .rules > a:visited {
             color: var(--mb-text-muted);
             transition: color 0.2s ease-in;
 
             &:hover {
-                color: #fff;
+                color: var(--mb-gold);
             }
         }
     }

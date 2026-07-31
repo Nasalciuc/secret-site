@@ -151,6 +151,8 @@
 
             > .second-block {
                 padding: 20px 16px;
+                // Extra room so Search Flight stays clear of Call Us / WhatsApp FABs.
+                margin-bottom: 72px;
             }
         }
     }
