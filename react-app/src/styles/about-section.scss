@@ -45,26 +45,10 @@
             max-width: 408px;
         }
 
+        // Match Vue AboutVue: wrapper layout only; button look from buttons.scss
         > .black-orange-button {
             width: 408px;
             margin-top: auto;
-
-            > button,
-            > a {
-                display: block;
-                width: 100%;
-                border-radius: 8px;
-                text-align: center;
-                padding: 14px 20px;
-                background: #1a1d1f;
-                color: #b4853b;
-                border: 1px solid #b4853b;
-                font-family: 'Inter', sans-serif;
-                font-weight: 600;
-                font-size: 15px;
-                cursor: pointer;
-                text-decoration: none;
-            }
         }
     }
 

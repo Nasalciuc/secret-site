@@ -1,15 +1,12 @@
 import { useEffect, useRef } from 'react'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { useAppStore } from '@/store/useAppStore'
-import { useRegionStore } from '@/store/useRegionStore'
 import SvgContainer from './SvgContainer'
 import DialogForm from '@/components/DialogForm'
 
 export default function Header({ layout = 'margin' }) {
-    const { burgherMenu, setBurgherMenu, settings, setScrollToAboutUs } = useAppStore()
-    const { regions, regionsIsLoaded } = useRegionStore()
+    const { burgherMenu, setBurgherMenu, settings } = useAppStore()
     const headerRef = useRef(null)
-    const navigate = useNavigate()
 
     useEffect(() => {
         const handleScroll = () => {
@@ -23,18 +20,6 @@ export default function Header({ layout = 'margin' }) {
         window.addEventListener('scroll', handleScroll)
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
-
-    const scrollToAbout = () => {
-        if (window.location.pathname === '/' || window.location.pathname === '/flight') {
-            window.scrollTo({
-                top: document.querySelector('.about-container')?.offsetTop || 0,
-                behavior: 'smooth',
-            })
-            return
-        }
-        setScrollToAboutUs(true)
-        navigate('/')
-    }
 
     const toggleBurgher = () => setBurgherMenu(!burgherMenu)
 

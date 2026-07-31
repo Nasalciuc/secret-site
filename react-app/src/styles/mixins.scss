@@ -337,11 +337,14 @@
     .v-select {
         flex-grow: 1;
         width: 0;
+        position: relative;
+
         .vs__selected {
             margin-top: 1.5px;
         }
         .vs__dropdown-toggle {
             border: none;
+
             > .vs__actions {
                 padding: 0;
             }
@@ -365,6 +368,14 @@
                     weight: 400;
                     size: 14px;
                 }
+
+                &[type='search']::-webkit-search-cancel-button,
+                &[type='search']::-webkit-search-decoration,
+                &[type='search']::-webkit-search-results-button,
+                &[type='search']::-webkit-search-results-decoration {
+                    display: none;
+                    -webkit-appearance: none;
+                }
             }
         }
         .vs--searching {
@@ -387,6 +398,9 @@
             }
         }
         .vs__open-indicator {
+            display: block;
+            width: 16px;
+            height: 16px;
             margin-top: 2px;
             margin-right: 10px;
         }

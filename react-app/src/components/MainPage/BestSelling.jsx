@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
 import useEmblaCarousel from 'embla-carousel-react'
 import { useAppStore } from '@/store/useAppStore'
 import { useRegionStore } from '@/store/useRegionStore'
+import OrangeFilledButton from '@/components/common/Buttons/OrangeFilledButton'
 import OfferCard from './OfferCard'
 
 export default function BestSelling() {
@@ -135,7 +135,7 @@ export default function BestSelling() {
                 </div>
             </div>
             <div className="all-deals-button">
-                <Link to="/all-deals" className="orange-filled-button">See All Deals</Link>
+                <OrangeFilledButton className="all-deals-button" buttonText="See All Deals" link="/all-deals" />
             </div>
         </div>
     )

@@ -39,7 +39,7 @@ export default function HeaderContainer({ title = 'Business Class Flight Deals' 
                 <video loop muted playsInline autoPlay preload="metadata" poster={videoPoster} ref={videoRef} />
             </div>
             <div className="blocks">
-                <div className="first-block xyz-in">
+                <div className="first-block xyz-in" xyz="fade left-50% duration-15 delay-5">
                     <p>{title}</p>
                 </div>
                 <div className="second-block">

@@ -9,10 +9,11 @@ const flightPath = (type, name, id) => {
     return `/flight/${type}/${String(name).toLowerCase()}/${id}`
 }
 
-export default function FirstBlock({ destination, price, departure = [] }) {
+export default function FirstBlock({ destination, price, departure = [], className = '' }) {
     const params = useParams()
     const isCity = Boolean(params.city)
     const nestedType = params.region ? 'country' : 'city'
+    const rootClass = ['first-block', 'flight-card-header', className].filter(Boolean).join(' ')
 
     const renderContent = (item) => (
         <>
@@ -23,7 +24,7 @@ export default function FirstBlock({ destination, price, departure = [] }) {
     )
 
     return (
-        <div className="first-block flight-card-header">
+        <div className={rootClass}>
             <div className="title">
                 <div className="first-row">
                     <p>Flight to</p>
@@ -47,12 +48,13 @@ export default function FirstBlock({ destination, price, departure = [] }) {
                     <div className="flex-grow-1">Old Price</div>
                     <div className="flex-grow-1">Price Today</div>
                 </div>
-                {/* Match Vue xyz-transition-group: per-row --xyz-index + appear-stagger */}
+                {/* Match Vue xyz-transition-group: appear-visible + appear-stagger (default 0.5s) */}
                 {departure.length > 0 && (
                     <XyzTransitionGroup
                         key={params.id ?? 'departure-list'}
                         className="content"
                         xyz="fade small appear-stagger"
+                        appear={false}
                         appearVisible
                     >
                         {departure.slice(0, 10).map((item) => {

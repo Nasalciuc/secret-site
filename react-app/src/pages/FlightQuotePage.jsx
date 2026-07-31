@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { getAirports, searchFlight } from '@/services/api'
 import { useAppStore } from '@/store/useAppStore'
+import { withBrandTitle } from '@/utils/brandTitle'
 import HeaderContainer from '@/components/Quote/HeaderContainer'
 import AirlinesLogos from '@/components/Footer/AirlinesLogos'
 import WorksContainer from '@/components/MainPage/WorksContainer'
@@ -45,7 +46,7 @@ export default function FlightQuotePage() {
     const [success, setSuccess] = useState(false)
 
     useEffect(() => {
-        document.title = 'Search result'
+        document.title = withBrandTitle('Search result')
     }, [])
 
     useEffect(() => {

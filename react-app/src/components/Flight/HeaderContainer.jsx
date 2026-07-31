@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getBestDeal } from '@/services/api'
 import { useRegionStore } from '@/store/useRegionStore'
+import { withBrandTitle } from '@/utils/brandTitle'
 import SecondBlock from '@/components/HeaderForm/FlightCard/SecondBlock'
 import FirstBlock from './FirstBlock'
 import RegionVue from './RegionVue'
@@ -62,7 +63,7 @@ export default function HeaderContainer({ destination = [], onAbout, onCards }) 
             setPrice(result.minPrice?.price_today ?? null)
             setImage(storageUrl(result.image))
 
-            if (result.meta?.title) document.title = result.meta.title
+            if (result.meta?.title) document.title = withBrandTitle(result.meta.title)
             Object.entries(result.meta?.meta ?? {}).forEach(([name, content]) => {
                 if (content === null || content === undefined) return
                 let tag = document.querySelector(`meta[name="${name}"]`)

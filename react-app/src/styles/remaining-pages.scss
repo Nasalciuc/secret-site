@@ -28,20 +28,6 @@
             padding: 24px !important;
             border-radius: 16px;
             background: #1a1d1f;
-
-            > .second-block {
-                padding: 0;
-            }
-
-            /* Match homepage phone field width so "+1 …" placeholder is not clipped */
-            .iti-group {
-                min-width: 232px;
-                flex: 1 1 40%;
-            }
-
-            .iti-group .iti__tel-input {
-                min-width: 0;
-            }
         }
 
         > .first-block-best-deals > .v-select {
@@ -159,7 +145,6 @@
             > span {
                 color: #fff;
                 font-family: 'SSP-bold', sans-serif;
-                text-transform: capitalize;
             }
         }
 
@@ -328,19 +313,26 @@
     .airline-details {
         display: flex;
         justify-content: flex-end;
-        width: 50%;
+        max-width: 800px;
+        width: auto;
+        padding: 0;
+        border-radius: 0;
+        background: transparent;
+        color: #001b47;
     }
 
     .second-block {
         width: 35%;
         height: 30%;
+        border-radius: 16px;
     }
 
     .promo-container {
         max-width: 800px;
         padding: 62px;
-        border-radius: 12px;
+        border-radius: 16px;
         background-color: #f9f6f3;
+        color: #001b47;
         font-family: 'Inter', sans-serif;
     }
 

@@ -7,8 +7,12 @@ const TRANSITION = parseInt(import.meta.env.VITE_TRANSITION || '400')
 
 export default function BurgerMenu() {
     const { burgherMenu, setBurgherMenu, settings } = useAppStore()
-    const { regions, regionsIsLoaded } = useRegionStore()
+    const { regions, regionsIsLoaded, getRegions } = useRegionStore()
     const [setTransition, setSetTransition] = useState(false)
+
+    useEffect(() => {
+        if (!regionsIsLoaded) getRegions()
+    }, [getRegions, regionsIsLoaded])
 
     useEffect(() => {
         if (burgherMenu) {
@@ -24,7 +28,13 @@ export default function BurgerMenu() {
 
     const hideBurgher = () => setBurgherMenu(false)
 
-    const firstRegion = regions?.regions?.[0]
+    // React store keeps `regions` as a flat array (Vue nested under regions.regions).
+    const firstRegion = Array.isArray(regions) ? regions[0] : regions?.regions?.[0]
+    const bestDealsTo = firstRegion?.name
+        ? `/best-deals/${String(firstRegion.name).toLowerCase()}/${firstRegion.id ?? 0}`
+        : regionsIsLoaded
+          ? '/best-deals/unset/0'
+          : '#'
 
     return (
         <div className={`burgher-menu ${burgherMenu ? 'show' : 'hide'} ${setTransition ? 'transition' : ''}`}>
@@ -53,7 +63,7 @@ export default function BurgerMenu() {
                     <a href="https://blog.buybusinessclass.com/" className="fade-in" style={{ '--index': 4 }}>Blog</a>
                     <Link
                         onClick={hideBurgher}
-                        to={regionsIsLoaded && firstRegion?.name && firstRegion?.id ? `/best-deals/${firstRegion.name.toLowerCase()}/${firstRegion.id}` : '#'}
+                        to={bestDealsTo}
                         className="fade-in"
                         style={{ '--index': 3 }}
                     >

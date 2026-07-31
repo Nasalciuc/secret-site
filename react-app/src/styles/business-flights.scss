@@ -39,6 +39,7 @@
     .business-order-fly {
         margin-bottom: 5%;
 
+        // Match Vue OrderFlyBlock: centered 600px form, no card chrome around OrderFly
         .header-form-business {
             max-width: 600px;
             margin-right: auto;
@@ -47,8 +48,8 @@
 
         .header-form.order-fly {
             padding: 24px;
-            border-radius: 16px;
-            background: rgba(26, 29, 31, 0.56);
+            border-radius: 0;
+            background: transparent;
         }
     }
 
@@ -422,19 +423,26 @@
     .airline-details {
         display: flex;
         justify-content: flex-end;
-        width: 50%;
+        max-width: 800px;
+        width: auto;
+        padding: 0;
+        border-radius: 0;
+        background: transparent;
+        color: #001b47;
     }
 
     .second-block {
         width: 35%;
         height: 30%;
+        border-radius: 16px;
     }
 
     .promo-container {
         max-width: 800px;
         padding: 62px;
-        border-radius: 12px;
+        border-radius: 16px;
         background-color: #f9f6f3;
+        color: #001b47;
         font-family: 'Inter', sans-serif;
     }
 
