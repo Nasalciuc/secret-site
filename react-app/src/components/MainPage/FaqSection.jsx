@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom'
 export const faqs = [
     {
         question: 'FAQ 1: How can I find discounted business class flights for last-minute travel?',
-        answer: 'Finding discounted business class flights for last-minute travel can be challenging, but there are a few ways to increase your chances. Airlines often offer last-minute promotions, so checking the airline\u2019s website directly and signing up for fare alerts can help. Travel platforms like BuyBusinessClass offer exclusive last-minute business class deals with flexible booking options. Additionally, staying flexible with travel dates can lead to cheaper fares closer to your departure.',
+        answer: "Finding discounted business class flights for last-minute travel can be challenging, but there are a few ways to increase your chances. Airlines often offer last-minute promotions, so checking the airline's website directly and signing up for fare alerts can help. Travel platforms like BuyBusinessClass offer exclusive last-minute business class deals with flexible booking options. Additionally, staying flexible with travel dates can lead to cheaper fares closer to your departure.",
         schemaQuestion: 'How can I find discounted business class flights for last-minute travel?',
     },
     {
         question: 'FAQ 2: What is the best way to book cheap international business class flights?',
-        answer: 'To book cheap international business class flights, it\u2019s essential to compare prices across various travel platforms. Off-peak season travel dates generally offer the lowest business class fares. Using loyalty points or miles can also significantly reduce the cost. Signing up for airline newsletters or using platforms like BuyBusinessClass will keep you updated on discounted business class tickets and deals.',
+        answer: "To book cheap international business class flights, it's essential to compare prices across various travel platforms. Off-peak season travel dates generally offer the lowest business class fares. Using loyalty points or miles can also significantly reduce the cost. Signing up for airline newsletters or using platforms like BuyBusinessClass will keep you updated on discounted business class tickets and deals.",
         schemaQuestion: 'What is the best way to book cheap international business class flights?',
     },
     {
@@ -60,7 +60,7 @@ export const faqs = [
     },
     {
         question: 'FAQ 11: Are business class tickets refundable or changeable?',
-        answer: 'Business class tickets are generally more flexible than economy class tickets, with many offering options for refunds or changes without fees. However, it\u2019s important to check the fare conditions with your airline to confirm whether changes or refunds are permitted.',
+        answer: "Business class tickets are generally more flexible than economy class tickets, with many offering options for refunds or changes without fees. However, it's important to check the fare conditions with your airline to confirm whether changes or refunds are permitted.",
         schemaQuestion: 'Are business class tickets refundable or changeable?',
     },
     {
