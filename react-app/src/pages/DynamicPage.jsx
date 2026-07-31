@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useAppStore } from '@/store/useAppStore'
+import { withBrandTitle } from '@/utils/brandTitle'
 import HeaderContainer from '@/components/DynamicPage/HeaderContainer'
 import DescriptionVue from '@/components/DynamicPage/DescriptionVue'
 import WorksContainer from '@/components/MainPage/WorksContainer'
@@ -24,7 +25,7 @@ export default function DynamicPage() {
     useEffect(() => {
         if (!page) return
 
-        document.title = page.meta?.title || document.title
+        if (page.meta?.title) document.title = withBrandTitle(page.meta.title)
 
         let metaDesc = document.querySelector('meta[name="description"]')
         if (!metaDesc) {

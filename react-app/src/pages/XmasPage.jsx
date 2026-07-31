@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import RegionVue from '@/components/Flight/RegionVue'
-import SecondBlock from '@/components/HeaderForm/FlightCard/SecondBlock'
+import BlackFridaySearch from '@/components/Seasonal/BlackFridaySearch'
 import ReviewsSection from '@/components/MainPage/ReviewsSection'
 import bgXmas from '@/assets/images/static/bg-xmas.webp'
 
@@ -24,14 +24,14 @@ export default function XmasPage() {
                 <div className="left-image-friday">
                     <img
                         src={bgXmas}
-                        alt="Christmas and New Year flight sale"
+                        alt="Christmas and New Year flight sale ΓÇö from $2,499"
                         className="img-fluid h-100 w-100"
                         loading="lazy"
                         decoding="async"
                     />
                 </div>
                 <div className="right-component">
-                    <SecondBlock />
+                    <BlackFridaySearch />
                 </div>
             </div>
             <div className="review-friday">

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import AirlinesLogos from '@/components/Footer/AirlinesLogos'
+import { withBrandTitle } from '@/utils/brandTitle'
 
 const BACK = import.meta.env.VITE_BACK
 
@@ -23,11 +24,13 @@ export default function InnerBlogPage() {
                     throw new Error('')
                 }
 
+                const name = result.data.data.name
                 setCurrentBlog(JSON.parse(result.data.data.body).blocks)
                 setHeaderBlog({
-                    name: result.data.data.name,
+                    name,
                     imgUrl: `${BACK}/storage/${result.data.data.image}`,
                 })
+                if (name) document.title = withBrandTitle(name)
                 setIsLoaded(true)
             } catch (error) {
                 navigate('/')

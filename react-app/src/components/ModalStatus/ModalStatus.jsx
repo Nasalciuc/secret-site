@@ -1,11 +1,9 @@
 import { useAppStore } from '@/store/useAppStore'
 
 export default function ModalStatus() {
-    const { modal, setModal } = useAppStore()
+    const { modal, hideModal } = useAppStore()
 
     if (!modal.display) return null
-
-    const hideModal = () => setModal({ display: false })
 
     const renderIcon = () => {
         if (modal.status === 'success') {

@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import TransparentButton from '@/components/common/Buttons/TransparentButton'
 
 const TRUSTPILOT_URL = 'https://www.trustpilot.com/review/buybusinessclass.com'
 
@@ -47,11 +48,12 @@ export default function ReviewsSection() {
                     </div>
                 </div>
             </div>
-            <div className="button-container">
-                <a href={TRUSTPILOT_URL} target="_blank" rel="noopener noreferrer">
-                    Read more
-                </a>
-            </div>
+            <TransparentButton
+                buttonText="Read more"
+                link={TRUSTPILOT_URL}
+                regularLink
+                target="_blank"
+            />
         </div>
     )
 }

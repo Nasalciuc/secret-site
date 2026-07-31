@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import AirlinesLogos from '@/components/Footer/AirlinesLogos'
 import WorksContainer from '@/components/MainPage/WorksContainer'
 import ContactSection from '@/components/MainPage/ContactSection'
+import OrangeFilledButton from '@/components/common/Buttons/OrangeFilledButton'
 import TransparentButton from '@/components/common/Buttons/TransparentButton'
 import { useReviewsStore } from '@/store/useReviewsStore'
+import { withBrandTitle } from '@/utils/brandTitle'
 
 function StarIcon() {
     return (
@@ -55,9 +56,7 @@ function ReviewsHeaderContainer() {
         <div className="content reviews-header-container">
             <div className="blocks reviews-header-content">
                 <ReviewsTitle />
-                <div className="orange-filled-button">
-                    <Link to="/">Book a Flight</Link>
-                </div>
+                <OrangeFilledButton buttonText="Book a Flight" link="/" />
             </div>
         </div>
     )
@@ -120,7 +119,7 @@ function ReviewsContainer() {
 
 export default function ReviewsPage() {
     useEffect(() => {
-        document.title = 'Reviews'
+        document.title = withBrandTitle('Reviews')
     }, [])
 
     return (

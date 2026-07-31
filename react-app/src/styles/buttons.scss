@@ -19,6 +19,35 @@
     }
 }
 
+// Match Vue BlackWithOrangeTextButton.vue scoped styles
+.black-orange-button {
+    width: 100%;
+    position: relative;
+
+    > button,
+    a {
+        display: block;
+        border-radius: 8px;
+        text-align: center;
+        background: #1a1d1f;
+        width: 100%;
+        padding: 12px 20px;
+        color: #b4853b;
+        transition: 0.4s ease-in;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: 15px;
+        box-shadow: 0 0 10px #dbdde0;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+
+        &:hover {
+            background: #272b30;
+        }
+    }
+}
+
 // Doubled class keeps the border from being reset by `.header-form.order-fly button`,
 // which has equal specificity and is loaded later. Vue relied on scoped styles here.
 .transparent-button.button-container.button-container {

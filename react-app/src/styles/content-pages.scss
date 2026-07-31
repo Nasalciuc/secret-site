@@ -70,7 +70,6 @@
         background: #272b30;
         border-radius: 16px;
         overflow: hidden;
-        text-decoration: none;
         color: #dadde0;
         transition: transform 0.2s;
 
@@ -78,24 +77,38 @@
             transform: translateY(-2px);
         }
 
+        > a {
+            flex-shrink: 0;
+        }
+
         img {
             width: 240px;
             height: 160px;
             object-fit: cover;
+            display: block;
         }
 
         .blog-card-content {
             padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
 
             h3 {
                 font-size: 20px;
-                margin-bottom: 8px;
+                margin-bottom: 0;
                 font-family: 'SSP-bold';
             }
 
             p {
                 color: #8e969e;
                 line-height: 1.6;
+                margin-bottom: 16px;
+            }
+
+            > .black-orange-button {
+                width: fit-content;
+                margin-top: auto;
             }
         }
     }

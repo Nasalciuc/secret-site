@@ -1,10 +1,12 @@
-import { lazy, Suspense, useEffect } from 'react'
+import { lazy, Suspense, useEffect, useRef } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 
 // Layouts
 import MarginLayout from '@/layouts/MarginLayout'
 import HeaderLayout from '@/layouts/HeaderLayout'
 import dynamicPagesData from '@/dynamicPages.json'
+import { DEFAULT_DOCUMENT_TITLE, withBrandTitle } from '@/utils/brandTitle'
+import { trackFacebookPageView } from '@/utils/thirdParty'
 
 // Critical pages (eager load)
 import MainPage from '@/pages/MainPage'
@@ -85,7 +87,7 @@ const routes = [
     { path: '/flight/country/:country/:id', element: FlightPage, layout: MarginLayout, meta: { canonical: true } },
     { path: '/flight/city/:city/:id', element: FlightPage, layout: MarginLayout, meta: { canonical: true } },
     { path: '/best-deals/:region/:id', element: BestDeals, layout: MarginLayout, meta: { canonical: true, description: 'Discover luxury business class travel at BuyBusinessClass. Personalized service, spacious seating, and unbeatable fares to all destinations worldwide. Book now!' } },
-    { path: '/reviews', element: ReviewsVue, layout: MarginLayout, meta: { description: 'Discover luxury business class travel at BuyBusinessClass. Personalized service, spacious seating, and unbeatable fares to all destinations worldwide. Book now!' } },
+    { path: '/reviews', element: ReviewsVue, layout: MarginLayout, meta: { title: 'Reviews | BuyBusinessClass', description: 'Discover luxury business class travel at BuyBusinessClass. Personalized service, spacious seating, and unbeatable fares to all destinations worldwide. Book now!' } },
     { path: '/black-friday-busines-class-seat-sale', element: BlackFridayPage, layout: MarginLayout, meta: { description: 'Discover luxury business class travel at BuyBusinessClass. Personalized service, spacious seating, and unbeatable fares to all destinations worldwide. Book now!' } },
     { path: '/xmas-new-year-flight-sale', element: XmasPage, layout: MarginLayout, meta: { description: 'Discover luxury business class travel at BuyBusinessClass. Personalized service, spacious seating, and unbeatable fares to all destinations worldwide. Book now!' } },
     { path: '/flight', element: FlightQuotePage, layout: MarginLayout },
@@ -109,12 +111,14 @@ const routes = [
 
 function MetaUpdater() {
     const location = useLocation()
+    const isFirstMetaPass = useRef(true)
 
     useEffect(() => {
-        const defaultTitle = 'Business Class Flights | Discounted Business Class Tickets'
         const defaultDescription = 'Find cheap business class airline tickets, exclusive flight deals, and discounted business class fares. Save big on airfares for business class travel worldwide. Book now!'
 
-        let title = defaultTitle
+        // Falsy titleContent → Vue App.vue empty-title fallback (unsuffixed).
+        // Homepage MainPage clears meta title in Vue; keep the same effective title here.
+        let titleContent = null
         let description = defaultDescription
         let canonical = false
 
@@ -128,27 +132,30 @@ function MetaUpdater() {
             // All flight detail routes use a canonical URL (matches router meta.canonical).
             canonical = true
             if (type === 'city' && staticCityMeta[key]) {
-                title = staticCityMeta[key].title
+                titleContent = staticCityMeta[key].title
                 description = staticCityMeta[key].description
             } else if (type === 'country' && staticCountryMeta[key]) {
-                title = staticCountryMeta[key].title
+                titleContent = staticCountryMeta[key].title
                 description = staticCountryMeta[key].description
             } else if (type === 'region' && staticRegionMeta[key]) {
-                title = staticRegionMeta[key].title
+                titleContent = staticRegionMeta[key].title
                 description = staticRegionMeta[key].description
             }
-        } else {
+        } else if (location.pathname !== '/') {
             const route = routes.find((r) => {
                 const routePath = r.path.replace(/:[^/]+/g, '[^/]+').replace(/\*/g, '.*')
                 return new RegExp(`^${routePath}$`).test(location.pathname)
             })
-            if (route?.meta?.title) title = route.meta.title
+            if (route?.meta?.title) titleContent = route.meta.title
             if (route?.meta?.description) description = route.meta.description
             if (route?.meta?.canonical) canonical = true
+        } else {
+            const route = routes.find((r) => r.path === '/')
+            if (route?.meta?.description) description = route.meta.description
         }
 
-        // Set title
-        document.title = title
+        // Vue App.vue: content ? `${content} | BuyBusinessClass` : default
+        document.title = withBrandTitle(titleContent, DEFAULT_DOCUMENT_TITLE)
 
         // Set description
         let metaDesc = document.querySelector('meta[name="description"]')
@@ -160,8 +167,8 @@ function MetaUpdater() {
             document.head.appendChild(metaDesc)
         }
 
-        // Set canonical
-        const canonicalUrl = window.location.origin + location.pathname
+        // Match Vue router: origin + to.fullPath (pathname + search)
+        const canonicalUrl = window.location.origin + location.pathname + location.search
         let link = document.querySelector('link[rel="canonical"]')
         if (canonical) {
             if (link) link.setAttribute('href', canonicalUrl)
@@ -173,6 +180,13 @@ function MetaUpdater() {
             }
         } else if (link) {
             link.remove()
+        }
+
+        // Initial PageView is fired by pixel init; only track SPA navigations after that.
+        if (isFirstMetaPass.current) {
+            isFirstMetaPass.current = false
+        } else {
+            trackFacebookPageView()
         }
     }, [location])
 
