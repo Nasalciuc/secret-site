@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PREVIEW — Moodboard × Production homepage | BuyBusinessClass</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap');
+        :root {
+            --gold: #b4853b;
+            --gold-dark: #8f6a2e;
+            --slate: #334155;
+            --slate-deep: #1e293b;
+            --slate-ink: #0f172a;
+            --border: #475569;
+        }
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: var(--slate);
+            color: #e2e8f0;
+        }
+        .heading-serif { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; line-height: 1.1; }
+        .section-header { font-size: 2.25rem; line-height: 2.5rem; font-weight: 700; color: #fff; }
+        .premium-card, .deal-card { background-color: var(--slate-deep); color: #fff; transition: all 0.3s; }
+        .premium-card:hover, .deal-card:hover { transform: translateY(-6px); background-color: var(--slate-ink); }
+        .accent-btn { background-color: var(--gold); color: #fff; font-weight: 600; }
+        .accent-btn:hover { background-color: var(--gold-dark); }
+        .text-gold { color: var(--gold) !important; }
+        .bg-gold { background-color: var(--gold) !important; }
+        .border-gold { border-color: var(--gold) !important; }
+        .hero-bg {
+            background-image:
+                linear-gradient(rgba(15, 23, 42, 0.78), rgba(15, 23, 42, 0.62)),
+                url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        .trip-tab.active {
+            background: var(--gold);
+            color: #fff;
+            border-color: var(--gold);
+        }
+        .airline-chip {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid var(--border);
+            color: #cbd5e1;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            padding: 0.65rem 1rem;
+            border-radius: 999px;
+            white-space: nowrap;
+        }
+        .preview-banner {
+            background: linear-gradient(90deg, #7c2d12, #b4853b 45%, #7c2d12);
+            color: #fff;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-align: center;
+            padding: 0.55rem 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 60;
+        }
+        details.faq summary { list-style: none; cursor: pointer; }
+        details.faq summary::-webkit-details-marker { display: none; }
+        details.faq[open] .faq-chevron { transform: rotate(180deg); }
+        .faq-chevron { transition: transform 0.2s; }
+        input, select, button { font-family: inherit; }
+    </style>
+</head>
+<body class="bg-[#334155] text-slate-200">
+    <!-- PREVIEW LABEL -->
+    <div class="preview-banner">
+        PREVIEW — Moodboard × Production homepage (not live) · Visual prototype only
+    </div>
+
+    <!-- STICKY HEADER (production nav + trust + phone) -->
+    <header class="bg-[#0f172a]/95 backdrop-blur border-b border-[#475569] sticky top-[34px] z-50">
+        <div class="max-w-screen-2xl mx-auto px-4 sm:px-8 py-3 flex items-center justify-between gap-4">
+            <a href="#" class="flex items-center gap-2 shrink-0">
+                <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gold text-white text-sm font-bold">BBC</span>
+                <span class="text-white font-semibold tracking-tight text-lg hidden sm:inline">BuyBusinessClass</span>
+            </a>
+            <nav class="hidden lg:flex items-center gap-x-7 text-sm font-medium">
+                <a href="#" class="text-white border-b-2 border-gold pb-0.5">Home</a>
+                <a href="#about" class="text-slate-300 hover:text-white">About Us</a>
+                <a href="#airlines" class="text-slate-300 hover:text-white">Airlines</a>
+                <a href="#deals" class="text-slate-300 hover:text-white">Business Class Flights</a>
+                <a href="#" class="text-slate-300 hover:text-white">Blog</a>
+            </nav>
+            <div class="flex items-center gap-3">
+                <div class="hidden md:flex flex-col items-end leading-tight">
+                    <span class="text-[10px] tracking-[0.15em] uppercase text-gold font-semibold">24/7 Live Service</span>
+                    <a href="tel:+18883227999" class="font-mono text-sm font-semibold text-white hover:text-gold">
+                        <i class="fa-solid fa-phone text-gold mr-1"></i>+1 (888) 322-7999
+                    </a>
+                </div>
+                <a href="tel:+18883227999" class="md:hidden accent-btn px-4 py-2 rounded-2xl text-sm">
+                    <i class="fa-solid fa-phone"></i>
+                </a>
+            </div>
+        </div>
+        <!-- Trust badges strip -->
+        <div class="border-t border-[#475569]/80 bg-[#1e293b]/80">
+            <div class="max-w-screen-2xl mx-auto px-4 sm:px-8 py-2 flex flex-wrap items-center justify-center gap-x-6 gap-y-1 text-[11px] sm:text-xs text-slate-400">
+                <span class="inline-flex items-center gap-1.5"><i class="fa-solid fa-shield-halved text-gold"></i> Secure booking</span>
+                <span class="inline-flex items-center gap-1.5"><i class="fa-solid fa-star text-gold"></i> 4.9 Trustpilot</span>
+                <span class="inline-flex items-center gap-1.5"><i class="fa-solid fa-headset text-gold"></i> 24/7 concierge</span>
+                <span class="inline-flex items-center gap-1.5"><i class="fa-solid fa-percent text-gold"></i> Save up to 60%</span>
+                <span class="inline-flex items-center gap-1.5"><i class="fa-solid fa-lock text-gold"></i> Price protection</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO + OrderFly-style search -->
+    <section class="hero-bg min-h-[640px] flex items-center">
+        <div class="max-w-screen-2xl mx-auto px-4 sm:px-8 py-14 w-full">
+            <div class="grid lg:grid-cols-12 gap-10 items-start">
+                <div class="lg:col-span-5 text-white pt-2">
+                    <div class="inline-flex items-center gap-x-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 mb-5">
+                        <div class="w-2 h-2 bg-emerald-400 rounded-full"></div>
+                        <span class="text-sm">Trusted by 50,000+ travelers · 4.9/5 on Trustpilot</span>
+                    </div>
+                    <h1 class="heading-serif text-4xl sm:text-5xl lg:text-6xl leading-tight mb-5">
+                        Cheap <span class="text-gold">Business Class</span> Airline Tickets &amp; Flight Deals
+                    </h1>
+                    <p class="max-w-md text-lg text-white/85 mb-6">
+                        Save up to <span class="text-gold font-semibold">60%</span> on premium cabin fares. Exclusive consolidator rates — not public airline pricing.
+                    </p>
+                    <a href="tel:+18883227999" class="inline-flex items-center gap-2 text-sm text-white/80 hover:text-white">
+                        <i class="fa-solid fa-phone text-gold"></i>
+                        Prefer to talk? Call +1 (888) 322-7999
+                    </a>
+                </div>
+
+                <!-- OrderFly-like widget (static preview) -->
+                <div class="lg:col-span-7">
+                    <div class="bg-[#1e293b]/95 rounded-3xl border border-[#475569] shadow-2xl overflow-hidden">
+                        <div class="flex border-b border-[#475569]" id="trip-tabs">
+                            <button type="button" data-tab="round" class="trip-tab active flex-1 py-3.5 text-sm font-semibold border-b-2 border-transparent">Round Trip</button>
+                            <button type="button" data-tab="oneway" class="trip-tab flex-1 py-3.5 text-sm font-semibold text-slate-400 border-b-2 border-transparent hover:text-white">One Way</button>
+                            <button type="button" data-tab="multi" class="trip-tab flex-1 py-3.5 text-sm font-semibold text-slate-400 border-b-2 border-transparent hover:text-white">Multi City</button>
+                        </div>
+                        <form class="p-5 sm:p-7 space-y-4" onsubmit="event.preventDefault(); alert('Preview only — search is not connected.');">
+                            <div class="grid sm:grid-cols-[1fr_auto_1fr] gap-3 items-end">
+                                <div>
+                                    <label class="block text-[11px] uppercase tracking-wider text-slate-400 mb-1.5">From</label>
+                                    <input type="text" value="New York (JFK)" class="w-full px-4 py-3 border border-[#475569] bg-[#0f172a] text-white rounded-2xl text-sm">
+                                </div>
+                                <button type="button" class="hidden sm:flex mb-1 w-10 h-10 rounded-full border border-[#475569] items-center justify-center text-gold hover:bg-[#0f172a]" title="Swap" onclick="swapAirports()">
+                                    <i class="fa-solid fa-right-left"></i>
+                                </button>
+                                <div>
+                                    <label class="block text-[11px] uppercase tracking-wider text-slate-400 mb-1.5">To</label>
+                                    <input type="text" value="London (LHR)" class="w-full px-4 py-3 border border-[#475569] bg-[#0f172a] text-white rounded-2xl text-sm">
+                                </div>
+                            </div>
+                            <div class="grid sm:grid-cols-2 gap-3" id="date-row">
+                                <div>
+                                    <label class="block text-[11px] uppercase tracking-wider text-slate-400 mb-1.5">Departure</label>
+                                    <input type="date" value="2026-03-15" class="w-full px-4 py-3 border border-[#475569] bg-[#0f172a] text-white rounded-2xl text-sm">
+                                </div>
+                                <div id="return-field">
+                                    <label class="block text-[11px] uppercase tracking-wider text-slate-400 mb-1.5">Return</label>
+                                    <input type="date" value="2026-03-29" class="w-full px-4 py-3 border border-[#475569] bg-[#0f172a] text-white rounded-2xl text-sm">
+                                </div>
+                            </div>
+                            <div class="grid sm:grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-[11px] uppercase tracking-wider text-slate-400 mb-1.5">Cabin</label>
+                                    <select class="w-full px-4 py-3 border border-[#475569] bg-[#0f172a] text-white rounded-2xl text-sm">
+                                        <option selected>Business Class</option>
+                                        <option>First Class</option>
+                                        <option>Premium Economy</option>
+                                        <option>Economy</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] uppercase tracking-wider text-slate-400 mb-1.5">Passengers</label>
+                                    <select class="w-full px-4 py-3 border border-[#475569] bg-[#0f172a] text-white rounded-2xl text-sm">
+                                        <option selected>1 Adult</option>
+                                        <option>2 Adults</option>
+                                        <option>3 Adults</option>
+                                        <option>1 Adult, 1 Child</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="w-full accent-btn py-4 rounded-3xl font-semibold tracking-wide uppercase text-sm">
+                                Search Flight
+                            </button>
+                            <p class="text-center text-xs text-slate-500">Static UI preview · Matches production OrderFly fields</p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats strip (from moodboard) -->
+    <div class="max-w-screen-2xl mx-auto px-4 sm:px-8 py-10">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+            <div class="bg-[#1e293b] border border-[#475569] rounded-3xl p-5 sm:p-6 text-center">
+                <div class="text-3xl sm:text-4xl font-bold text-white">52k+</div>
+                <div class="text-sm text-slate-400 mt-1">Happy travelers</div>
+            </div>
+            <div class="bg-[#1e293b] border border-[#475569] rounded-3xl p-5 sm:p-6 text-center">
+                <div class="text-3xl sm:text-4xl font-bold text-white">$1,240</div>
+                <div class="text-sm text-slate-400 mt-1">Avg savings</div>
+            </div>
+            <div class="bg-[#1e293b] border border-[#475569] rounded-3xl p-5 sm:p-6 text-center">
+                <div class="text-3xl sm:text-4xl font-bold text-white">87</div>
+                <div class="text-sm text-slate-400 mt-1">Countries</div>
+            </div>
+            <div class="bg-[#1e293b] border border-[#475569] rounded-3xl p-5 sm:p-6 text-center">
+                <div class="text-3xl sm:text-4xl font-bold text-emerald-400">99%</div>
+                <div class="text-sm text-slate-400 mt-1">Recommend us</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Airline logos strip -->
+    <section id="airlines" class="border-y border-[#475569] bg-[#0f172a]/50 py-8">
+        <div class="max-w-screen-2xl mx-auto px-4 sm:px-8">
+            <p class="text-center text-xs uppercase tracking-[0.2em] text-slate-500 mb-5">Partners &amp; popular airlines</p>
+            <div class="flex flex-wrap justify-center gap-3">
+                <span class="airline-chip">Lufthansa</span>
+                <span class="airline-chip">United</span>
+                <span class="airline-chip">Emirates</span>
+                <span class="airline-chip">Qatar Airways</span>
+                <span class="airline-chip">British Airways</span>
+                <span class="airline-chip">Delta</span>
+                <span class="airline-chip">Air France</span>
+                <span class="airline-chip">Singapore</span>
+                <span class="airline-chip">ANA</span>
+                <span class="airline-chip">Turkish</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works — production BBC copy, moodboard numbered style -->
+    <section id="how-it-works" class="bg-white py-20">
+        <div class="max-w-screen-2xl mx-auto px-4 sm:px-8 text-center">
+            <span class="text-xs font-bold tracking-[3px] text-[#b4853b]">SIMPLE PROCESS</span>
+            <h2 class="text-3xl md:text-5xl font-bold text-[#0f172a] mt-3 mb-3">How does this <span class="text-[#b4853b]">work?</span></h2>
+            <p class="text-lg text-slate-500 max-w-md mx-auto mb-14">Four steps from quote to boarding — we do the hard work.</p>
+            <div class="grid md:grid-cols-4 gap-8 max-w-6xl mx-auto text-left md:text-center">
+                <div>
+                    <div class="w-14 h-14 bg-[#0f172a] text-white rounded-full flex items-center justify-center font-bold text-lg mx-auto mb-5">01</div>
+                    <h4 class="font-semibold text-xl text-[#0f172a] mb-2">Request a quote</h4>
+                    <p class="text-sm text-slate-500 leading-relaxed">Request a FREE quote by completing the form above.</p>
+                </div>
+                <div>
+                    <div class="w-14 h-14 bg-[#0f172a] text-white rounded-full flex items-center justify-center font-bold text-lg mx-auto mb-5">02</div>
+                    <h4 class="font-semibold text-xl text-[#0f172a] mb-2">Fill in your information</h4>
+                    <p class="text-sm text-slate-500 leading-relaxed">Fill in your personal and contact information.</p>
+                </div>
+                <div>
+                    <div class="w-14 h-14 bg-[#0f172a] text-white rounded-full flex items-center justify-center font-bold text-lg mx-auto mb-5">03</div>
+                    <h4 class="font-semibold text-xl text-[#0f172a] mb-2">Find the best deal</h4>
+                    <p class="text-sm text-slate-500 leading-relaxed">A friendly travel concierge will quickly find the best deals for you.</p>
+                </div>
+                <div>
+                    <div class="w-14 h-14 bg-[#b4853b] text-white rounded-full flex items-center justify-center font-bold text-lg mx-auto mb-5">04</div>
+                    <h4 class="font-semibold text-xl text-[#0f172a] mb-2">Book your flight</h4>
+                    <p class="text-sm text-slate-500 leading-relaxed">Book your flight and save up to 60% OFF retail prices.</p>
+                </div>
+            </div>
+            <a href="#order-fly" onclick="window.scrollTo({top:0,behavior:'smooth'}); return false;" class="mt-14 inline-flex items-center gap-2 bg-[#0f172a] hover:bg-[#1e293b] text-white px-10 py-4 rounded-full text-sm font-semibold transition-colors">
+                Book your Flight Now <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Discounted deals — Best Selling style (6 region cards) -->
+    <section id="deals" class="max-w-screen-2xl mx-auto px-4 sm:px-8 py-20">
+        <div class="text-center mb-10">
+            <span class="uppercase tracking-[2px] text-xs font-semibold text-gold">Best selling</span>
+            <h2 class="section-header mt-2">
+                <span class="text-gold">Discounted</span> Business Class <span class="text-gold">Flights</span>
+            </h2>
+            <p class="text-slate-400 mt-2">Save up to 60%</p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <article class="deal-card border border-[#475569] rounded-3xl overflow-hidden">
+                <div class="relative h-44">
+                    <img src="https://images.unsplash.com/photo-1467269204594-5994001beaa4?auto=format&fit=crop&w=800&q=80" alt="Europe" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4 bg-white px-3 py-1 rounded-xl text-xs font-bold text-emerald-600">up to 60% OFF</div>
+                </div>
+                <div class="p-6">
+                    <div class="font-semibold text-xl">Europe</div>
+                    <div class="text-sm text-slate-400 mt-1">Business class flights from</div>
+                    <div class="text-3xl font-bold text-white mt-1">$1,499</div>
+                    <button type="button" class="mt-4 w-full text-xs font-semibold py-2.5 rounded-2xl border border-[#475569] hover:bg-[#0f172a]">View deals</button>
+                </div>
+            </article>
+            <article class="deal-card border border-[#475569] rounded-3xl overflow-hidden">
+                <div class="relative h-44">
+                    <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=80" alt="Asia" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4 bg-white px-3 py-1 rounded-xl text-xs font-bold text-emerald-600">up to 55% OFF</div>
+                </div>
+                <div class="p-6">
+                    <div class="font-semibold text-xl">Asia</div>
+                    <div class="text-sm text-slate-400 mt-1">Business class flights from</div>
+                    <div class="text-3xl font-bold text-white mt-1">$1,899</div>
+                    <button type="button" class="mt-4 w-full text-xs font-semibold py-2.5 rounded-2xl border border-[#475569] hover:bg-[#0f172a]">View deals</button>
+                </div>
+            </article>
+            <article class="deal-card border border-[#475569] rounded-3xl overflow-hidden">
+                <div class="relative h-44">
+                    <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80" alt="Middle East" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4 bg-white px-3 py-1 rounded-xl text-xs font-bold text-emerald-600">up to 58% OFF</div>
+                </div>
+                <div class="p-6">
+                    <div class="font-semibold text-xl">Middle East</div>
+                    <div class="text-sm text-slate-400 mt-1">Business class flights from</div>
+                    <div class="text-3xl font-bold text-white mt-1">$1,699</div>
+                    <button type="button" class="mt-4 w-full text-xs font-semibold py-2.5 rounded-2xl border border-[#475569] hover:bg-[#0f172a]">View deals</button>
+                </div>
+            </article>
+            <article class="deal-card border border-[#475569] rounded-3xl overflow-hidden">
+                <div class="relative h-44">
+                    <img src="https://images.unsplash.com/photo-1484318571209-661cf29a69c3?auto=format&fit=crop&w=800&q=80" alt="Africa" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4 bg-white px-3 py-1 rounded-xl text-xs font-bold text-emerald-600">up to 50% OFF</div>
+                </div>
+                <div class="p-6">
+                    <div class="font-semibold text-xl">Africa</div>
+                    <div class="text-sm text-slate-400 mt-1">Business class flights from</div>
+                    <div class="text-3xl font-bold text-white mt-1">$1,799</div>
+                    <button type="button" class="mt-4 w-full text-xs font-semibold py-2.5 rounded-2xl border border-[#475569] hover:bg-[#0f172a]">View deals</button>
+                </div>
+            </article>
+            <article class="deal-card border border-[#475569] rounded-3xl overflow-hidden">
+                <div class="relative h-44">
+                    <img src="https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=800&q=80" alt="North America" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4 bg-white px-3 py-1 rounded-xl text-xs font-bold text-emerald-600">up to 52% OFF</div>
+                </div>
+                <div class="p-6">
+                    <div class="font-semibold text-xl">North America</div>
+                    <div class="text-sm text-slate-400 mt-1">Business class flights from</div>
+                    <div class="text-3xl font-bold text-white mt-1">$1,299</div>
+                    <button type="button" class="mt-4 w-full text-xs font-semibold py-2.5 rounded-2xl border border-[#475569] hover:bg-[#0f172a]">View deals</button>
+                </div>
+            </article>
+            <article class="deal-card border border-[#475569] rounded-3xl overflow-hidden">
+                <div class="relative h-44">
+                    <img src="https://images.unsplash.com/photo-1523482580671-b37b06c5f3f3?auto=format&fit=crop&w=800&q=80" alt="Oceania" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4 bg-white px-3 py-1 rounded-xl text-xs font-bold text-emerald-600">up to 48% OFF</div>
+                </div>
+                <div class="p-6">
+                    <div class="font-semibold text-xl">Oceania / Australia</div>
+                    <div class="text-sm text-slate-400 mt-1">Business class flights from</div>
+                    <div class="text-3xl font-bold text-white mt-1">$2,499</div>
+                    <button type="button" class="mt-4 w-full text-xs font-semibold py-2.5 rounded-2xl border border-[#475569] hover:bg-[#0f172a]">View deals</button>
+                </div>
+            </article>
+        </div>
+        <div class="text-center mt-10">
+            <a href="#" class="inline-block accent-btn px-10 py-3.5 rounded-3xl text-sm font-semibold">See All Deals</a>
+        </div>
+    </section>
+
+    <!-- Why us / About (moodboard difference + production tone) -->
+    <section id="about" class="max-w-screen-2xl mx-auto px-4 sm:px-8 py-16">
+        <div class="grid lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-5">
+                <span class="text-xs font-bold tracking-[2.5px] text-gold">THE BUYBUSINESSCLASS DIFFERENCE</span>
+                <h2 class="section-header mt-4">Premium travel,<br>without the premium price.</h2>
+                <p class="mt-6 text-lg text-slate-300">We specialize exclusively in business &amp; first class. Unpublished consolidator fares, dedicated experts, 24/7 support.</p>
+                <div class="mt-8 flex flex-wrap gap-4">
+                    <a href="tel:+18883227999" class="accent-btn px-8 py-3.5 rounded-3xl text-sm font-semibold">Call for a quote</a>
+                    <a href="#contact" class="px-5 py-3.5 border border-[#475569] rounded-3xl text-sm font-semibold text-white hover:bg-[#1e293b]">Contact us</a>
+                </div>
+            </div>
+            <div class="lg:col-span-7 grid sm:grid-cols-2 gap-5">
+                <div class="premium-card p-7 rounded-3xl border border-[#475569]">
+                    <div class="w-12 h-12 bg-amber-100 text-amber-700 rounded-2xl flex items-center justify-center mb-5"><i class="fa-solid fa-user-tie text-2xl"></i></div>
+                    <h4 class="font-semibold text-xl mb-2">Dedicated experts</h4>
+                    <p class="text-sm text-slate-300">Personal consultants who know the best routes and lowest fares.</p>
+                </div>
+                <div class="premium-card p-7 rounded-3xl border border-[#475569]">
+                    <div class="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center mb-5"><i class="fa-solid fa-lock text-2xl"></i></div>
+                    <h4 class="font-semibold text-xl mb-2">Real fares. Real savings.</h4>
+                    <p class="text-sm text-slate-300">Verified consolidators. What you see is what you pay.</p>
+                </div>
+                <div class="premium-card p-7 rounded-3xl border border-[#475569]">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-700 rounded-2xl flex items-center justify-center mb-5"><i class="fa-solid fa-headset text-2xl"></i></div>
+                    <h4 class="font-semibold text-xl mb-2">24/7 Concierge support</h4>
+                    <p class="text-sm text-slate-300">From booking to boarding and beyond.</p>
+                </div>
+                <div class="premium-card p-7 rounded-3xl border border-[#475569]">
+                    <div class="w-12 h-12 bg-orange-100 text-orange-700 rounded-2xl flex items-center justify-center mb-5"><i class="fa-solid fa-handshake text-2xl"></i></div>
+                    <h4 class="font-semibold text-xl mb-2">Flexible &amp; protected</h4>
+                    <p class="text-sm text-slate-300">Changeable tickets and price protection options.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trustpilot / Reviews -->
+    <section id="reviews" class="bg-white py-20">
+        <div class="max-w-screen-2xl mx-auto px-4 sm:px-8">
+            <div class="text-center mb-10">
+                <span class="text-xs font-bold tracking-[2px] text-[#b4853b]">TRUSTPILOT</span>
+                <h2 class="text-3xl md:text-5xl font-bold text-[#0f172a] mt-3">
+                    <span class="text-[#b4853b]">99%</span> of Travelers <span class="text-[#b4853b]">Recommend</span> BuyBusinessClass
+                </h2>
+                <a href="https://www.trustpilot.com/review/buybusinessclass.com" target="_blank" rel="noopener" class="inline-flex items-center gap-2 mt-4 text-sm font-semibold text-[#0f172a]">
+                    <i class="fa-solid fa-star text-[#00b67a]"></i>
+                    Excellent · 4.9/5 on Trustpilot
+                    <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400"></i>
+                </a>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-slate-50 border border-slate-100 p-8 rounded-3xl">
+                    <div class="flex gap-x-1 text-[#b4853b] mb-5"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <blockquote class="text-[15px] text-slate-700 leading-relaxed">"They found me a business class ticket to Tokyo for almost half the price. Service was incredible."</blockquote>
+                    <div class="mt-6 font-semibold text-sm text-[#0f172a]">Sarah P.</div>
+                    <div class="text-xs text-slate-500">New York → Tokyo</div>
+                </div>
+                <div class="bg-slate-50 border border-slate-100 p-8 rounded-3xl">
+                    <div class="flex gap-x-1 text-[#b4853b] mb-5"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <blockquote class="text-[15px] text-slate-700 leading-relaxed">"Best experience booking business class. They handled everything, even last-minute changes."</blockquote>
+                    <div class="mt-6 font-semibold text-sm text-[#0f172a]">David &amp; Elena M.</div>
+                    <div class="text-xs text-slate-500">Chicago → Paris</div>
+                </div>
+                <div class="bg-slate-50 border border-slate-100 p-8 rounded-3xl">
+                    <div class="flex gap-x-1 text-[#b4853b] mb-5"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
+                    <blockquote class="text-[15px] text-slate-700 leading-relaxed">"Consistently beats airline direct prices by 40–55%. Personal and trustworthy."</blockquote>
+                    <div class="mt-6 font-semibold text-sm text-[#0f172a]">Marcus T.</div>
+                    <div class="text-xs text-slate-500">Frequent flyer</div>
+                </div>
+            </div>
+            <div class="text-center mt-10">
+                <a href="https://www.trustpilot.com/review/buybusinessclass.com" target="_blank" rel="noopener" class="inline-block px-8 py-3 border-2 border-[#0f172a] text-[#0f172a] rounded-full text-sm font-semibold hover:bg-[#0f172a] hover:text-white transition-colors">Read more reviews</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Regions (production IA) -->
+    <section id="regions" class="max-w-screen-2xl mx-auto px-4 sm:px-8 py-16">
+        <h2 class="section-header text-center mb-10">Browse by destination</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="bg-[#1e293b] border border-[#475569] rounded-3xl p-7">
+                <h3 class="text-gold text-xs font-bold tracking-[2px] uppercase mb-4">Region</h3>
+                <ul class="space-y-2.5 text-sm text-slate-300">
+                    <li><a href="#" class="hover:text-white">Business class flights to Europe</a></li>
+                    <li><a href="#" class="hover:text-white">Business class flights to Asia</a></li>
+                    <li><a href="#" class="hover:text-white">Business class flights to Middle East</a></li>
+                    <li><a href="#" class="hover:text-white">Business class flights to Africa</a></li>
+                    <li><a href="#" class="hover:text-white">Business class flights to Americas</a></li>
+                </ul>
+                <a href="#" class="inline-block mt-5 text-sm font-semibold text-gold">View More →</a>
+            </div>
+            <div class="bg-[#1e293b] border border-[#475569] rounded-3xl p-7">
+                <h3 class="text-gold text-xs font-bold tracking-[2px] uppercase mb-4">Country</h3>
+                <ul class="space-y-2.5 text-sm text-slate-300">
+                    <li><a href="#" class="hover:text-white">Business class flights to United Kingdom</a></li>
+                    <li><a href="#" class="hover:text-white">Business class flights to Japan</a></li>
+                    <li><a href="#" class="hover:text-white">Business class flights to France</a></li>
+                    <li><a href="#" class="hover:text-white">Business class flights to UAE</a></li>
+                    <li><a href="#" class="hover:text-white">Business class flights to Australia</a></li>
+                </ul>
+                <a href="#" class="inline-block mt-5 text-sm font-semibold text-gold">View More →</a>
+            </div>
+            <div class="bg-[#1e293b] border border-[#475569] rounded-3xl p-7">
+                <h3 class="text-gold text-xs font-bold tracking-[2px] uppercase mb-4">City</h3>
+                <ul class="space-y-2.5 text-sm text-slate-300">
+                    <li><a href="#" class="hover:text-white">Business class flights to London</a></li>
+                    <li><a href="#" class="hover:text-white">Business class flights to Tokyo</a></li>
+                    <li><a href="#" class="hover:text-white">Business class flights to Paris</a></li>
+                    <li><a href="#" class="hover:text-white">Business class flights to Dubai</a></li>
+                    <li><a href="#" class="hover:text-white">Business class flights to Sydney</a></li>
+                </ul>
+                <a href="#" class="inline-block mt-5 text-sm font-semibold text-gold">View More →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ (sample from production) -->
+    <section id="faq" class="bg-[#0f172a] py-16 border-y border-[#475569]">
+        <div class="max-w-3xl mx-auto px-4 sm:px-8">
+            <h2 class="section-header text-center mb-8">Frequently asked questions</h2>
+            <div class="space-y-3">
+                <details class="faq bg-[#1e293b] border border-[#475569] rounded-2xl p-5">
+                    <summary class="flex items-center justify-between font-semibold text-white">
+                        How much can I save on business class?
+                        <i class="fa-solid fa-chevron-down faq-chevron text-gold text-sm ml-3"></i>
+                    </summary>
+                    <p class="mt-3 text-sm text-slate-400 leading-relaxed">Most travelers save 30–60% vs. airline retail rates by booking through consolidator fares our specialists access.</p>
+                </details>
+                <details class="faq bg-[#1e293b] border border-[#475569] rounded-2xl p-5">
+                    <summary class="flex items-center justify-between font-semibold text-white">
+                        How much does a business class flight to Europe typically cost?
+                        <i class="fa-solid fa-chevron-down faq-chevron text-gold text-sm ml-3"></i>
+                    </summary>
+                    <p class="mt-3 text-sm text-slate-400 leading-relaxed">Typically $1,500–$4,000 depending on airline, destination, and booking window. Advance booking and promotions help lower the fare.</p>
+                </details>
+                <details class="faq bg-[#1e293b] border border-[#475569] rounded-2xl p-5">
+                    <summary class="flex items-center justify-between font-semibold text-white">
+                        Is support available 24/7?
+                        <i class="fa-solid fa-chevron-down faq-chevron text-gold text-sm ml-3"></i>
+                    </summary>
+                    <p class="mt-3 text-sm text-slate-400 leading-relaxed">Yes — call +1 (888) 322-7999 any time for quotes, changes, and travel assistance.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact / Call CTA -->
+    <section id="contact" class="bg-[#1e293b] py-16 text-white">
+        <div class="max-w-screen-2xl mx-auto px-4 sm:px-8 grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <div class="text-gold text-xs font-bold tracking-[2px] uppercase mb-3">Contact Us</div>
+                <h2 class="text-3xl md:text-4xl font-bold">Still <span class="text-gold">have questions</span> or want to <span class="text-gold">leave us a message?</span></h2>
+                <p class="mt-4 text-slate-300">Submit your request and a Travel Consultant will contact you directly — or call now.</p>
+                <a href="tel:+18883227999" class="mt-6 inline-flex items-center gap-3 accent-btn px-8 py-4 rounded-3xl font-semibold">
+                    <i class="fa-solid fa-phone"></i> +1 (888) 322-7999
+                </a>
+                <p class="mt-4 text-sm text-slate-400">180 North Stetson Avenue, Chicago, IL 60601</p>
+            </div>
+            <form class="bg-[#0f172a] border border-[#475569] rounded-3xl p-6 sm:p-8 space-y-4" onsubmit="event.preventDefault(); alert('Preview only — form is not connected.');">
+                <input type="text" placeholder="Name" class="w-full px-4 py-3 border border-[#475569] bg-[#1e293b] text-white rounded-2xl text-sm">
+                <input type="email" placeholder="E-Mail" class="w-full px-4 py-3 border border-[#475569] bg-[#1e293b] text-white rounded-2xl text-sm">
+                <input type="tel" placeholder="Phone" class="w-full px-4 py-3 border border-[#475569] bg-[#1e293b] text-white rounded-2xl text-sm">
+                <textarea rows="3" placeholder="Message" class="w-full px-4 py-3 border border-[#475569] bg-[#1e293b] text-white rounded-2xl text-sm resize-none"></textarea>
+                <button type="submit" class="w-full accent-btn py-3.5 rounded-3xl font-semibold text-sm">Send message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#334155] border-t border-[#475569] pt-14 pb-8">
+        <div class="max-w-screen-2xl mx-auto px-4 sm:px-8 grid md:grid-cols-12 gap-y-10 gap-x-8">
+            <div class="md:col-span-4">
+                <div class="flex items-center gap-2 mb-4">
+                    <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gold text-white text-xs font-bold">BBC</span>
+                    <span class="text-white font-semibold">BuyBusinessClass</span>
+                </div>
+                <p class="text-sm text-slate-400">Making premium travel accessible. Exclusive business &amp; first class deals.</p>
+            </div>
+            <div class="md:col-span-2 text-sm text-slate-400">
+                <div class="font-semibold mb-4 text-xs tracking-wider text-slate-300">COMPANY</div>
+                <div class="space-y-2">
+                    <a href="#about" class="block hover:text-white">About us</a>
+                    <a href="#reviews" class="block hover:text-white">Reviews</a>
+                    <a href="#faq" class="block hover:text-white">FAQ</a>
+                    <a href="#" class="block hover:text-white">Blog</a>
+                </div>
+            </div>
+            <div class="md:col-span-3 text-sm text-slate-400">
+                <div class="font-semibold mb-4 text-xs tracking-wider text-slate-300">FLIGHTS</div>
+                <div class="space-y-2">
+                    <a href="#deals" class="block hover:text-white">Business Class Flights</a>
+                    <a href="#airlines" class="block hover:text-white">Airlines</a>
+                    <a href="#regions" class="block hover:text-white">All destinations</a>
+                </div>
+            </div>
+            <div class="md:col-span-3 text-sm">
+                <div class="font-semibold mb-4 text-xs tracking-wider text-slate-300">CONTACT</div>
+                <a href="tel:+18883227999" class="font-mono hover:text-gold block">+1 (888) 322-7999</a>
+                <a href="mailto:info@buybusinessclass.com" class="hover:text-gold block mt-2 text-slate-400">info@buybusinessclass.com</a>
+            </div>
+        </div>
+        <div class="max-w-screen-2xl mx-auto px-4 sm:px-8 mt-12 pt-8 border-t border-[#475569] text-xs text-slate-500 flex flex-wrap gap-4 justify-between">
+            <span>© 2026 BuyBusinessClass. All rights reserved.</span>
+            <span class="text-amber-600/90">Prototype preview — not the live website</span>
+        </div>
+    </footer>
+
+    <script>
+        // Trip tabs (visual only)
+        const tabs = document.querySelectorAll('.trip-tab');
+        const returnField = document.getElementById('return-field');
+        tabs.forEach((tab) => {
+            tab.addEventListener('click', () => {
+                tabs.forEach((t) => {
+                    t.classList.remove('active');
+                    t.classList.add('text-slate-400');
+                });
+                tab.classList.add('active');
+                tab.classList.remove('text-slate-400');
+                if (returnField) {
+                    returnField.style.display = tab.dataset.tab === 'oneway' ? 'none' : '';
+                }
+            });
+        });
+
+        function swapAirports() {
+            const inputs = document.querySelectorAll('form input[type="text"]');
+            if (inputs.length >= 2) {
+                const tmp = inputs[0].value;
+                inputs[0].value = inputs[1].value;
+                inputs[1].value = tmp;
+            }
+        }
+    </script>
+</body>
+</html>
