@@ -71,7 +71,7 @@ export default function NewsletterBanner() {
                 <h2 className="nb-title">Get Exclusive Business Class Flight Deals First</h2>
                 <h2 className="nb-subtitle">
                     Join our newsletter to get first access to our latest sales and exclusive business class offers you
-                    won\u2019t find online.
+                    won't find online.
                 </h2>
 
                 <form className="nb-form" onSubmit={onSubmit}>
@@ -98,7 +98,7 @@ export default function NewsletterBanner() {
                         <span></span>
                     </label>
                     <small className="nb-legal">
-                        I agree to receive promotional emails with exclusive offers and updates. Consent isn\u2019t required for
+                        I agree to receive promotional emails with exclusive offers and updates. Consent isn't required for
                         purchase. I accept the <Link to="/terms">T&C</Link> and
                         <Link to="/privacy">Privacy Policy</Link>.
                         <br />

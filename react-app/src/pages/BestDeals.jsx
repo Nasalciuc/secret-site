@@ -101,7 +101,7 @@ function HeaderContainer({ onCards }) {
                     selector={flights.selector ?? {}}
                 />
                 <div className="imported-second-block">
-                    <SecondBlock propTo={params.region} />
+                    <SecondBlock />
                 </div>
             </div>
         </div>

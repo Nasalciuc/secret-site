@@ -53,7 +53,7 @@ export default function BurgerMenu() {
                     <a href="https://blog.buybusinessclass.com/" className="fade-in" style={{ '--index': 4 }}>Blog</a>
                     <Link
                         onClick={hideBurgher}
-                        to={regionsIsLoaded ? `/best-deals/${firstRegion?.name?.toLowerCase() ?? 'unset'}/${firstRegion?.id ?? 0}` : '#'}
+                        to={regionsIsLoaded && firstRegion?.name && firstRegion?.id ? `/best-deals/${firstRegion.name.toLowerCase()}/${firstRegion.id}` : '#'}
                         className="fade-in"
                         style={{ '--index': 3 }}
                     >
