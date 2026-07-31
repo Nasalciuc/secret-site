@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import intlTelInput from 'intl-tel-input/intlTelInputWithUtils'
+import intlTelInput from 'intl-tel-input'
 import 'intl-tel-input/styles'
 import { useAppStore } from '@/store/useAppStore'
 import { sendCouponLead } from '@/services/api'
@@ -43,6 +43,7 @@ export default function CouponForm({ autoOpen = false }) {
             inputEl = phoneRef.current
 
             itiRef.current = intlTelInput(inputEl, {
+                loadUtils: () => import('intl-tel-input/utils'),
                 initialCountry: 'us',
                 countryOrder: ['us', 'gb', 'ca', 'au'],
                 separateDialCode: true,
