@@ -1,6 +1,32 @@
 import { Link } from 'react-router-dom'
 
-export default function OfferCard({ title, price, imgUrl, extraInfo = '', to }) {
+export default function OfferCard({ title, price, imgUrl, extraInfo = '', to, variant }) {
+    // Moodboard homepage variant: image on top, white % badge, outline CTA.
+    // Only rendered when explicitly requested (BestSelling on .mb-home); every
+    // other usage (AllDeals, FlightCards, DynamicPage) keeps the legacy markup.
+    if (variant === 'mb') {
+        const percentMatch = /\d+\s*%/.exec(extraInfo)
+        const badgeText = percentMatch ? `${percentMatch[0].replace(/\s+/g, '')} OFF` : 'Up to 60% OFF'
+
+        return (
+            <div className="mb-deal-card">
+                <div className="mb-deal-card__media">
+                    {imgUrl ? <img src={imgUrl} alt={title} loading="lazy" /> : null}
+                    <span className="mb-deal-card__badge">{badgeText}</span>
+                </div>
+                <div className="mb-deal-card__body">
+                    <p className="mb-deal-card__title">{title}</p>
+                    <p className="mb-deal-card__price">from ${price}</p>
+                    {to ? (
+                        <Link className="mb-deal-card__cta" aria-label={`View ${title} page`} to={to}>
+                            View deal
+                        </Link>
+                    ) : null}
+                </div>
+            </div>
+        )
+    }
+
     const backgroundImage = `linear-gradient(
         180deg,
         rgba(7, 8, 17, 0) 0%,

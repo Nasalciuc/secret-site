@@ -2,14 +2,14 @@ import SecondBlock from '@/components/HeaderForm/FlightCard/SecondBlock'
 
 export default function StudentFlightsPage() {
     return (
-        <div className="student-flights-page">
+        <div className="student-flights-page mb-page mb-promo">
             <div className="container-airline">
                 <div className="content-wrapper">
                     <div className="airline-details">
                         <div className="promo-container">
-                            <h2 className="promo-title">
-                                Business Class Flights for Students <br />
-                                <span />
+                            <h2 className="promo-title mb-serif">
+                                Business Class Flights <br />
+                                <span>for Students</span>
                             </h2>
                             <p className="promo-description">
                                 Book today and save up to <strong>50 - 77%*</strong> OFF - specially curated business

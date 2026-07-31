@@ -21,10 +21,14 @@ export default function BlogPage() {
     }, [blogsIsLoaded, getBlogs])
 
     return (
-        <>
+        <div className="mb-page mb-blog-page">
             <div className="header-content">
                 <div className="blog-header">
-                    <h1>Business Class Travel Blog</h1>
+                    <span className="mb-eyebrow">Travel journal</span>
+                    <h1 className="mb-serif">
+                        Business Class <span className="accent">Travel Blog</span>
+                    </h1>
+                    <p className="mb-blog-sub">Guides, tips and inspiration for flying business class for less.</p>
                     <div className="blog-header-cards">
                         {(blogs || []).slice(0, 5).map((blog) => (
                             <div key={blog.id} className="blog-header-card">
@@ -51,6 +55,6 @@ export default function BlogPage() {
                     </div>
                 ))}
             </div>
-        </>
+        </div>
     )
 }

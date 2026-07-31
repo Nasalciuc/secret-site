@@ -88,7 +88,9 @@
         fill: #b4853b;
     }
 
-    > .reverse {
+    // button.reverse beats `.header-form.order-fly button { border: none }` (0,2,1).
+    // Plain `.reverse` lost that fight and hid the circular border on From/To swap.
+    > button.reverse {
         position: absolute;
         left: 50%;
         top: 50%;
@@ -772,23 +774,26 @@
 
 .calendar,
 .single-calendar {
+    // Match Vue @mixin calendar: teleported to body, Popper sets coords.
+    // Do not set left/transform here — they fight Popper's inline styles.
     opacity: 0;
     display: none;
     z-index: -100;
     position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    left: -9999px;
 
     &.vs-open {
         opacity: 1;
         display: block;
-        z-index: 1000;
+        z-index: 1100; // above sticky Call Us (.btn-container z-index: 1000)
     }
 
     > div {
         background: #1a1d1f;
         border: 1px solid #33383f;
         padding: 24px;
+        left: 50%;
+        transform: translateX(-50%);
         position: relative;
         z-index: 400;
         border-radius: 8px;

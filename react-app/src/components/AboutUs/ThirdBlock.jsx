@@ -22,29 +22,24 @@ const differentiators = [
 
 export default function ThirdBlock() {
     return (
-        <div>
-            <div className="choose-description-apart">
-                <div className="title">
-                    <h2 className="main-title" style={{ fontFamily: 'SSP-bold' }}>
-                        What Sets Us Apart?
-                    </h2>
-                </div>
-            </div>
-            <div className="image-box-section">
-                <div className="image-container">
+        <section className="mb-about-apart">
+            <span className="mb-eyebrow">The difference</span>
+            <h2 className="mb-serif mb-about-apart__title">
+                What Sets Us <span className="accent">Apart?</span>
+            </h2>
+            <div className="mb-about-apart__layout">
+                <div className="mb-about-apart__media">
                     <img src={secondImg} alt="Left Image" loading="lazy" decoding="async" />
                 </div>
-                <div className="box-container">
+                <div className="mb-about-apart__cards">
                     {differentiators.map((item) => (
-                        <div className="box" key={item.title}>
-                            <span style={{ color: '#f2f2f3', fontSize: '18px', fontWeight: 'bold' }}>{item.title}</span>
-                            <p style={{ paddingTop: '10px', fontFamily: 'Inter, sans-serif', fontSize: '14px' }}>
-                                {item.description}
-                            </p>
+                        <div className="mb-about-apart__card" key={item.title}>
+                            <h3 className="mb-about-apart__card-title">{item.title}</h3>
+                            <p className="mb-about-apart__card-body">{item.description}</p>
                         </div>
                     ))}
                 </div>
             </div>
-        </div>
+        </section>
     )
 }

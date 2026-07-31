@@ -29,12 +29,18 @@ export default function ClientInfo({ errors, onButtonClick }) {
         const refresh = () => {
             const iti = itiRef.current
             if (!iti) return
-            setValid(iti.isValidNumber())
+            try {
+                // utils load async; calling before ready throws and unmounts Multi City
+                setValid(iti.isValidNumber())
+            } catch {
+                setValid(null)
+            }
         }
 
         phoneRef.current.addEventListener('countrychange', refresh)
         phoneRef.current.addEventListener('input', refresh)
-        refresh()
+        // Avoid sync isValidNumber before utils finish loading
+        Promise.resolve(itiRef.current?.promise).finally(refresh)
 
         return () => {
             phoneRef.current?.removeEventListener('countrychange', refresh)

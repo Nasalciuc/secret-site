@@ -1,18 +1,14 @@
 import { useEffect } from 'react'
 import { useAppStore } from '@/store/useAppStore'
 
-// Components
+// Components (moodboard redesign: hero, stats, deals, how-it-works, why-us, reviews, CTA)
 import HeaderContainer from '@/components/MainPage/HeaderContainer'
-import WorksContainer from '@/components/MainPage/WorksContainer'
+import StatsStrip from '@/components/MainPage/StatsStrip'
 import BestSelling from '@/components/MainPage/BestSelling'
+import WorksContainer from '@/components/MainPage/WorksContainer'
+import WhyUs from '@/components/MainPage/WhyUs'
 import ReviewsSection from '@/components/MainPage/ReviewsSection'
-import GoogleReview from '@/components/MainPage/GoogleReview'
-import RegionsSection from '@/components/MainPage/RegionsSection'
-import SeoContent from '@/components/MainPage/SeoContent'
-import FaqSection from '@/components/MainPage/FaqSection'
-import NewsletterBanner from '@/components/MainPage/NewsletterBanner'
-import ContactSection from '@/components/MainPage/ContactSection'
-import AirlinesLogos from '@/components/Footer/AirlinesLogos'
+import CtaBanner from '@/components/MainPage/CtaBanner'
 
 export default function MainPage() {
     const { getAboutUs } = useAppStore()
@@ -62,20 +58,16 @@ export default function MainPage() {
     }, [])
 
     return (
-        <div className="main-page">
+        <div className="main-page mb-home">
             <div className="header-content">
                 <HeaderContainer />
             </div>
-            <AirlinesLogos />
-            <WorksContainer />
+            <StatsStrip />
             <BestSelling />
+            <WorksContainer />
+            <WhyUs />
             <ReviewsSection />
-            <GoogleReview />
-            <RegionsSection />
-            <SeoContent />
-            <FaqSection />
-            <NewsletterBanner />
-            <ContactSection />
+            <CtaBanner />
         </div>
     )
 }

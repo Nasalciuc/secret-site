@@ -10,10 +10,10 @@ const teamMembers = [
 
 export default function TeamBlock() {
     return (
-        <div className="team-section">
-            <div className="team-header-second">
-                <h2 style={{ fontFamily: 'SSP-bold' }}>Your Personal Travel Managers</h2>
-                <p style={{ fontFamily: 'Inter, sans-serif', lineHeight: '24px', fontWeight: 400, color: '#8e969e' }}>
+        <div className="mb-about-team">
+            <div className="mb-about-team__intro">
+                <h2 className="mb-serif mb-about-team__intro-title">Your Personal Travel Managers</h2>
+                <p className="mb-about-team__intro-text">
                     We believe in one-on-one service.
                     <br />
                     When you book with us, you'll be paired with your very own Personal Travel Manager who will handle
@@ -22,12 +22,12 @@ export default function TeamBlock() {
                 </p>
             </div>
 
-            <div className="team-grid">
+            <div className="mb-about-team__grid">
                 {teamMembers.map((member) => (
-                    <div className="team-member" key={member.name}>
+                    <div className="mb-about-team__card" key={member.name}>
                         <img src={member.image} alt={member.name} loading="lazy" decoding="async" />
-                        <h3>{member.name}</h3>
-                        <p>{member.role}</p>
+                        <h3 className="mb-about-team__name">{member.name}</h3>
+                        <p className="mb-about-team__role">{member.role}</p>
                     </div>
                 ))}
             </div>

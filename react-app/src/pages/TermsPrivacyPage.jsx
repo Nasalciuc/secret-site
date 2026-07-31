@@ -49,29 +49,34 @@ export default function TermsPrivacyPage() {
     const blocks = useMemo(() => (Array.isArray(body) ? body : []), [body])
 
     return (
-        <div className="required-page">
-            <div className="blocks">
-                <div className="title">{title}</div>
-                {blocks.map((item, index) => {
-                    const type = item?.type
-                    const className = `block ${type === 'paragraph' ? 'text' : ''} ${type === 'header' ? 'header' : ''}`.trim()
+        <div className="required-page mb-page">
+            <div className="mb-cl-hero">
+                <span className="mb-eyebrow">Legal</span>
+                <h1 className="mb-serif">{title}</h1>
+            </div>
+            <section className="mb-legal-body">
+                <div className="blocks">
+                    {blocks.map((item, index) => {
+                        const type = item?.type
+                        const className = `block ${type === 'paragraph' ? 'text' : ''} ${type === 'header' ? 'header' : ''}`.trim()
 
-                    if (type === 'header') {
-                        const level = Math.min(Math.max(Number(item?.data?.level) || 2, 1), 6)
+                        if (type === 'header') {
+                            const level = Math.min(Math.max(Number(item?.data?.level) || 2, 1), 6)
+                            return (
+                                <div className={className} key={item?.id ?? index}>
+                                    {createElement(`h${level}`, null, item?.data?.text ?? '')}
+                                </div>
+                            )
+                        }
+
                         return (
                             <div className={className} key={item?.id ?? index}>
-                                {createElement(`h${level}`, null, item?.data?.text ?? '')}
+                                <p dangerouslySetInnerHTML={{ __html: item?.data?.text ?? '' }} />
                             </div>
                         )
-                    }
-
-                    return (
-                        <div className={className} key={item?.id ?? index}>
-                            <p dangerouslySetInnerHTML={{ __html: item?.data?.text ?? '' }} />
-                        </div>
-                    )
-                })}
-            </div>
+                    })}
+                </div>
+            </section>
             <ContactSection />
         </div>
     )

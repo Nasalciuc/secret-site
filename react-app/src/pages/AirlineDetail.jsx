@@ -82,8 +82,8 @@ export default function AirlineDetail() {
 
     if (!airline) {
         return (
-            <div className="airline-detail airline-not-found">
-                <h1>Airline not found</h1>
+            <div className="airline-detail airline-not-found mb-page">
+                <h1 className="mb-serif">Airline not found</h1>
                 <p>Explore the full list of premium airlines available through BuyBusinessClass.</p>
                 <Link to="/airlines">Back to airlines</Link>
             </div>
@@ -91,7 +91,7 @@ export default function AirlineDetail() {
     }
 
     return (
-        <div className="airline-detail-page">
+        <div className="airline-detail-page mb-page mb-airline-detail">
             <div className="container-airline">
                 <div className="content-wrapper">
                     <div className="airline-details">

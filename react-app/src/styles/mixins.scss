@@ -137,11 +137,11 @@
     display: none;
     z-index: -100;
     position: absolute;
-    left: -9999;
+    left: -9999px;
     &.vs-open {
         opacity: 1;
         display: block;
-        z-index: 1000;
+        z-index: 1100; // above sticky Call Us (.btn-container z-index: 1000)
     }
     > div {
         background: #1a1d1f;

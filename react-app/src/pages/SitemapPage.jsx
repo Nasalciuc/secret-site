@@ -5,5 +5,9 @@ export default function SitemapPage() {
         window.location.replace('/sitemap.html')
     }, [])
 
-    return null
+    return (
+        <div className="sitemap-page mb-page">
+            <p>Redirecting&hellip;</p>
+        </div>
+    )
 }

@@ -47,7 +47,7 @@ export default function DynamicPage() {
     if (!page) return <Error404 />
 
     return (
-        <div className="main-page">
+        <div className="main-page mb-page mb-dynamic-page">
             <div className="header-content">
                 <HeaderContainer title={page.mainTitle} />
             </div>

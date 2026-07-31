@@ -1,12 +1,18 @@
 import { useEffect, useRef } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { useAppStore } from '@/store/useAppStore'
 import SvgContainer from './SvgContainer'
 import DialogForm from '@/components/DialogForm'
 
+const scrollToOrderFly = () => {
+    document.getElementById('order-fly')?.scrollIntoView({ behavior: 'smooth' })
+}
+
 export default function Header({ layout = 'margin' }) {
     const { burgherMenu, setBurgherMenu, settings } = useAppStore()
     const headerRef = useRef(null)
+    const location = useLocation()
+    const navigate = useNavigate()
 
     useEffect(() => {
         const handleScroll = () => {
@@ -22,6 +28,17 @@ export default function Header({ layout = 'margin' }) {
     }, [])
 
     const toggleBurgher = () => setBurgherMenu(!burgherMenu)
+
+    const handleQuoteClick = () => {
+        if (location.pathname === '/') {
+            scrollToOrderFly()
+        } else {
+            navigate('/')
+            // Wait for the homepage to mount (and the scroll-to-top on route
+            // change to run) before scrolling down to the quote form.
+            setTimeout(scrollToOrderFly, 400)
+        }
+    }
 
     return (
         <div ref={headerRef} className={`header-container ${layout}-layout`}>
@@ -86,6 +103,9 @@ export default function Header({ layout = 'margin' }) {
                     </svg>
                     <span className="tel">{settings?.number || '+1 (888) 322-7999'}</span>
                 </a>
+                <button type="button" className="mb-btn-gold header-quote-btn" onClick={handleQuoteClick}>
+                    Get Free Quote
+                </button>
             </div>
         </div>
     )

@@ -129,9 +129,8 @@ export default function HeaderContainer({ destination = [], onAbout, onCards }) 
                     </div>
                     <div className="adaptive-title">
                         <p>Flight to</p>
-                        <h1 style={{ color: '#b4853b', textTransform: 'capitalize', fontFamily: "'SSP-bold', sans-serif" }}>
-                            {destinationName}
-                        </h1>
+                        {/* Moodboard: styled from mb-flight-deals.scss (serif gold destination) */}
+                        <h1>{destinationName}</h1>
                         <br />
                         <p>Starting from</p>
                         {price && <span>{formatPrice(price)}</span>}

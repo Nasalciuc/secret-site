@@ -1,0 +1,272 @@
+// Moodboard homepage: "How it works" (white break-out section) + "Why us" (dark 5/7 grid).
+// Scoped under .mb-home so the legacy WorksContainer look (main-page.scss
+// .describe-container) on all other pages stays untouched.
+
+:is(.mb-home, .mb-page) {
+    // ------------------------------------------------------------------
+    // How it works — full-width white section
+    // ------------------------------------------------------------------
+    .mb-works {
+        // Break out of .margin-container (32px / 24px / 8px side margins).
+        width: calc(100% + 64px);
+        margin-left: -32px;
+        background: #fff;
+        padding: 96px 32px;
+
+        @media screen and (max-width: 1200px) {
+            width: calc(100% + 48px);
+            margin-left: -24px;
+        }
+
+        @media screen and (max-width: 768px) {
+            width: calc(100% + 16px);
+            margin-left: -8px;
+            padding: 64px 16px;
+        }
+    }
+
+    .mb-works__inner {
+        max-width: 1440px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .mb-works__title {
+        color: var(--mb-ink);
+        font: 700 44px/1.15 'Inter', sans-serif;
+        margin: 0 0 16px;
+
+        @media screen and (max-width: 768px) {
+            font-size: 32px;
+        }
+    }
+
+    .mb-works__sub {
+        color: var(--mb-ink-muted);
+        font: 400 18px/1.5 'Inter', sans-serif;
+        max-width: 440px;
+        margin: 0 auto 56px;
+
+        @media screen and (max-width: 768px) {
+            margin-bottom: 40px;
+        }
+    }
+
+    .mb-works__grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 32px;
+        max-width: 1152px;
+        margin: 0 auto;
+
+        @media screen and (max-width: 1024px) {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 40px 24px;
+        }
+
+        @media screen and (max-width: 600px) {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 32px;
+        }
+    }
+
+    .mb-works__step {
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+            opacity 0.5s ease-out,
+            transform 0.5s ease-out;
+    }
+
+    .mb-works.is-visible .mb-works__step {
+        opacity: 1;
+        transform: none;
+
+        &:nth-child(2) {
+            transition-delay: 0.1s;
+        }
+
+        &:nth-child(3) {
+            transition-delay: 0.2s;
+        }
+
+        &:nth-child(4) {
+            transition-delay: 0.3s;
+        }
+    }
+
+    .mb-works__num {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: var(--mb-ink);
+        color: #fff;
+        font: 700 18px/1 'Inter', sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+
+        &.gold {
+            background: var(--mb-gold);
+        }
+    }
+
+    .mb-works__step-title {
+        color: var(--mb-ink);
+        font: 600 20px/1.3 'Inter', sans-serif;
+        margin: 0 0 12px;
+    }
+
+    .mb-works__step-body {
+        color: var(--mb-ink-muted);
+        font: 400 14px/1.6 'Inter', sans-serif;
+        max-width: 280px;
+        margin: 0 auto;
+    }
+
+    .mb-works__cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 56px;
+        background: var(--mb-ink);
+        color: #fff;
+        border: none;
+        border-radius: 999px;
+        padding: 16px 40px;
+        cursor: pointer;
+        font: 600 14px/1.4 'Inter', sans-serif;
+        transition: background 0.3s;
+
+        > svg {
+            flex-shrink: 0;
+        }
+
+        &:hover {
+            background: var(--mb-surface);
+        }
+
+        @media screen and (max-width: 768px) {
+            margin-top: 40px;
+        }
+    }
+
+    // ------------------------------------------------------------------
+    // Why us — dark section, 5/7 grid (intro / 2x2 cards)
+    // ------------------------------------------------------------------
+    .mb-why {
+        padding: 96px 32px;
+
+        @media screen and (max-width: 768px) {
+            padding: 64px 8px;
+        }
+    }
+
+    .mb-why__inner {
+        max-width: 1440px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+        gap: 48px;
+        align-items: center;
+
+        @media screen and (max-width: 1200px) {
+            grid-template-columns: minmax(0, 1fr);
+        }
+    }
+
+    .mb-why__title {
+        color: #fff;
+        font-size: 40px;
+        margin: 4px 0 0;
+
+        @media screen and (max-width: 768px) {
+            font-size: 32px;
+        }
+    }
+
+    .mb-why__text {
+        color: var(--mb-text-muted);
+        font: 400 18px/1.6 'Inter', sans-serif;
+        margin: 24px 0 0;
+        max-width: 460px;
+    }
+
+    .mb-why__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-top: 32px;
+    }
+
+    .mb-why__cards {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+
+        @media screen and (max-width: 600px) {
+            grid-template-columns: minmax(0, 1fr);
+        }
+    }
+
+    .mb-why__card {
+        background: var(--mb-surface);
+        border: 1px solid var(--mb-border);
+        border-radius: var(--mb-radius-card);
+        padding: 28px;
+        transition: all 0.3s;
+
+        &:hover {
+            transform: translateY(-6px);
+            background: var(--mb-deep);
+        }
+    }
+
+    .mb-why__icon {
+        width: 48px;
+        height: 48px;
+        border-radius: var(--mb-radius-input);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+
+        > svg {
+            display: block;
+        }
+
+        &--amber {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        &--emerald {
+            background: #d1fae5;
+            color: #059669;
+        }
+
+        &--blue {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+
+        &--purple {
+            background: #f3e8ff;
+            color: #9333ea;
+        }
+    }
+
+    .mb-why__card-title {
+        color: #fff;
+        font: 600 20px/1.3 'Inter', sans-serif;
+        margin: 0 0 8px;
+    }
+
+    .mb-why__card-body {
+        color: var(--mb-text);
+        font: 400 14px/1.6 'Inter', sans-serif;
+        margin: 0;
+    }
+}

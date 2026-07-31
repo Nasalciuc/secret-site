@@ -31,9 +31,15 @@ const parseFrDate = (date) => {
     return new Date(yyyy, Number(mm) - 1, dd).getTime()
 }
 
+const isCalendarButtonsClick = (event) => Boolean(event.target.closest?.('.calendar-buttons'))
+
 export default function OrderFly() {
     const navigate = useNavigate()
     const { appWidth, setModal, setQuoteLoading, setFlightPrices, setDestinationsFlights } = useAppStore()
+
+    const [roundTripDateTarget, setRoundTripDateTarget] = useState(null)
+    const [oneWayDateTarget, setOneWayDateTarget] = useState(null)
+    const [multiDateTargets, setMultiDateTargets] = useState([])
 
     const [currentPage, setCurrentPage] = useState('round_trip')
     const [from, setFrom] = useState(null)
@@ -58,6 +64,29 @@ export default function OrderFly() {
         setMultiFormErrors(emptyMultiErrors)
         setCalendarCollapse(true)
         setSelectReturn(false)
+        setMultiFlights((current) => current.map((flight) => ({ ...flight, collapse: true })))
+    }
+
+    const openCalendar = () => {
+        setCalendarCollapse(false)
+        setMultiFlights((current) => current.map((flight) => ({ ...flight, collapse: true })))
+    }
+
+    const doCalendarCollapse = (event, index) => {
+        if (index !== undefined && index !== null) {
+            setMultiFlights((current) => {
+                if (current.length <= +index || current[index].collapse || isCalendarButtonsClick(event)) {
+                    return current
+                }
+                return current.map((flight, flightIndex) => (flightIndex === index ? { ...flight, collapse: true } : flight))
+            })
+            return
+        }
+
+        if (!calendarCollapse && !isCalendarButtonsClick(event)) {
+            setCalendarCollapse(true)
+            setSelectReturn(false)
+        }
     }
 
     const updateMultiDatePicker = (date) => {
@@ -87,6 +116,8 @@ export default function OrderFly() {
     }
 
     const showCalendar = (index) => {
+        setCalendarCollapse(true)
+        setSelectReturn(false)
         setMultiFlights((current) => current.map((flight, flightIndex) => ({ ...flight, collapse: flightIndex !== index })))
     }
 
@@ -216,15 +247,18 @@ export default function OrderFly() {
                 {currentPage === 'round_trip' && (
                     <div className="round-trip">
                         <ChooseAirport propFrom={from} propTo={to} errorFrom={formErrors.airportFrom} errorTo={formErrors.airportTo} onFromChange={setFrom} onToChange={setTo} />
-                        <div className={`d-flex calendar-buttons round-trip xyz-nested ${!calendarCollapse ? 'active' : 'disabled'} ${formErrors.departureDate || formErrors.returnDate ? 'has-error' : ''}`}>
-                            <button type="button" onClick={() => setCalendarCollapse(false)} className={`date-button first-button ${formErrors.departureDate ? 'has-error' : ''}`}>
+                        <div
+                            ref={setRoundTripDateTarget}
+                            className={`d-flex calendar-buttons round-trip xyz-nested ${!calendarCollapse ? 'active' : 'disabled'} ${formErrors.departureDate || formErrors.returnDate ? 'has-error' : ''}`}
+                        >
+                            <button type="button" onClick={openCalendar} className={`date-button first-button ${formErrors.departureDate ? 'has-error' : ''}`}>
                                 <CalendarIcon fill={Boolean(multiDatePicker.start)} />
                                 {multiDatePicker.start || 'Select departure'}
                             </button>
                             <button
                                 type="button"
                                 onClick={() => {
-                                    setCalendarCollapse(false)
+                                    openCalendar()
                                     setSelectReturn(true)
                                 }}
                                 className={`date-button second-button ${formErrors.returnDate ? 'has-error' : ''}`}
@@ -233,38 +267,42 @@ export default function OrderFly() {
                                 {multiDatePicker.end || 'Select return'}
                             </button>
                         </div>
-                        <ChooseProperties propType={type} propTravelers={travelers} onTypeChange={setType} onTravelersChange={setTravelers} />
+                        <ChooseProperties
+                            propType={type}
+                            propTravelers={travelers}
+                            onTypeChange={setType}
+                            onTravelersChange={setTravelers}
+                            onOpenOverlay={() => {
+                                setCalendarCollapse(true)
+                                setSelectReturn(false)
+                            }}
+                        />
                         <OrangeFilledButton className="xyz-nested show search-submit" buttonText="Search Flight" click={searchFlightHandler} />
-                        {!calendarCollapse && (
-                            <Suspense fallback={null}>
-                                <DatePicker calendarCollapse={calendarCollapse} selectReturn={selectReturn} minDate={Date.now()} onUpdateValue={updateMultiDatePicker} />
-                            </Suspense>
-                        )}
                     </div>
                 )}
                 {currentPage === 'one_way' && (
                     <div className="one-way">
                         <ChooseAirport propFrom={from} propTo={to} errorFrom={formErrors.airportFrom} errorTo={formErrors.airportTo} onFromChange={setFrom} onToChange={setTo} />
-                        <div className={`d-flex calendar-buttons one-way xyz-nested ${!calendarCollapse ? 'active' : 'disabled'} ${formErrors.departureDate ? 'has-error' : ''}`}>
-                            <button type="button" onClick={() => setCalendarCollapse(false)} className={`date-button first-button ${formErrors.departureDate ? 'has-error' : ''}`}>
+                        <div
+                            ref={setOneWayDateTarget}
+                            className={`d-flex calendar-buttons one-way xyz-nested ${!calendarCollapse ? 'active' : 'disabled'} ${formErrors.departureDate ? 'has-error' : ''}`}
+                        >
+                            <button type="button" onClick={openCalendar} className={`date-button first-button ${formErrors.departureDate ? 'has-error' : ''}`}>
                                 <CalendarIcon fill={Boolean(singleDatePicker)} />
                                 {singleDatePicker || 'Select departure'}
                             </button>
                         </div>
-                        <ChooseProperties propType={type} propTravelers={travelers} onTypeChange={setType} onTravelersChange={setTravelers} />
+                        <ChooseProperties
+                            propType={type}
+                            propTravelers={travelers}
+                            onTypeChange={setType}
+                            onTravelersChange={setTravelers}
+                            onOpenOverlay={() => {
+                                setCalendarCollapse(true)
+                                setSelectReturn(false)
+                            }}
+                        />
                         <OrangeFilledButton className="xyz-nested show search-submit" buttonText="Search Flight" click={searchFlightHandler} />
-                        {!calendarCollapse && (
-                            <Suspense fallback={null}>
-                                <VueCalendar
-                                    calendarCollapse={calendarCollapse}
-                                    minDate={Date.now()}
-                                    onUpdateValue={(date) => {
-                                        setSingleDatePicker(date)
-                                        setCalendarCollapse(true)
-                                    }}
-                                />
-                            </Suspense>
-                        )}
                     </div>
                 )}
                 {currentPage === 'multi_city' && (
@@ -280,17 +318,35 @@ export default function OrderFly() {
                                     onFromChange={(airport) => updateMultiFlight(index, { from: airport })}
                                     onToChange={(airport) => updateMultiFlight(index, { to: airport })}
                                 />
-                                <div className={`calendar-buttons ${!flight.collapse ? 'active' : 'disabled'} ${index === multiFormErrors.index && multiFormErrors.departureDate ? 'has-error' : ''}`}>
+                                <div
+                                    ref={(node) => {
+                                        // Only store attach; ignore detach nulls to avoid max-update-depth loops
+                                        if (!node) return
+                                        setMultiDateTargets((current) => {
+                                            if (current[index] === node) return current
+                                            const next = current.slice()
+                                            next[index] = node
+                                            return next
+                                        })
+                                    }}
+                                    className={`calendar-buttons ${!flight.collapse ? 'active' : 'disabled'} ${index === multiFormErrors.index && multiFormErrors.departureDate ? 'has-error' : ''}`}
+                                >
                                     <button type="button" onClick={() => showCalendar(index)} className={index === multiFormErrors.index && multiFormErrors.departureDate ? 'has-error' : ''}>
                                         <CalendarIcon fill={Boolean(flight.date)} />
                                         {flight.date || 'Departure'}
                                     </button>
                                 </div>
-                                {!flight.collapse && (
-                                    <Suspense fallback={null}>
-                                        <VueCalendar calendarCollapse={flight.collapse} minDate={index > 0 ? parseFrDate(multiFlights[index - 1]?.date) : Date.now()} defaultDate={false} onUpdateValue={(date) => updateMultiFlightDate(date, index)} />
-                                    </Suspense>
-                                )}
+                                <Suspense fallback={null}>
+                                    <VueCalendar
+                                        calendarCollapse={flight.collapse}
+                                        target={multiDateTargets[index] || null}
+                                        dataIndex={index}
+                                        minDate={index > 0 ? parseFrDate(multiFlights[index - 1]?.date) : Date.now()}
+                                        defaultDate={false}
+                                        onUpdateValue={(date) => updateMultiFlightDate(date, index)}
+                                        onDoCalendarCollapse={doCalendarCollapse}
+                                    />
+                                </Suspense>
                                 {index > 1 && (
                                     <button type="button" onClick={() => removeFlight(index)} className="remove-flight">
                                         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -305,6 +361,32 @@ export default function OrderFly() {
                     </div>
                 )}
             </div>
+            {currentPage === 'round_trip' && (
+                <Suspense fallback={null}>
+                    <DatePicker
+                        target={roundTripDateTarget}
+                        calendarCollapse={calendarCollapse}
+                        selectReturn={selectReturn}
+                        minDate={Date.now()}
+                        onUpdateValue={updateMultiDatePicker}
+                        onDoCalendarCollapse={doCalendarCollapse}
+                    />
+                </Suspense>
+            )}
+            {currentPage === 'one_way' && (
+                <Suspense fallback={null}>
+                    <VueCalendar
+                        target={oneWayDateTarget}
+                        calendarCollapse={calendarCollapse}
+                        minDate={Date.now()}
+                        onUpdateValue={(date) => {
+                            setSingleDatePicker(date)
+                            setCalendarCollapse(true)
+                        }}
+                        onDoCalendarCollapse={doCalendarCollapse}
+                    />
+                </Suspense>
+            )}
         </div>
     )
 }

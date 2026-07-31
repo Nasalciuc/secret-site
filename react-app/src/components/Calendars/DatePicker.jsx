@@ -1,11 +1,30 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { DayPicker } from 'react-day-picker'
 import 'react-day-picker/style.css'
+import { useAppStore } from '@/store/useAppStore'
+import useCalendarPopper from './useCalendarPopper'
 
 const formatDate = (date) => date.toLocaleDateString('fr-CH')
 
-export default function DatePicker({ calendarCollapse, minDate, selectReturn = false, onUpdateValue }) {
+export default function DatePicker({
+    calendarCollapse,
+    minDate,
+    selectReturn = false,
+    onUpdateValue,
+    onDoCalendarCollapse,
+    target = null,
+}) {
+    const popRef = useRef(null)
+    const appWidth = useAppStore((state) => state.appWidth)
     const [range, setRange] = useState()
+
+    useCalendarPopper({
+        target,
+        calendarCollapse,
+        popRef,
+        onDoCalendarCollapse,
+    })
 
     useEffect(() => {
         if (selectReturn && range?.from && !range?.to) {
@@ -24,17 +43,20 @@ export default function DatePicker({ calendarCollapse, minDate, selectReturn = f
         })
     }
 
-    return (
-        <div className={`calendar ${calendarCollapse ? '' : 'vs-open'}`}>
+    if (typeof document === 'undefined') return null
+
+    return createPortal(
+        <div ref={popRef} className={`calendar ${calendarCollapse ? '' : 'vs-open'}`}>
             <div>
                 <DayPicker
                     mode="range"
-                    numberOfMonths={window.innerWidth <= 768 ? 1 : 2}
+                    numberOfMonths={appWidth <= 768 ? 1 : 2}
                     selected={range}
                     disabled={{ before: new Date(minDate) }}
                     onSelect={handleSelect}
                 />
             </div>
-        </div>
+        </div>,
+        document.body,
     )
 }

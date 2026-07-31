@@ -1,0 +1,194 @@
+// Moodboard homepage (slate + gold): stats strip + featured deals.
+// Everything is scoped under .mb-home so shared components (BestSelling,
+// OfferCard) keep their legacy look on DynamicPage / AllDeals / FlightCards.
+
+:is(.mb-home, .mb-page) {
+    // ------------------------------------------------------------------
+    // Stats strip: 4 rounded tiles under the hero
+    // ------------------------------------------------------------------
+    .mb-stats-strip {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 24px;
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 48px 32px;
+
+        @media screen and (max-width: 768px) {
+            gap: 12px;
+            padding: 32px 16px;
+        }
+    }
+
+    .mb-stat-tile {
+        background: var(--mb-surface);
+        border: 1px solid var(--mb-border);
+        border-radius: var(--mb-radius-card);
+        padding: 24px;
+        text-align: center;
+
+        &__value {
+            color: #fff;
+            font: 700 36px/1.2 'Inter', sans-serif;
+
+            @media screen and (max-width: 768px) {
+                font-size: 28px;
+            }
+        }
+
+        &__label {
+            margin-top: 4px;
+            color: var(--mb-text-muted);
+            font: 400 14px/1.4 'Inter', sans-serif;
+        }
+    }
+
+    // ------------------------------------------------------------------
+    // Featured deals (BestSelling): kill the legacy gradient panel and
+    // restyle the embla carousel content per the mockup '#deals' section
+    // ------------------------------------------------------------------
+    .best-selling-container {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 64px 32px;
+        background: none;
+        border-radius: 0;
+
+        @media screen and (max-width: 768px) {
+            padding: 40px 16px;
+        }
+
+        .mb-deals-head {
+            text-align: left;
+        }
+
+        .carousel__slide > div {
+            row-gap: 24px;
+            column-gap: 24px;
+        }
+
+        // Deal card: image top, white % badge, outline CTA
+        .mb-deal-card {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: var(--mb-surface);
+            border: 1px solid var(--mb-border);
+            border-radius: var(--mb-radius-card);
+            transition: all 0.3s;
+
+            &:hover {
+                transform: translateY(-6px);
+                background: var(--mb-deep);
+            }
+
+            &__media {
+                position: relative;
+                aspect-ratio: 3 / 2;
+                background: var(--mb-deep);
+
+                img {
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+
+            &__badge {
+                position: absolute;
+                top: 16px;
+                right: 16px;
+                background: #fff;
+                // Mockup badge text is emerald-600; --mb-green is too light on white
+                color: #059669;
+                border-radius: 12px;
+                padding: 4px 12px;
+                font: 700 12px/1.4 'Inter', sans-serif;
+                white-space: nowrap;
+            }
+
+            &__body {
+                display: flex;
+                flex: 1;
+                flex-direction: column;
+                padding: 24px;
+            }
+
+            &__title {
+                color: #fff;
+                font: 600 20px/1.3 'Inter', sans-serif;
+            }
+
+            &__price {
+                margin: 8px 0 20px;
+                color: #fff;
+                font: 700 30px/1.2 'Inter', sans-serif;
+            }
+
+            &__cta {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                margin-top: auto;
+                padding: 10px 16px;
+                border: 1px solid var(--mb-border);
+                border-radius: var(--mb-radius-input);
+                color: var(--mb-text);
+                font: 600 12px/1.4 'Inter', sans-serif;
+                transition: background 0.2s ease-in;
+
+                &:hover {
+                    background: var(--mb-deep);
+                }
+            }
+        }
+
+        // Carousel controls: subtle slate arrows + slate/gold dots
+        .carousel {
+            > button {
+                color: var(--mb-text-muted);
+                border-color: var(--mb-border);
+                transition: all 0.2s ease-in;
+
+                &:hover {
+                    color: #fff;
+                    border-color: var(--mb-text-muted);
+                }
+            }
+
+            .carousel__pagination {
+                button {
+                    border-color: var(--mb-border);
+
+                    &.carousel__pagination-button--active::after {
+                        background: var(--mb-gold);
+                    }
+                }
+            }
+        }
+
+        // Legacy places arrows at ±48px, outside the tighter mb padding;
+        // pull them in so they never overflow the viewport (<=1200 the
+        // legacy media query already moves them to the container edge)
+        @media screen and (min-width: 1201px) {
+            .carousel {
+                > button.carousel__prev {
+                    left: -16px;
+                }
+
+                > button.carousel__next {
+                    right: -16px;
+                }
+            }
+        }
+
+        // Gold 'See All Deals' link (legacy forces a { display: block })
+        > .all-deals-button {
+            a.mb-btn-gold {
+                display: inline-flex;
+            }
+        }
+    }
+}

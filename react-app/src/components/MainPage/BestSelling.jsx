@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import useEmblaCarousel from 'embla-carousel-react'
 import { useAppStore } from '@/store/useAppStore'
 import { useRegionStore } from '@/store/useRegionStore'
@@ -13,6 +14,15 @@ export default function BestSelling() {
     const [selectedIndex, setSelectedIndex] = useState(0)
     const [scrollSnaps, setScrollSnaps] = useState([])
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, align: 'start' })
+
+    // Moodboard presentation is only used on pages carrying the .mb-home scope
+    // (the homepage); DynamicPage reuses this component with the legacy look.
+    const rootRef = useRef(null)
+    const [mbHome, setMbHome] = useState(false)
+
+    useLayoutEffect(() => {
+        setMbHome(Boolean(rootRef.current?.closest('.mb-home, .mb-page')))
+    }, [])
 
     useEffect(() => {
         getBestSelling()
@@ -82,13 +92,20 @@ export default function BestSelling() {
     }
 
     return (
-        <div className="best-selling-container">
-            <div className="title">
-                <h2 className="main-title">
-                    <span className="accent">Discounted</span> Business Class <span className="accent">Flights</span>
-                </h2>
-                <p className="subtitle">Save up to 60%</p>
-            </div>
+        <div className="best-selling-container" ref={rootRef}>
+            {mbHome ? (
+                <div className="mb-deals-head">
+                    <span className="mb-eyebrow">Limited time</span>
+                    <h2 className="mb-section-title">Featured Business Class Deals</h2>
+                </div>
+            ) : (
+                <div className="title">
+                    <h2 className="main-title">
+                        <span className="accent">Discounted</span> Business Class <span className="accent">Flights</span>
+                    </h2>
+                    <p className="subtitle">Save up to 60%</p>
+                </div>
+            )}
             <div className="cards-container">
                 <div className="carousel">
                     <button className="carousel__prev" type="button" aria-label="Previous" onClick={scrollPrev}>
@@ -109,6 +126,7 @@ export default function BestSelling() {
                                                 imgUrl={returnImgUrl(item.image)}
                                                 extraInfo={item.extra_info ?? '60% off on business class flights'}
                                                 to={cardTo(item)}
+                                                variant={mbHome ? 'mb' : undefined}
                                             />
                                         ))}
                                     </div>
@@ -135,7 +153,13 @@ export default function BestSelling() {
                 </div>
             </div>
             <div className="all-deals-button">
-                <OrangeFilledButton className="all-deals-button" buttonText="See All Deals" link="/all-deals" />
+                {mbHome ? (
+                    <Link className="mb-btn-gold" to="/all-deals">
+                        See All Deals
+                    </Link>
+                ) : (
+                    <OrangeFilledButton className="all-deals-button" buttonText="See All Deals" link="/all-deals" />
+                )}
             </div>
         </div>
     )
