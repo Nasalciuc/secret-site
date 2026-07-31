@@ -4,7 +4,7 @@ import { Routes, Route, useLocation } from 'react-router-dom'
 // Layouts
 import MarginLayout from '@/layouts/MarginLayout'
 import HeaderLayout from '@/layouts/HeaderLayout'
-import dynamicPagesData from '@/dynamicPages.json'
+import dynamicSlugs from '@/dynamicSlugs'
 
 // Critical pages (eager load)
 import MainPage from '@/pages/MainPage'
@@ -91,7 +91,7 @@ const routes = [
     { path: '/flight', element: FlightQuotePage, layout: MarginLayout },
     // React Router v6 does not support partial dynamic segments ("/business-class-:suffix"
     // never matches). Enumerate the known dynamic pages explicitly instead.
-    ...Object.keys(dynamicPagesData).map((slug) => ({
+    ...dynamicSlugs.map((slug) => ({
         path: `/${slug}`,
         element: DynamicPage,
         layout: MarginLayout,
