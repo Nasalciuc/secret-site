@@ -12,6 +12,7 @@
     > .page-link {
         position: relative;
         cursor: pointer;
+        white-space: nowrap;
         color: var(--mb-text);
         font-size: 14px;
         font-weight: 500;

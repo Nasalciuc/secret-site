@@ -178,7 +178,8 @@
     // footer background instead of disappearing behind it.
     position: relative;
     isolation: isolate;
-    padding: 64px 120px 40px;
+    // Bottom padding clears the sticky Call Us pill over the copyright row.
+    padding: 64px 120px 96px;
 
     > .footer-top {
         display: grid;
