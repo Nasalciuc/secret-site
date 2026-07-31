@@ -2,6 +2,7 @@ import { createElement, useEffect, useMemo, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { getPrivacyTerms } from '@/services/api'
 import ContactSection from '@/components/MainPage/ContactSection'
+import { withBrandTitle } from '@/utils/brandTitle'
 
 const termsPaths = new Set(['/terms', '/terms-and-conditions'])
 
@@ -15,7 +16,7 @@ export default function TermsPrivacyPage() {
     const requestType = isTerms ? 'terms' : 'privacy'
 
     useEffect(() => {
-        document.title = title
+        document.title = withBrandTitle(title)
     }, [title])
 
     useEffect(() => {

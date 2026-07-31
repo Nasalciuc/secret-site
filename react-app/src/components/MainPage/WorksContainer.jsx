@@ -1,11 +1,16 @@
 import { useEffect, useRef, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { useAppStore } from '@/store/useAppStore'
+import BlackWithOrangeTextButton from '@/components/common/Buttons/BlackWithOrangeTextButton'
 
 export default function WorksContainer() {
+    const location = useLocation()
     const { appWidth } = useAppStore()
     const [displayPlaneAdaptive, setDisplayPlaneAdaptive] = useState(false)
     const [visible, setVisible] = useState(false)
     const rootRef = useRef(null)
+    // Match Vue: `$route.fullPath === '/' ? '' : '/'`
+    const isHome = `${location.pathname}${location.search}${location.hash}` === '/'
 
     useEffect(() => {
         setDisplayPlaneAdaptive(appWidth <= 420)
@@ -112,9 +117,11 @@ export default function WorksContainer() {
                     )}
                 </div>
             </div>
-            <button className="black-orange-button" onClick={scrollToTop}>
-                Book your Flight Now
-            </button>
+            <BlackWithOrangeTextButton
+                buttonText="Book your Flight Now"
+                link={isHome ? '' : '/'}
+                click={scrollToTop}
+            />
         </div>
     )
 }

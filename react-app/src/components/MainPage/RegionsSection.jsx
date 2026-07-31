@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAppStore } from '@/store/useAppStore'
 import { useRegionStore } from '@/store/useRegionStore'
+import BlackWithOrangeTextButton from '@/components/common/Buttons/BlackWithOrangeTextButton'
 
 export default function RegionsSection() {
     const { appWidth } = useAppStore()
@@ -49,7 +50,7 @@ export default function RegionsSection() {
                         Business class flights to {item.name}
                     </Link>
                 ))}
-                <Link to="/all-deals" className="black-orange-button">View More</Link>
+                <BlackWithOrangeTextButton buttonText="View More" link="/all-deals" />
             </div>
         </div>
     )

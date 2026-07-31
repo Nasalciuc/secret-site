@@ -1,6 +1,7 @@
 import { createElement, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { useAppStore } from '@/store/useAppStore'
+import BlackWithOrangeTextButton from '@/components/common/Buttons/BlackWithOrangeTextButton'
 import aboutFallback from '@/assets/images/static/about-image.webp'
 
 const renderBlocks = (blocks) => {
@@ -68,7 +69,8 @@ export default function AboutSection() {
 
     const image = aboutUs?.image ?? aboutFallback
     const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
-    const isHome = location.pathname === '/'
+    // Match Vue: `$route.fullPath === '/' ? '' : '/'`
+    const isHome = `${location.pathname}${location.search}${location.hash}` === '/'
 
     return (
         <div className="about-container">
@@ -84,15 +86,13 @@ export default function AboutSection() {
                 <div className="about-text xyz-in" xyz="fade down duration-10">
                     <div className="text-from-editor">{renderBlocks(aboutUs?.body)}</div>
                 </div>
-                <div className="black-orange-button xyz-in" xyz="fade down duration-10">
-                    {isHome ? (
-                        <button type="button" onClick={scrollToTop}>
-                            Book your Flight Now
-                        </button>
-                    ) : (
-                        <Link to="/">Book your Flight Now</Link>
-                    )}
-                </div>
+                <BlackWithOrangeTextButton
+                    className="xyz-in"
+                    xyz="fade down duration-10"
+                    buttonText="Book your Flight Now"
+                    link={isHome ? '' : '/'}
+                    click={scrollToTop}
+                />
             </div>
         </div>
     )

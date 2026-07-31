@@ -20,10 +20,10 @@ export default function CouponForm({ autoOpen = false }) {
     const phoneRef = useRef(null)
     const itiRef = useRef(null)
 
+    // Vue CouponForm opens immediately when mounted with auto-open.
+    // App.jsx already delays mounting by 5s — do not add a second delay here.
     useEffect(() => {
-        if (!autoOpen) return undefined
-        const timer = setTimeout(() => setShowModal(true), 5000)
-        return () => clearTimeout(timer)
+        if (autoOpen) setShowModal(true)
     }, [autoOpen])
 
     useEffect(() => {

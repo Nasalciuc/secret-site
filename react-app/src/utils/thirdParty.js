@@ -58,6 +58,13 @@ const loadFacebookPixel = () => {
     loadScript('https://connect.facebook.net/en_US/fbevents.js')
     fbq('init', FB_PIXEL_ID)
     fbq('track', 'PageView')
+    window.__fbPixelReady = true
+}
+
+/** Fire PageView on SPA navigations after the pixel has initialized. */
+export const trackFacebookPageView = () => {
+    if (!FB_PIXEL_ID || !window.__fbPixelReady || typeof window.fbq !== 'function') return
+    window.fbq('track', 'PageView')
 }
 
 /**
