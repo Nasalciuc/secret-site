@@ -1,22 +1,29 @@
 .header-links {
     display: flex;
-    padding: 12px 24px;
-    margin-left: 32px;
+    padding: 12px 0;
+    margin-left: 40px;
     align-items: center;
-    background: rgba(0, 0, 0, 0.16);
+    background: none;
     border-radius: 8px;
-    gap: 48px;
+    gap: 40px;
 
     > .page-link {
         position: relative;
         cursor: pointer;
-        color: #fff;
-        font-size: 0.8vw;
+        color: var(--mb-text);
+        font-size: 14px;
+        font-weight: 500;
         font-family: 'Inter', sans-serif;
+        transition: color 0.2s ease-in;
+
+        &:hover {
+            color: #fff;
+        }
 
         &.active {
             @include after-active;
 
+            color: #fff;
             font-weight: 700;
         }
     }
@@ -102,18 +109,21 @@
 .header-container {
     z-index: 501;
     display: flex;
-    padding: 24px;
+    padding: 20px 32px;
     align-items: center;
     justify-content: space-between;
+    background: var(--mb-bg);
+    border: 1px solid var(--mb-border);
+    border-radius: 16px;
     &.margin-layout {
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
-        width: calc(100% - 48px);
+        width: 100%;
     }
     &.header-layout {
         border-radius: 16px;
-        background: #272b30;
+        background: var(--mb-bg);
         margin: 32px 32px 56px 32px;
         > .trust-container > .logo {
             margin-top: 4px;
@@ -126,7 +136,10 @@
         width: 100%;
         transform: unset;
         padding: 20px 16px;
-        background-color: #1a1d1f;
+        background-color: var(--mb-bg);
+        border: none;
+        border-bottom: 1px solid var(--mb-border);
+        border-radius: 0;
         animation: header-slide-down 250ms;
 
         .logo {
@@ -163,25 +176,37 @@
                 display: flex;
                 flex-direction: row;
                 align-items: center;
-                padding: 4px 8px;
-                background: #f4f4f4;
-                border-radius: 12px;
+                padding: 8px 16px;
+                background: none;
+                border: 1px solid var(--mb-border);
+                border-radius: 24px;
                 margin-left: 16px;
                 white-space: nowrap;
                 flex-shrink: 0;
+                transition: border-color 0.2s ease-in;
+
+                &:hover {
+                    border-color: var(--mb-text-muted);
+                }
                 > .tel {
                     margin-left: 10px;
-                    color: #111315;
+                    color: #fff;
                     white-space: nowrap;
                     font: {
                         weight: 600;
-                        size: 0.8vw;
+                        size: 13px;
                     }
                 }
             }
             > .live-service {
-                color: #f4f4f4;
-                font-size: 0.8vw;
+                color: var(--mb-text-muted);
+                font-size: 12px;
+                letter-spacing: 1px;
+                white-space: nowrap;
+            }
+            > .header-quote-btn {
+                margin-left: 16px;
+                padding: 12px 24px;
                 white-space: nowrap;
             }
         }
@@ -205,7 +230,8 @@
                     display: none;
                     align-items: center;
                     justify-content: center;
-                    background: #272b30;
+                    background: var(--mb-deep);
+                    border: 1px solid var(--mb-border);
                     border-radius: 12px;
                     padding: 8px;
                     cursor: pointer;
@@ -217,7 +243,7 @@
     @media screen and (max-width: 1440px) {
         > .trust-container {
             > .header-links > a {
-                font-size: 15px;
+                font-size: 14px;
             }
         }
         > .service .tel {
@@ -279,6 +305,10 @@
             position: absolute;
             right: 8px;
             margin-top: 8px;
+
+            > .header-quote-btn {
+                display: none;
+            }
         }
     }
 

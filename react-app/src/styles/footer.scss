@@ -168,3 +168,150 @@
         }
     }
 }
+
+// Moodboard (slate + gold) skin for the real site footer only. Scoped to
+// .site-footer because .footer-container is reused by AboutUs/IconsBlock.
+.footer-container.site-footer {
+    background: var(--mb-bg);
+    border-top: 1px solid var(--mb-border);
+    // Keeps the negative z-index AirlinesLogos strip painting above the
+    // footer background instead of disappearing behind it.
+    position: relative;
+    isolation: isolate;
+    padding: 64px 120px 40px;
+
+    > .footer-top {
+        display: grid;
+        grid-template-columns: minmax(0, 5fr) minmax(0, 3fr) minmax(0, 4fr);
+        gap: 48px;
+        margin-bottom: 56px;
+
+        .footer-logo {
+            display: inline-block;
+
+            .footer-logo-svg {
+                width: auto;
+                height: 40px;
+            }
+        }
+
+        .footer-tagline {
+            margin-top: 20px;
+            max-width: 360px;
+            color: var(--mb-text-muted);
+            font: 400 14px/1.7 'Inter', sans-serif;
+        }
+
+        .footer-col-title {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--mb-text-muted);
+            font: 600 12px/1.4 'Inter', sans-serif;
+            margin-bottom: 18px;
+        }
+
+        .footer-col-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            a {
+                width: fit-content;
+                color: var(--mb-text-muted);
+                font: 400 14px/1.5 'Inter', sans-serif;
+                transition: color 0.2s ease-in;
+
+                &:hover {
+                    color: #fff;
+                }
+            }
+        }
+
+        .footer-col--contact .footer-col-links a {
+            color: var(--mb-text);
+            font-weight: 600;
+
+            &:hover {
+                color: var(--mb-gold);
+            }
+        }
+
+        @media screen and (max-width: 1200px) {
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+
+            .footer-brand {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            grid-template-columns: 1fr;
+            gap: 32px;
+            margin-bottom: 40px;
+        }
+    }
+
+    > .seo-keywords {
+        text-align: center;
+        color: var(--mb-text-muted);
+        font: 400 13px/2 'Inter', sans-serif;
+        margin-bottom: 8px;
+
+        &:last-of-type {
+            margin-bottom: 40px;
+        }
+    }
+
+    > .text-info > p {
+        color: var(--mb-text-muted);
+    }
+
+    .payment .card-icon {
+        opacity: 0.45;
+    }
+
+    .socials a {
+        opacity: 0.5;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    > .footer-links {
+        border-top: 1px solid var(--mb-border);
+        padding-top: 24px;
+
+        > .rights {
+            > p {
+                color: var(--mb-text-muted);
+            }
+
+            &::after {
+                background: var(--mb-border);
+            }
+        }
+
+        > .rules > a {
+            color: var(--mb-text-muted);
+            transition: color 0.2s ease-in;
+
+            &:hover {
+                color: #fff;
+            }
+        }
+    }
+
+    @media screen and (max-width: 1440px) {
+        padding: 48px 64px 32px;
+    }
+
+    @media screen and (max-width: 1200px) {
+        padding: 48px 24px 60px;
+    }
+
+    @media screen and (max-width: 768px) {
+        padding: 40px 16px 16px;
+    }
+}

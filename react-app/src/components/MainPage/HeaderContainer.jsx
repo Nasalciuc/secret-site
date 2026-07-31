@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import OrderFly from './OrderFly'
+import { useReviewsStore } from '@/store/useReviewsStore'
 
 const mobilePoster = '/hero-poster-mobile.jpg'
 const desktopPoster = '/hero-poster-desktop.jpg'
@@ -9,6 +10,13 @@ import desktopVideo from '@/assets/video/background-desktop.mp4'
 export default function HeaderContainer() {
     const [videoPoster, setVideoPoster] = useState(mobilePoster)
     const videoRef = useRef(null)
+    const score = useReviewsStore((state) => state.score)
+    const reviewsIsLoaded = useReviewsStore((state) => state.reviewsIsLoaded)
+    const getReviews = useReviewsStore((state) => state.getReviews)
+
+    useEffect(() => {
+        if (!reviewsIsLoaded) getReviews()
+    }, [reviewsIsLoaded, getReviews])
 
     useEffect(() => {
         const updateVideoBackgroundSource = () => {
@@ -67,14 +75,23 @@ export default function HeaderContainer() {
                     ref={videoRef}
                 />
             </div>
+            <div className="mb-hero-overlay" />
             <div className="blocks">
                 <div className="first-block xyz-in" xyz="fade left-50% duration-15 delay-5">
-                    <h1>
-                        <span className="weight-700">Cheap Business Class</span> Airline Tickets <br />
-                        & <span className="weight-700">Flight Deals</span> — Save up to 60%
+                    {score > 0 && (
+                        <div className="mb-hero-badge">
+                            <span className="dot" />
+                            <span>Trusted by travelers worldwide • {score}/5 on Trustpilot</span>
+                        </div>
+                    )}
+                    <h1 className="mb-serif">
+                        Save up to <span className="accent">60%</span> on Business Class flights
                     </h1>
+                    <p className="mb-hero-subtitle">Cheap business class airline tickets & flight deals — access exclusive unpublished fares.</p>
                 </div>
                 <div className="second-block">
+                    <h3 className="mb-hero-card-title">Find your perfect deal</h3>
+                    <p className="mb-hero-card-sub">Get a personalized quote in under 60 seconds</p>
                     <OrderFly />
                 </div>
             </div>

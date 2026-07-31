@@ -1,0 +1,95 @@
+// Moodboard redesign tokens (slate + gold, "buybusinessclass-new-homepage" mockup).
+// New homepage sections use these vars; scope overrides under .mb-home to avoid
+// leaking into pages that still use the legacy dark theme.
+:root {
+    --mb-bg: #334155; // page background, nav, footer
+    --mb-surface: #1e293b; // cards, panels
+    --mb-deep: #0f172a; // inputs, overlays, dark buttons, hover states
+    --mb-border: #475569;
+    --mb-text: #e2e8f0; // body text on dark
+    --mb-text-muted: #94a3b8; // secondary text on dark
+    --mb-gold: #b4853b;
+    --mb-gold-dark: #8f6a2e;
+    --mb-green: #34d399;
+    --mb-ink: #0f172a; // headings on white sections
+    --mb-ink-muted: #64748b; // secondary text on white sections
+    --mb-radius-card: 24px;
+    --mb-radius-input: 16px;
+}
+
+.main-page.mb-home {
+    background: var(--mb-bg);
+}
+
+.mb-serif {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.mb-eyebrow {
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font: 600 12px/1.4 'Inter', sans-serif;
+    color: var(--mb-gold);
+    margin-bottom: 12px;
+}
+
+.mb-btn-gold {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--mb-gold);
+    color: #fff;
+    border: none;
+    border-radius: 24px;
+    padding: 14px 32px;
+    cursor: pointer;
+    transition: background 0.2s ease-in;
+    font: 600 14px/1.4 'Inter', sans-serif;
+
+    &:hover {
+        background: var(--mb-gold-dark);
+    }
+}
+
+.mb-btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: none;
+    color: #fff;
+    border: 1px solid var(--mb-border);
+    border-radius: 24px;
+    padding: 14px 24px;
+    cursor: pointer;
+    transition: border-color 0.2s ease-in;
+    font: 600 14px/1.4 'Inter', sans-serif;
+
+    &:hover {
+        border-color: var(--mb-text-muted);
+    }
+}
+
+.mb-section {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 64px 32px;
+
+    @media screen and (max-width: 768px) {
+        padding: 40px 16px;
+    }
+}
+
+.mb-section-title {
+    color: #fff;
+    font: 700 36px/1.15 'Inter', sans-serif;
+    margin-bottom: 36px;
+
+    @media screen and (max-width: 768px) {
+        font-size: 28px;
+    }
+}
