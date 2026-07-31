@@ -1,9 +1,10 @@
-﻿import { useState } from 'react'
+﻿import { lazy, Suspense, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAppStore } from '@/store/useAppStore'
 import { searchFlight, sendLead } from '@/services/api'
-import DatePicker from '@/components/Calendars/DatePicker'
-import VueCalendar from '@/components/Calendars/VueCalendar'
+
+const DatePicker = lazy(() => import('@/components/Calendars/DatePicker'))
+const VueCalendar = lazy(() => import('@/components/Calendars/VueCalendar'))
 import OrangeFilledButton from '@/components/common/Buttons/OrangeFilledButton'
 import TransparentButton from '@/components/common/Buttons/TransparentButton'
 import VueSelectAdaptive from '../VueSelectAdaptive'
@@ -234,7 +235,11 @@ export default function OrderFly() {
                         </div>
                         <ChooseProperties propType={type} propTravelers={travelers} onTypeChange={setType} onTravelersChange={setTravelers} />
                         <OrangeFilledButton className="xyz-nested show search-submit" buttonText="Search Flight" click={searchFlightHandler} />
-                        <DatePicker calendarCollapse={calendarCollapse} selectReturn={selectReturn} minDate={Date.now()} onUpdateValue={updateMultiDatePicker} />
+                        {!calendarCollapse && (
+                            <Suspense fallback={null}>
+                                <DatePicker calendarCollapse={calendarCollapse} selectReturn={selectReturn} minDate={Date.now()} onUpdateValue={updateMultiDatePicker} />
+                            </Suspense>
+                        )}
                     </div>
                 )}
                 {currentPage === 'one_way' && (
@@ -248,14 +253,18 @@ export default function OrderFly() {
                         </div>
                         <ChooseProperties propType={type} propTravelers={travelers} onTypeChange={setType} onTravelersChange={setTravelers} />
                         <OrangeFilledButton className="xyz-nested show search-submit" buttonText="Search Flight" click={searchFlightHandler} />
-                        <VueCalendar
-                            calendarCollapse={calendarCollapse}
-                            minDate={Date.now()}
-                            onUpdateValue={(date) => {
-                                setSingleDatePicker(date)
-                                setCalendarCollapse(true)
-                            }}
-                        />
+                        {!calendarCollapse && (
+                            <Suspense fallback={null}>
+                                <VueCalendar
+                                    calendarCollapse={calendarCollapse}
+                                    minDate={Date.now()}
+                                    onUpdateValue={(date) => {
+                                        setSingleDatePicker(date)
+                                        setCalendarCollapse(true)
+                                    }}
+                                />
+                            </Suspense>
+                        )}
                     </div>
                 )}
                 {currentPage === 'multi_city' && (
@@ -277,7 +286,11 @@ export default function OrderFly() {
                                         {flight.date || 'Departure'}
                                     </button>
                                 </div>
-                                <VueCalendar calendarCollapse={flight.collapse} minDate={index > 0 ? parseFrDate(multiFlights[index - 1]?.date) : Date.now()} defaultDate={false} onUpdateValue={(date) => updateMultiFlightDate(date, index)} />
+                                {!flight.collapse && (
+                                    <Suspense fallback={null}>
+                                        <VueCalendar calendarCollapse={flight.collapse} minDate={index > 0 ? parseFrDate(multiFlights[index - 1]?.date) : Date.now()} defaultDate={false} onUpdateValue={(date) => updateMultiFlightDate(date, index)} />
+                                    </Suspense>
+                                )}
                                 {index > 1 && (
                                     <button type="button" onClick={() => removeFlight(index)} className="remove-flight">
                                         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
