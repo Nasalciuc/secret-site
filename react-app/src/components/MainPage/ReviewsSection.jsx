@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import TransparentButton from '@/components/common/Buttons/TransparentButton'
 import { useReviewsStore } from '@/store/useReviewsStore'
 
@@ -23,6 +23,17 @@ const FALLBACK_REVIEWS = [
         author_name: 'Priya S.',
     },
 ]
+
+// API author names can arrive unformatted (lowercase, padded); tidy them for
+// display only. Empty names fall back to a neutral label.
+function formatAuthorName(name) {
+    const trimmed = String(name || '').trim()
+    if (!trimmed) return 'Verified traveler'
+    return trimmed
+        .split(/\s+/)
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ')
+}
 
 function loadTrustpilotWidget(el) {
     if (!el || !window.Trustpilot?.loadFromElement) return false
@@ -59,7 +70,7 @@ function ReviewCard({ review }) {
                 </div>
             )}
             {quote && <blockquote className="mb-review-quote">&ldquo;{quote}&rdquo;</blockquote>}
-            {review.author_name && <div className="mb-review-name">{review.author_name}</div>}
+            <div className="mb-review-name">{formatAuthorName(review.author_name)}</div>
             <div className="mb-review-context">Trustpilot review</div>
         </div>
     )
@@ -71,7 +82,19 @@ export default function ReviewsSection() {
     const reviewsIsLoaded = useReviewsStore((state) => state.reviewsIsLoaded)
     const getReviews = useReviewsStore((state) => state.getReviews)
 
+    // Moodboard scope detection, mirroring BestSelling: initialize to false so
+    // legacy pages render the legacy Trustpilot block on first paint.
+    const [mbScope, setMbScope] = useState(false)
+
+    useLayoutEffect(() => {
+        setMbScope(Boolean(sectionRef.current?.closest('.mb-home, .mb-page')))
+    }, [])
+
     useEffect(() => {
+        // The Trustpilot widget script is only needed by the legacy block, so
+        // poll for it only when that block is rendered (outside mb scope).
+        if (mbScope) return undefined
+
         const el = document.querySelector('.reviews-container .trustpilot-widget')
         if (!el) return undefined
 
@@ -82,14 +105,14 @@ export default function ReviewsSection() {
         }, 100)
 
         return () => window.clearInterval(id)
-    }, [])
+    }, [mbScope])
 
     useEffect(() => {
         // Fetch real Trustpilot reviews only for the moodboard homepage variant,
         // so legacy pages reusing this component keep their old network behavior.
-        if (!sectionRef.current?.closest('.mb-home, .mb-page')) return
+        if (!mbScope) return
         getReviews()
-    }, [getReviews])
+    }, [mbScope, getReviews])
 
     const topReviews = (reviews.length > 0 ? reviews : reviewsIsLoaded ? FALLBACK_REVIEWS : []).slice(0, 3)
     const showSkeletons = !reviewsIsLoaded && reviews.length === 0
@@ -97,38 +120,40 @@ export default function ReviewsSection() {
     return (
         <>
             {/* Legacy Trustpilot block: still rendered by Flight/Dynamic/seasonal/AboutUs
-                pages. Hidden on the moodboard homepage via mb-reviews-cta.scss. */}
-            <div className="reviews-container">
-                <div className="reviews-tittle">
-                    <div className="title">
-                        <h3 className="main-title">
-                            <span className="accent">99%</span> of Travelers <span className="accent">Recommend</span>{' '}
-                            BuyBusinessClass
-                        </h3>
-                    </div>
-                    <div className="subtitle-block">
-                        {/* TrustBox widget - Micro Combo */}
-                        <div
-                            className="trustpilot-widget"
-                            data-locale="en-US"
-                            data-template-id="56278e9abfbbba0bdcd568bc"
-                            data-businessunit-id="5991787a0000ff0005a8d1d6"
-                            data-style-height="52px"
-                            data-style-width="100%"
-                        >
-                            <a href={TRUSTPILOT_URL} target="_blank" rel="noopener noreferrer">
-                                Trustpilot
-                            </a>
+                pages. Not mounted at all inside the moodboard scope. */}
+            {!mbScope && (
+                <div className="reviews-container">
+                    <div className="reviews-tittle">
+                        <div className="title">
+                            <h3 className="main-title">
+                                <span className="accent">99%</span> of Travelers <span className="accent">Recommend</span>{' '}
+                                BuyBusinessClass
+                            </h3>
+                        </div>
+                        <div className="subtitle-block">
+                            {/* TrustBox widget - Micro Combo */}
+                            <div
+                                className="trustpilot-widget"
+                                data-locale="en-US"
+                                data-template-id="56278e9abfbbba0bdcd568bc"
+                                data-businessunit-id="5991787a0000ff0005a8d1d6"
+                                data-style-height="52px"
+                                data-style-width="100%"
+                            >
+                                <a href={TRUSTPILOT_URL} target="_blank" rel="noopener noreferrer">
+                                    Trustpilot
+                                </a>
+                            </div>
                         </div>
                     </div>
+                    <TransparentButton
+                        buttonText="Read more"
+                        link={TRUSTPILOT_URL}
+                        regularLink
+                        target="_blank"
+                    />
                 </div>
-                <TransparentButton
-                    buttonText="Read more"
-                    link={TRUSTPILOT_URL}
-                    regularLink
-                    target="_blank"
-                />
-            </div>
+            )}
 
             {/* Moodboard homepage variant: white section with real Trustpilot review
                 cards. Only visible inside .mb-home (see mb-reviews-cta.scss). */}

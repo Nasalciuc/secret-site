@@ -87,11 +87,11 @@ export default function HeaderContainer() {
                     <h1 className="mb-serif">
                         Save up to <span className="accent">60%</span> on Business Class flights
                     </h1>
-                    <p className="mb-hero-subtitle">Cheap business class airline tickets & flight deals — access exclusive unpublished fares.</p>
+                    <p className="mb-hero-subtitle">Cheap business class airline tickets and flight deals. Access exclusive unpublished fares.</p>
                 </div>
                 <div className="second-block">
                     <h3 className="mb-hero-card-title">Find your perfect deal</h3>
-                    <p className="mb-hero-card-sub">Get a personalized quote in under 60 seconds</p>
+                    <p className="mb-hero-card-sub">Get a personalized quote from a real consultant.</p>
                     <OrderFly />
                 </div>
             </div>

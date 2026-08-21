@@ -1,7 +1,8 @@
-﻿import { lazy, Suspense, useState } from 'react'
+﻿import { Fragment, lazy, Suspense, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAppStore } from '@/store/useAppStore'
 import { searchFlight, sendLead } from '@/services/api'
+import { formatUsDate } from '@/utils/dateDisplay'
 
 const DatePicker = lazy(() => import('@/components/Calendars/DatePicker'))
 const VueCalendar = lazy(() => import('@/components/Calendars/VueCalendar'))
@@ -58,6 +59,26 @@ export default function OrderFly() {
         setModal({ display: true, status: 'error', title, body })
     }
 
+    // Display-only: drop a field's error flag as soon as the user fixes it.
+    // Validation rules and submit blocking in searchFlightHandler are untouched.
+    const clearFormError = (field) => {
+        setFormErrors((current) => (current[field] ? { ...current, [field]: null } : current))
+    }
+
+    const clearMultiFormError = (index, field) => {
+        setMultiFormErrors((current) => (current.index === index && current[field] ? { ...current, [field]: null } : current))
+    }
+
+    const updateFrom = (airport) => {
+        setFrom(airport)
+        if (airport?.iata_code) clearFormError('airportFrom')
+    }
+
+    const updateTo = (airport) => {
+        setTo(airport)
+        if (airport?.iata_code) clearFormError('airportTo')
+    }
+
     const changePage = (page) => {
         setCurrentPage(page)
         setFormErrors(emptyFormErrors)
@@ -93,6 +114,8 @@ export default function OrderFly() {
         if (date.start === 'Invalid Date' || date.end === 'Invalid Date') return
 
         setMultiDatePicker((current) => ({ ...current, ...date }))
+        if (date.start) clearFormError('departureDate')
+        if (date.end) clearFormError('returnDate')
         if (date.start && date.end) {
             setCalendarCollapse(true)
             setSelectReturn(false)
@@ -104,6 +127,7 @@ export default function OrderFly() {
     }
 
     const updateMultiFlightDate = (date, index) => {
+        if (date) clearMultiFormError(index, 'departureDate')
         setMultiFlights((current) => {
             const selectedTime = parseFrDate(date)
             const next = current.map((flight, flightIndex) => (flightIndex === index ? { ...flight, date, collapse: true } : flight))
@@ -246,14 +270,19 @@ export default function OrderFly() {
             <div className="content xyz-nested">
                 {currentPage === 'round_trip' && (
                     <div className="round-trip">
-                        <ChooseAirport propFrom={from} propTo={to} errorFrom={formErrors.airportFrom} errorTo={formErrors.airportTo} onFromChange={setFrom} onToChange={setTo} />
+                        <ChooseAirport propFrom={from} propTo={to} errorFrom={formErrors.airportFrom} errorTo={formErrors.airportTo} onFromChange={updateFrom} onToChange={updateTo} />
+                        {(formErrors.airportFrom || formErrors.airportTo) && (
+                            <p className="mb-form-error" role="alert">
+                                Please add your departure and destination cities.
+                            </p>
+                        )}
                         <div
                             ref={setRoundTripDateTarget}
                             className={`d-flex calendar-buttons round-trip xyz-nested ${!calendarCollapse ? 'active' : 'disabled'} ${formErrors.departureDate || formErrors.returnDate ? 'has-error' : ''}`}
                         >
                             <button type="button" onClick={openCalendar} className={`date-button first-button ${formErrors.departureDate ? 'has-error' : ''}`}>
                                 <CalendarIcon fill={Boolean(multiDatePicker.start)} />
-                                {multiDatePicker.start || 'Select departure'}
+                                {multiDatePicker.start ? formatUsDate(multiDatePicker.start) : 'Select departure'}
                             </button>
                             <button
                                 type="button"
@@ -264,9 +293,14 @@ export default function OrderFly() {
                                 className={`date-button second-button ${formErrors.returnDate ? 'has-error' : ''}`}
                             >
                                 <CalendarIcon fill={Boolean(multiDatePicker.end)} />
-                                {multiDatePicker.end || 'Select return'}
+                                {multiDatePicker.end ? formatUsDate(multiDatePicker.end) : 'Select return'}
                             </button>
                         </div>
+                        {(formErrors.departureDate || formErrors.returnDate) && (
+                            <p className="mb-form-error" role="alert">
+                                Please pick your travel dates.
+                            </p>
+                        )}
                         <ChooseProperties
                             propType={type}
                             propTravelers={travelers}
@@ -282,16 +316,26 @@ export default function OrderFly() {
                 )}
                 {currentPage === 'one_way' && (
                     <div className="one-way">
-                        <ChooseAirport propFrom={from} propTo={to} errorFrom={formErrors.airportFrom} errorTo={formErrors.airportTo} onFromChange={setFrom} onToChange={setTo} />
+                        <ChooseAirport propFrom={from} propTo={to} errorFrom={formErrors.airportFrom} errorTo={formErrors.airportTo} onFromChange={updateFrom} onToChange={updateTo} />
+                        {(formErrors.airportFrom || formErrors.airportTo) && (
+                            <p className="mb-form-error" role="alert">
+                                Please add your departure and destination cities.
+                            </p>
+                        )}
                         <div
                             ref={setOneWayDateTarget}
                             className={`d-flex calendar-buttons one-way xyz-nested ${!calendarCollapse ? 'active' : 'disabled'} ${formErrors.departureDate ? 'has-error' : ''}`}
                         >
                             <button type="button" onClick={openCalendar} className={`date-button first-button ${formErrors.departureDate ? 'has-error' : ''}`}>
                                 <CalendarIcon fill={Boolean(singleDatePicker)} />
-                                {singleDatePicker || 'Select departure'}
+                                {singleDatePicker ? formatUsDate(singleDatePicker) : 'Select departure'}
                             </button>
                         </div>
+                        {formErrors.departureDate && (
+                            <p className="mb-form-error" role="alert">
+                                Please pick your departure date.
+                            </p>
+                        )}
                         <ChooseProperties
                             propType={type}
                             propTravelers={travelers}
@@ -309,52 +353,70 @@ export default function OrderFly() {
                     <div className={`multi-city ${appWidth < 1270 ? 'overlap' : ''}`}>
                         <VueSelectAdaptive type={type} travelers={travelers} onSetType={setType} onSetTravelers={setTravelers} className="xyz-nested" />
                         {multiFlights.map((flight, index) => (
-                            <div className="multi-city-container xyz-nested" style={{ zIndex: 100 + (5 - index) }} key={index}>
-                                <ChooseAirport
-                                    propFrom={flight.from}
-                                    propTo={flight.to}
-                                    errorFrom={index === multiFormErrors.index ? multiFormErrors.airportFrom : null}
-                                    errorTo={index === multiFormErrors.index ? multiFormErrors.airportTo : null}
-                                    onFromChange={(airport) => updateMultiFlight(index, { from: airport })}
-                                    onToChange={(airport) => updateMultiFlight(index, { to: airport })}
-                                />
-                                <div
-                                    ref={(node) => {
-                                        // Only store attach; ignore detach nulls to avoid max-update-depth loops
-                                        if (!node) return
-                                        setMultiDateTargets((current) => {
-                                            if (current[index] === node) return current
-                                            const next = current.slice()
-                                            next[index] = node
-                                            return next
-                                        })
-                                    }}
-                                    className={`calendar-buttons ${!flight.collapse ? 'active' : 'disabled'} ${index === multiFormErrors.index && multiFormErrors.departureDate ? 'has-error' : ''}`}
-                                >
-                                    <button type="button" onClick={() => showCalendar(index)} className={index === multiFormErrors.index && multiFormErrors.departureDate ? 'has-error' : ''}>
-                                        <CalendarIcon fill={Boolean(flight.date)} />
-                                        {flight.date || 'Departure'}
-                                    </button>
-                                </div>
-                                <Suspense fallback={null}>
-                                    <VueCalendar
-                                        calendarCollapse={flight.collapse}
-                                        target={multiDateTargets[index] || null}
-                                        dataIndex={index}
-                                        minDate={index > 0 ? parseFrDate(multiFlights[index - 1]?.date) : Date.now()}
-                                        defaultDate={false}
-                                        onUpdateValue={(date) => updateMultiFlightDate(date, index)}
-                                        onDoCalendarCollapse={doCalendarCollapse}
+                            <Fragment key={index}>
+                                <div className="multi-city-container xyz-nested" style={{ zIndex: 100 + (5 - index) }}>
+                                    <ChooseAirport
+                                        propFrom={flight.from}
+                                        propTo={flight.to}
+                                        errorFrom={index === multiFormErrors.index ? multiFormErrors.airportFrom : null}
+                                        errorTo={index === multiFormErrors.index ? multiFormErrors.airportTo : null}
+                                        onFromChange={(airport) => {
+                                            updateMultiFlight(index, { from: airport })
+                                            if (airport?.iata_code) clearMultiFormError(index, 'airportFrom')
+                                        }}
+                                        onToChange={(airport) => {
+                                            updateMultiFlight(index, { to: airport })
+                                            if (airport?.iata_code) clearMultiFormError(index, 'airportTo')
+                                        }}
                                     />
-                                </Suspense>
-                                {index > 1 && (
-                                    <button type="button" onClick={() => removeFlight(index)} className="remove-flight">
-                                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path fillRule="evenodd" clipRule="evenodd" d="M7.00004 13.6663C10.6819 13.6663 13.6667 10.6816 13.6667 6.99967C13.6667 3.31778 10.6819 0.333008 7.00004 0.333008C3.31814 0.333374 0.333374 3.31778 0.333374 6.99967C0.333374 10.6816 3.31814 13.6663 7.00004 13.6663ZM4.52864 9.47108C4.26829 9.21073 4.26829 8.78862 4.52864 8.52827L6.05725 6.99965L4.5287 5.4711C4.26835 5.21075 4.26835 4.78864 4.5287 4.52829C4.78905 4.26794 5.21116 4.26794 5.47151 4.52829L7.00006 6.05685L8.52864 4.52827C8.78899 4.26792 9.2111 4.26792 9.47145 4.52827C9.7318 4.78862 9.7318 5.21073 9.47145 5.47108L7.94287 6.99966L9.47151 8.5283C9.73186 8.78865 9.73186 9.21076 9.47151 9.47111C9.21116 9.73146 8.78905 9.73146 8.5287 9.47111L7.00006 7.94246L5.47145 9.47108C5.2111 9.73143 4.78899 9.73143 4.52864 9.47108Z" fill="#6F767E" />
-                                        </svg>
-                                    </button>
+                                    <div
+                                        ref={(node) => {
+                                            // Only store attach; ignore detach nulls to avoid max-update-depth loops
+                                            if (!node) return
+                                            setMultiDateTargets((current) => {
+                                                if (current[index] === node) return current
+                                                const next = current.slice()
+                                                next[index] = node
+                                                return next
+                                            })
+                                        }}
+                                        className={`calendar-buttons ${!flight.collapse ? 'active' : 'disabled'} ${index === multiFormErrors.index && multiFormErrors.departureDate ? 'has-error' : ''}`}
+                                    >
+                                        <button type="button" onClick={() => showCalendar(index)} className={index === multiFormErrors.index && multiFormErrors.departureDate ? 'has-error' : ''}>
+                                            <CalendarIcon fill={Boolean(flight.date)} />
+                                            {flight.date ? formatUsDate(flight.date) : 'Departure'}
+                                        </button>
+                                    </div>
+                                    <Suspense fallback={null}>
+                                        <VueCalendar
+                                            calendarCollapse={flight.collapse}
+                                            target={multiDateTargets[index] || null}
+                                            dataIndex={index}
+                                            minDate={index > 0 ? parseFrDate(multiFlights[index - 1]?.date) : Date.now()}
+                                            defaultDate={false}
+                                            onUpdateValue={(date) => updateMultiFlightDate(date, index)}
+                                            onDoCalendarCollapse={doCalendarCollapse}
+                                        />
+                                    </Suspense>
+                                    {index > 1 && (
+                                        <button type="button" onClick={() => removeFlight(index)} className="remove-flight">
+                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path fillRule="evenodd" clipRule="evenodd" d="M7.00004 13.6663C10.6819 13.6663 13.6667 10.6816 13.6667 6.99967C13.6667 3.31778 10.6819 0.333008 7.00004 0.333008C3.31814 0.333374 0.333374 3.31778 0.333374 6.99967C0.333374 10.6816 3.31814 13.6663 7.00004 13.6663ZM4.52864 9.47108C4.26829 9.21073 4.26829 8.78862 4.52864 8.52827L6.05725 6.99965L4.5287 5.4711C4.26835 5.21075 4.26835 4.78864 4.5287 4.52829C4.78905 4.26794 5.21116 4.26794 5.47151 4.52829L7.00006 6.05685L8.52864 4.52827C8.78899 4.26792 9.2111 4.26792 9.47145 4.52827C9.7318 4.78862 9.7318 5.21073 9.47145 5.47108L7.94287 6.99966L9.47151 8.5283C9.73186 8.78865 9.73186 9.21076 9.47151 9.47111C9.21116 9.73146 8.78905 9.73146 8.5287 9.47111L7.00006 7.94246L5.47145 9.47108C5.2111 9.73143 4.78899 9.73143 4.52864 9.47108Z" fill="#6F767E" />
+                                            </svg>
+                                        </button>
+                                    )}
+                                </div>
+                                {index === multiFormErrors.index && (multiFormErrors.airportFrom || multiFormErrors.airportTo) && (
+                                    <p className="mb-form-error" role="alert">
+                                        Please add your departure and destination cities.
+                                    </p>
                                 )}
-                            </div>
+                                {index === multiFormErrors.index && multiFormErrors.departureDate && (
+                                    <p className="mb-form-error" role="alert">
+                                        Please pick your departure date.
+                                    </p>
+                                )}
+                            </Fragment>
                         ))}
                         <TransparentButton className="xyz-nested" buttonText="Add Flight" click={addFlight} />
                         <ClientInfo errors={multiFormErrors} onButtonClick={proceedLead} />
@@ -381,6 +443,7 @@ export default function OrderFly() {
                         minDate={Date.now()}
                         onUpdateValue={(date) => {
                             setSingleDatePicker(date)
+                            if (date) clearFormError('departureDate')
                             setCalendarCollapse(true)
                         }}
                         onDoCalendarCollapse={doCalendarCollapse}

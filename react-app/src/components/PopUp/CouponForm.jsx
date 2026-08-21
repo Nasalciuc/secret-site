@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
+import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
-import intlTelInput from 'intl-tel-input'
+import intlTelInput from 'intl-tel-input/intlTelInputWithUtils'
 import 'intl-tel-input/styles'
 import { useAppStore } from '@/store/useAppStore'
 import { sendCouponLead } from '@/services/api'
@@ -21,11 +22,37 @@ export default function CouponForm({ autoOpen = false }) {
     const phoneRef = useRef(null)
     const itiRef = useRef(null)
 
-    // Vue CouponForm opens immediately when mounted with auto-open.
-    // App.jsx already delays mounting by 5s — do not add a second delay here.
+    // Opens immediately when mounted with auto-open. App.jsx decides when to
+    // mount it (24h frequency cap plus intent trigger): do not add a delay here.
     useEffect(() => {
         if (autoOpen) setShowModal(true)
     }, [autoOpen])
+
+    // Lock page scroll / hide chrome that can paint above the dimmer.
+    useEffect(() => {
+        if (!showModal) return undefined
+
+        const html = document.documentElement
+        const body = document.body
+        const prevHtmlOverflow = html.style.overflow
+        const prevBodyOverflow = body.style.overflow
+        const prevBodyPaddingRight = body.style.paddingRight
+        const scrollbarGap = window.innerWidth - html.clientWidth
+
+        html.style.overflow = 'hidden'
+        body.style.overflow = 'hidden'
+        if (scrollbarGap > 0) {
+            body.style.paddingRight = `${scrollbarGap}px`
+        }
+        body.classList.add('coupon-modal-open')
+
+        return () => {
+            html.style.overflow = prevHtmlOverflow
+            body.style.overflow = prevBodyOverflow
+            body.style.paddingRight = prevBodyPaddingRight
+            body.classList.remove('coupon-modal-open')
+        }
+    }, [showModal])
 
     useEffect(() => {
         if (!showModal) {
@@ -43,8 +70,8 @@ export default function CouponForm({ autoOpen = false }) {
             if (!phoneRef.current || itiRef.current) return
             inputEl = phoneRef.current
 
+            // Match Vue: utils bundled so isValidNumber works immediately.
             itiRef.current = intlTelInput(inputEl, {
-                loadUtils: () => import('intl-tel-input/utils'),
                 initialCountry: 'us',
                 countryOrder: ['us', 'gb', 'ca', 'au'],
                 separateDialCode: true,
@@ -178,8 +205,8 @@ export default function CouponForm({ autoOpen = false }) {
 
     if (!showModal) return null
 
-    return (
-        <div className="modal-overlay" onClick={closeModal}>
+    return createPortal(
+        <div className="modal-overlay coupon-modal-overlay" onClick={closeModal}>
             <div
                 className="modal-content"
                 role="dialog"
@@ -287,6 +314,7 @@ export default function CouponForm({ autoOpen = false }) {
                     </div>
                 </div>
             </div>
-        </div>
+        </div>,
+        document.body,
     )
 }

@@ -14,6 +14,29 @@ import Footer from '@/components/Footer/Footer'
 // Lazy load CouponForm
 const CouponForm = lazy(() => import('@/components/PopUp/CouponForm'))
 
+// Coupon popup frequency cap: at most one show per browser per 24h
+const COUPON_SHOWN_KEY = 'bbc_coupon_shown_at'
+const COUPON_COOLDOWN_MS = 24 * 60 * 60 * 1000
+
+function couponShownRecently() {
+    try {
+        const raw = window.localStorage.getItem(COUPON_SHOWN_KEY)
+        if (!raw) return false
+        const shownAt = Number(raw)
+        return Number.isFinite(shownAt) && Date.now() - shownAt < COUPON_COOLDOWN_MS
+    } catch {
+        return false
+    }
+}
+
+function markCouponShown() {
+    try {
+        window.localStorage.setItem(COUPON_SHOWN_KEY, String(Date.now()))
+    } catch {
+        // Storage unavailable (private mode, quota): popup may repeat next visit, nothing breaks
+    }
+}
+
 export default function App() {
     const location = useLocation()
     const { setAppWidth, getSettings, appWidth, quoteLoading } = useAppStore()
@@ -48,10 +71,63 @@ export default function App() {
         window.scrollTo(0, 0)
     }, [location.pathname])
 
-    // Show coupon after 5s
+    // Coupon popup governance: capped to once per 24h and opened on visitor intent
+    // (scroll depth >= 50% or desktop exit intent) instead of a fixed timer.
+    // It also yields while the chat dialog or the quote loader is on screen.
     useEffect(() => {
-        const timer = setTimeout(() => setShowCoupon(true), 5000)
-        return () => clearTimeout(timer)
+        if (couponShownRecently()) return undefined
+
+        let armed = false
+        let retryTimer = null
+
+        const removeIntentListeners = () => {
+            window.removeEventListener('scroll', onScroll)
+            document.documentElement.removeEventListener('mouseleave', onMouseLeave)
+        }
+
+        const overlayInUse = () =>
+            Boolean(document.querySelector('.dialog-overlay')) ||
+            Boolean(useAppStore.getState().quoteLoading?.loading)
+
+        const openCoupon = () => {
+            if (overlayInUse()) {
+                // Chat dialog or quote loader is up: wait for it to close instead of stacking overlays
+                retryTimer = setTimeout(openCoupon, 500)
+                return
+            }
+            markCouponShown()
+            setShowCoupon(true)
+        }
+
+        const onIntent = () => {
+            if (armed) return
+            armed = true
+            removeIntentListeners()
+            openCoupon()
+        }
+
+        const onScroll = () => {
+            const doc = document.documentElement
+            if (doc.scrollHeight <= 0) return
+            const seen = (window.scrollY || doc.scrollTop || 0) + window.innerHeight
+            if (seen / doc.scrollHeight >= 0.5) onIntent()
+        }
+
+        const onMouseLeave = (event) => {
+            // Exit intent: pointer leaves through the top of the viewport
+            if (event.clientY <= 0) onIntent()
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true })
+        // Exit intent is desktop only: requires a fine pointer that can hover
+        if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+            document.documentElement.addEventListener('mouseleave', onMouseLeave)
+        }
+
+        return () => {
+            removeIntentListeners()
+            if (retryTimer) clearTimeout(retryTimer)
+        }
     }, [])
 
     return (

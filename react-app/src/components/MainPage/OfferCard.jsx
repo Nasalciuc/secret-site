@@ -6,13 +6,13 @@ export default function OfferCard({ title, price, imgUrl, extraInfo = '', to, va
     // other usage (AllDeals, FlightCards, DynamicPage) keeps the legacy markup.
     if (variant === 'mb') {
         const percentMatch = /\d+\s*%/.exec(extraInfo)
-        const badgeText = percentMatch ? `${percentMatch[0].replace(/\s+/g, '')} OFF` : 'Up to 60% OFF'
+        const badgeText = percentMatch ? `${percentMatch[0].replace(/\s+/g, '')} OFF` : null
 
         return (
             <div className="mb-deal-card">
                 <div className="mb-deal-card__media">
                     {imgUrl ? <img src={imgUrl} alt={title} loading="lazy" /> : null}
-                    <span className="mb-deal-card__badge">{badgeText}</span>
+                    {badgeText ? <span className="mb-deal-card__badge">{badgeText}</span> : null}
                 </div>
                 <div className="mb-deal-card__body">
                     <p className="mb-deal-card__title">{title}</p>
