@@ -1,4 +1,4 @@
-﻿import { Fragment, lazy, Suspense, useState } from 'react'
+﻿import { Fragment, lazy, Suspense, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAppStore } from '@/store/useAppStore'
 import { searchFlight, sendLead } from '@/services/api'
@@ -78,6 +78,19 @@ export default function OrderFly() {
         setTo(airport)
         if (airport?.iata_code) clearFormError('airportTo')
     }
+
+    // Featured-route cards prefill the search exactly as if the user had
+    // picked the airports themselves (state only; validation and payloads
+    // stay on their normal path).
+    useEffect(() => {
+        const onPrefill = (event) => {
+            const detail = event.detail || {}
+            if (detail.from?.iata_code) updateFrom(detail.from)
+            if (detail.to?.iata_code) updateTo(detail.to)
+        }
+        window.addEventListener('bbc:prefill-route', onPrefill)
+        return () => window.removeEventListener('bbc:prefill-route', onPrefill)
+    })
 
     const changePage = (page) => {
         setCurrentPage(page)

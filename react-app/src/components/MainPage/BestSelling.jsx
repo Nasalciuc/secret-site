@@ -95,8 +95,8 @@ export default function BestSelling() {
         <div className="best-selling-container" ref={rootRef}>
             {mbHome ? (
                 <div className="mb-deals-head">
-                    <span className="mb-eyebrow">Popular routes</span>
-                    <h2 className="mb-section-title">Featured Business Class Deals</h2>
+                    <span className="mb-eyebrow">Destinations</span>
+                    <h2 className="mb-section-title">Explore more destinations</h2>
                 </div>
             ) : (
                 <div className="title">
