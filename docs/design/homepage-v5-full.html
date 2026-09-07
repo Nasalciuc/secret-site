@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cheap Business Class Flights &amp; Deals — BuyBusinessClass</title>
+<!--
+  buybusinessclass — new brand homepage, v5 "full"
+  Basis: Betty's mockup (4) → extended to the 13 sections the React MainPage renders, in that order.
+  Decisions applied: D2 real 7-item nav · D3 full OrderFly in hero · D6 Google reviews re-mounted · D9 real StatsStrip metrics (no invented numbers)
+  Rules: no CDN (no Tailwind, no Font Awesome) · inline SVG icons · real copy from react-app/src · no stock photos · gold used ≤3 places per viewport
+  Live-data slots are marked data-live="…" and show the shape, not invented values.
+  Drop this file into react-app/public/ to get the real hero poster (hero-poster-desktop.jpg / -mobile.jpg).
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --mb-bg:#334155; --mb-surface:#1e293b; --mb-deep:#0f172a; --mb-border:#475569;
+  --mb-text:#e2e8f0; --mb-text-muted:#94a3b8; --mb-gold:#b4853b; --mb-gold-dark:#8f6a2e; --mb-green:#34d399;
+  --mb-ink:#0f172a; --mb-ink-muted:#64748b; --mb-radius-card:24px; --mb-radius-input:16px;
+  --wrap:1280px; --pad:32px;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;font-weight:400;color:var(--mb-text);background:var(--mb-bg);line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,.serif{font-family:"Playfair Display",Georgia,serif;font-weight:700;letter-spacing:-.01em;line-height:1.12;margin:0}
+h3,h4{margin:0;font-weight:600}
+p{margin:0}
+a{color:inherit;text-decoration:none}
+img,svg{display:block}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--pad)}
+.section{padding:88px 0}
+.section.white{background:#fff;color:var(--mb-ink)}
+.section.white .muted{color:var(--mb-ink-muted)}
+.section.surface{background:var(--mb-surface)}
+.muted{color:var(--mb-text-muted)}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mb-gold);margin-bottom:12px}
+.h2{font-size:clamp(28px,3.4vw,40px)}
+.lead{font-size:18px;max-width:60ch}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:40px}
+.sec-head .lead{margin-top:10px}
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:52px;padding:0 26px;border-radius:999px;font-weight:600;font-size:15px;border:1px solid transparent;cursor:pointer;transition:background .15s,border-color .15s,transform .15s;white-space:nowrap}
+.btn:active{transform:translateY(1px)}
+.btn-gold{background:var(--mb-gold);color:#fff}.btn-gold:hover{background:var(--mb-gold-dark)}
+.btn-ghost{background:transparent;color:var(--mb-text);border-color:var(--mb-border)}.btn-ghost:hover{border-color:var(--mb-text)}
+.white .btn-ghost{color:var(--mb-ink);border-color:#cbd5e1}.white .btn-ghost:hover{border-color:var(--mb-ink)}
+.btn-dark{background:var(--mb-deep);color:#fff}.btn-dark:hover{background:#000}
+.btn-sm{height:42px;padding:0 18px;font-size:14px}
+.ico{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+/* header */
+.trust-strip{background:var(--mb-deep);font-size:12px;color:var(--mb-text-muted)}
+.trust-strip .wrap{display:flex;gap:28px;align-items:center;height:36px}
+.trust-strip b{color:var(--mb-text);font-weight:500}
+.trust-strip .right{margin-left:auto;display:flex;gap:18px}
+header.site{position:sticky;top:0;z-index:40;background:rgba(51,65,85,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--mb-border)}
+header.site .wrap{display:flex;align-items:center;gap:28px;height:76px}
+.logo{display:flex;align-items:center;gap:10px;font-family:"Playfair Display",serif;font-weight:700;font-size:20px;color:#fff}
+.logo .mark{width:34px;height:34px;border-radius:10px;background:var(--mb-gold);display:grid;place-items:center}
+.logo .mark svg{width:20px;height:20px;stroke:#fff}
+.logo small{display:block;font:500 10px/1 Inter,sans-serif;letter-spacing:.14em;color:var(--mb-text-muted);margin-top:3px}
+nav.main{display:flex;gap:18px;font-size:13.5px;font-weight:500;margin-left:8px;white-space:nowrap}
+nav.main a{color:var(--mb-text-muted);padding:6px 0;border-bottom:1px solid transparent}
+nav.main a:hover,nav.main a[aria-current]{color:#fff;border-bottom-color:var(--mb-gold)}
+nav.main .ext::after{content:"↗";margin-left:4px;font-size:11px}
+.phone-pill{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:14px;font-weight:500;padding:8px 14px;border:1px solid var(--mb-border);border-radius:999px;white-space:nowrap;line-height:1.2}
+.phone-pill .dot{width:8px;height:8px;border-radius:50%;background:var(--mb-green);box-shadow:0 0 0 3px rgba(52,211,153,.2)}
+.phone-pill span.lbl{font-size:11px;color:var(--mb-text-muted);letter-spacing:.06em}
+.burger{display:none;width:44px;height:44px;border:1px solid var(--mb-border);border-radius:12px;background:none;color:#fff;place-items:center}
+/* hero */
+.hero{position:relative;overflow:hidden;background:var(--mb-deep);min-height:720px;display:flex;align-items:center;padding:72px 0}
+.hero .bg{position:absolute;inset:0;background:url(hero-poster-desktop.jpg) center/cover no-repeat,radial-gradient(1200px 600px at 20% 30%,#243046 0,#0f172a 60%);opacity:.55}
+.hero .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(15,23,42,.92) 0,rgba(15,23,42,.6) 55%,rgba(15,23,42,.35) 100%)}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.badge{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:500;padding:6px 12px;border-radius:999px;border:1px solid var(--mb-border);color:var(--mb-text);background:rgba(30,41,59,.7)}
+.badge .dot{width:7px;height:7px;border-radius:50%;background:var(--mb-green)}
+.hero h1{font-size:clamp(38px,5vw,60px);margin:22px 0 18px;color:#fff}
+.hero h1 .accent{color:var(--mb-gold)}
+.hero .lead{font-size:19px;color:var(--mb-text-muted);max-width:52ch}
+.hero .proof{display:flex;gap:26px;margin-top:34px;font-size:13px;color:var(--mb-text-muted)}
+.hero .proof b{display:block;font-size:15px;color:#fff;font-weight:600}
+/* OrderFly card */
+.quote-card{background:var(--mb-surface);border:1px solid var(--mb-border);border-radius:var(--mb-radius-card);padding:28px;box-shadow:0 30px 60px -30px rgba(0,0,0,.7)}
+.quote-card h3{font-size:20px;color:#fff}
+.quote-card .sub{font-size:14px;color:var(--mb-text-muted);margin:4px 0 18px}
+.tabs{display:flex;gap:6px;background:var(--mb-deep);padding:4px;border-radius:999px;width:max-content;margin-bottom:16px}
+.tabs button{border:0;background:none;color:var(--mb-text-muted);font:500 13px Inter,sans-serif;padding:8px 14px;border-radius:999px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--mb-surface);color:#fff}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.field{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--mb-text-muted)}
+.field .in{display:flex;align-items:center;gap:10px;height:50px;padding:0 14px;background:var(--mb-deep);border:1px solid var(--mb-border);border-radius:var(--mb-radius-input);color:var(--mb-text);font-size:14px}
+.field .in svg{width:16px;height:16px;stroke:var(--mb-text-muted);fill:none;stroke-width:1.8;flex:none}
+.field .in .ph{color:#64748b}
+.field .in .caret{margin-left:auto;stroke:var(--mb-text-muted)}
+.swap{align-self:center;margin:0 -6px;width:32px;height:32px;border-radius:50%;background:var(--mb-surface);border:1px solid var(--mb-border);display:grid;place-items:center;z-index:1}
+.route{display:grid;grid-template-columns:1fr auto 1fr;gap:6px;align-items:end}
+.stack{display:flex;flex-direction:column;gap:12px}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--mb-text-muted);margin:14px 0 16px;line-height:1.45}
+.consent .box{width:16px;height:16px;border:1px solid var(--mb-border);border-radius:4px;flex:none;margin-top:2px}
+.consent a{color:var(--mb-text);text-decoration:underline;text-underline-offset:3px}
+.quote-card .btn{width:100%;height:54px;font-size:16px}
+.quote-card .note{font-size:12px;color:var(--mb-text-muted);text-align:center;margin-top:12px}
+/* stats */
+.stats{background:var(--mb-surface);border-top:1px solid var(--mb-border);border-bottom:1px solid var(--mb-border)}
+.stats .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{padding:28px 24px;border-right:1px solid var(--mb-border)}
+.stat:last-child{border-right:0}
+.stat b{display:block;font-family:"Playfair Display",serif;font-size:34px;color:#fff;line-height:1}
+.stat span{display:block;font-size:13px;color:var(--mb-text-muted);margin-top:8px}
+.stat .live{display:inline-block;font-size:10px;letter-spacing:.08em;color:var(--mb-green);margin-top:8px}
+/* deals */
+.cards4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.deal{background:var(--mb-surface);border:1px solid var(--mb-border);border-radius:var(--mb-radius-card);overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,border-color .2s}
+.deal:hover{transform:translateY(-3px);border-color:#64748b}
+.deal .photo{height:170px;background:linear-gradient(160deg,#3b4a63,#1e293b);position:relative;display:flex;align-items:flex-end;padding:14px}
+.deal .photo .cityline{font-size:12px;color:var(--mb-text-muted)}
+.deal .photo .off{position:absolute;top:12px;right:12px;font-size:11px;font-weight:600;padding:4px 9px;border-radius:999px;background:rgba(52,211,153,.15);color:var(--mb-green);border:1px solid rgba(52,211,153,.35)}
+.deal .body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:6px;flex:1}
+.deal h3{font-size:17px;color:#fff}
+.deal .meta{font-size:13px;color:var(--mb-text-muted)}
+.deal .price{margin-top:auto;padding-top:12px;display:flex;align-items:baseline;justify-content:space-between}
+.deal .price b{font-size:22px;color:#fff;font-weight:600}
+.deal .price b small{font-size:12px;color:var(--mb-text-muted);font-weight:400;margin-right:4px}
+.deal .price a{font-size:13px;font-weight:600;color:var(--mb-gold)}
+/* works */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;position:relative}
+.steps::before{content:"";position:absolute;left:8%;right:8%;top:24px;height:1px;background:#e2e8f0}
+.step{position:relative}
+.step .n{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-weight:600;background:#fff;border:1px solid #cbd5e1;color:var(--mb-ink);margin-bottom:18px;position:relative}
+.step.last .n{background:var(--mb-gold);border-color:var(--mb-gold);color:#fff}
+.step h3{font-size:17px;margin-bottom:6px}
+.step p{font-size:14px;color:var(--mb-ink-muted)}
+/* why us */
+.why{display:grid;grid-template-columns:1.1fr 1fr;gap:64px;align-items:center}
+.why h2{color:#fff}
+.why .lead{margin:16px 0 28px}
+.why-list{display:grid;gap:14px}
+.why-item{display:grid;grid-template-columns:44px 1fr;gap:16px;padding:18px 20px;background:var(--mb-surface);border:1px solid var(--mb-border);border-radius:18px}
+.why-item .i{width:44px;height:44px;border-radius:12px;background:var(--mb-deep);display:grid;place-items:center}
+.why-item .i svg{width:22px;height:22px;stroke:var(--mb-text);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.why-item h3{font-size:16px;color:#fff}
+.why-item p{font-size:14px;color:var(--mb-text-muted);margin-top:2px}
+.why .concierge{background:var(--mb-surface);border:1px solid var(--mb-border);border-radius:var(--mb-radius-card);padding:28px;display:grid;gap:16px}
+.why .concierge .agent{display:flex;gap:16px;align-items:center}
+.why .concierge .avatar{width:64px;height:64px;border-radius:50%;background:#475569;display:grid;place-items:center;font-weight:600;color:#fff}
+.why .concierge .agent b{display:block;color:#fff;font-size:16px}
+.why .concierge .agent span{font-size:13px;color:var(--mb-text-muted)}
+.why .concierge .num{font-family:"Playfair Display",serif;font-size:28px;color:#fff}
+/* reviews */
+.reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.review{border:1px solid #e2e8f0;border-radius:var(--mb-radius-card);padding:26px;background:#fff;display:flex;flex-direction:column;gap:12px}
+.stars{color:var(--mb-gold);letter-spacing:2px;font-size:14px}
+.review h3{font-size:16px}
+.review p{font-size:14px;color:var(--mb-ink-muted)}
+.review .who{margin-top:auto;display:flex;align-items:center;gap:12px;font-size:13px}
+.review .who .av{width:36px;height:36px;border-radius:50%;background:#e2e8f0;display:grid;place-items:center;font-weight:600;color:var(--mb-ink);font-size:13px}
+.review .who span{color:var(--mb-ink-muted)}
+.tp-row{display:flex;align-items:center;gap:16px;font-size:14px;color:var(--mb-ink-muted)}
+.tp-row .score{font-family:"Playfair Display",serif;font-size:24px;color:var(--mb-ink)}
+/* google reviews (dark) */
+.google-head{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-bottom:32px}
+.g-badge{display:inline-flex;align-items:center;gap:12px;padding:12px 18px;border:1px solid var(--mb-border);border-radius:14px;background:var(--mb-surface)}
+.g-badge .g{font-weight:600;font-size:18px;color:#fff}
+.g-badge .s{color:var(--mb-gold);letter-spacing:2px}
+.g-badge span{font-size:13px;color:var(--mb-text-muted)}
+.g-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.g-card{background:var(--mb-surface);border:1px solid var(--mb-border);border-radius:var(--mb-radius-card);padding:24px;display:flex;flex-direction:column;gap:12px}
+.g-card .who{display:flex;gap:12px;align-items:center}
+.g-card .av{width:40px;height:40px;border-radius:50%;background:#475569;display:grid;place-items:center;font-weight:600;color:#fff;font-size:13px}
+.g-card .who b{display:block;color:#fff;font-size:14px}
+.g-card .who span{font-size:12px;color:var(--mb-text-muted)}
+.g-card p{font-size:14px;color:var(--mb-text)}
+/* regions */
+.regions{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.region{position:relative;height:150px;border-radius:20px;border:1px solid var(--mb-border);background:linear-gradient(150deg,#3b4a63,#1e293b);padding:18px;display:flex;flex-direction:column;justify-content:flex-end;transition:border-color .2s}
+.region:hover{border-color:#94a3b8}
+.region h3{font-size:18px;color:#fff}
+.region span{font-size:13px;color:var(--mb-text-muted)}
+.region .arrow{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:50%;border:1px solid var(--mb-border);display:grid;place-items:center}
+.region .arrow svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:1.8}
+.region.wide{grid-column:span 2}
+/* seo content */
+.seo{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+.seo h2{font-size:30px;margin-bottom:18px}
+.seo h3{font-size:18px;margin:26px 0 8px}
+.seo p{font-size:15px;color:var(--mb-ink-muted)}
+.checks{display:grid;gap:10px;margin:16px 0 0;padding:0;list-style:none}
+.checks li{display:flex;gap:10px;font-size:15px;color:var(--mb-ink)}
+.checks li svg{width:20px;height:20px;stroke:var(--mb-gold);fill:none;stroke-width:2;flex:none;margin-top:2px}
+.routes{background:#f8fafc;border:1px solid #e2e8f0;border-radius:var(--mb-radius-card);padding:26px}
+.routes h3{margin-top:0}
+.routes ul{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:10px}
+.routes li{display:grid;grid-template-columns:auto 1fr;gap:12px;font-size:14px;padding:10px 0;border-bottom:1px solid #e2e8f0}
+.routes li:last-child{border-bottom:0}
+.routes li b{font-weight:600;white-space:nowrap}
+.routes li span{color:var(--mb-ink-muted)}
+/* faq */
+.faq{max-width:860px;margin:0 auto}
+.faq details{border-bottom:1px solid #e2e8f0}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:20px 0;font-size:17px;font-weight:600}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .pm{width:28px;height:28px;border-radius:50%;border:1px solid #cbd5e1;display:grid;place-items:center;font-weight:400;color:var(--mb-ink-muted);flex:none;transition:transform .2s}
+.faq details[open] summary .pm{transform:rotate(45deg);border-color:var(--mb-gold);color:var(--mb-gold)}
+.faq .a{padding:0 0 22px;font-size:15px;color:var(--mb-ink-muted);max-width:70ch}
+/* newsletter */
+.news{background:var(--mb-surface);border:1px solid var(--mb-border);border-radius:var(--mb-radius-card);padding:40px;display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center}
+.news h2{font-size:28px;color:#fff}
+.news .row{display:flex;gap:10px}
+.news .row .in{flex:1}
+.news .fine{font-size:12px;color:var(--mb-text-muted);margin-top:12px}
+/* cta */
+.cta{background:var(--mb-deep);text-align:center}
+.cta h2{font-size:clamp(30px,3.6vw,44px);color:#fff}
+.cta p{margin:14px auto 30px;color:var(--mb-text-muted);font-size:18px}
+.cta .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+/* contact */
+.contact{display:grid;grid-template-columns:1.25fr 1fr;gap:48px}
+.contact .form{background:var(--mb-surface);border:1px solid var(--mb-border);border-radius:var(--mb-radius-card);padding:32px}
+.contact h2{color:#fff}
+.contact .form .lead{margin:10px 0 22px;font-size:15px}
+.contact .in.area{height:120px;align-items:flex-start;padding-top:14px}
+.info{display:grid;gap:14px;align-content:start}
+.info-card{display:grid;grid-template-columns:44px 1fr;gap:16px;padding:20px;border:1px solid var(--mb-border);border-radius:18px;background:var(--mb-surface)}
+.info-card .i{width:44px;height:44px;border-radius:12px;background:var(--mb-deep);display:grid;place-items:center}
+.info-card .i svg{width:20px;height:20px;stroke:var(--mb-text);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.info-card h3{font-size:15px;color:#fff}
+.info-card p{font-size:14px;color:var(--mb-text-muted);margin:2px 0 8px}
+.info-card a.link{font-size:13px;font-weight:600;color:var(--mb-gold)}
+/* footer */
+footer.site{background:var(--mb-deep);border-top:1px solid var(--mb-border);padding:64px 0 28px;font-size:14px}
+.fgrid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px}
+.fgrid h4{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#fff;margin-bottom:14px}
+.fgrid ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.fgrid a{color:var(--mb-text-muted)}.fgrid a:hover{color:#fff}
+.fgrid .about p{color:var(--mb-text-muted);margin:14px 0 18px;max-width:40ch}
+.badges{display:flex;gap:10px;flex-wrap:wrap}
+.badges span{font-size:11px;padding:6px 10px;border:1px solid var(--mb-border);border-radius:8px;color:var(--mb-text-muted)}
+.logos{display:flex;flex-wrap:wrap;gap:10px 28px;margin:44px 0 0;padding-top:28px;border-top:1px solid var(--mb-border);align-items:center}
+.logos span{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#64748b}
+.legal-row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:28px;padding-top:20px;border-top:1px solid var(--mb-border);font-size:12px;color:#64748b}
+.legal-row .seo-lines{max-width:70ch}
+/* sticky call */
+.sticky-call{position:fixed;right:20px;bottom:20px;z-index:30;display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 20px;border-radius:999px;background:var(--mb-gold);color:#fff;font-weight:600;box-shadow:0 12px 30px -10px rgba(0,0,0,.6)}
+.sticky-call:hover{background:var(--mb-gold-dark)}
+/* responsive */
+@media (max-width:1180px){nav.main{gap:12px;font-size:13px} .cards4{grid-template-columns:repeat(2,1fr)} .steps{grid-template-columns:repeat(2,1fr)} .steps::before{display:none} .regions{grid-template-columns:repeat(2,1fr)} .region.wide{grid-column:span 1}}
+@media (max-width:960px){
+  .trust-strip .right{display:none}
+  nav.main,.phone-pill,header .btn{display:none} .burger{display:grid;margin-left:auto}
+  .hero{min-height:0;padding:48px 0} .hero .wrap{grid-template-columns:1fr;gap:32px}
+  .stats .wrap{grid-template-columns:1fr 1fr} .stat{border-right:0;border-bottom:1px solid var(--mb-border)}
+  .why{grid-template-columns:1fr;gap:32px} .reviews,.g-cards{grid-template-columns:1fr} .seo{grid-template-columns:1fr;gap:28px}
+  .news{grid-template-columns:1fr;padding:28px} .contact{grid-template-columns:1fr} .fgrid{grid-template-columns:1fr 1fr}
+  .section{padding:60px 0} .sec-head{flex-direction:column;align-items:flex-start}
+}
+@media (max-width:560px){
+  :root{--pad:18px}
+  .grid2,.grid3{grid-template-columns:1fr} .route{grid-template-columns:1fr} .swap{display:none}
+  .cards4,.regions,.steps,.stats .wrap,.fgrid{grid-template-columns:1fr}
+  .quote-card{padding:20px} .tabs{width:100%;justify-content:space-between} .tabs button{padding:8px 10px;font-size:12px}
+  .hero .proof{flex-wrap:wrap;gap:14px} .news .row{flex-direction:column}
+  .sticky-call{right:12px;bottom:12px;height:48px;width:48px;padding:0;border-radius:50%;font-size:0}
+  .sticky-call .ico{width:20px;height:20px}
+  .trust-strip{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- 0. TRUST STRIP + HEADER — components/Header/Header.jsx (D2: real 7-item nav) -->
+<div class="trust-strip">
+  <div class="wrap">
+    <span><b>IATA</b> accredited · code 99910753</span>
+    <span><b>BBB</b> accredited business</span>
+    <div class="right"><span><b>CCRA</b> verified</span><span><b>Trustpilot</b> reviews</span></div>
+  </div>
+</div>
+<header class="site">
+  <div class="wrap">
+    <a class="logo" href="/" aria-label="Go to main page">
+      <span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 19h19"/><path d="M3.8 12.3 6 9.9l4.6 1.2 4.4-5.6a1.6 1.6 0 0 1 2.7 1.7l-2.6 5.2 3.9 1.3-1.5 2.1-5.6-1-3.1 3.3-2.3-.7 1.2-3.7-3.7-1.3Z"/></svg></span>
+      <span>BuyBusinessClass<small>24/7 TRAVEL CONCIERGE</small></span>
+    </a>
+    <nav class="main" aria-label="Main">
+      <a href="/" aria-current="page">Home</a>
+      <a href="/about-us">About Us</a>
+      <a href="/airlines">Airlines</a>
+      <a href="/business-class-flights">Business Class Flights</a>
+      <a href="/all-deals">Best Deals</a>
+      <a href="/reviews">Reviews</a>
+      <a class="ext" href="https://blog.buybusinessclass.com/" target="_blank" rel="noopener">Blog</a>
+    </nav>
+    <a class="phone-pill" href="tel:+18883227999"><span class="dot"></span><span><span class="lbl">24/7 LIVE SERVICE</span><br>+1 (888) 322-7999</span></a>
+    <a class="btn btn-gold btn-sm" href="#quote">Get Free Quote</a>
+    <button class="burger" aria-label="Toggle menu"><svg class="ico" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+
+<!-- 1. HERO + FULL ORDERFLY — components/MainPage/HeaderContainer.jsx + HeaderForm/OrderFly (D3) -->
+<section class="hero" id="top">
+  <div class="bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <div>
+      <span class="badge"><span class="dot"></span> Live concierge available 24/7</span>
+      <h1>Save up to <span class="accent">60%</span> on Business Class flights</h1>
+      <p class="lead">Cheap business class airline tickets &amp; flight deals — access exclusive unpublished fares.</p>
+      <div class="proof">
+        <div><b data-live="trustpilot.score">★ —/5</b>Trustpilot</div>
+        <div><b>IATA 99910753</b>Accredited agency</div>
+        <div><b>30 airlines</b>Verified consolidator fares</div>
+      </div>
+    </div>
+
+    <form class="quote-card" id="quote" onsubmit="return false" aria-label="Request a free quote">
+      <h3>Find your perfect deal</h3>
+      <p class="sub">Get a personalized quote in under 60 seconds</p>
+      <div class="tabs" role="tablist">
+        <button type="button" role="tab" aria-selected="true">Round Trip</button>
+        <button type="button" role="tab" aria-selected="false">One Way</button>
+        <button type="button" role="tab" aria-selected="false">Multi City</button>
+      </div>
+      <div class="stack">
+        <div class="route">
+          <label class="field">From<span class="in"><svg viewBox="0 0 24 24"><path d="M2.5 19h19M4 12l3-2 4 1 4-5 3 1-2 5 4 1-1 2-6-1-3 3-2-1 1-3-3-1Z"/></svg><span class="ph">Departure airport</span></span></label>
+          <button type="button" class="swap" aria-label="Swap airports"><svg class="ico" viewBox="0 0 24 24"><path d="M7 4v16M3 8l4-4 4 4M17 20V4M13 16l4 4 4-4"/></svg></button>
+          <label class="field">To<span class="in"><svg viewBox="0 0 24 24"><path d="M2.5 19h19M4 12l3-2 4 1 4-5 3 1-2 5 4 1-1 2-6-1-3 3-2-1 1-3-3-1Z"/></svg><span class="ph">Arrival airport</span></span></label>
+        </div>
+        <div class="grid2">
+          <label class="field">Depart<span class="in"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span class="ph">Select date</span></span></label>
+          <label class="field">Return<span class="in"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span class="ph">Select date</span></span></label>
+        </div>
+        <div class="grid2">
+          <label class="field">Cabin type<span class="in">Business Class<svg class="caret" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span></label>
+          <label class="field">Travelers<span class="in">1 adult<svg class="caret" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span></label>
+        </div>
+        <div class="grid3">
+          <label class="field">Name<span class="in"><span class="ph">Full name</span></span></label>
+          <label class="field">Email<span class="in"><span class="ph">email@example.com</span></span></label>
+          <label class="field">Phone<span class="in">🇺🇸 +1<span class="ph">(555) 000-0000</span></span></label>
+        </div>
+      </div>
+      <label class="consent"><span class="box"></span><span>By submitting, you agree to our <a href="/privacy">Privacy Policy</a> and consent to receive SMS.</span></label>
+      <button class="btn btn-gold" type="submit">Get Free Quote <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      <p class="note">No payment now. A travel concierge calls you back with real fares. Protected by reCAPTCHA.</p>
+    </form>
+  </div>
+</section>
+
+<!-- 2. STATS STRIP — components/MainPage/StatsStrip.jsx (D9: real metrics only) -->
+<section class="stats" aria-label="Key facts">
+  <div class="wrap">
+    <div class="stat"><b data-live="trustpilot.score">—/5</b><span>Trustpilot rating</span><span class="live">LIVE · TRUSTPILOT</span></div>
+    <div class="stat"><b data-live="trustpilot.count">—</b><span>Trustpilot reviews</span><span class="live">LIVE · TRUSTPILOT</span></div>
+    <div class="stat"><b>Up to 60%</b><span>Off published fares</span></div>
+    <div class="stat"><b>24/7</b><span>Live support</span></div>
+  </div>
+</section>
+
+<!-- 3. FEATURED DEALS — components/MainPage/BestSelling.jsx + OfferCard (data: useRegionStore.bestSelling) -->
+<section class="section" id="deals">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow">Limited time</p><h2 class="h2">Featured Business Class Deals</h2><p class="lead muted">Discounted business class flights — save up to 60%. Cards below are populated from the CMS (<code>bestDeals/getMain</code>); routes shown are structural samples.</p></div>
+      <a class="btn btn-ghost" href="/all-deals">See all deals</a>
+    </div>
+    <div class="cards4" data-live="bestSelling">
+      <article class="deal"><div class="photo"><span class="off">-58%</span><span class="cityline">Destination photo from CMS</span></div><div class="body"><h3>New York → London</h3><p class="meta">Business Class · round trip</p><div class="price"><b><small>from</small>$—</b><a href="/flight/city/london/0">View deal →</a></div></div></article>
+      <article class="deal"><div class="photo"><span class="off">-52%</span><span class="cityline">Destination photo from CMS</span></div><div class="body"><h3>Los Angeles → Tokyo</h3><p class="meta">Business Class · round trip</p><div class="price"><b><small>from</small>$—</b><a href="/flight/city/tokyo/0">View deal →</a></div></div></article>
+      <article class="deal"><div class="photo"><span class="off">-47%</span><span class="cityline">Destination photo from CMS</span></div><div class="body"><h3>Miami → Madrid</h3><p class="meta">Business Class · round trip</p><div class="price"><b><small>from</small>$—</b><a href="/flight/city/madrid/0">View deal →</a></div></div></article>
+      <article class="deal"><div class="photo"><span class="off">-61%</span><span class="cityline">Destination photo from CMS</span></div><div class="body"><h3>San Francisco → Singapore</h3><p class="meta">Business Class · round trip</p><div class="price"><b><small>from</small>$—</b><a href="/flight/city/singapore/0">View deal →</a></div></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- 4. HOW IT WORKS — components/MainPage/WorksContainer.jsx -->
+<section class="section white" id="how-it-works">
+  <div class="wrap">
+    <div class="sec-head"><div><p class="eyebrow">Simple process</p><h2 class="h2">How does this work?</h2><p class="lead muted">We do the hard work so you can enjoy the journey.</p></div></div>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><h3>Request a quote</h3><p>Request a FREE quote by completing the form above.</p></div>
+      <div class="step"><div class="n">2</div><h3>Fill in your information</h3><p>Fill in your personal and contact information.</p></div>
+      <div class="step"><div class="n">3</div><h3>Find the best deal</h3><p>A friendly travel concierge will quickly find the best deals for you.</p></div>
+      <div class="step last"><div class="n">4</div><h3>Book your flight</h3><p>Book your flight and save up to 60% OFF retail prices.</p></div>
+    </div>
+    <div style="margin-top:40px"><a class="btn btn-dark" href="#quote">Book your Flight Now</a></div>
+  </div>
+</section>
+
+<!-- 5. WHY US — components/MainPage/WhyUs.jsx (copy verbatim; concierge card makes the human side visible) -->
+<section class="section" id="why-us">
+  <div class="wrap why">
+    <div>
+      <p class="eyebrow">The BuyBusinessClass difference</p>
+      <h2 class="h2">Premium travel, without the premium price.</h2>
+      <p class="lead muted">A real person searches consolidator inventory the booking sites can't show, then calls you back with the options.</p>
+      <div class="why-list">
+        <div class="why-item"><div class="i"><svg viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><div><h3>Dedicated experts</h3><p>Personal consultants who know the best routes and lowest fares.</p></div></div>
+        <div class="why-item"><div class="i"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div><div><h3>Real fares. Real savings.</h3><p>Verified consolidators. What you see is what you pay.</p></div></div>
+        <div class="why-item"><div class="i"><svg viewBox="0 0 24 24"><path d="M4.6 13.5v-2.1A7.4 7.4 0 0 1 12 4a7.4 7.4 0 0 1 7.4 7.4v2.1"/><rect x="3" y="13" width="4" height="6" rx="1.5"/><rect x="17" y="13" width="4" height="6" rx="1.5"/><path d="M19.2 19.6a3.8 3.8 0 0 1-3.4 2.1h-1.6"/></svg></div><div><h3>From booking to boarding and beyond.</h3><p>24/7 live support before, during and after your trip.</p></div></div>
+        <div class="why-item"><div class="i"><svg viewBox="0 0 24 24"><path d="M12 3 5 6v6c0 4.4 3 7.7 7 9 4-1.3 7-4.6 7-9V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg></div><div><h3>Flexible &amp; protected</h3><p>Changeable tickets and price protection.</p></div></div>
+      </div>
+    </div>
+    <aside class="concierge" aria-label="Your travel concierge">
+      <div class="agent"><div class="avatar" aria-hidden="true">BBC</div><div><b>Speak to a travel concierge</b><span>Live concierge available 24/7 — real agents, not a call center script.</span></div></div>
+      <a class="num" href="tel:+18883227999">+1 (888) 322-7999</a>
+      <div class="badges"><span>IATA 99910753</span><span>BBB accredited</span><span>CCRA verified</span></div>
+      <a class="btn btn-ghost" href="#quote">Or request a free quote</a>
+    </aside>
+  </div>
+</section>
+
+<!-- 6. TRUSTPILOT REVIEWS — components/MainPage/ReviewsSection.jsx (data: useReviewsStore) -->
+<section class="section white" id="reviews">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow">Real stories</p><h2 class="h2">Travelers love flying with us</h2><div class="tp-row" style="margin-top:14px"><span class="score" data-live="trustpilot.score">—/5</span><span class="stars">★★★★★</span><span data-live="trustpilot.count">— reviews on Trustpilot</span></div></div>
+      <a class="btn btn-ghost" href="https://www.trustpilot.com/review/buybusinessclass.com" target="_blank" rel="noopener">See all reviews on Trustpilot ↗</a>
+    </div>
+    <div class="reviews" data-live="trustpilot.reviews">
+      <article class="review"><div class="stars">★★★★★</div><h3>Review title from Trustpilot</h3><p>Review body from Trustpilot. Cards are rendered from <code>useReviewsStore.reviews</code>; three most recent 5-star reviews.</p><div class="who"><div class="av">A</div><div><b>author_name</b><br><span>Verified · date</span></div></div></article>
+      <article class="review"><div class="stars">★★★★★</div><h3>Review title from Trustpilot</h3><p>Review body from Trustpilot.</p><div class="who"><div class="av">B</div><div><b>author_name</b><br><span>Verified · date</span></div></div></article>
+      <article class="review"><div class="stars">★★★★★</div><h3>Review title from Trustpilot</h3><p>Review body from Trustpilot.</p><div class="who"><div class="av">C</div><div><b>author_name</b><br><span>Verified · date</span></div></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- 7. GOOGLE REVIEWS — components/MainPage/GoogleReview.jsx (D6: re-mounted). No stock avatars: initials only. -->
+<section class="section surface" id="google-reviews">
+  <div class="wrap">
+    <div class="google-head">
+      <div><p class="eyebrow">On Google</p><h2 class="h2">What travelers say on Google</h2></div>
+      <a class="g-badge" href="https://g.page/r/CesDQbfDx7lREAE/review" target="_blank" rel="noopener"><span class="g">Google</span><span class="s">★★★★★</span><span>Write a review ↗</span></a>
+    </div>
+    <div class="g-cards">
+      <article class="g-card"><div class="who"><div class="av">SG</div><div><b>Sally Gutierrez</b><span>Google review</span></div></div><div class="stars">★★★★★</div><p>BuyBusiness was very easy to work with and their prices were great. Also, Chris did an outstanding job assisting me with my travel plans.</p></article>
+      <article class="g-card"><div class="who"><div class="av">NN</div><div><b>Norm Nelson</b><span>Google review</span></div></div><div class="stars">★★★★★</div><p>Tyke once again did a great job for me. He was fast, responsive, courteous, professional and highly skilled. He found the best possible route for the best possible price.</p></article>
+      <article class="g-card"><div class="who"><div class="av">HS</div><div><b>Harry Steinke</b><span>Google review</span></div></div><div class="stars">★★★★★</div><p>It was a wonderful experience working with Sara. She quickly grasped our travel desires and was able to get us wonderful flights to and from Kenya at a very reasonable price.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- 8. REGIONS — components/MainPage/RegionsSection.jsx (data: useRegionStore.regions; 7 real regions) -->
+<section class="section" id="destinations">
+  <div class="wrap">
+    <div class="sec-head"><div><p class="eyebrow">Destinations</p><h2 class="h2">Fly business class worldwide</h2></div></div>
+    <div class="regions" data-live="regions">
+      <a class="region wide" href="/best-deals/europe/1"><span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><h3>Europe</h3><span>London · Paris · Rome · Frankfurt · Zurich</span></a>
+      <a class="region" href="/best-deals/asia/281"><span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><h3>Asia</h3><span>Tokyo · Seoul · Hong Kong · Bangkok</span></a>
+      <a class="region" href="/best-deals/middle%20east/0"><span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><h3>Middle East</h3><span>Dubai · Doha · Istanbul</span></a>
+      <a class="region" href="/best-deals/africa/0"><span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><h3>Africa</h3><span>Johannesburg · Cape Town · Nairobi</span></a>
+      <a class="region" href="/best-deals/oceania/0"><span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><h3>Oceania</h3><span>Sydney · Auckland · Melbourne</span></a>
+      <a class="region" href="/best-deals/latin%20america/0"><span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><h3>Latin America</h3><span>São Paulo · Buenos Aires · Lima</span></a>
+      <a class="region" href="/best-deals/indian%20subcontinent/0"><span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><h3>Indian Subcontinent</h3><span>Delhi · Mumbai · Colombo</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- 9. SEO CONTENT — components/MainPage/SeoContent.jsx (copy verbatim, on white for readability) -->
+<section class="section white" id="about-fares">
+  <div class="wrap seo">
+    <div>
+      <p class="eyebrow">Why travelers choose our business class tickets</p>
+      <h2>Up to 60% off Business Class Tickets</h2>
+      <p>We source unpublished consolidator fares on the same flights you'd find on the airline's own site — business and first class seats at a fraction of the published price. A concierge does the searching; you get the options by phone or email, usually within the hour.</p>
+      <ul class="checks">
+        <li><svg viewBox="0 0 24 24"><path d="M5.8 12.4l3.7 3.7 8.7-9.2"/></svg><span><b>Exclusive discounts</b> — business class airline tickets at consolidator rates.</span></li>
+        <li><svg viewBox="0 0 24 24"><path d="M5.8 12.4l3.7 3.7 8.7-9.2"/></svg><span><b>Exclusive deals on business class flights</b> — flexible dates, one-way, round trip and multi-city.</span></li>
+        <li><svg viewBox="0 0 24 24"><path d="M5.8 12.4l3.7 3.7 8.7-9.2"/></svg><span><b>How we find discounted fares</b> — 30 partner airlines, verified consolidators, every quote checked by a person.</span></li>
+      </ul>
+      <h3>Ready for your next business class flight?</h3>
+      <p>Tell us where and when. We'll come back with real fares, not estimates.</p>
+      <div style="margin-top:18px"><a class="btn btn-dark" href="#quote">Request a free quote</a></div>
+    </div>
+    <aside class="routes" aria-label="Popular routes">
+      <h3>Popular routes for cheap business class flights</h3>
+      <ul>
+        <li><b>New York (JFK / EWR)</b><span>⇄ London, Paris, Rome, Frankfurt, Zurich</span></li>
+        <li><b>Los Angeles (LAX)</b><span>⇄ Tokyo, Seoul, Hong Kong, Sydney, Auckland</span></li>
+        <li><b>Miami (MIA)</b><span>⇄ Madrid, Lisbon, São Paulo, Buenos Aires</span></li>
+        <li><b>San Francisco (SFO)</b><span>⇄ Singapore, Bangkok, Dubai, Delhi, Mumbai</span></li>
+        <li><b>Chicago (ORD)</b><span>⇄ Istanbul, Doha, Johannesburg, Cape Town</span></li>
+      </ul>
+    </aside>
+  </div>
+</section>
+
+<!-- 10. FAQ — components/MainPage/FaqSection.jsx (6 of 12 real questions; emits FAQ JSON-LD in the app) -->
+<section class="section white" id="faq" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head" style="justify-content:center;text-align:center"><div><p class="eyebrow">Good to know</p><h2 class="h2">Frequently asked questions</h2></div></div>
+    <div class="faq">
+      <details open><summary>How can I find discounted business class flights for last-minute travel?<span class="pm">+</span></summary><div class="a">Finding discounted business class flights for last-minute travel can be challenging, but there are a few ways to increase your chances. Airlines often offer last-minute promotions, and consolidators like us hold unpublished inventory that never appears on booking sites. Call the concierge line — last-minute is where a human search pays off most.</div></details>
+      <details><summary>What is the best way to book cheap international business class flights?<span class="pm">+</span></summary><div class="a">Request a quote with flexible dates if you can. A concierge compares consolidator fares across 30 partner airlines and comes back with the options that fit your route and budget.</div></details>
+      <details><summary>How much does a business class flight ticket usually cost?<span class="pm">+</span></summary><div class="a">Business class flight tickets vary greatly depending on the airline, destination, and time of booking. Typically, international business class tickets range from $1,100 to $5,000. Booking in advance or during an airline sale can secure the best price.</div></details>
+      <details><summary>Can I find business class flights at a discount during peak travel seasons?<span class="pm">+</span></summary><div class="a">Yes — availability is tighter, but consolidator fares exist year-round. Give us your dates early and we'll hold options as they appear.</div></details>
+      <details><summary>What is included in a business class ticket for international flights?<span class="pm">+</span></summary><div class="a">Lie-flat or angled seats, priority check-in and boarding, lounge access, premium dining and a larger baggage allowance. Details vary by airline; your quote lists what's included.</div></details>
+      <details><summary>Are business class tickets refundable or changeable?<span class="pm">+</span></summary><div class="a">Most consolidator fares are changeable for a fee; refund rules depend on the fare class. Every quote states the change and refund terms before you book.</div></details>
+    </div>
+    <div style="text-align:center;margin-top:28px"><a class="btn btn-ghost" href="/faq">Find more questions</a></div>
+  </div>
+</section>
+
+<!-- 11. NEWSLETTER — components/MainPage/NewsletterBanner.jsx (POST contacts/subscribe) -->
+<section class="section" id="newsletter" style="padding-top:64px;padding-bottom:0">
+  <div class="wrap">
+    <form class="news" onsubmit="return false" aria-label="Newsletter">
+      <div><p class="eyebrow">Deals by email</p><h2>Get Exclusive Business Class Flight Deals First</h2><p class="muted" style="margin-top:10px">Unpublished fares, seasonal sales and route openings — a short email, only when there's a real deal.</p></div>
+      <div>
+        <div class="row"><label class="field in" style="flex:1"><span class="ph">E-mail</span></label><button class="btn btn-gold" type="submit">Subscribe Free</button></div>
+        <label class="consent" style="margin:14px 0 0"><span class="box"></span><span>I agree to receive emails. <a href="/terms">T&amp;C</a> · <a href="/privacy">Privacy Policy</a></span></label>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- 12. CTA BANNER — components/MainPage/CtaBanner.jsx (copy verbatim) -->
+<section class="section cta" id="cta" style="margin-top:88px">
+  <div class="wrap">
+    <h2>Ready to experience business class for less?</h2>
+    <p>Join thousands of smart travelers.</p>
+    <div class="row"><a class="btn btn-gold" href="#quote">Get my free quote</a><a class="btn btn-ghost" href="tel:+18883227999">Call +1 (888) 322-7999</a></div>
+  </div>
+</section>
+
+<!-- 13. CONTACT — components/MainPage/ContactSection.jsx (POST contacts/submit) -->
+<section class="section" id="contact">
+  <div class="wrap contact">
+    <form class="form" onsubmit="return false" aria-label="Contact form">
+      <p class="eyebrow">Contact us</p>
+      <h2 class="h2">Still have questions? Leave us a message.</h2>
+      <p class="lead muted">Submit your request in the box below and one of our Travel Consultants will contact you back directly.</p>
+      <div class="stack">
+        <div class="grid2"><label class="field">Name<span class="in"><span class="ph">Your name</span></span></label><label class="field">E-mail<span class="in"><span class="ph">email@example.com</span></span></label></div>
+        <label class="field">Phone<span class="in">🇺🇸 +1<span class="ph">(555) 000-0000</span></span></label>
+        <label class="field">Message<span class="in area"><span class="ph">Where would you like to fly, and when?</span></span></label>
+      </div>
+      <label class="consent"><span class="box"></span><span>I agree to the <a href="/privacy">Privacy Policy</a> and <a href="/terms">SMS Terms and Conditions</a>.</span></label>
+      <button class="btn btn-gold" type="submit">Send</button>
+    </form>
+    <div class="info">
+      <div class="info-card"><div class="i"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg></div><div><h3>Call to Book</h3><p>24/7, real agents — no menus.</p><a class="link" href="tel:+18883227999">Let's have a chat · +1 (888) 322-7999</a></div></div>
+      <div class="info-card"><div class="i"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m3 8 9 6 9-6"/></svg></div><div><h3>Email Us</h3><p>Quotes and questions, answered by a consultant.</p><a class="link" href="mailto:cs@buybusinessclass.com">Write an email to us · cs@buybusinessclass.com</a></div></div>
+      <div class="info-card"><div class="i"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg></div><div><h3>Address</h3><p data-live="settings.address">Office address from settings/getAll</p><a class="link" href="#" target="_blank" rel="noopener">Show on map</a></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER — components/Footer/Footer.jsx (full: Company / Contact / Legal, badges, airline logos strip, SEO lines) -->
+<footer class="site">
+  <div class="wrap">
+    <div class="fgrid">
+      <div class="about">
+        <a class="logo" href="/"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 19h19"/><path d="M3.8 12.3 6 9.9l4.6 1.2 4.4-5.6a1.6 1.6 0 0 1 2.7 1.7l-2.6 5.2 3.9 1.3-1.5 2.1-5.6-1-3.1 3.3-2.3-.7 1.2-3.7-3.7-1.3Z"/></svg></span><span>BuyBusinessClass</span></a>
+        <p>Discounted business and first class fares from verified consolidators, found by a real travel concierge, available 24/7.</p>
+        <div class="badges"><span>IATA 99910753</span><span>BBB</span><span>CCRA</span><span>Trustpilot</span><span>3-D Secure</span></div>
+      </div>
+      <div><h4>Company</h4><ul><li><a href="/about-us">About Us</a></li><li><a href="/airlines">Airlines</a></li><li><a href="/business-class-flights">Business Class Flights</a></li><li><a href="/reviews">Reviews</a></li><li><a href="https://blog.buybusinessclass.com/" target="_blank" rel="noopener">Blog ↗</a></li></ul></div>
+      <div><h4>Contact</h4><ul><li><a href="tel:+18883227999">+1 (888) 322-7999</a></li><li><a href="mailto:cs@buybusinessclass.com">cs@buybusinessclass.com</a></li><li><a href="https://wa.me/18883227999" target="_blank" rel="noopener">WhatsApp</a></li></ul></div>
+      <div><h4>Legal</h4><ul><li><a href="/privacy">Privacy Policy</a></li><li><a href="/terms">Terms of Use</a></li><li><a href="/sitemap">Sitemap</a></li></ul></div>
+    </div>
+    <div class="logos" aria-label="Partner airlines" data-live="airlines">
+      <span>Emirates</span><span>Qatar Airways</span><span>Singapore Airlines</span><span>Turkish Airlines</span><span>Etihad</span><span>Lufthansa</span><span>British Airways</span><span>Air France</span><span>KLM</span><span>Cathay Pacific</span><span>Qantas</span><span>Swiss</span><span>Korean Air</span><span>United</span><span>American</span><span>+ 15 more</span>
+    </div>
+    <div class="legal-row">
+      <div class="seo-lines">Cheap business class flights · Discount business class tickets · Business class airline tickets &amp; flight deals</div>
+      <div>© 2026 BuyBusinessClass · IATA 99910753</div>
+    </div>
+  </div>
+</footer>
+
+<a class="sticky-call" href="tel:+18883227999"><svg class="ico" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg> Call us</a>
+
+</body>
+</html>

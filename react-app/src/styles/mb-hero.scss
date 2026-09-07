@@ -375,3 +375,36 @@
         fill: var(--mb-text-muted);
     }
 }
+
+// ---------------------------------------------------------------------------
+// NEW BLOCK (workstream 2, search form UX). Appended additions only; nothing
+// above this line changed. Two concerns live here:
+//   1. .mb-form-error: inline validation text rendered by OrderFly under the
+//      airports row / date row (role="alert"). Text-based feedback so errors
+//      are not color-only.
+//   2. City-first autocomplete rows in ChooseAirport: the primary line
+//      (.airport-primary, city + airport name) reads brighter and bolder, the
+//      secondary line (.airport-secondary, country) reads muted. Scoped to
+//      the moodboard pages so other pages' dropdowns are unaffected.
+// ---------------------------------------------------------------------------
+
+:is(.mb-home, .mb-page) .header-form.order-fly {
+    .mb-form-error {
+        margin: 6px 0 0;
+        color: #ff6a55;
+        font: 400 13px/1.4 'Inter', sans-serif;
+        text-align: left;
+    }
+
+    .search-flight .select-option {
+        .airport-primary {
+            color: var(--mb-text);
+            font-weight: 600;
+        }
+
+        .airport-secondary {
+            color: var(--mb-text-muted);
+            font-weight: 400;
+        }
+    }
+}

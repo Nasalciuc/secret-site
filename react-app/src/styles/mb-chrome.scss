@@ -64,8 +64,12 @@
 // Coupon popup (.modal-overlay / .modal-content) — slate card, gold CTA.
 // Lead / intl-tel-input logic untouched; classes and structure identical.
 // ---------------------------------------------------------------------------
-.modal-overlay {
-    background: rgba(15, 23, 42, 0.75);
+.modal-overlay.coupon-modal-overlay,
+.coupon-modal-overlay {
+    background: rgba(15, 23, 42, 0.82);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 10050;
 
     .modal-content {
         background: var(--mb-surface);
@@ -89,6 +93,7 @@
         }
 
         .image-overlay {
+            padding: 36px 28px 32px 36px;
             background: linear-gradient(transparent, rgba(15, 23, 42, 0.85));
 
             .badge {
@@ -126,13 +131,21 @@
                 color: var(--mb-text-muted);
             }
 
-            .promo-card-row .copy-btn {
-                border-color: var(--mb-gold);
-                border-radius: 999px;
+            .promo-card-row {
+                align-items: center;
+                gap: 12px;
 
-                &:hover {
-                    background: var(--mb-gold);
-                    color: #fff;
+                .copy-btn {
+                    flex-shrink: 0;
+                    border-color: var(--mb-gold);
+                    border-radius: 999px;
+                    min-height: 32px;
+                    padding: 6px 14px;
+
+                    &:hover {
+                        background: var(--mb-gold);
+                        color: #fff;
+                    }
                 }
             }
         }
@@ -161,6 +174,7 @@
 
         .terms {
             color: var(--mb-text-muted);
+            margin: 8px 0 22px;
 
             input[type='checkbox'] {
                 border-color: var(--mb-border);
@@ -186,7 +200,7 @@
             background: var(--mb-gold);
             color: var(--mb-ink);
             border-radius: var(--mb-radius-input);
-            box-shadow: none;
+            box-shadow: 0 8px 24px rgba(180, 133, 59, 0.28);
             font-weight: 700;
 
             &:not(:disabled):hover {
@@ -195,9 +209,12 @@
                 box-shadow: 0 12px 28px rgba(180, 133, 59, 0.3);
             }
 
+            // Gold-but-waiting — not slate/blue-grey (reads as broken).
             &:disabled {
-                background: rgba(255, 255, 255, 0.08);
-                color: var(--mb-text-muted);
+                background: var(--mb-gold);
+                color: var(--mb-ink);
+                opacity: 0.45;
+                box-shadow: none;
             }
         }
     }
@@ -337,11 +354,11 @@
 
 // ---------------------------------------------------------------------------
 // Status toast (.modal-status) — surface card; error body keeps red.
-// z-index raised above the coupon overlay (2000) so validation toasts
+// z-index raised above the coupon overlay (10050) so validation toasts
 // triggered from inside popups are not dimmed behind them.
 // ---------------------------------------------------------------------------
 .modal-status {
-    z-index: 2100;
+    z-index: 10100;
     background: var(--mb-surface);
     border: 1px solid var(--mb-border);
     border-radius: var(--mb-radius-input);
@@ -511,4 +528,16 @@
         background: var(--mb-deep);
         color: var(--mb-text);
     }
+}
+
+// --- Floating-chrome yield rule ---------------------------------------------
+// When any full-screen overlay is up (chat dialog or coupon modal), the
+// floating buttons (WhatsApp FAB, sticky Call Us pill, chat trigger circle)
+// disappear entirely instead of peeking half-covered from under panel
+// corners (mixed layers read as broken, not as depth).
+body:has(.dialog-overlay) #wa-btn,
+body:has(.dialog-overlay) .btn-container,
+body:has(.coupon-modal-overlay) #wa-btn,
+body:has(.coupon-modal-overlay) .btn-container {
+    visibility: hidden;
 }

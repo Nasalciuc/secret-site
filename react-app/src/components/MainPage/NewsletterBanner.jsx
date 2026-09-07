@@ -69,10 +69,10 @@ export default function NewsletterBanner() {
         <section className="newsletter-banner">
             <div className="nb-container">
                 <h2 className="nb-title">Get Exclusive Business Class Flight Deals First</h2>
-                <h2 className="nb-subtitle">
+                <p className="nb-subtitle">
                     Join our newsletter to get first access to our latest sales and exclusive business class offers you
                     won't find online.
-                </h2>
+                </p>
 
                 <form className="nb-form" onSubmit={onSubmit}>
                     <label className="sr-only" htmlFor="nb-email">E-mail</label>

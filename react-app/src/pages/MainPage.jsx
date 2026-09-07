@@ -6,6 +6,7 @@ import { useAppStore } from '@/store/useAppStore'
 // contact — they carry SEO weight, internal links, and extra lead capture)
 import HeaderContainer from '@/components/MainPage/HeaderContainer'
 import StatsStrip from '@/components/MainPage/StatsStrip'
+import FeaturedRoutes from '@/components/MainPage/FeaturedRoutes'
 import BestSelling from '@/components/MainPage/BestSelling'
 import WorksContainer from '@/components/MainPage/WorksContainer'
 import WhyUs from '@/components/MainPage/WhyUs'
@@ -70,6 +71,7 @@ export default function MainPage() {
                 <HeaderContainer />
             </div>
             <StatsStrip />
+            <FeaturedRoutes />
             <BestSelling />
             <WorksContainer />
             <WhyUs />

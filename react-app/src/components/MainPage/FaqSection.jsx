@@ -133,11 +133,11 @@ export default function FaqSection({ limit = 6, showMoreLink = true }) {
 
     return (
         <div className="faq">
-            <h2>FAQ Section</h2>
+            <h2>Frequently asked questions</h2>
             {visibleFaqs.map((item, index) => (
                 <div key={index} className="faq-item">
                     <button className="faq-question" onClick={() => setOpenIndex(openIndex === index ? null : index)}>
-                        {item.question}
+                        {item.question.replace(/^FAQ\s*\d+:\s*/, '')}
                         <span>{openIndex === index ? '-' : '+'}</span>
                     </button>
                     {openIndex === index && (

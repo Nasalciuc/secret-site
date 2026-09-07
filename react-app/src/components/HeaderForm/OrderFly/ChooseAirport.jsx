@@ -7,6 +7,12 @@ const normalizeAirport = (value) => {
     return value
 }
 
+// Display-only label for a suggestion row: city plus airport name when present.
+const airportLabel = (option) => {
+    if (option.name && option.name !== option.city) return [option.city, option.name].filter(Boolean).join(' ')
+    return option.city || option.name || ''
+}
+
 export default function ChooseAirport({ propFrom, propTo, errorFrom, errorTo, onFromChange, onToChange }) {
     const [inputFirst, setInputFirst] = useState(() => normalizeAirport(propFrom))
     const [inputSecond, setInputSecond] = useState(() => normalizeAirport(propTo))
@@ -86,10 +92,15 @@ export default function ChooseAirport({ propFrom, propTo, errorFrom, errorTo, on
                 selectAirport(option, isFirst)
             }}
         >
+            {/* City-first: the primary slot (legacy .country class keeps its 14px
+                size everywhere) now carries the city + airport name, the small
+                secondary slot (.city class) carries the country. Data, filtering,
+                and selection stay untouched; airport-primary / airport-secondary
+                are styling hooks for the moodboard skin (mb-hero.scss). */}
             <div className="select-option">
                 <div className="country-info">
-                    <div className="country">{option.country}</div>
-                    <div className="city">{option.city}</div>
+                    <div className="country airport-primary">{airportLabel(option)}</div>
+                    <div className="city airport-secondary">{option.country}</div>
                 </div>
                 <span className="iata">{option.iata_code}</span>
             </div>

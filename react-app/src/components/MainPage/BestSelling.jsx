@@ -95,8 +95,8 @@ export default function BestSelling() {
         <div className="best-selling-container" ref={rootRef}>
             {mbHome ? (
                 <div className="mb-deals-head">
-                    <span className="mb-eyebrow">Limited time</span>
-                    <h2 className="mb-section-title">Featured Business Class Deals</h2>
+                    <span className="mb-eyebrow">Destinations</span>
+                    <h2 className="mb-section-title">Explore more destinations</h2>
                 </div>
             ) : (
                 <div className="title">
@@ -124,7 +124,7 @@ export default function BestSelling() {
                                                 title={item.name}
                                                 price={item.minPrice?.price_today ?? item.price_today}
                                                 imgUrl={returnImgUrl(item.image)}
-                                                extraInfo={item.extra_info ?? '60% off on business class flights'}
+                                                extraInfo={item.extra_info ?? (mbHome ? '' : '60% off on business class flights')}
                                                 to={cardTo(item)}
                                                 variant={mbHome ? 'mb' : undefined}
                                             />
