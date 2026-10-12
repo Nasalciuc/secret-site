@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useRegionStore } from '@/store/useRegionStore'
-import { searchFlight } from '@/services/api'
+import { getBestDeal, searchFlight } from '@/services/api'
 import { PLANE_D } from '@/components/MainPage/planeShape'
 import { ArrowIcon, scrollToQuote } from './homeShared'
 
@@ -11,11 +11,13 @@ import { ArrowIcon, scrollToQuote } from './homeShared'
 // /flights/search the quote funnel uses, cached for the session; a route the search does not price
 // shows "Fare on request". "View deal" fills the quote form with the route and brings it into view.
 // On phones the four tickets become a sideways row (the next one peeks in).
+// Photos are the city records in the CMS (getOne), not the region tiles from getMain: London and
+// Dubai are not in that short list, so a region match was showing Europe and the Middle East.
 const ROUTES = [
-    { from: 'JFK', to: 'LHR', fromLabel: 'New York', toLabel: 'London', off: 58, imageMatch: ['london', 'europe'] },
-    { from: 'LAX', to: 'NRT', fromLabel: 'Los Angeles', toLabel: 'Tokyo', off: 51, imageMatch: ['tokyo', 'asia'] },
-    { from: 'MIA', to: 'DXB', fromLabel: 'Miami', toLabel: 'Dubai', off: 63, imageMatch: ['dubai', 'middle east'] },
-    { from: 'ORD', to: 'SYD', fromLabel: 'Chicago', toLabel: 'Sydney', off: 47, imageMatch: ['sydney', 'oceania'] },
+    { from: 'JFK', to: 'LHR', fromLabel: 'New York', toLabel: 'London', off: 58, dealId: 23 },
+    { from: 'LAX', to: 'NRT', fromLabel: 'Los Angeles', toLabel: 'Tokyo', off: 51, dealId: 283 },
+    { from: 'MIA', to: 'DXB', fromLabel: 'Miami', toLabel: 'Dubai', off: 63, dealId: 512 },
+    { from: 'ORD', to: 'SYD', fromLabel: 'Chicago', toLabel: 'Sydney', off: 47, dealId: 695 },
 ]
 
 const CACHE_KEY = 'bbc_featured_routes_v1'
@@ -69,10 +71,29 @@ export default function HomeDeals() {
     const bestSelling = useRegionStore((state) => state.bestSelling)
     const getBestSelling = useRegionStore((state) => state.getBestSelling)
     const [prices, setPrices] = useState(() => readCache())
+    const [cityImages, setCityImages] = useState({})
 
     useEffect(() => {
         if (bestSelling.length === 0) getBestSelling()
     }, [bestSelling.length, getBestSelling])
+
+    useEffect(() => {
+        let cancelled = false
+
+        Promise.all(ROUTES.map((route) => getBestDeal(route.dealId))).then((results) => {
+            if (cancelled) return
+            const next = {}
+            results.forEach(([data], index) => {
+                const url = returnImgUrl(data?.image)
+                if (url) next[keyOf(ROUTES[index])] = url
+            })
+            setCityImages(next)
+        })
+
+        return () => {
+            cancelled = true
+        }
+    }, [])
 
     useEffect(() => {
         if (prices) return undefined
@@ -98,13 +119,11 @@ export default function HomeDeals() {
     const imageFor = useMemo(() => {
         const items = bestSelling.map((item) => ({ name: String(item.name || '').toLowerCase(), image: returnImgUrl(item.image) }))
         return (route) => {
-            for (const match of route.imageMatch) {
-                const hit = items.find((item) => item.name === match && item.image)
-                if (hit) return hit.image
-            }
-            return ''
+            if (cityImages[keyOf(route)]) return cityImages[keyOf(route)]
+            const hit = items.find((item) => item.name === route.toLabel.toLowerCase() && item.image)
+            return hit ? hit.image : ''
         }
-    }, [bestSelling])
+    }, [bestSelling, cityImages])
 
     const viewDeal = (route) => {
         window.dispatchEvent(
