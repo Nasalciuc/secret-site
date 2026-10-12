@@ -1,158 +1,73 @@
+// Sticky "Call us" pill: one link, quiet navy, the number always readable.
 .btn-container {
     position: fixed;
-    bottom: 20px;
-    padding: 12px 18px;
-    width: auto;
-    min-width: 220px;
-    max-width: min(320px, calc(100vw - 48px));
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-    // Below deal cards / search CTA hit targets; still above page chrome.
+    bottom: 28px;
     z-index: 40;
-    background-color: #d1cece;
-    overflow: hidden;
-    border-radius: 10px;
-    animation: glow-border 2.4s ease-in-out infinite;
-    pointer-events: auto;
-}
-
-.btn-container a {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
+    display: inline-flex;
     align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    background: var(--mb-raised);
+    color: var(--mb-text-strong);
+    border: 1px solid var(--mb-border-strong);
+    border-radius: 999px;
+    box-shadow: 0 10px 28px rgb(var(--mb-shade-rgb) / 0.5);
+    font: 600 15px/1.2 var(--mb-font-text);
+    font-variant-numeric: tabular-nums;
     text-decoration: none;
-    overflow: hidden;
-    font-size: 14px;
-    color: #000;
-    font-weight: lighter;
-    letter-spacing: 1px;
-    z-index: 1;
-    font-family: Arial, Helvetica, sans-serif;
-    transition: 0.5s;
-    backdrop-filter: blur(15px);
-}
+    white-space: nowrap;
+    transition:
+        opacity 0.25s ease-out,
+        transform 0.25s ease-out,
+        border-color 0.2s ease-out;
 
-.btn-container:hover a {
-    letter-spacing: 2px;
-}
+    &:hover {
+        border-color: var(--mb-gold);
+    }
 
-.btn-container::before {
-    bottom: -5px;
-}
-
-.btn-container:hover::before {
-    bottom: 0;
-    height: 60%;
-    width: 90%;
-    border-radius: 30px;
-}
-
-.btn-container::after {
-    top: -5px;
-}
-
-.btn-container:hover::after {
-    top: 0;
-    height: 60%;
-    width: 90%;
-    border-radius: 30px;
+    .phone-icon {
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+        color: var(--mb-gold);
+    }
 }
 
 .btn-container.is-desktop {
     left: 50%;
     transform: translateX(-50%);
-    // Clear mid-page deal cards; content can scroll past without being covered.
-    bottom: 28px;
 }
 
 .btn-container.is-mobile {
-    // Bottom-left, clear of Search Flight + WhatsApp / CRM widget pile-up.
     left: 16px;
-    right: auto;
     bottom: 88px;
-    width: 48px;
-    height: 48px;
-    min-width: 48px;
-    max-width: 48px;
-    padding: 10px;
-    border-radius: 50%;
-    z-index: 40;
-}
-
-.btn-container.is-mobile a {
-    display: flex;
+    width: 52px;
+    height: 52px;
+    padding: 0;
     justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    font-size: 0;
-}
+    border-radius: 50%;
 
-.btn-container.is-mobile a .phone-icon {
-    width: 22px;
-    height: 22px;
-    margin: 0;
-    display: block;
-}
+    .btn-label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+    }
 
-@keyframes glow-border {
-    0%,
-    100% {
-        box-shadow:
-            0 0 6px rgba(180, 133, 59, 0.45),
-            0 0 12px rgba(180, 133, 59, 0.25);
+    .phone-icon {
+        width: 22px;
+        height: 22px;
     }
-    50% {
-        box-shadow:
-            0 0 10px rgba(180, 133, 59, 0.55),
-            0 0 18px rgba(180, 133, 59, 0.3);
-    }
-}
-@keyframes glow-border-mobile {
-    0%,
-    100% {
-        box-shadow:
-            0 0 8px rgba(180, 133, 59, 0.5),
-            0 0 14px rgba(180, 133, 59, 0.28);
-    }
-    50% {
-        box-shadow:
-            0 0 12px rgba(180, 133, 59, 0.6),
-            0 0 20px rgba(180, 133, 59, 0.35);
-    }
-}
-.btn-container a .phone-icon {
-    width: 24px;
-    height: 24px;
-    margin-right: 8px;
-    display: none;
-}
-
-.btn-container.is-mobile {
-    animation: glow-border-mobile 2.4s ease-in-out infinite;
 }
 
 .btn-container.is-hidden {
     opacity: 0;
     pointer-events: none;
     transform: translate(-50%, 12px);
-    transition:
-        opacity 0.25s ease,
-        transform 0.25s ease;
 }
 
 .btn-container.is-mobile.is-hidden {
     transform: translateY(12px);
-}
-
-.btn-container:not(.is-hidden) {
-    transition:
-        opacity 0.25s ease,
-        transform 0.25s ease;
 }

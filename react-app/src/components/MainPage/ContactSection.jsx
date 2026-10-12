@@ -11,8 +11,68 @@ const MAPS_LINK = 'https://maps.app.goo.gl/uumk5sNfudCszvfa7'
 const MAPS_EMBED =
     'https://www.google.com/maps?q=180+North+Stetson+Avenue,+Chicago,+IL+60601&hl=en&z=15&output=embed'
 
-export default function ContactSection() {
-    const { settings, setModal } = useAppStore()
+// On the homepage the office is the third way to reach us: its tile carries a small night map of
+// Chicago (the street grid, the river, the lake and a pin on the office) and opens Google Maps. The
+// map is drawn at one fixed scale and anchored on the lake, so a wider tile shows more of the city
+// instead of a bigger one.
+const CITY_GRID = [
+    ...Array.from({ length: 40 }, (_, i) => `M${-712 + i * 28} 0V200`),
+    ...Array.from({ length: 8 }, (_, i) => `M-720 ${14 + i * 26}H392`),
+].join('')
+// lit blocks between the streets (deterministic, so every render draws the same city)
+const CITY_BLOCKS = Array.from({ length: 84 }, (_, i) => {
+    const col = (i * 7) % 39
+    const row = (i * 5) % 7
+    return `M${-708 + col * 28} ${18 + row * 26}h20v18h-20z`
+}).join('')
+
+function OfficeMap() {
+    return (
+        <a className="hp-desk__map" href={MAPS_LINK} target="_blank" rel="noreferrer">
+            <span className="hp-desk__view" aria-hidden="true">
+                <svg className="hp-desk__city" viewBox="-720 0 1200 200" width="1200" height="200" focusable="false">
+                    <path className="hp-desk__lake" d="M396 0C386 38 398 78 390 118C384 150 394 178 388 200H480V0Z" />
+                    <path className="hp-desk__blocks" d={CITY_BLOCKS} />
+                    <path className="hp-desk__grid" d={CITY_GRID} />
+                    <path className="hp-desk__avenue" d="M344 0V200M-720 140H390" />
+                    <path className="hp-desk__river" d="M390 96H252C232 96 224 88 212 66L178 0M252 96C238 104 236 122 238 142L244 200" />
+                    <text className="hp-desk__water-label" x="432" y="148" textAnchor="middle">
+                        LAKE MICHIGAN
+                    </text>
+                    <g transform="translate(356 76)">
+                        <circle className="hp-desk__pin-ring" r="14" />
+                        <circle className="hp-desk__pin-dot" r="7" />
+                    </g>
+                </svg>
+            </span>
+            <span className="hp-desk__place">
+                <span className="hp-contact__icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" focusable="false">
+                        <path
+                            fillRule="evenodd"
+                            clipRule="evenodd"
+                            d="M13.36 6.69c0 1.27-.44 2.43-1.18 3.35 0 0-1.86 2.49-3.3 4.25-.46.57-1.3.57-1.76 0-1.44-1.76-3.3-4.25-3.3-4.25a5.36 5.36 0 1 1 9.54-3.35ZM10 6.67a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"
+                        />
+                    </svg>
+                </span>
+                <span className="hp-contact__text">
+                    <span className="hp-contact__label">Office</span>
+                    <span className="hp-contact__value">{OFFICE_ADDRESS}</span>
+                </span>
+                <span className="hp-desk__open" aria-hidden="true">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" focusable="false">
+                        <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                </span>
+                <span className="sr-only">Open in Google Maps (opens in a new tab)</span>
+            </span>
+        </a>
+    )
+}
+
+// The form's state and request, shared by the homepage's contact section and the other pages' panel.
+function useContactForm() {
+    const setModal = useAppStore((state) => state.setModal)
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [phone, setPhone] = useState('')
@@ -28,7 +88,7 @@ export default function ContactSection() {
     }
 
     const sendMessage = async () => {
-        const [data, error] = await contactUs({ name, email, phone, message })
+        const [, error] = await contactUs({ name, email, phone, message })
 
         if (error) {
             setModal({
@@ -48,14 +108,146 @@ export default function ContactSection() {
         })
     }
 
+    return { name, setName, email, setEmail, phone, setPhone, message, setMessage, smsConsent, setSmsConsent, sendMessage }
+}
+
+function SmsConsentText() {
+    return (
+        <>
+            By checking this box, I consent to receive text messages related to customer care and marketing from BuyBusinessClass. You can reply
+            &quot;STOP&quot; at any time to opt-out. Message and data rates may apply. Message frequency may vary, text HELP for assistance. For
+            more information, please visit our <Link to="/privacy"> Privacy Policy </Link> and <Link to="/terms">SMS Terms and Conditions</Link>
+        </>
+    )
+}
+
+// The homepage's contact section, in Betty's language: the ways to reach us on the left, the form
+// in a card on the right, every field with its label.
+function HomeContact({ form }) {
+    const settings = useAppStore((state) => state.settings)
+    const phoneLabel = settings?.number || '+1 (888) 322-7999'
+    const phoneHref = `tel:${phoneLabel.replace(/[^\d+]/g, '')}`
+    const emailAddress = settings?.email || 'cs@buybusinessclass.com'
+
+    const onSubmit = (event) => {
+        event.preventDefault()
+        form.sendMessage()
+    }
+
+    return (
+        <section className="hp-section hp-contact" aria-labelledby="hp-contact-title">
+            <div className="hp-wrap hp-contact__grid">
+                <div className="hp-contact__info">
+                    <p className="hp-eyebrow">Contact us</p>
+                    <h2 className="hp-h2" id="hp-contact-title">
+                        Still have questions or want to leave us a message?
+                    </h2>
+                    <p className="hp-sub">Send us your request and one of our Travel Consultants will contact you back directly.</p>
+                    <div className="hp-desk__head">
+                        <span className="hp-desk__live">
+                            <span className="dot" aria-hidden="true" />
+                            Live
+                        </span>
+                        <p className="hp-desk__title">24/7 Open customer service</p>
+                    </div>
+                    <ul className="hp-contact__ways">
+                        <li>
+                            <span className="hp-contact__icon" aria-hidden="true">
+                                <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" focusable="false">
+                                    <path d="M2.12 6.01C1.39 4.53 2.13 2.9 3.54 2.05c.68-.41 1.56-.23 2.03.41l1.04 1.42c.44.6.51 1.4.18 2.08l-.27.55a.6.6 0 0 0-.01.5c.15.29.46.79 1.07 1.4.6.6 1.11.92 1.4 1.07.16.08.34.07.5-.01l.55-.27c.67-.34 1.47-.27 2.08.18l1.42 1.04c.64.47.82 1.35.41 2.03-.85 1.41-2.48 2.16-3.95 1.42-1.25-.62-2.84-1.64-4.52-3.33C3.77 8.84 2.74 7.25 2.12 6.01Z" />
+                                </svg>
+                            </span>
+                            <span className="hp-contact__text">
+                                <span className="hp-contact__label">Call to book · 24/7</span>
+                                <a className="hp-contact__value" href={phoneHref}>
+                                    {phoneLabel}
+                                </a>
+                            </span>
+                        </li>
+                        <li>
+                            <span className="hp-contact__icon" aria-hidden="true">
+                                <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" focusable="false">
+                                    <path d="M1.72 3.48c-.15.2-.06.48.15.61l5.78 3.58c.21.13.49.13.7 0l5.78-3.58c.21-.13.3-.4.15-.61a2.33 2.33 0 0 0-1.61-.82H3.33c-.66 0-1.25.32-1.61.82Z" />
+                                    <path d="M14.67 6.22c0-.39-.43-.63-.76-.43L9.05 8.8a2 2 0 0 1-2.1 0L2.1 5.8c-.33-.21-.76.03-.76.42v5.11c0 1.1.9 2 2 2h9.33c1.1 0 2-.9 2-2V6.22Z" />
+                                </svg>
+                            </span>
+                            <span className="hp-contact__text">
+                                <span className="hp-contact__label">Email us</span>
+                                <a className="hp-contact__value" href={`mailto:${emailAddress}`}>
+                                    {emailAddress}
+                                </a>
+                            </span>
+                        </li>
+                        <li className="hp-contact__office">
+                            <OfficeMap />
+                        </li>
+                    </ul>
+                </div>
+                <form className="hp-card hp-contact__form" onSubmit={onSubmit}>
+                    <div className="hp-field">
+                        <label htmlFor="hp-contact-name">Name</label>
+                        <input id="hp-contact-name" className="hp-input" name="name" autoComplete="name" value={form.name} onChange={(event) => form.setName(event.target.value)} />
+                    </div>
+                    <div className="hp-field-row">
+                        <div className="hp-field">
+                            <label htmlFor="hp-contact-email">E-mail</label>
+                            <input
+                                id="hp-contact-email"
+                                className="hp-input"
+                                name="email"
+                                type="email"
+                                autoComplete="email"
+                                value={form.email}
+                                onChange={(event) => form.setEmail(event.target.value)}
+                            />
+                        </div>
+                        <div className="hp-field">
+                            <label htmlFor="hp-contact-phone">Phone</label>
+                            <input
+                                id="hp-contact-phone"
+                                className="hp-input"
+                                name="phone"
+                                type="tel"
+                                autoComplete="tel"
+                                value={form.phone}
+                                onChange={(event) => form.setPhone(event.target.value)}
+                            />
+                        </div>
+                    </div>
+                    <div className="hp-field hp-field--message">
+                        <label htmlFor="hp-contact-message">Message</label>
+                        <textarea id="hp-contact-message" className="hp-input" name="message" rows="4" value={form.message} onChange={(event) => form.setMessage(event.target.value)} />
+                    </div>
+                    <label className="hp-check">
+                        <input type="checkbox" checked={form.smsConsent} onChange={(event) => form.setSmsConsent(event.target.checked)} />
+                        <span>
+                            <SmsConsentText />
+                        </span>
+                    </label>
+                    <button className="hp-btn hp-btn--gold hp-btn--block" type="submit">
+                        Send message
+                    </button>
+                </form>
+            </div>
+        </section>
+    )
+}
+
+// variant="home": the homepage section above; every other page keeps the plain panel below.
+export default function ContactSection({ variant }) {
+    const form = useContactForm()
+    const settings = useAppStore((state) => state.settings)
+    const { name, setName, email, setEmail, phone, setPhone, message, setMessage, smsConsent, setSmsConsent, sendMessage } = form
+
+    if (variant === 'home') return <HomeContact form={form} />
+
     return (
         <div className="contact-container">
             <div className="content">
-                <div className="contactus-label">Contact Us</div>
                 <div className="title">
                     <p className="main-title">
-                        Still <span className="accent">have questions</span> or want to{' '}
-                        <span className="accent">leave us a message?</span>
+                        Still have questions or want to{' '}
+                        leave us a message?
                     </p>
                 </div>
                 <div className="subtitle">
@@ -104,11 +296,7 @@ export default function ContactSection() {
                                 onChange={(e) => setSmsConsent(e.target.checked)}
                             />
                             {' '}
-                            By checking this box, I consent to receive text messages related to customer care and
-                            marketing from BuyBusinessClass. You can reply &quot;STOP&quot; at any time to opt-out.
-                            Message and data rates may apply. Message frequency may vary, text HELP for assistance. For
-                            more information, please visit our <Link to="/privacy"> Privacy Policy </Link> and{' '}
-                            <Link to="/terms">SMS Terms and Conditions</Link>
+                            <SmsConsentText />
                         </label>
                     </div>
                     <OrangeFilledButton buttonText="Send" click={sendMessage} />
@@ -212,7 +400,7 @@ export default function ContactSection() {
                 <div className="customer-service">
                     <div className="customer-service__contacts">
                         <div className="title">
-                            24/7 <span className="accent">Open customer service</span>
+                            24/7 Open customer service
                         </div>
                         <a href="mailto:cs@buybusinessclass.com">
                             <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -226,7 +414,7 @@ export default function ContactSection() {
                                 />
                             </svg>
                             <span className="content">
-                                <span className="accent">Email Us</span>
+                                Email Us
                                 cs@buybusinessclass
                             </span>
                         </a>
@@ -238,7 +426,7 @@ export default function ContactSection() {
                                 />
                             </svg>
                             <span className="content">
-                                <span className="accent">Call Us</span>
+                                Call Us
                                 +1 (855)-955-2040
                             </span>
                         </a>

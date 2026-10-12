@@ -24,9 +24,7 @@
             padding: 6px 18px;
             margin-bottom: 20px;
             color: var(--mb-gold);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font: 600 12px/1.4 'Inter', sans-serif;
+            font: 600 12px/1.4 var(--mb-font-text);
 
             > .dot {
                 width: 8px;
@@ -39,11 +37,15 @@
 
         > h1 {
             margin: 0 0 16px;
-            color: #fff;
+            color: var(--mb-text-strong);
             font-size: clamp(36px, 4vw, 56px);
+            font-family: var(--mb-font-display);
+            font-weight: var(--mb-display-weight);
+            font-stretch: var(--mb-display-stretch);
+            letter-spacing: var(--mb-display-tracking);
 
             .accent {
-                color: var(--mb-gold);
+                color: inherit;
             }
         }
 
@@ -51,7 +53,7 @@
             margin: 0;
             max-width: 560px;
             color: var(--mb-text-muted);
-            font: 400 18px/1.5 'Inter', sans-serif;
+            font: 400 18px/1.5 var(--mb-font-text);
         }
     }
 
@@ -147,6 +149,10 @@
                     background: var(--mb-deep);
                     border-color: var(--mb-border);
                     border-radius: var(--mb-radius-input);
+
+                    .vs__dropdown-toggle {
+                        background: transparent;
+                    }
 
                     .vs__selected {
                         color: var(--mb-text);
@@ -315,7 +321,6 @@
         // Submit CTA: gold button, white label, moodboard hover
         .orange-filled-button > button {
             border-radius: var(--mb-radius-input);
-            color: #fff;
 
             &:hover {
                 background: var(--mb-gold-dark);

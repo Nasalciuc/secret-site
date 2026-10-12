@@ -26,7 +26,7 @@ export default function XmasPage() {
                     Holiday season sale
                 </span>
                 <h1 className="mb-serif">
-                    Christmas &amp; New Year <span className="accent">Flight Sale</span>
+                    Christmas &amp; New Year Flight Sale
                 </h1>
                 <p>Fly business class for the holidays with fares from $2,499 — get your free quote today.</p>
             </div>

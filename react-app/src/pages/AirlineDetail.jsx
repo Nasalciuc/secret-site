@@ -53,7 +53,7 @@ function AirlineDescription({ airline }) {
             <div className="flight-description">
                 <div className="title">
                     <h1 className="main-title">
-                        <span className="accent">{airline.title}</span>
+                        {airline.title}
                         <span className="capitalize">{airline.subtitle}</span>
                     </h1>
                 </div>

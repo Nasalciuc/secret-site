@@ -23,9 +23,8 @@ const differentiators = [
 export default function ThirdBlock() {
     return (
         <section className="mb-about-apart">
-            <span className="mb-eyebrow">The difference</span>
             <h2 className="mb-serif mb-about-apart__title">
-                What Sets Us <span className="accent">Apart?</span>
+                What Sets Us Apart?
             </h2>
             <div className="mb-about-apart__layout">
                 <div className="mb-about-apart__media">

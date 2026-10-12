@@ -3,7 +3,7 @@ export default function FirstBlock() {
         <div className="xyz-in" xyz="fade left-50% duration-15 delay-5">
             <div className="business-flight-description">
                 <div className="title">
-                    <h1 className="main-title" style={{ fontFamily: 'SSP-bold' }}>
+                    <h1 className="main-title" style={{ fontFamily: 'var(--mb-font-display)' }}>
                         Cheap Business Class Flights - <br />
                         Exclusive Discounted Airline Tickets for 2025
                     </h1>

@@ -36,8 +36,7 @@ export default function FaqPage() {
     return (
         <div className="faq-page mb-page">
             <div className="mb-cl-hero">
-                <span className="mb-eyebrow">Support</span>
-                <h1 className="mb-serif">Frequently asked <span className="gold">questions</span></h1>
+                <h1 className="mb-serif">Frequently asked questions</h1>
             </div>
             <FaqSection limit={null} showMoreLink={false} />
         </div>

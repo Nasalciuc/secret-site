@@ -10,7 +10,7 @@ export default function BusinessFlights() {
                     <div className="mb-bf-hero-copy xyz-in" xyz="fade left-50% duration-15 delay-5">
                         <h1 className="mb-serif">
                             Cheap Business Class Flights - <br />
-                            <span className="accent">Exclusive Discounted Airline Tickets for 2025</span>
+                            Exclusive Discounted Airline Tickets for 2025
                         </h1>
                         <p className="mb-bf-hero-sub">
                             Book your cheap business class tickets today and enjoy a luxurious business class flight with

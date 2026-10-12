@@ -1,29 +1,41 @@
 import { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import { useAppStore } from '@/store/useAppStore'
 
-// Components (moodboard redesign: hero, stats, deals, how-it-works, why-us, reviews,
-// then the live-site content sections restyled: regions, SEO copy, FAQ, newsletter,
-// contact — they carry SEO weight, internal links, and extra lead capture)
-import HeaderContainer from '@/components/MainPage/HeaderContainer'
-import StatsStrip from '@/components/MainPage/StatsStrip'
-import FeaturedRoutes from '@/components/MainPage/FeaturedRoutes'
-import BestSelling from '@/components/MainPage/BestSelling'
-import WorksContainer from '@/components/MainPage/WorksContainer'
-import WhyUs from '@/components/MainPage/WhyUs'
+// The homepage is Betty's design (HTML new version of site/buybusinessclass-new-homepage (4).html),
+// in navy and gold, with the site's soul: hero with the quote form as a boarding pass, figures on a
+// departures board, featured deals as route tickets, how it works as a flight, why us, reviews as
+// boarding passes and the closing call to action on an evening sky, in her order and her layout.
+// After it, in the same language, the live site's content that carries SEO weight and leads: the
+// route map of destinations, FAQ and guide, the golden newsletter ticket, the contact desk.
+import HomeHero from '@/components/Home/HomeHero'
+import HomeStats from '@/components/Home/HomeStats'
+import HomeDeals from '@/components/Home/HomeDeals'
+import HomeSteps from '@/components/Home/HomeSteps'
+import HomeWhy from '@/components/Home/HomeWhy'
 import ReviewsSection from '@/components/MainPage/ReviewsSection'
+import HomeCta from '@/components/Home/HomeCta'
 import RegionsSection from '@/components/MainPage/RegionsSection'
-import SeoContent from '@/components/MainPage/SeoContent'
-import FaqSection from '@/components/MainPage/FaqSection'
-import NewsletterBanner from '@/components/MainPage/NewsletterBanner'
-import CtaBanner from '@/components/MainPage/CtaBanner'
+import HomeGuide from '@/components/Home/HomeGuide'
+import HomeNewsletter from '@/components/Home/HomeNewsletter'
 import ContactSection from '@/components/MainPage/ContactSection'
 
 export default function MainPage() {
     const { getAboutUs } = useAppStore()
+    const { hash, key } = useLocation()
 
     useEffect(() => {
         getAboutUs()
     }, [getAboutUs])
+
+    // The bar's links (Deals, How it Works, Why Us, Reviews) are /#section links: bring the section
+    // into view, also when arriving from another page (after the app's scroll to the top).
+    useEffect(() => {
+        const id = decodeURIComponent(hash.slice(1))
+        if (!id) return undefined
+        const timer = window.setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }), 120)
+        return () => window.clearTimeout(timer)
+    }, [hash, key])
 
     useEffect(() => {
         // Reuse existing canonical if MetaUpdater (or another page) already created one.
@@ -66,22 +78,18 @@ export default function MainPage() {
     }, [])
 
     return (
-        <div className="main-page mb-home">
-            <div className="header-content">
-                <HeaderContainer />
-            </div>
-            <StatsStrip />
-            <FeaturedRoutes />
-            <BestSelling />
-            <WorksContainer />
-            <WhyUs />
+        <div className="main-page mb-page hp">
+            <HomeHero />
+            <HomeStats />
+            <HomeDeals />
+            <HomeSteps />
+            <HomeWhy />
             <ReviewsSection />
+            <HomeCta />
             <RegionsSection />
-            <SeoContent />
-            <FaqSection />
-            <NewsletterBanner />
-            <CtaBanner />
-            <ContactSection />
+            <HomeGuide />
+            <HomeNewsletter />
+            <ContactSection variant="home" />
         </div>
     )
 }

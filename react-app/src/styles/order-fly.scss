@@ -13,22 +13,22 @@
     > .choose-option {
         display: flex;
         justify-content: space-around;
-        border: 1px solid #33383f;
-        background: #1a1d1f;
+        border: 1px solid var(--mb-border);
+        background: var(--mb-surface);
         padding: 12px 16px;
         border-radius: 8px;
         margin-bottom: 8px;
 
         > button {
             background: none;
-            color: #6f767e;
+            color: var(--mb-text-muted);
             position: relative;
-            font-family: 'Inter', sans-serif;
+            font-family: var(--mb-font-text);
             font-size: 15px;
 
             &.active {
                 font-weight: 700;
-                color: #dadde0;
+                color: var(--mb-text);
 
                 &::after {
                     position: absolute;
@@ -55,7 +55,7 @@
             .client-info .input-name,
             .client-info .input-email,
             .client-info .iti-group input {
-                background: #1a1d1f;
+                background: var(--mb-surface);
             }
         }
     }
@@ -64,7 +64,7 @@
 .search-flight {
     width: 100%;
     position: relative;
-    border: 1px solid #33383f !important;
+    border: 1px solid var(--mb-border) !important;
     border-radius: 8px;
     margin-bottom: 8px;
     transition: 0.4s ease-in;
@@ -80,7 +80,7 @@
 
     &.first-active,
     &.second-active {
-        background: #111315;
+        background: var(--mb-bg);
     }
 
     &.first-active .first-svg > *,
@@ -97,7 +97,7 @@
         transform: translate(-50%, -50%);
         z-index: 10;
         background: none;
-        border: 1px solid #33383f;
+        border: 1px solid var(--mb-border);
         border-radius: 50%;
         width: 24px;
         height: 24px;
@@ -127,12 +127,12 @@
         position: relative;
 
         > ul {
-            background: #111315;
-            border: 1px solid #6f767e;
+            background: var(--mb-bg);
+            border: 1px solid var(--mb-border-strong);
             border-radius: 16px;
             padding: 8px;
-            color: #c2c7cc;
-            font-family: 'Inter', sans-serif;
+            color: var(--mb-text-body);
+            font-family: var(--mb-font-text);
             z-index: 500;
             position: absolute;
             list-style: none;
@@ -143,17 +143,17 @@
             > li {
                 transition: 0.2s ease-in;
                 padding: 8px;
-                color: #6f767e;
+                color: var(--mb-text-muted);
                 text-align: left;
                 border-radius: 12px;
                 background: none;
-                font-family: 'Inter', sans-serif;
+                font-family: var(--mb-font-text);
                 font-size: 15px;
                 font-weight: 600;
 
                 &:hover {
-                    color: #efefef;
-                    background: #1a1d1f;
+                    color: var(--mb-text-strong);
+                    background: var(--mb-surface);
                 }
             }
         }
@@ -202,8 +202,8 @@
         background: none;
         box-shadow: none;
         box-sizing: border-box;
-        color: #c2c7cc;
-        font-family: 'Inter', sans-serif;
+        color: var(--mb-text-body);
+        font-family: var(--mb-font-text);
         font-weight: 400;
         font-size: 14px;
         line-height: 1.4;
@@ -235,7 +235,7 @@
             margin-right: 16px;
             width: 16px;
             height: 16px;
-            border: 2px solid #33383f;
+            border: 2px solid var(--mb-border);
             border-top-color: #b4853b;
             border-radius: 50%;
             animation: search-flight-spin 0.6s linear infinite;
@@ -295,7 +295,7 @@
         }
 
         .city {
-            font-size: 11px;
+            font-size: 12px;
         }
 
         .iata {
@@ -321,7 +321,7 @@
 .calendar-buttons {
     padding: 16px !important;
     border-radius: 8px;
-    border: 1px solid #33383f;
+    border: 1px solid var(--mb-border);
     margin-bottom: 8px;
     transition: 0.2s ease-in;
     position: relative;
@@ -331,18 +331,18 @@
     > button {
         display: flex;
         background: none;
-        color: #c2c7cc;
+        color: var(--mb-text-body);
         line-height: 24px;
         gap: 12px;
         width: 0;
         flex-grow: 1;
-        font-family: 'Inter', sans-serif;
+        font-family: var(--mb-font-text);
         font-size: 14px;
         font-weight: 400;
     }
 
     &.active {
-        background: #111315;
+        background: var(--mb-bg);
 
         svg.fill > * {
             fill: #b4853b;
@@ -354,7 +354,7 @@
         position: absolute;
         height: 50%;
         width: 1px;
-        background: #33383f;
+        background: var(--mb-raised);
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -411,7 +411,7 @@
         width: 0;
         flex-grow: 1;
         height: 56px;
-        border: 1px solid #33383f;
+        border: 1px solid var(--mb-border);
         border-radius: 8px;
 
         > button {
@@ -419,10 +419,10 @@
             text-align: left;
             width: 100%;
             display: block;
-            color: #dadde0;
+            color: var(--mb-text);
             background: none;
             line-height: 24px;
-            font-family: 'Inter', sans-serif;
+            font-family: var(--mb-font-text);
             font-size: 14px;
             font-weight: 600;
 
@@ -442,27 +442,27 @@
     position: relative;
     border-radius: 16px;
     min-width: 250px;
-    background: #111315;
-    border: 1px solid #6f767e;
+    background: var(--mb-bg);
+    border: 1px solid var(--mb-border-strong);
     transition: 0.4s ease-in;
     z-index: 300;
 
     label {
-        color: #6f767e;
+        color: var(--mb-text-muted);
         font-weight: 700;
         font-size: 12px;
     }
 
     .cabin-buttons {
         margin-top: 8px;
-        border: 1px solid #1a1d1f;
+        border: 1px solid var(--mb-border);
         width: fit-content;
         border-radius: 12px;
         display: flex;
         gap: 8px;
 
         > button {
-            color: #a5aaaf;
+            color: var(--mb-text-muted);
             border-radius: 12px;
             padding: 8px;
             transition: background-color 0.2s ease-in;
@@ -472,7 +472,7 @@
 
             &.active {
                 color: #b4853b;
-                background: #272b30;
+                background: var(--mb-raised);
             }
         }
     }
@@ -482,12 +482,12 @@
     transition: 0.4s ease-in;
     border-radius: 16px;
     min-width: 250px;
-    background: #111315;
-    border: 1px solid #6f767e;
+    background: var(--mb-bg);
+    border: 1px solid var(--mb-border-strong);
     z-index: 300;
 
     label {
-        color: #6f767e;
+        color: var(--mb-text-muted);
         font-weight: 700;
         font-size: 12px;
     }
@@ -498,7 +498,7 @@
         align-items: center;
 
         > .adults {
-            color: #efefef;
+            color: var(--mb-text-strong);
             font-weight: 600;
         }
 
@@ -508,7 +508,7 @@
             align-items: center;
 
             > button {
-                background: #272b30;
+                background: var(--mb-raised);
                 border-radius: 50%;
                 width: 32px;
                 height: 32px;
@@ -516,7 +516,7 @@
                 padding-bottom: 4px;
 
                 &.minus {
-                    color: #6f767e;
+                    color: var(--mb-text-muted);
                 }
 
                 &.plus {
@@ -525,7 +525,7 @@
             }
 
             > .ammount {
-                color: #efefef;
+                color: var(--mb-text-strong);
                 font-weight: 600;
             }
         }
@@ -540,12 +540,12 @@
 .adaptive-select-options-buttons {
     > button {
         display: block;
-        color: #dadde0;
+        color: var(--mb-text);
         background: none;
         width: 100%;
         text-align: center;
         line-height: 24px;
-        font-family: 'Inter', sans-serif;
+        font-family: var(--mb-font-text);
         font-size: 14px;
         font-weight: 600;
     }
@@ -568,8 +568,8 @@
         width: 100%;
         z-index: 200;
         transition: 0.2s ease-in;
-        background: #111315;
-        border: 1px solid #6f767e;
+        background: var(--mb-bg);
+        border: 1px solid var(--mb-border-strong);
 
         &.collapse {
             opacity: 0;
@@ -595,7 +595,7 @@
             margin-top: 16px;
             width: 100%;
             height: 1px;
-            background: #272b30;
+            background: var(--mb-raised);
         }
 
         > .choose-ammount-travelers {
@@ -666,16 +666,16 @@
         input {
             width: 100%;
             padding: 16px;
-            color: #dadde0;
+            color: var(--mb-text);
             outline: none;
-            border: 1px solid #33383f;
+            border: 1px solid var(--mb-border);
             border-radius: 8px;
             font-size: 14px;
             font-weight: 600;
-            font-family: 'Inter', sans-serif;
+            font-family: var(--mb-font-text);
 
             &::placeholder {
-                color: #c2c7cc;
+                color: var(--mb-text-body);
             }
 
             &.has-error {
@@ -711,17 +711,17 @@
 }
 
 .privacy-text {
-    font-family: 'Inter', sans-serif;
+    font-family: var(--mb-font-text);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 10px;
+    font-size: 12px;
     padding-inline: 8px;
     padding-block: 4px;
     border-radius: 6px;
     margin-top: 8px;
-    color: #dadde0;
-    background-color: #1a1d1f;
+    color: var(--mb-text);
+    background-color: var(--mb-surface);
 
     a {
         color: #b4853b;
@@ -739,9 +739,9 @@
         min-height: 48px;
         padding: 12px 24px;
         background: #b4853b;
-        color: #111315;
+        color: var(--mb-ink);
         border-radius: 8px;
-        font-family: 'Inter', sans-serif;
+        font-family: var(--mb-font-text);
         font-weight: 700;
         font-size: 15px;
         transition: background 0.3s ease;
@@ -752,22 +752,21 @@
     }
 
     &.search-submit {
-        box-shadow: 0 0 8px #101214;
+        box-shadow: 0 0 8px var(--mb-deep);
 
         button {
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
+            font-weight: 700;
         }
     }
 
     &.transparent > button {
-        background: #1a1d1f;
-        color: #dadde0;
-        border: 1px solid #33383f;
+        background: var(--mb-surface);
+        color: var(--mb-text);
+        border: 1px solid var(--mb-border);
 
         &:hover {
             background: #b4853b;
-            color: #111315;
+            color: var(--mb-ink);
         }
     }
 }
@@ -789,39 +788,39 @@
     }
 
     > div {
-        background: #1a1d1f;
-        border: 1px solid #33383f;
+        background: var(--mb-surface);
+        border: 1px solid var(--mb-border);
         padding: 24px;
         left: 50%;
         transform: translateX(-50%);
         position: relative;
         z-index: 400;
         border-radius: 8px;
-        box-shadow: 0 18px 48px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 18px 48px rgb(var(--mb-shade-rgb) / 0.4);
     }
 
     .rdp-root {
         --rdp-accent-color: #b4853b;
-        --rdp-accent-background-color: #272b30;
+        --rdp-accent-background-color: var(--mb-raised);
         --rdp-day_button-border-radius: 50%;
-        color: #fcfcfc;
-        font-family: 'Inter', sans-serif;
+        color: var(--mb-text-strong);
+        font-family: var(--mb-font-text);
     }
 
     .rdp-caption_label {
-        color: #fcfcfc;
+        color: var(--mb-text-strong);
         font-size: 18px;
         font-weight: 600;
     }
 
     .rdp-weekday {
-        color: #6f767e;
+        color: var(--mb-text-muted);
         font-size: 12px;
         font-weight: 700;
     }
 
     .rdp-day_button {
-        color: #fcfcfc;
+        color: var(--mb-text-strong);
         font-size: 15px;
         font-weight: 600;
     }
@@ -833,7 +832,7 @@
     .rdp-selected .rdp-day_button {
         background: #b4853b;
         border-color: #b4853b;
-        color: #fcfcfc;
+        color: var(--mb-ink);
     }
 
     .rdp-range_middle .rdp-day_button {
@@ -842,7 +841,7 @@
     }
 
     .rdp-chevron {
-        fill: #efefef;
+        fill: var(--mb-text-strong);
     }
 }
 
@@ -963,7 +962,7 @@
 
         > .select-options-adaptive {
             display: block !important;
-            border: 1px solid #33383f;
+            border: 1px solid var(--mb-border);
             padding: 8px;
             border-radius: 8px;
             margin-bottom: 16px;

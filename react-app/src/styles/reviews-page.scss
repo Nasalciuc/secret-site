@@ -81,8 +81,8 @@
 
         > p {
             font-size: 14px;
-            color: #dadde0;
-            font-family: 'Inter';
+            color: var(--mb-text);
+            font-family: var(--mb-font-text);
             text-align: center;
 
             > span.bold {
@@ -124,7 +124,7 @@
 
 .reviews-cards-container {
     padding: 40px 176px;
-    background: #08090c7a;
+    background: rgb(var(--mb-shade-rgb) / 0.478);
     background-image: url('../assets/images/static/plane.webp');
     background-size: 100% 100%;
     background-repeat: no-repeat;
@@ -141,7 +141,7 @@
 
         > .reviews-content {
             > .review-card-container {
-                background: #1a1d1f;
+                background: var(--mb-surface);
                 padding: 16px;
             }
         }
@@ -154,10 +154,10 @@
 
 .review-card-container {
     padding: 24px;
-    background: #111315;
+    background: var(--mb-bg);
     border-radius: 16px;
     width: 320px;
-    color: #fff;
+    color: var(--mb-text-strong);
 
     > .review-card-header {
         display: flex;
@@ -178,7 +178,7 @@
             > p {
                 margin-bottom: 8px;
                 font: {
-                    family: 'Inter';
+                    family: var(--mb-font-text);
                     weight: 700;
                     size: 14px;
                 }
@@ -193,10 +193,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #111315;
+            color: var(--mb-ink);
             text-transform: uppercase;
             font: {
-                family: 'Inter', sans-serif;
+                family: var(--mb-font-text);
                 weight: 700;
                 size: 15px;
             }
@@ -207,18 +207,18 @@
         > .topic {
             margin-bottom: 8px;
             font: {
-                family: 'Inter', sans-serif;
+                family: var(--mb-font-text);
                 weight: 700;
                 size: 14px;
             }
         }
 
         > .comment {
-            color: #c2c7cc;
+            color: var(--mb-text-body);
             line-height: 24px;
             font: {
                 weight: 400;
-                family: 'Inter', sans-serif;
+                family: var(--mb-font-text);
                 size: 12px;
             }
         }

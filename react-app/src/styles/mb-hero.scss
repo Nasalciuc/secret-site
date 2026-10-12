@@ -1,163 +1,3 @@
-// Moodboard hero (slate + gold) — homepage only, everything scoped under .mb-home.
-// Overrides the legacy .main-page-header layout from main-page.scss and re-skins
-// the OrderFly widget (colors / borders / radii only) so it sits inside the slate card.
-// Portaled popups (.calendar / .single-calendar) render into document.body — outside
-// .mb-home — and are intentionally left untouched.
-
-.mb-home .content.main-page-header {
-    border-radius: var(--mb-radius-card);
-
-    > .video-wrapper {
-        background: var(--mb-deep);
-        border-radius: var(--mb-radius-card);
-
-        // Legacy ≤768 fade gradients (#111315) are replaced by the full slate overlay
-        &::before,
-        &::after {
-            content: none;
-        }
-    }
-
-    > .mb-hero-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1; // same layer as .video-wrapper; later sibling paints above the video
-        border-radius: var(--mb-radius-card);
-        background: linear-gradient(rgba(15, 23, 42, 0.72), rgba(15, 23, 42, 0.58));
-        pointer-events: none;
-    }
-
-    > .blocks {
-        display: grid;
-        grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-        gap: 48px;
-        align-items: center;
-        max-width: 1440px;
-        margin: 0 auto;
-        padding: 160px 88px 120px;
-
-        > .first-block {
-            width: 100%;
-            font-size: 16px;
-
-            > .mb-hero-badge {
-                display: inline-flex;
-                align-items: center;
-                gap: 8px;
-                background: rgba(255, 255, 255, 0.1);
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                border-radius: 999px;
-                padding: 6px 20px;
-                margin-bottom: 24px;
-                color: #fff;
-                font: 400 14px/1.4 'Inter', sans-serif;
-
-                > .dot {
-                    width: 8px;
-                    height: 8px;
-                    border-radius: 50%;
-                    background: var(--mb-green);
-                    flex-shrink: 0;
-                }
-            }
-
-            h1 {
-                color: #fff;
-                font-family: 'Playfair Display', Georgia, serif;
-                font-size: clamp(40px, 4.6vw, 68px);
-                font-weight: 700;
-                line-height: 1.1;
-                margin: 0 0 24px;
-
-                .accent {
-                    color: var(--mb-gold);
-                }
-            }
-
-            > .mb-hero-subtitle {
-                display: block; // legacy ≤1200 hides .first-block > p:not(.without-br)
-                max-width: 520px;
-                margin: 0;
-                color: rgba(255, 255, 255, 0.9);
-                font: 400 20px/1.5 'Inter', sans-serif;
-            }
-        }
-
-        > .second-block {
-            min-width: 0;
-            width: 100%;
-            background: var(--mb-surface);
-            border: 1px solid var(--mb-border);
-            border-radius: var(--mb-radius-card);
-            padding: 32px;
-
-            > .mb-hero-card-title {
-                color: #fff;
-                font: 600 24px/1.3 'Inter', sans-serif;
-                margin: 0 0 4px;
-            }
-
-            > .mb-hero-card-sub {
-                color: var(--mb-text-muted);
-                font: 400 14px/1.4 'Inter', sans-serif;
-                margin: 0 0 24px;
-            }
-        }
-    }
-
-    @media screen and (max-width: 1200px) {
-        > .blocks {
-            display: grid; // legacy switches to block here; keep the grid and just stack
-            grid-template-columns: minmax(0, 1fr);
-            gap: 32px;
-            padding: 164px 16px 16px;
-
-            > .first-block {
-                margin-bottom: 0;
-
-                h1 {
-                    font-size: 44px;
-                }
-            }
-        }
-    }
-
-    @media screen and (max-width: 768px) {
-        > .mb-hero-overlay {
-            // Mirror the legacy .video-wrapper offsets at this breakpoint
-            width: calc(100% + 16px);
-            left: -8px;
-            top: -8px;
-            border-radius: 0;
-        }
-
-        > .blocks {
-            padding: 152px 8px 8px;
-
-            > .first-block {
-                margin: 0 8px;
-
-                h1 {
-                    font-size: 34px;
-                }
-
-                > .mb-hero-subtitle {
-                    font-size: 16px;
-                }
-            }
-
-            > .second-block {
-                padding: 20px 16px;
-                // Extra room so Search Flight stays clear of Call Us / WhatsApp FABs.
-                margin-bottom: 72px;
-            }
-        }
-    }
-}
-
 // OrderFly widget re-skin inside the hero card. Colors, borders, and radii only —
 // legacy grays #111315 / #1a1d1f / #33383f map onto var(--mb-deep) / var(--mb-surface) /
 // var(--mb-border); gold accents (#b4853b) already equal var(--mb-gold) and stay put.
@@ -343,7 +183,6 @@
     .orange-filled-button {
         > button {
             border-radius: var(--mb-radius-input);
-            color: #fff;
 
             &:hover {
                 background: var(--mb-gold-dark);
@@ -352,6 +191,11 @@
 
         &.search-submit {
             box-shadow: none; // legacy #101214 glow reads as dirt on the slate card
+
+            // the moodboard's full-width pill
+            > button {
+                border-radius: 999px;
+            }
         }
 
         &.transparent > button {
@@ -361,7 +205,7 @@
 
             &:hover {
                 background: var(--mb-gold);
-                color: #fff;
+                color: var(--mb-ink);
             }
         }
     }
@@ -392,7 +236,7 @@
     .mb-form-error {
         margin: 6px 0 0;
         color: #ff6a55;
-        font: 400 13px/1.4 'Inter', sans-serif;
+        font: 400 13px/1.4 var(--mb-font-text);
         text-align: left;
     }
 

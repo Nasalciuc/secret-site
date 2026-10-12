@@ -1,0 +1,485 @@
+// Soul pass 3 (refine_kit7.py), the parts the site still shares: the flown "how it works" (inner
+// pages and Betty's homepage), the deal cards of the destination pages and all deals, and the footer
+// with the plane on its top line. Navy tokens only; every motion stops for prefers-reduced-motion.
+
+// =================================================================================================
+// How does this work? — the steps are waypoints and a plane flies the route
+// =================================================================================================
+:is(.mb-home, .mb-page) {
+    .mb-works__route {
+        position: relative;
+        max-width: 1180px;
+        margin: 0 auto;
+    }
+
+    .mb-works__map {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 0;
+        overflow: visible;
+        pointer-events: none;
+    }
+
+    .mb-works__dash {
+        fill: none;
+        stroke: var(--mb-paper-line);
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-dasharray: 1 9;
+    }
+
+    .mb-works__trail {
+        fill: none;
+        stroke: var(--mb-gold);
+        stroke-width: 2.5;
+        stroke-linecap: round;
+    }
+
+    .mb-works__plane {
+        fill: var(--mb-ink);
+        filter: drop-shadow(0 6px 8px rgb(var(--mb-shade-rgb) / 0.28));
+    }
+
+    .mb-works__grid {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 40px 32px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .mb-works__step {
+        position: relative;
+        isolation: isolate;
+        min-width: 0;
+        text-align: center;
+    }
+
+    // the waypoint: the moodboard's numbered stop, a navy disc the route runs through; the plane rings
+    // each one in gold as it passes, and the last stop (the booking) turns gold
+    .mb-works__icon {
+        position: relative;
+        display: grid;
+        place-items: center;
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 26px;
+        border: 2px solid var(--mb-ink);
+        border-radius: 50%;
+        background: var(--mb-ink);
+        color: var(--mb-text-strong);
+        font: 700 18px/1 var(--mb-font-text);
+        font-variant-numeric: tabular-nums;
+        box-shadow: 0 0 0 0 color-mix(in srgb, var(--mb-gold) 30%, transparent);
+        transition:
+            background-color 0.45s ease,
+            border-color 0.45s ease,
+            box-shadow 0.45s ease,
+            color 0.45s ease,
+            transform 0.45s cubic-bezier(0.3, 1.6, 0.5, 1);
+
+        &::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border: 2px solid var(--mb-gold);
+            border-radius: 50%;
+            opacity: 0;
+        }
+    }
+
+    .mb-works__step.is-lit .mb-works__icon {
+        border-color: var(--mb-gold);
+        box-shadow: 0 0 0 5px color-mix(in srgb, var(--mb-gold) 22%, transparent);
+        transform: scale(1.06);
+
+        &::after {
+            animation: mb-soul-ping 1.5s ease-out 1;
+        }
+    }
+
+    .mb-works__step:last-child.is-lit .mb-works__icon {
+        background: var(--mb-gold);
+        color: var(--mb-ink);
+    }
+
+    .mb-works__step-title {
+        margin: 0 0 8px;
+        color: var(--mb-ink);
+        font: 600 17px/1.35 var(--mb-font-text);
+    }
+
+    .mb-works__step-body {
+        max-width: 240px;
+        margin: 0 auto;
+        color: var(--mb-ink-muted);
+        font: 400 15px/1.55 var(--mb-font-text);
+    }
+
+    @media screen and (max-width: 899px) {
+        .mb-works__route {
+            max-width: 520px;
+        }
+
+        .mb-works__grid {
+            grid-template-columns: minmax(0, 1fr);
+            row-gap: 44px;
+            padding-left: 4px;
+        }
+
+        .mb-works__step {
+            display: grid;
+            grid-template-columns: 56px minmax(0, 1fr);
+            column-gap: 20px;
+            text-align: left;
+        }
+
+        .mb-works__icon {
+            grid-row: 1 / span 2;
+            width: 52px;
+            height: 52px;
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .mb-works__step-title {
+            align-self: end;
+            margin-top: 4px;
+        }
+
+        .mb-works__step-body {
+            max-width: none;
+            margin: 0;
+        }
+    }
+}
+
+// =================================================================================================
+// Destinations — the same deal card as the routes: the photo on top with the saving on a white pill,
+// then the name, the fare and a full-width button (homepage carousel, destination pages, all deals)
+// =================================================================================================
+:is(.mb-home, .mb-page) {
+    .best-selling-container .mb-deals-head {
+        margin-bottom: 32px;
+
+        .mb-section-title {
+            margin-bottom: 10px;
+        }
+    }
+
+    .mb-deal-card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        overflow: hidden;
+        border: 1px solid var(--mb-border);
+        border-radius: var(--mb-radius-card);
+        background: var(--mb-surface);
+        transition:
+            transform 0.25s ease,
+            box-shadow 0.25s ease,
+            border-color 0.25s ease;
+
+        &:hover,
+        &:focus-within {
+            transform: translateY(-6px);
+            border-color: var(--mb-border-strong);
+            box-shadow: 0 30px 60px -30px rgb(var(--mb-shade-rgb) / 0.85);
+        }
+
+        &__media {
+            position: relative;
+            aspect-ratio: 16 / 10;
+            overflow: hidden;
+            background: var(--mb-deep);
+
+            img {
+                position: absolute;
+                inset: 0;
+                display: block;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+            }
+        }
+
+        &:hover .mb-deal-card__media img {
+            transform: scale(1.06);
+        }
+
+        &__badge {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            z-index: 1;
+            padding: 7px 12px;
+            border-radius: 999px;
+            background: var(--mb-paper);
+            box-shadow: 0 6px 16px -8px rgb(var(--mb-shade-rgb) / 0.6);
+            color: var(--mb-ink);
+            font: 700 11px/1 var(--mb-font-text);
+            letter-spacing: 0.04em;
+            white-space: nowrap;
+        }
+
+        &__body {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            padding: 20px 22px 22px;
+        }
+
+        &__meta {
+            margin: 6px 0 0;
+            color: var(--mb-text-muted);
+            font: 400 13px/1.4 var(--mb-font-text);
+        }
+
+        &__title {
+            margin: 0;
+            color: var(--mb-text-strong);
+            font: var(--mb-display-weight) 26px/1.15 var(--mb-font-display);
+            font-stretch: var(--mb-display-stretch);
+            letter-spacing: var(--mb-display-tracking);
+        }
+
+        &__price {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 4px 8px;
+            margin: 8px 0 0;
+            color: var(--mb-text-strong);
+            font: 700 24px/1.2 var(--mb-font-text);
+        }
+
+        &__from {
+            color: var(--mb-text-muted);
+            font: 400 14px/1 var(--mb-font-text);
+        }
+
+        &__old {
+            color: var(--mb-text-muted);
+            font: 400 15px/1 var(--mb-font-text);
+            text-decoration-thickness: 1.5px;
+        }
+
+        // the card's one link: a full-width button, its hit area stretched over the whole card
+        &__cta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            width: 100%;
+            min-height: 44px;
+            margin-top: 18px;
+            border: 1px solid var(--mb-border-strong);
+            border-radius: 999px;
+            color: var(--mb-text-strong);
+            font: 600 13px/1 var(--mb-font-text);
+            transition:
+                border-color 0.2s ease,
+                background-color 0.2s ease,
+                color 0.2s ease;
+
+            &::after {
+                content: '';
+                position: absolute;
+                inset: 0;
+                z-index: 1;
+                border-radius: inherit;
+            }
+
+            > svg {
+                transition: transform 0.2s ease;
+            }
+
+            &:focus-visible {
+                outline: none !important;
+            }
+
+            &:focus-visible::after {
+                outline: 2px solid var(--mb-gold);
+                outline-offset: -3px;
+                border-radius: var(--mb-radius-card);
+            }
+        }
+
+        &:hover .mb-deal-card__cta {
+            border-color: var(--mb-gold);
+            background: var(--mb-gold);
+            color: var(--mb-ink);
+
+            > svg {
+                transform: translateX(3px);
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            &__title {
+                font-size: 24px;
+            }
+        }
+    }
+}
+
+:is(.mb-home, .mb-page) .best-selling-container .mb-deals-sub {
+    margin: 10px 0 0;
+    color: var(--mb-text-muted);
+    font: 400 16px/1.5 var(--mb-font-text);
+}
+
+// =================================================================================================
+// Footer — a plane on the top line; the badges and the payment marks as two labelled groups
+// =================================================================================================
+.footer-container.site-footer {
+    border-top: 0;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--mb-border) 18%, var(--mb-gold) 50%, var(--mb-border) 82%, transparent);
+    }
+
+    > .mb-footer-flight {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        display: grid;
+        place-items: center;
+        width: 40px;
+        height: 40px;
+        border: 1px solid var(--mb-border);
+        border-radius: 50%;
+        background: var(--mb-bg);
+        translate: -50% -50%;
+
+        > svg {
+            width: 18px;
+            height: 16px;
+            fill: var(--mb-gold);
+        }
+    }
+
+    .icons-block {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: end;
+        gap: 28px 56px;
+        margin: 0 0 28px;
+        padding: 28px 0;
+        border-top: 1px solid var(--mb-border);
+        border-bottom: 1px solid var(--mb-border);
+    }
+
+    .mb-footer-label {
+        margin: 0 0 14px;
+        color: var(--mb-text-muted);
+        font: 600 11px/1.2 var(--mb-font-text);
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+    }
+
+    .mb-footer-trust .logos-items {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 10px;
+        margin: 0;
+
+        .logos-item {
+            height: 48px;
+            padding: 0 16px;
+            border: 1px solid var(--mb-border);
+            border-radius: 12px;
+            background: rgb(var(--mb-surface-rgb) / 0.6);
+            opacity: 1;
+            transition: border-color 0.2s ease;
+
+            &:hover {
+                border-color: var(--mb-border-strong);
+            }
+        }
+    }
+
+    .mb-footer-pay__row {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        height: 48px;
+    }
+
+    .secure-3d {
+        width: 42px;
+        height: 42px;
+        margin: 0;
+        border-radius: 8px;
+        mix-blend-mode: lighten;
+    }
+
+    .payment {
+        gap: 10px;
+
+        .card-icon {
+            opacity: 0.85;
+        }
+    }
+
+    .socials {
+        gap: 12px;
+        padding-bottom: 28px;
+
+        a {
+            display: grid;
+            place-items: center;
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--mb-border);
+            border-radius: 50%;
+            color: var(--mb-text-muted);
+            font-size: 17px;
+            opacity: 1;
+            transition:
+                color 0.2s ease,
+                border-color 0.2s ease;
+
+            &:hover {
+                border-color: var(--mb-gold);
+                color: var(--mb-gold-light);
+            }
+        }
+    }
+
+    @media screen and (max-width: 1000px) {
+        .icons-block {
+            grid-template-columns: minmax(0, 1fr);
+            align-items: start;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .icons-block {
+            display: grid;
+            justify-items: center;
+            text-align: center;
+        }
+
+        .mb-footer-trust .logos-items {
+            justify-content: center;
+
+            .logos-item {
+                height: 44px;
+                padding: 0 12px;
+            }
+        }
+    }
+}

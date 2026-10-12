@@ -16,7 +16,7 @@
     .mb-bf-hero {
         border-radius: var(--mb-radius-card);
         background:
-            linear-gradient(rgba(15, 23, 42, 0.78), rgba(15, 23, 42, 0.6)),
+            linear-gradient(rgb(var(--mb-deep-rgb) / 0.78), rgb(var(--mb-deep-rgb) / 0.6)),
             url('@/assets/images/static/bg-business.png') center 20% / cover no-repeat;
         padding: 160px 88px 96px;
     }
@@ -35,11 +35,15 @@
 
         > h1 {
             margin: 0 0 24px;
-            color: #fff;
+            color: var(--mb-text-strong);
             font-size: clamp(36px, 4vw, 56px);
+            font-family: var(--mb-font-display);
+            font-weight: var(--mb-display-weight);
+            font-stretch: var(--mb-display-stretch);
+            letter-spacing: var(--mb-display-tracking);
 
             .accent {
-                color: var(--mb-gold);
+                color: inherit;
             }
         }
     }
@@ -48,7 +52,7 @@
         max-width: 560px;
         margin: 0;
         color: rgba(255, 255, 255, 0.88);
-        font: 400 16px/1.65 'Inter', sans-serif;
+        font: 400 16px/1.65 var(--mb-font-text);
     }
 
     .mb-orderfly-card {
@@ -62,8 +66,8 @@
 
     .mb-orderfly-card-title {
         margin: 0 0 20px;
-        color: #fff;
-        font: 600 22px/1.3 'Inter', sans-serif;
+        color: var(--mb-text-strong);
+        font: 600 22px/1.3 var(--mb-font-text);
     }
 
     // ------------------------------------------------------------------
@@ -130,7 +134,7 @@
     .seo-content {
         width: calc(100% + 64px);
         margin-left: -32px;
-        background: #fff;
+        background: var(--mb-paper);
         padding: 96px 32px;
         color: var(--mb-ink-muted);
         font-size: 16px;
@@ -142,13 +146,15 @@
         h2 {
             margin-bottom: 24px;
             color: var(--mb-ink);
-            font: 700 36px/1.2 'Inter', sans-serif;
+            font: var(--mb-display-weight) 36px/1.2 var(--mb-font-display);
+            font-stretch: var(--mb-display-stretch);
+            letter-spacing: var(--mb-display-tracking);
         }
 
         h3 {
             margin: 36px 0 12px;
-            color: var(--mb-gold);
-            font: 600 22px/1.3 'Inter', sans-serif;
+            color: var(--mb-gold-ink);
+            font: 600 22px/1.3 var(--mb-font-text);
         }
 
         strong {
@@ -228,7 +234,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(rgba(15, 23, 42, 0.82), rgba(15, 23, 42, 0.58));
+            background: linear-gradient(rgb(var(--mb-deep-rgb) / 0.82), rgb(var(--mb-deep-rgb) / 0.58));
             pointer-events: none;
         }
     }
@@ -262,9 +268,13 @@
 
     .promo-title {
         margin: 0 0 24px;
-        color: #fff;
+        color: var(--mb-text-strong);
         font-size: clamp(36px, 4vw, 56px);
         line-height: 1.1;
+        font-family: var(--mb-font-display);
+        font-weight: var(--mb-display-weight);
+        font-stretch: var(--mb-display-stretch);
+        letter-spacing: var(--mb-display-tracking);
 
         span {
             color: var(--mb-gold);
@@ -286,7 +296,7 @@
 
     .promo-price-box {
         display: inline-flex;
-        background: rgba(15, 23, 42, 0.55);
+        background: rgb(var(--mb-deep-rgb) / 0.55);
         border: 1px solid rgba(255, 255, 255, 0.16);
         border-radius: var(--mb-radius-input);
         padding: 16px 28px;
@@ -296,12 +306,12 @@
         display: block;
         margin-bottom: 6px;
         color: var(--mb-gold);
-        font: 600 12px/1.2 'Inter', sans-serif;
+        font: 600 12px/1.2 var(--mb-font-text);
         letter-spacing: 2px;
     }
 
     .price-amount {
-        color: #fff;
+        color: var(--mb-text-strong);
         font-size: 40px;
     }
 

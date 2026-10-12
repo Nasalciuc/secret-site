@@ -27,164 +27,20 @@
         display: none;
     }
 
-    .mb-reviews {
-        display: block;
-        background: #fff;
+}
 
-        .mb-reviews-title {
-            color: var(--mb-ink);
-            font: 700 44px/1.15 'Inter', sans-serif;
-            margin: 0 0 40px;
-
-            @media screen and (max-width: 768px) {
-                font-size: 30px;
-                margin-bottom: 28px;
-            }
-        }
-
-        .mb-reviews-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-
-            @media screen and (max-width: 1024px) {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .mb-review-card {
-            background: #f8fafc;
-            border: 1px solid #f1f5f9;
-            border-radius: var(--mb-radius-card);
-            padding: 32px;
-        }
-
-        .mb-review-stars {
-            display: flex;
-            gap: 4px;
-            margin-bottom: 20px;
-
-            .star {
-                color: #e2e8f0;
-            }
-
-            .star.filled {
-                color: var(--mb-gold);
-            }
-        }
-
-        .mb-review-quote {
-            margin: 0;
-            font: 400 15px/1.6 'Inter', sans-serif;
-            color: #334155;
-        }
-
-        .mb-review-name {
-            margin-top: 24px;
-            font: 600 14px/1.4 'Inter', sans-serif;
-            color: var(--mb-ink);
-        }
-
-        .mb-review-context {
-            margin-top: 4px;
-            font: 400 12px/1.4 'Inter', sans-serif;
-            color: var(--mb-ink-muted);
-        }
-
-        .mb-review-skeleton {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            min-height: 200px;
-
-            .line {
-                height: 12px;
-                border-radius: 6px;
-                background: #e2e8f0;
-                animation: mb-skeleton-pulse 1.2s ease-in-out infinite;
-            }
-
-            .line.short {
-                width: 40%;
-            }
-
-            .line.medium {
-                width: 70%;
-            }
-        }
-
-        .mb-reviews-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            margin-top: 32px;
-            font: 600 14px/1.4 'Inter', sans-serif;
-            color: var(--mb-gold);
-            text-decoration: none;
-            transition: color 0.2s ease-in;
-
-            &:hover {
-                color: var(--mb-gold-dark);
-                text-decoration: underline;
-            }
-        }
+@media screen and (max-width: 1200px) {
+    :is(.mb-home, .mb-page) .mb-reviews {
+        width: calc(100% + 48px);
+        margin-left: -24px;
+        padding-inline: 24px;
     }
+}
 
-    // Final CTA band (dark surface, centered).
-    .mb-cta {
-        background: var(--mb-surface);
-        text-align: center;
-
-        .mb-cta-inner {
-            max-width: 736px;
-            margin: 0 auto;
-            padding: 80px 32px;
-
-            @media screen and (max-width: 768px) {
-                padding: 56px 16px;
-            }
-        }
-
-        .mb-cta-title {
-            margin: 0;
-            color: #fff;
-            font: 700 36px/1.2 'Inter', sans-serif;
-
-            @media screen and (max-width: 768px) {
-                font-size: 28px;
-            }
-        }
-
-        .mb-cta-subtitle {
-            margin: 16px 0 0;
-            font: 400 20px/1.5 'Inter', sans-serif;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .mb-cta-actions {
-            margin-top: 36px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 16px;
-
-            .mb-btn-gold {
-                padding: 16px 56px;
-            }
-
-            .mb-btn-outline {
-                padding: 16px 40px;
-                border-color: rgba(255, 255, 255, 0.4);
-
-                &:hover {
-                    border-color: #fff;
-                }
-            }
-
-            @media screen and (max-width: 768px) {
-                flex-direction: column;
-                align-items: stretch;
-            }
-        }
+@media screen and (max-width: 768px) {
+    :is(.mb-home, .mb-page) .mb-reviews {
+        width: calc(100% + 16px);
+        margin-left: -8px;
+        padding-inline: 8px;
     }
 }

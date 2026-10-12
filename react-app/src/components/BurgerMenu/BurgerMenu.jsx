@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAppStore } from '@/store/useAppStore'
 import { useRegionStore } from '@/store/useRegionStore'
+import { HOME_SECTIONS } from '@/components/Header/Header'
 
 const TRANSITION = parseInt(import.meta.env.VITE_TRANSITION || '400')
 
@@ -56,22 +57,19 @@ export default function BurgerMenu() {
             </div>
             <div className="content">
                 <div className="links">
-                    <Link onClick={hideBurgher} to="/" className="fade-in" style={{ '--index': 0 }}>Home</Link>
-                    <Link onClick={hideBurgher} to="/about-us" className="fade-in" style={{ '--index': 1 }}>About Us</Link>
-                    <Link onClick={hideBurgher} to="/airlines" className="fade-in" style={{ '--index': 2 }}>Airlines</Link>
-                    <Link onClick={hideBurgher} to="/business-class-flights" className="fade-in" style={{ '--index': 3 }}>Business Class Flights</Link>
-                    <a href="https://blog.buybusinessclass.com/" className="fade-in" style={{ '--index': 4 }}>Blog</a>
-                    <Link
-                        onClick={hideBurgher}
-                        to={bestDealsTo}
-                        className="fade-in"
-                        style={{ '--index': 3 }}
-                    >
-                        Best Deals
-                    </Link>
-                    <Link onClick={hideBurgher} to="/reviews" className="fade-in" style={{ '--index': 4 }}>Reviews</Link>
+                    {HOME_SECTIONS.map((section, index) => (
+                        <Link key={section.id} onClick={hideBurgher} to={{ pathname: '/', hash: `#${section.id}` }} className="fade-in" style={{ '--index': index }}>
+                            {section.label}
+                        </Link>
+                    ))}
+                    <span className="links-divider" aria-hidden="true" />
+                    <Link onClick={hideBurgher} to="/about-us" className="fade-in" style={{ '--index': 4 }}>About Us</Link>
+                    <Link onClick={hideBurgher} to="/airlines" className="fade-in" style={{ '--index': 4 }}>Airlines</Link>
+                    <Link onClick={hideBurgher} to="/business-class-flights" className="fade-in" style={{ '--index': 5 }}>Business Class Flights</Link>
+                    <Link onClick={hideBurgher} to={bestDealsTo} className="fade-in" style={{ '--index': 5 }}>Best Deals</Link>
+                    <a href="https://blog.buybusinessclass.com/" className="fade-in" style={{ '--index': 6 }}>Blog</a>
                 </div>
-                <div className="footer fade-in" style={{ '--index': 5 }}>
+                <div className="footer fade-in" style={{ '--index': 6 }}>
                     <p>24/7 SERVICE</p>
                     <a className="tel" href={`tel:${settings?.number}`}>{settings?.number}</a>
                 </div>

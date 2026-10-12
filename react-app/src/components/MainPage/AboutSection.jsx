@@ -76,7 +76,7 @@ export default function AboutSection() {
         <div className="about-container">
             <div className="title">
                 <h3 className="main-title">
-                    About<span className="accent"> BuyBusinessClass</span>
+                    About BuyBusinessClass
                 </h3>
             </div>
             <div className="content">

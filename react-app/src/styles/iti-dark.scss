@@ -9,15 +9,15 @@
 }
 .iti-group .iti__tel-input {
     width: 100% !important;
-    background: #1a1d1f !important;
-    border: 1px solid #33383f !important;
-    color: #dadde0 !important;
+    background: var(--mb-surface) !important;
+    border: 1px solid var(--mb-border) !important;
+    color: var(--mb-text) !important;
     padding-top: 12px !important;
     padding-bottom: 12px !important;
     padding-right: 14px !important;
     border-radius: 8px !important;
     font-size: 14px !important;
-    font-family: 'Inter', sans-serif !important;
+    font-family: var(--mb-font-text)!important;
     font-weight: 600;
     transition:
         border-color 0.2s ease,
@@ -27,7 +27,7 @@
     box-sizing: border-box;
 }
 .iti-group .iti__tel-input::placeholder {
-    color: rgba(218, 221, 224, 0.4) !important;
+    color: rgb(var(--mb-text-rgb) / 0.4) !important;
 }
 .iti-group .iti__tel-input:focus {
     outline: none !important;
@@ -50,15 +50,15 @@
 }
 .iti-group .iti--separate-dial-code .iti__selected-dial-code,
 .iti-group .iti__selected-dial-code {
-    color: #dadde0 !important;
+    color: var(--mb-text) !important;
     font-weight: 600;
     margin-left: 6px;
 }
 .iti-group .iti__arrow {
-    border-top-color: rgba(218, 221, 224, 0.6) !important;
+    border-top-color: rgb(var(--mb-text-rgb) / 0.6) !important;
 }
 .iti-group .iti__arrow--up {
-    border-bottom-color: rgba(218, 221, 224, 0.6) !important;
+    border-bottom-color: rgb(var(--mb-text-rgb) / 0.6) !important;
 }
 
 /* Dropdown list â€” dark theme */
@@ -66,12 +66,12 @@
 .iti-group .iti__dropdown-content,
 .iti__country-list,
 .iti__dropdown-content {
-    background: #1a1d1f !important;
-    background-color: #1a1d1f !important;
-    color: #dadde0 !important;
-    border: 1px solid #33383f !important;
+    background: var(--mb-surface) !important;
+    background-color: var(--mb-surface) !important;
+    color: var(--mb-text) !important;
+    border: 1px solid var(--mb-border) !important;
     border-radius: 8px !important;
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45) !important;
+    box-shadow: 0 12px 32px rgb(var(--mb-shade-rgb) / 0.45) !important;
     max-height: 260px !important;
     overflow-y: auto !important;
     scrollbar-width: thin;
@@ -89,16 +89,16 @@
     background-color: transparent !important;
     padding: 8px 12px !important;
     font-size: 13px !important;
-    color: #dadde0 !important;
+    color: var(--mb-text) !important;
 }
 .iti__country .iti__country-name,
 .iti__country .iti__flag-box {
-    color: #dadde0 !important;
+    color: var(--mb-text) !important;
 }
 .iti__country.iti__highlight,
 .iti__country:hover {
     background: rgba(255, 255, 255, 0.06) !important;
-    color: #dadde0 !important;
+    color: var(--mb-text) !important;
 }
 .iti__country.iti__active {
     background: transparent !important;
@@ -110,7 +110,7 @@
     background: transparent !important;
 }
 .iti__dial-code {
-    color: rgba(218, 221, 224, 0.5) !important;
+    color: rgb(var(--mb-text-rgb) / 0.5) !important;
 }
 .iti__country.iti__active .iti__dial-code {
     color: #b4853b !important;
@@ -122,11 +122,11 @@
     align-items: center !important;
     gap: 8px !important;
     padding: 6px 10px !important;
-    background: #1a1d1f !important;
+    background: var(--mb-surface) !important;
 }
 .iti__search-icon {
     flex-shrink: 0 !important;
-    color: rgba(218, 221, 224, 0.5) !important;
+    color: rgb(var(--mb-text-rgb) / 0.5) !important;
     margin-right: 4px !important;
 }
 .iti__search-icon svg,
@@ -137,25 +137,25 @@
 }
 .iti__search-input,
 input.iti__search-input {
-    background: #1a1d1f !important;
-    border: 1px solid #33383f !important;
+    background: var(--mb-surface) !important;
+    border: 1px solid var(--mb-border) !important;
     border-radius: 6px !important;
-    color: #dadde0 !important;
+    color: var(--mb-text) !important;
     padding: 6px 10px !important;
     margin: 0 !important;
     flex: 1 1 auto !important;
     min-width: 0 !important;
     box-sizing: border-box !important;
     box-shadow: none !important;
-    -webkit-box-shadow: 0 0 0 1000px #1a1d1f inset !important;
-    -webkit-text-fill-color: #dadde0 !important;
+    -webkit-box-shadow: 0 0 0 1000px var(--mb-deep) inset !important;
+    -webkit-text-fill-color: var(--mb-text) !important;
 }
 .iti__search-input::placeholder {
-    color: rgba(218, 221, 224, 0.4) !important;
+    color: rgb(var(--mb-text-rgb) / 0.4) !important;
 }
 .iti__search-input:focus {
     outline: none !important;
     border-color: rgba(180, 133, 59, 0.5) !important;
-    background: #1a1d1f !important;
+    background: var(--mb-surface) !important;
 }
 

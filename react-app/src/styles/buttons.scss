@@ -7,9 +7,9 @@
         padding: 12px 24px;
         background: #b4853b;
         border-radius: 8px;
-        font-family: 'Poppins', sans-serif;
+        font-family: var(--mb-font-text);
         transition: background 0.3s ease;
-        color: #111315;
+        color: var(--mb-ink);
         font-weight: 600;
         font-size: 15px;
 
@@ -29,12 +29,12 @@
         display: block;
         border-radius: 8px;
         text-align: center;
-        background: #1a1d1f;
+        background: var(--mb-surface);
         width: 100%;
         padding: 12px 20px;
         color: #b4853b;
         transition: 0.4s ease-in;
-        font-family: 'Poppins', sans-serif;
+        font-family: var(--mb-font-text);
         font-weight: 600;
         font-size: 15px;
         box-shadow: 0 0 10px #dbdde0;
@@ -43,7 +43,7 @@
         cursor: pointer;
 
         &:hover {
-            background: #272b30;
+            background: var(--mb-raised);
         }
     }
 }
@@ -63,11 +63,11 @@
         border-radius: 8px;
         transition: 0.4s ease-in;
         font-weight: 600;
-        font-family: 'Poppins', sans-serif;
+        font-family: var(--mb-font-text);
         font-size: 15px;
 
         &:hover {
-            color: #111315;
+            color: var(--mb-ink);
             background: #b4853b;
         }
     }
@@ -82,30 +82,30 @@
         --rdp-accent-color: #b4853b;
         --rdp-accent-background-color: rgba(180, 133, 59, 0.25);
         --rdp-range_middle-background-color: rgba(180, 133, 59, 0.15);
-        color: #efefef;
+        color: var(--mb-text-strong);
     }
 
     .rdp-month_caption,
     .rdp-weekday,
     .rdp-day_button {
-        color: #efefef;
+        color: var(--mb-text-strong);
     }
 
     .rdp-day_button:hover {
-        background: #272b30;
+        background: var(--mb-raised);
     }
 
     .rdp-selected .rdp-day_button,
     .rdp-range_start .rdp-day_button,
     .rdp-range_end .rdp-day_button {
         background: #b4853b;
-        color: #111315;
+        color: var(--mb-ink);
     }
 
     .rdp-button_previous,
     .rdp-button_next {
         border-radius: 50%;
-        background: #272b30;
-        color: #efefef;
+        background: var(--mb-raised);
+        color: var(--mb-text-strong);
     }
 }

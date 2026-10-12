@@ -23,7 +23,23 @@
     }
 
     > .content {
+        overflow-y: auto;
+
+        // the homepage's four sections, a hairline, then the pages
+        > .links {
+            justify-content: flex-start;
+            gap: 8px;
+
+            > .links-divider {
+                height: 1px;
+                margin: 8px 0;
+                background: var(--mb-border);
+            }
+        }
+
         > .links > a {
+            padding: 10px 12px;
+            font-size: 18px;
             background: var(--mb-surface);
             border: 1px solid var(--mb-border);
             border-radius: var(--mb-radius-input);
@@ -36,7 +52,7 @@
             }
 
             &.router-link-exact-active {
-                color: #fff;
+                color: var(--mb-text-strong);
             }
         }
 
@@ -48,7 +64,7 @@
 
             > .tel {
                 background: var(--mb-gold);
-                color: #fff;
+                color: var(--mb-ink);
                 font-size: 14px;
                 transition: background 0.2s ease-in;
 
@@ -66,7 +82,7 @@
 // ---------------------------------------------------------------------------
 .modal-overlay.coupon-modal-overlay,
 .coupon-modal-overlay {
-    background: rgba(15, 23, 42, 0.82);
+    background: rgb(var(--mb-deep-rgb) / 0.82);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
     z-index: 10050;
@@ -79,7 +95,7 @@
 
     .close-button {
         color: var(--mb-text);
-        background: rgba(15, 23, 42, 0.55);
+        background: rgb(var(--mb-deep-rgb) / 0.55);
         border-radius: 50%;
     }
 
@@ -94,16 +110,16 @@
 
         .image-overlay {
             padding: 36px 28px 32px 36px;
-            background: linear-gradient(transparent, rgba(15, 23, 42, 0.85));
+            background: linear-gradient(transparent, rgb(var(--mb-deep-rgb) / 0.85));
 
             .badge {
                 background: var(--mb-gold);
-                color: #fff;
+                color: var(--mb-ink);
                 border-radius: 999px;
             }
 
             .image-title {
-                font-family: 'Playfair Display', Georgia, serif;
+                font-family: var(--mb-font-display);
             }
 
             .image-subtitle {
@@ -114,8 +130,8 @@
 
     .modal-form {
         h2 {
-            color: #fff;
-            font-family: 'Playfair Display', Georgia, serif;
+            color: var(--mb-text-strong);
+            font-family: var(--mb-font-display);
         }
 
         .lead {
@@ -144,7 +160,7 @@
 
                     &:hover {
                         background: var(--mb-gold);
-                        color: #fff;
+                        color: var(--mb-ink);
                     }
                 }
             }
@@ -185,7 +201,7 @@
                     border-color: var(--mb-gold);
 
                     &::after {
-                        border-color: #fff;
+                        border-color: var(--mb-text-strong);
                     }
                 }
             }
@@ -205,7 +221,7 @@
 
             &:not(:disabled):hover {
                 background: var(--mb-gold-dark);
-                color: #fff;
+                color: var(--mb-ink);
                 box-shadow: 0 12px 28px rgba(180, 133, 59, 0.3);
             }
 
@@ -294,7 +310,7 @@
 // Call-us popup — slate card, gold pill
 // ---------------------------------------------------------------------------
 .call-us-modal-overlay {
-    background: rgba(15, 23, 42, 0.7);
+    background: rgb(var(--mb-deep-rgb) / 0.7);
 }
 
 .call-us-modal-content {
@@ -305,13 +321,13 @@
 }
 
 .call-us-modal-header {
-    color: #fff;
+    color: var(--mb-text-strong);
 }
 
 .call-us-button {
     background-color: var(--mb-gold);
-    color: #fff;
-    border-radius: 999px;
+    color: var(--mb-ink);
+    border-radius: var(--mb-radius-input);
     transition: background 0.2s ease-in;
 
     &:hover {
@@ -327,7 +343,7 @@
 // Disclaimer popup — legacy overlay background carries !important
 // ---------------------------------------------------------------------------
 .disclaimer-modal-overlay {
-    background-color: rgba(15, 23, 42, 0.65) !important;
+    background-color: rgb(var(--mb-deep-rgb) / 0.65) !important;
 }
 
 .disclaimer-modal-content {
@@ -337,7 +353,7 @@
 }
 
 .disclaimer-modal-title {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: var(--mb-font-display);
 }
 
 .disclaimer-modal-body {
@@ -363,11 +379,11 @@
     border: 1px solid var(--mb-border);
     border-radius: var(--mb-radius-input);
     padding: 12px;
-    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.45);
+    box-shadow: 0 16px 40px rgb(var(--mb-deep-rgb) / 0.45);
 
     > .d-flex .info {
         .title {
-            color: #fff;
+            color: var(--mb-text-strong);
         }
 
         .body {
@@ -389,7 +405,7 @@
 
     > .content {
         > .globe {
-            background: radial-gradient(43.41% 41.52% at 52.72% 44.98%, #64748b 0%, #334155 100%);
+            background: radial-gradient(43.41% 41.52% at 52.72% 44.98%, var(--mb-border-strong) 0%, var(--mb-bg) 100%);
 
             > .percent {
                 color: var(--mb-text-muted);
@@ -403,21 +419,6 @@
     }
 }
 
-// ---------------------------------------------------------------------------
-// Sticky "Call Us" button — slate pill with gold ring (glow already gold)
-// ---------------------------------------------------------------------------
-.btn-container {
-    background-color: var(--mb-surface);
-    border: 1px solid var(--mb-gold);
-    border-radius: 999px;
-    z-index: 40;
-
-    a {
-        color: #fff;
-        font-family: 'Inter', sans-serif;
-        font-weight: 600;
-    }
-}
 
 // Keep WhatsApp clear of the Search Flight CTA + mobile Call Us pill.
 @media screen and (max-width: 767px) {
@@ -435,7 +436,7 @@
 // re-skinned by mb-hero.scss via the .mb-page + .mb-orderfly-card wrapper
 // ---------------------------------------------------------------------------
 .dialog-overlay {
-    background: rgba(15, 23, 42, 0.6);
+    background: rgb(var(--mb-deep-rgb) / 0.6);
 }
 
 .dialog-content {
@@ -446,7 +447,7 @@
     }
 
     .form-header {
-        color: #fff;
+        color: var(--mb-text-strong);
     }
 
     .call-block {
@@ -491,7 +492,7 @@
         background: var(--mb-surface);
         border: 1px solid var(--mb-border);
         border-radius: var(--mb-radius-input);
-        box-shadow: 0 24px 48px rgba(15, 23, 42, 0.45);
+        box-shadow: 0 24px 48px rgb(var(--mb-deep-rgb) / 0.45);
     }
 
     .rdp-root {
@@ -519,7 +520,7 @@
     .rdp-range_start .rdp-day_button,
     .rdp-range_end .rdp-day_button {
         background: var(--mb-gold);
-        color: #fff;
+        color: var(--mb-ink);
     }
 
     .rdp-button_previous,

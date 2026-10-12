@@ -16,8 +16,12 @@
 
     h1 {
         margin: 0;
-        color: #fff;
+        color: var(--mb-text-strong);
         font-size: clamp(36px, 4.5vw, 60px);
+        font-family: var(--mb-font-display);
+        font-weight: var(--mb-display-weight);
+        font-stretch: var(--mb-display-stretch);
+        letter-spacing: var(--mb-display-tracking);
 
         .gold {
             color: var(--mb-gold);
@@ -28,7 +32,7 @@
         max-width: 560px;
         margin: 16px auto 0;
         color: var(--mb-text-muted);
-        font: 400 17px/1.6 'Inter', sans-serif;
+        font: 400 17px/1.6 var(--mb-font-text);
     }
 
     @media screen and (max-width: 768px) {
@@ -46,7 +50,7 @@
     }
 
     .mb-legal-body {
-        background: #fff;
+        background: var(--mb-paper);
         padding: 80px 32px 96px;
 
         @media screen and (max-width: 768px) {
@@ -79,7 +83,7 @@
                 h5,
                 h6 {
                     color: var(--mb-ink);
-                    font-family: 'Inter', sans-serif;
+                    font-family: var(--mb-font-text);
                     font-weight: 700;
                     line-height: 1.25;
                 }
@@ -104,15 +108,15 @@
             }
 
             > .block.text > p {
-                color: #334155;
-                font: 400 15px/1.75 'Inter', sans-serif;
+                color: var(--mb-ink-muted);
+                font: 400 15px/1.75 var(--mb-font-text);
 
                 a {
                     color: var(--mb-gold-dark);
                     text-decoration: underline;
 
                     &:hover {
-                        color: var(--mb-gold);
+                        color: var(--mb-gold-ink);
                     }
                 }
 
@@ -145,13 +149,9 @@
         margin: 0 auto;
         padding: 0 16px 48px;
 
-        // The legacy 'FAQ Section' heading becomes a small gold section label
+        // The section's own heading repeats the page h1 right above it
         h2 {
-            margin-bottom: 24px;
-            color: var(--mb-gold);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font: 600 13px/1.4 'Inter', sans-serif;
+            display: none;
         }
 
         .faq-item {
@@ -173,11 +173,11 @@
             padding: 20px 24px;
             background: none;
             color: var(--mb-text);
-            font: 600 15px/1.5 'Inter', sans-serif;
+            font: 600 15px/1.5 var(--mb-font-text);
 
             &:hover {
                 background: var(--mb-deep);
-                color: #fff;
+                color: var(--mb-text-strong);
             }
 
             span {
@@ -214,19 +214,22 @@
 
     h1 {
         margin: 0;
-        color: #fff;
+        color: var(--mb-text-strong);
         font-size: clamp(110px, 18vw, 170px);
         line-height: 1;
+        font-family: var(--mb-font-display);
+        font-weight: var(--mb-display-weight);
+        font-stretch: var(--mb-display-stretch);
+        letter-spacing: var(--mb-display-tracking);
     }
 
     p {
         margin: 16px 0 36px;
         color: var(--mb-text-muted);
-        font: 400 18px/1.5 'Inter', sans-serif;
+        font: 400 18px/1.5 var(--mb-font-text);
     }
 
     a.mb-btn-gold {
-        color: #fff;
         text-decoration: none;
     }
 }
@@ -240,7 +243,7 @@
     justify-content: center;
     min-height: 60vh;
     color: var(--mb-text-muted);
-    font: 400 16px/1.5 'Inter', sans-serif;
+    font: 400 16px/1.5 var(--mb-font-text);
 }
 
 // ----------------------------------------------------------------------
@@ -275,84 +278,6 @@
 
             > .cards-container {
                 grid-template-columns: minmax(0, 1fr);
-            }
-        }
-    }
-
-    // Deal card recipe (the shared skin in mb-stats-deals.scss is scoped to
-    // the BestSelling carousel, so the grid cards are styled here)
-    .mb-deal-card {
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-        background: var(--mb-surface);
-        border: 1px solid var(--mb-border);
-        border-radius: var(--mb-radius-card);
-        transition: all 0.3s;
-
-        &:hover {
-            transform: translateY(-6px);
-            background: var(--mb-deep);
-        }
-
-        &__media {
-            position: relative;
-            aspect-ratio: 3 / 2;
-            background: var(--mb-deep);
-
-            img {
-                display: block;
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-        }
-
-        &__badge {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: #fff;
-            color: #059669;
-            border-radius: 12px;
-            padding: 4px 12px;
-            font: 700 12px/1.4 'Inter', sans-serif;
-            white-space: nowrap;
-        }
-
-        &__body {
-            display: flex;
-            flex: 1;
-            flex-direction: column;
-            padding: 24px;
-        }
-
-        &__title {
-            color: #fff;
-            font: 600 20px/1.3 'Inter', sans-serif;
-        }
-
-        &__price {
-            margin: 8px 0 20px;
-            color: #fff;
-            font: 700 30px/1.2 'Inter', sans-serif;
-        }
-
-        &__cta {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            margin-top: auto;
-            padding: 10px 16px;
-            border: 1px solid var(--mb-border);
-            border-radius: var(--mb-radius-input);
-            color: var(--mb-text);
-            font: 600 12px/1.4 'Inter', sans-serif;
-            transition: background 0.2s ease-in;
-
-            &:hover {
-                background: var(--mb-deep);
             }
         }
     }
@@ -397,21 +322,21 @@
         > .content {
             > .contactus-label {
                 color: var(--mb-gold);
-                text-transform: uppercase;
-                letter-spacing: 2px;
-                font: 600 12px/1.6 'Inter', sans-serif;
+                font: 600 12px/1.6 var(--mb-font-text);
             }
 
             > .title > .main-title {
-                color: #fff;
-                font-family: 'Playfair Display', Georgia, serif;
-                font-weight: 700;
+                color: var(--mb-text-strong);
+                font-family: var(--mb-font-display);
+                font-weight: var(--mb-display-weight);
                 font-size: clamp(30px, 2.6vw, 42px);
                 line-height: 1.15;
+                font-stretch: var(--mb-display-stretch);
+                letter-spacing: var(--mb-display-tracking);
 
                 > .accent {
                     font-family: inherit;
-                    color: var(--mb-gold);
+                    color: inherit;
                 }
             }
 

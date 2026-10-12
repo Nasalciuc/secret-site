@@ -51,7 +51,6 @@ export default function TermsPrivacyPage() {
     return (
         <div className="required-page mb-page">
             <div className="mb-cl-hero">
-                <span className="mb-eyebrow">Legal</span>
                 <h1 className="mb-serif">{title}</h1>
             </div>
             <section className="mb-legal-body">

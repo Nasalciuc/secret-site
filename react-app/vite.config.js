@@ -35,7 +35,11 @@ export default defineConfig({
                     if (
                         path.includes('/react-dom/') ||
                         path.includes('/react/') ||
-                        path.includes('/scheduler/')
+                        path.includes('/scheduler/') ||
+                        path.includes('loose-envify') ||
+                        path.includes('react-transition-group') ||
+                        path.includes('/zustand/') ||
+                        path.includes('use-sync-external-store')
                     ) {
                         return 'vendor-react'
                     }

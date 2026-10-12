@@ -5,7 +5,7 @@ export default function SecondBlock() {
         <div className="xyz-in" xyz="fade left-50% duration-15 delay-5">
             <div className="business-flight-second-description">
                 <div className="title">
-                    <h2 className="main-title" style={{ fontFamily: 'SSP-bold', fontSize: 30 }}>
+                    <h2 className="main-title" style={{ fontFamily: 'var(--mb-font-display)', fontSize: 30 }}>
                         Our Travelers Saved Big on Business Class Tickets -<br />
                         Now It&apos;s Your Turn to Enjoy Exclusive Business Class Deals You Deserve
                     </h2>

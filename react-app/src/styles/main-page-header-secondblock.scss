@@ -7,24 +7,24 @@
     > .choose-option {
         display: flex;
         justify-content: space-around;
-        border: 1px solid #33383f;
-        background: #1a1d1f;
+        border: 1px solid var(--mb-border);
+        background: var(--mb-surface);
         padding: 12px 16px;
         border-radius: 8px;
         margin-bottom: 8px;
         > button {
             background: none;
-            color: #6f767e;
+            color: var(--mb-text-muted);
             position: relative;
             font: {
-                family: 'Inter', sans-serif;
+                family: var(--mb-font-text);
                 size: 15px;
             }
             &.active {
                 @include after-active;
 
                 font-weight: 700;
-                color: #dadde0;
+                color: var(--mb-text);
             }
         }
     }
@@ -41,7 +41,7 @@
             .client-info .input-name,
             .client-info .input-email,
             .client-info .vue-tel-input {
-                background: #1a1d1f;
+                background: var(--mb-surface);
             }
 
             .d-flex {
@@ -97,7 +97,7 @@
 
                     button,
                     a {
-                        background: #1a1d1f;
+                        background: var(--mb-surface);
 
                         &:hover {
                             background: #b4853b;
@@ -161,17 +161,17 @@
                     > .first-row {
                         input {
                             padding: 16px;
-                            color: #dadde0;
+                            color: var(--mb-text);
                             outline: none;
-                            border: 1px solid #33383f;
+                            border: 1px solid var(--mb-border);
                             border-radius: 8px;
                             font: {
                                 size: 14px;
                                 weight: 600;
-                                family: 'Inter', sans-serif;
+                                family: var(--mb-font-text);
                             }
                             &::placeholder {
-                                color: #c2c7cc;
+                                color: var(--mb-text-body);
                             }
                         }
                     }
@@ -188,12 +188,10 @@
 
 
                 &.search-submit {
-                    box-shadow: 0 0 8px #101214;
+                    box-shadow: 0 0 8px var(--mb-deep);
                     
                     button {
-                        text-transform: uppercase;
                         font-weight: 700;
-                        letter-spacing: 1.2px;
                     }
                 }
             }
@@ -295,7 +293,7 @@
                 }
                 > .select-options-adaptive {
                     display: block !important;
-                    border: 1px solid #33383f;
+                    border: 1px solid var(--mb-border);
                     padding: 8px;
                     border-radius: 8px;
                     margin-bottom: 16px;

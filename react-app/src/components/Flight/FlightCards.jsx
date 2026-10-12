@@ -37,7 +37,7 @@ export default function FlightCards({ arr = false }) {
         <div className="deals-container" ref={rootRef}>
             <div className="title">
                 <h2 className="main-title">
-                    <span className="accent">Discounted</span> Business Class <span className="accent">Flights</span>
+                    Discounted Business Class Flights
                 </h2>
                 <p className="subtitle">Save up to 60%</p>
             </div>
@@ -47,6 +47,7 @@ export default function FlightCards({ arr = false }) {
                         key={item.id}
                         title={item.name}
                         price={item.minPrice?.price_today ?? item.price_today}
+                        oldPrice={item.minPrice?.old_price ?? item.old_price}
                         imgUrl={returnImgUrl(item.image)}
                         extraInfo={item.extra_info ?? '60% off on business class flights'}
                         to={cardRoute(item)}

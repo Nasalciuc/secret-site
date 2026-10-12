@@ -25,13 +25,13 @@
         }
 
         > .content {
-            color: #8e969e;
+            color: var(--mb-text-muted);
             padding-top: 50px;
             margin: 0 25%;
             line-height: 24px;
             font: {
                 weight: 400;
-                family: 'Inter', sans-serif;
+                family: var(--mb-font-text);
             }
         }
     }
@@ -74,13 +74,13 @@
         }
 
         > .content {
-            color: #8e969e;
+            color: var(--mb-text-muted);
             padding-top: 50px;
             margin: 0 25%;
             line-height: 24px;
             font: {
                 weight: 400;
-                family: 'Inter', sans-serif;
+                family: var(--mb-font-text);
             }
         }
     }
@@ -113,15 +113,15 @@
         top: 55%;
         z-index: 10;
         transform: translateY(-50%);
-        background: rgba(0, 0, 0, 0.5);
-        color: white;
+        background: rgb(var(--mb-shade-rgb) / 0.5);
+        color: var(--mb-text-strong);
         border: none;
         padding: 20px;
         cursor: pointer;
         font-size: 1.5em;
 
         &:hover {
-            background: rgba(0, 0, 0, 0.8);
+            background: rgb(var(--mb-shade-rgb) / 0.8);
         }
     }
 
@@ -138,10 +138,10 @@
         width: 100%;
         height: auto;
         overflow: hidden;
-        border: 1px solid white;
+        border: 1px solid var(--mb-text-strong);
         border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        color: white;
+        box-shadow: 0 4px 6px rgb(var(--mb-shade-rgb) / 0.1);
+        color: var(--mb-text-strong);
     }
 
     .testimonial-header {
@@ -188,9 +188,9 @@
         padding-top: 25px;
         padding-bottom: 25px;
         margin: 30px;
-        color: #8e969e;
+        color: var(--mb-text-muted);
         line-height: 24px;
-        font-family: 'Inter', sans-serif;
+        font-family: var(--mb-font-text);
         font-size: 14px;
         font-weight: 400;
     }
@@ -209,8 +209,8 @@
 
     .seo-content {
         padding: 60px 16px;
-        color: #c2c7cc;
-        font-family: 'Inter', sans-serif;
+        color: var(--mb-text-body);
+        font-family: var(--mb-font-text);
         font-size: 15px;
         line-height: 1.7;
 
@@ -221,16 +221,16 @@
 
         h2 {
             margin-bottom: 24px;
-            color: #dadde0;
+            color: var(--mb-text);
             text-align: center;
-            font-family: 'SSP-bold', sans-serif;
+            font-family: var(--mb-font-display); font-weight: var(--mb-display-weight);
             font-size: 32px;
         }
 
         h3 {
             margin: 32px 0 12px;
             color: #b4853b;
-            font-family: 'SSP-bold', sans-serif;
+            font-family: var(--mb-font-display); font-weight: var(--mb-display-weight);
             font-size: 22px;
         }
 
@@ -239,7 +239,7 @@
         }
 
         strong {
-            color: #dadde0;
+            color: var(--mb-text);
             font-weight: 600;
         }
 
@@ -272,7 +272,7 @@
             > .title > .main-title {
                 font: {
                     weight: 400;
-                    family: 'Inter', sans-serif;
+                    family: var(--mb-font-text);
                     size: 16px !important;
                 }
             }
@@ -293,7 +293,7 @@
             > .title > .main-title {
                 font: {
                     weight: 400;
-                    family: 'Inter', sans-serif;
+                    family: var(--mb-font-text);
                     size: 16px !important;
                 }
             }
@@ -316,7 +316,7 @@
 
         .testimonial-card {
             padding: 15px;
-            background-color: rgb(0, 0, 0);
+            background-color: var(--mb-deep);
         }
 
         .testimonial-header h3 {
@@ -351,7 +351,7 @@
             > .title > .main-title {
                 font: {
                     weight: 400;
-                    family: 'Inter', sans-serif;
+                    family: var(--mb-font-text);
                     size: 38px !important;
                 }
             }
@@ -365,7 +365,7 @@
             > .title > .main-title {
                 font: {
                     weight: 400;
-                    family: 'Inter', sans-serif;
+                    family: var(--mb-font-text);
                     size: 38px !important;
                 }
             }
@@ -389,7 +389,7 @@
 
         .testimonial-text {
             margin: 0 5px;
-            font-size: 11px;
+            font-size: 12px;
         }
     }
 }
@@ -428,7 +428,7 @@
         padding: 0;
         border-radius: 0;
         background: transparent;
-        color: #001b47;
+        color: var(--mb-ink);
     }
 
     .second-block {
@@ -441,14 +441,14 @@
         max-width: 800px;
         padding: 62px;
         border-radius: 16px;
-        background-color: #f9f6f3;
-        color: #001b47;
-        font-family: 'Inter', sans-serif;
+        background-color: var(--mb-paper-2);
+        color: var(--mb-ink);
+        font-family: var(--mb-font-text);
     }
 
     .promo-title {
         margin-bottom: 12px;
-        color: #001b47;
+        color: var(--mb-ink);
         font-size: 34px;
         font-weight: 700;
         line-height: 1.4;
@@ -461,7 +461,7 @@
 
     .promo-description {
         margin-bottom: 20px;
-        color: #444;
+        color: var(--mb-ink-muted);
         font-size: 15px;
     }
 
@@ -479,7 +479,7 @@
     }
 
     .price-amount {
-        color: #001b47;
+        color: var(--mb-ink);
         font-size: 36px;
         font-weight: 700;
         line-height: 1;
@@ -492,7 +492,7 @@
 
     .price-note {
         margin-top: 4px;
-        color: #444;
+        color: var(--mb-ink-muted);
         font-size: 14px;
     }
 
@@ -501,7 +501,7 @@
         border: none;
         border-radius: 8px;
         background-color: #b4853b;
-        color: white;
+        color: var(--mb-ink);
         cursor: pointer;
         font-weight: 600;
         transition: background 0.3s ease;
