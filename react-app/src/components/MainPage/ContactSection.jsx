@@ -103,10 +103,11 @@ export default function ContactSection() {
                                 checked={smsConsent}
                                 onChange={(e) => setSmsConsent(e.target.checked)}
                             />
+                            {' '}
                             By checking this box, I consent to receive text messages related to customer care and
                             marketing from BuyBusinessClass. You can reply &quot;STOP&quot; at any time to opt-out.
                             Message and data rates may apply. Message frequency may vary, text HELP for assistance. For
-                            more information, please visit our <Link to="/privacy"> Privacy Policy </Link> and
+                            more information, please visit our <Link to="/privacy"> Privacy Policy </Link> and{' '}
                             <Link to="/terms">SMS Terms and Conditions</Link>
                         </label>
                     </div>

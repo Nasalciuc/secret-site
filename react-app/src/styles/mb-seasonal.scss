@@ -1,0 +1,385 @@
+// Moodboard re-skin for the seasonal campaign pages (BlackFridayPage / XmasPage).
+// Everything is scoped under .mb-page (+ .seasonal-sale-page / .seasonal-search) so
+// the legacy seasonal styles in seasonal-search.scss / flight-card-header.scss stay
+// untouched anywhere else. Colors / borders / radii only on the BlackFridaySearch
+// widget — its form logic and layout mechanics are frozen (mirrors mb-hero.scss).
+// Portaled popups (.calendar / .single-calendar) render into document.body and are
+// intentionally left alone.
+
+// ---------------------------------------------------------------------------
+// Page layout: slate hero band with serif heading, image card + search card
+// ---------------------------------------------------------------------------
+.mb-page.seasonal-sale-page {
+    .mb-seasonal-hero {
+        max-width: 860px;
+        padding: 48px 0 8px;
+
+        > .mb-seasonal-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--mb-deep);
+            border: 1px solid rgba(180, 133, 59, 0.45);
+            border-radius: 999px;
+            padding: 6px 18px;
+            margin-bottom: 20px;
+            color: var(--mb-gold);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font: 600 12px/1.4 'Inter', sans-serif;
+
+            > .dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: var(--mb-gold);
+                flex-shrink: 0;
+            }
+        }
+
+        > h1 {
+            margin: 0 0 16px;
+            color: #fff;
+            font-size: clamp(36px, 4vw, 56px);
+
+            .accent {
+                color: var(--mb-gold);
+            }
+        }
+
+        > p {
+            margin: 0;
+            max-width: 560px;
+            color: var(--mb-text-muted);
+            font: 400 18px/1.5 'Inter', sans-serif;
+        }
+    }
+
+    // Legacy 100vh split layout becomes a two-card hero grid.
+    .container-friday {
+        display: grid;
+        grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+        gap: 32px;
+        align-items: stretch;
+        height: auto;
+        min-height: 0;
+        padding-top: 40px;
+    }
+
+    .left-image-friday {
+        background: var(--mb-deep);
+        border: 1px solid var(--mb-border);
+        border-radius: var(--mb-radius-card);
+        overflow: hidden;
+        min-height: 420px;
+    }
+
+    // Neutralize the legacy flex / xmas-variant offsets — the card supplies its own shell.
+    .right-component {
+        max-width: none;
+        margin-top: 0;
+        padding: 0;
+    }
+
+    // Reviews no longer overlap the hero; the white moodboard section sits below it.
+    .review-friday {
+        margin-top: 64px;
+        padding-top: 0;
+    }
+
+    @media screen and (max-width: 1200px) {
+        .container-friday {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .left-image-friday {
+            min-height: 0;
+            height: auto;
+            aspect-ratio: 16 / 9;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .mb-seasonal-hero {
+            padding: 32px 8px 0;
+        }
+
+        .container-friday {
+            gap: 16px;
+            padding-top: 24px;
+        }
+
+        .left-image-friday {
+            margin-left: 0;
+            aspect-ratio: 4 / 3;
+        }
+
+        .review-friday {
+            margin-top: 48px;
+        }
+    }
+}
+
+// ---------------------------------------------------------------------------
+// BlackFridaySearch widget re-skin (card shell + token mapping).
+// Legacy grays #111315 / #1a1d1f map onto var(--mb-deep), panel #1a1d1f onto
+// var(--mb-surface), borders #33383f / #6f767e onto var(--mb-border), text
+// #dadde0 / #efefef onto var(--mb-text), muted #6f767e onto var(--mb-text-muted).
+// Gold #b4853b already equals var(--mb-gold). Error reds (#ff6a55) are preserved
+// via :not(.has-error) guards wherever these overrides would outrank them.
+// ---------------------------------------------------------------------------
+.mb-page .seasonal-search {
+    background: var(--mb-surface);
+    border: 1px solid var(--mb-border);
+    border-radius: var(--mb-radius-card);
+    padding: 32px;
+
+    @media screen and (max-width: 768px) {
+        padding: 20px 16px;
+    }
+
+    > .content {
+        // Trip type / cabin class row + passengers / name row
+        > .d-flex {
+            &.flight-options,
+            &.travellers {
+                .v-select {
+                    background: var(--mb-deep);
+                    border-color: var(--mb-border);
+                    border-radius: var(--mb-radius-input);
+
+                    .vs__selected {
+                        color: var(--mb-text);
+                    }
+
+                    > ul {
+                        background: var(--mb-deep);
+                        border-color: var(--mb-border);
+                        color: var(--mb-text);
+
+                        > li {
+                            color: var(--mb-text-muted);
+
+                            &:hover {
+                                color: var(--mb-text);
+                                background: var(--mb-surface);
+                            }
+                        }
+                    }
+                }
+
+                > .adaptive-select-options-buttons {
+                    background: var(--mb-deep);
+                    border-color: var(--mb-border);
+                    border-radius: var(--mb-radius-input);
+
+                    > button {
+                        color: var(--mb-text);
+                    }
+                }
+            }
+
+            // Name / email inputs. Guards keep the legacy #ff6a55 error styling alive.
+            > .input-container {
+                > input {
+                    background: var(--mb-deep);
+                    border-radius: var(--mb-radius-input);
+                }
+
+                &:not(.has-error) > input {
+                    border-color: var(--mb-border);
+                    color: var(--mb-text);
+
+                    &::placeholder {
+                        color: var(--mb-text-muted);
+                    }
+                }
+            }
+        }
+
+        // ChooseAirport (From / To)
+        .search-flight {
+            background: var(--mb-deep);
+            border-radius: var(--mb-radius-input);
+
+            // Legacy border declaration carries !important — mirror it, guarding error reds
+            &:not(.has-error) {
+                border-color: var(--mb-border) !important;
+            }
+
+            &.first-active:not(.has-error),
+            &.second-active:not(.has-error) {
+                border-color: var(--mb-gold) !important;
+            }
+
+            .v-select > ul {
+                background: var(--mb-deep);
+                border-color: var(--mb-border);
+                color: var(--mb-text);
+
+                > li {
+                    color: var(--mb-text-muted);
+
+                    &:hover {
+                        color: var(--mb-text);
+                        background: var(--mb-surface);
+                    }
+                }
+            }
+
+            .vs__search {
+                color: var(--mb-text);
+            }
+
+            .vs__actions > .vs__spinner {
+                border-color: var(--mb-border);
+                border-top-color: var(--mb-gold);
+            }
+
+            > button.reverse {
+                border-color: var(--mb-border);
+            }
+        }
+
+        // Departure / return date buttons
+        .calendar-buttons {
+            background: var(--mb-deep);
+            border-radius: var(--mb-radius-input);
+
+            &:not(.has-error) {
+                border-color: var(--mb-border);
+            }
+
+            &.active:not(.has-error) {
+                background: var(--mb-deep);
+                border-color: var(--mb-gold);
+            }
+
+            &.round-trip::before {
+                background: var(--mb-border);
+            }
+
+            > button:not(.has-error) {
+                color: var(--mb-text);
+            }
+
+            > button > svg.fill > * {
+                fill: var(--mb-gold);
+            }
+        }
+
+        // Cabin class / passengers popovers
+        .choose-cabin-type,
+        .choose-ammount-travelers {
+            background: var(--mb-deep);
+            border-color: var(--mb-border);
+
+            label {
+                color: var(--mb-text-muted);
+            }
+        }
+
+        .choose-cabin-type .cabin-buttons {
+            border-color: var(--mb-surface);
+
+            > button {
+                color: var(--mb-text-muted);
+
+                &.active {
+                    color: var(--mb-gold);
+                    background: var(--mb-surface);
+                }
+            }
+        }
+
+        .choose-ammount-travelers > .travelers-buttons {
+            > .adults {
+                color: var(--mb-text);
+            }
+
+            > .right-block {
+                > button {
+                    background: var(--mb-surface);
+
+                    &.minus {
+                        color: var(--mb-text-muted);
+                    }
+                }
+
+                > .ammount {
+                    color: var(--mb-text);
+                }
+            }
+        }
+
+        // Submit CTA: gold button, white label, moodboard hover
+        .orange-filled-button > button {
+            border-radius: var(--mb-radius-input);
+            color: #fff;
+
+            &:hover {
+                background: var(--mb-gold-dark);
+            }
+        }
+
+        // SMS consent toggle: slate track, gold checked state stays from legacy
+        > .sms-toggle {
+            .slider {
+                background-color: var(--mb-border);
+            }
+
+            input:checked + .slider {
+                background-color: var(--mb-gold);
+            }
+
+            .label-text {
+                color: var(--mb-text);
+            }
+        }
+    }
+
+    .privacy-text {
+        color: var(--mb-text-muted);
+    }
+
+    // intl-tel-input: legacy skin is #1a1d1f/!important, so these mirror the weight.
+    // Error border and focus gold are re-asserted because these outrank them.
+    .iti-group {
+        .iti__tel-input {
+            background: var(--mb-deep) !important;
+            border-radius: var(--mb-radius-input) !important;
+        }
+
+        &:not(.has-error) .iti__tel-input {
+            border-color: var(--mb-border) !important;
+            color: var(--mb-text) !important;
+
+            &:focus {
+                border-color: var(--mb-gold) !important;
+            }
+        }
+
+        .iti__selected-flag,
+        .iti__country-container > button {
+            border-radius: var(--mb-radius-input) 0 0 var(--mb-radius-input) !important;
+        }
+    }
+
+    .iti__country-list,
+    .iti__dropdown-content {
+        background: var(--mb-deep) !important;
+        background-color: var(--mb-deep) !important;
+        border-color: var(--mb-border) !important;
+    }
+
+    .iti__search-input-wrapper {
+        background: var(--mb-deep) !important;
+    }
+
+    .iti__search-input,
+    input.iti__search-input {
+        background: var(--mb-deep) !important;
+        border-color: var(--mb-border) !important;
+        -webkit-box-shadow: 0 0 0 1000px var(--mb-deep) inset !important;
+    }
+}

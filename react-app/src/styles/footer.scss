@@ -87,12 +87,41 @@
         align-items: center;
     }
 
+    .secure-3d {
+        display: inline-block;
+        margin-inline: 10px;
+        width: 50px;
+        height: 50px;
+        object-fit: contain;
+        opacity: 1;
+        visibility: visible;
+        flex-shrink: 0;
+    }
+
     .payment {
         display: flex;
         justify-content: center;
         gap: 16px;
         .card-icon {
             opacity: 0.24;
+        }
+    }
+
+    .socials {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        color: white;
+        padding-bottom: 2rem;
+        font-size: 1.5rem;
+
+        a {
+            opacity: 0.24;
+
+            &:hover {
+                opacity: 1;
+            }
         }
     }
 
@@ -137,5 +166,158 @@
                 margin-bottom: 20px;
             }
         }
+    }
+}
+
+// Moodboard (slate + gold) skin for the real site footer only. Scoped to
+// .site-footer because .footer-container is reused by AboutUs/IconsBlock.
+.footer-container.site-footer {
+    background: var(--mb-bg);
+    border-top: 1px solid var(--mb-border);
+    // Keeps the negative z-index AirlinesLogos strip painting above the
+    // footer background instead of disappearing behind it.
+    position: relative;
+    isolation: isolate;
+    // Bottom padding clears the sticky Call Us pill over the copyright row.
+    padding: 64px 120px 96px;
+
+    > .footer-top {
+        display: grid;
+        grid-template-columns: minmax(0, 5fr) minmax(0, 3fr) minmax(0, 4fr);
+        gap: 48px;
+        margin-bottom: 56px;
+
+        .footer-logo {
+            display: inline-block;
+
+            .footer-logo-svg {
+                width: auto;
+                height: 40px;
+            }
+        }
+
+        .footer-tagline {
+            margin-top: 20px;
+            max-width: 360px;
+            color: var(--mb-text-muted);
+            font: 400 14px/1.7 'Inter', sans-serif;
+        }
+
+        .footer-col-title {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--mb-text-muted);
+            font: 600 12px/1.4 'Inter', sans-serif;
+            margin-bottom: 18px;
+        }
+
+        .footer-col-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            a {
+                width: fit-content;
+                color: var(--mb-text-muted);
+                font: 400 14px/1.5 'Inter', sans-serif;
+                transition: color 0.2s ease-in;
+
+                &:hover {
+                    color: #fff;
+                }
+            }
+        }
+
+        .footer-col--contact .footer-col-links a {
+            color: var(--mb-text);
+            font-weight: 600;
+
+            &:hover {
+                color: var(--mb-gold);
+            }
+        }
+
+        @media screen and (max-width: 1200px) {
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+
+            .footer-brand {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            grid-template-columns: 1fr;
+            gap: 32px;
+            margin-bottom: 40px;
+        }
+    }
+
+    // SEO-only keyword H2s: keep in DOM for crawlers, visually hidden.
+    > .seo-keywords.sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 1px, 1px);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    > .text-info > p {
+        color: var(--mb-text-muted);
+    }
+
+    .payment .card-icon {
+        opacity: 0.9;
+        filter: brightness(1.15);
+    }
+
+    .socials a {
+        opacity: 0.5;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    > .footer-links {
+        border-top: 1px solid var(--mb-border);
+        padding-top: 24px;
+
+        > .rights {
+            > p {
+                color: var(--mb-text-muted);
+            }
+
+            &::after {
+                background: var(--mb-border);
+            }
+        }
+
+        > .rules > a,
+        > .rules > a:link,
+        > .rules > a:visited {
+            color: var(--mb-text-muted);
+            transition: color 0.2s ease-in;
+
+            &:hover {
+                color: var(--mb-gold);
+            }
+        }
+    }
+
+    @media screen and (max-width: 1440px) {
+        padding: 48px 64px 32px;
+    }
+
+    @media screen and (max-width: 1200px) {
+        padding: 48px 24px 60px;
+    }
+
+    @media screen and (max-width: 768px) {
+        padding: 40px 16px 16px;
     }
 }

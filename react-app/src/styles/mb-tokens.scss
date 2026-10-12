@@ -1,0 +1,180 @@
+// Moodboard redesign tokens (slate + gold, "buybusinessclass-new-homepage" mockup).
+// New homepage sections use these vars; scope overrides under .mb-home to avoid
+// leaking into pages that still use the legacy dark theme.
+:root {
+    --mb-bg: #334155; // page background, nav, footer
+    --mb-surface: #1e293b; // cards, panels
+    --mb-deep: #0f172a; // inputs, overlays, dark buttons, hover states
+    --mb-border: #475569;
+    --mb-text: #e2e8f0; // body text on dark
+    --mb-text-muted: #94a3b8; // secondary text on dark
+    --mb-gold: #b4853b;
+    --mb-gold-dark: #8f6a2e;
+    --mb-green: #34d399;
+    --mb-ink: #0f172a; // headings on white sections
+    --mb-ink-muted: #64748b; // secondary text on white sections
+    --mb-radius-card: 24px;
+    --mb-radius-input: 16px;
+}
+
+.main-page.mb-home {
+    background: var(--mb-bg);
+    // Clearance for the sticky Call Us pill at the bottom of the viewport.
+    padding-bottom: 72px;
+}
+
+#root,
+.app {
+    background: var(--mb-bg);
+}
+
+// The whole app now ships the moodboard theme: page frame goes slate too
+// (legacy #111315 set earlier in general.scss loses to this later import).
+html,
+body {
+    background: var(--mb-bg);
+}
+
+// Base skin for every redesigned page: put .mb-page on the page root element.
+// Shared components (BestSelling, ReviewsSection, WorksContainer, OrderFly card
+// via .mb-orderfly-card) detect this scope and render their moodboard variant.
+.mb-page {
+    background: var(--mb-bg);
+    color: var(--mb-text);
+    font-family: 'Inter', sans-serif;
+
+    a {
+        color: inherit;
+    }
+}
+
+// Low-specificity global skins for shared sections no workstream owns.
+// Page-scoped variants (.mb-page.mb-xxx …) are more specific and win.
+.mb-page .contact-container {
+    background: var(--mb-surface);
+    border: 1px solid var(--mb-border);
+    border-radius: var(--mb-radius-card);
+
+    .contactus-label {
+        color: var(--mb-gold);
+    }
+
+    .main-title,
+    .main-title .accent {
+        color: #fff;
+    }
+
+    .subtitle {
+        color: var(--mb-text-muted);
+    }
+
+    input,
+    textarea {
+        background: var(--mb-deep);
+        border-color: var(--mb-border);
+        color: var(--mb-text);
+    }
+
+    .adaptive,
+    .info-block {
+        background: var(--mb-deep);
+        border-color: var(--mb-border);
+    }
+}
+
+.mb-page .about-container {
+    .header,
+    h2,
+    h3 {
+        color: #fff;
+    }
+
+    p {
+        color: var(--mb-text);
+    }
+}
+
+.mb-page .about-text {
+    background: var(--mb-surface);
+    border: 1px solid var(--mb-border);
+    border-radius: var(--mb-radius-card);
+}
+
+// Airline logo strips read too faint on slate (tuned for the old near-black bg).
+.mb-page .logos-container img,
+.mb-home .logos-container img {
+    opacity: 0.55;
+}
+
+.mb-serif {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.mb-eyebrow {
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font: 600 12px/1.4 'Inter', sans-serif;
+    color: var(--mb-gold);
+    margin-bottom: 12px;
+}
+
+.mb-btn-gold {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--mb-gold);
+    color: #fff;
+    border: none;
+    border-radius: 24px;
+    padding: 14px 32px;
+    cursor: pointer;
+    transition: background 0.2s ease-in;
+    font: 600 14px/1.4 'Inter', sans-serif;
+
+    &:hover {
+        background: var(--mb-gold-dark);
+    }
+}
+
+.mb-btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: none;
+    color: #fff;
+    border: 1px solid var(--mb-border);
+    border-radius: 24px;
+    padding: 14px 24px;
+    cursor: pointer;
+    transition: border-color 0.2s ease-in;
+    font: 600 14px/1.4 'Inter', sans-serif;
+
+    &:hover {
+        border-color: var(--mb-text-muted);
+    }
+}
+
+.mb-section {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 64px 32px;
+
+    @media screen and (max-width: 768px) {
+        padding: 40px 16px;
+    }
+}
+
+.mb-section-title {
+    color: #fff;
+    font: 700 36px/1.15 'Inter', sans-serif;
+    margin-bottom: 36px;
+
+    @media screen and (max-width: 768px) {
+        font-size: 28px;
+    }
+}

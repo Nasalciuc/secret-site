@@ -1,0 +1,850 @@
+// Moodboard reskin (slate + gold): blog list, inner blog article, dynamic SEO
+// landing pages and the standalone /reviews page.
+// Everything is scoped under the page root classes added by this workstream
+// (.mb-page.mb-blog-page / .mb-inner-blog-page / .mb-dynamic-page /
+// .mb-reviews-page) so shared components skinned elsewhere (BestSelling,
+// ReviewsSection, WorksContainer via mb-*.scss) are never double-styled and
+// other .mb-page workstreams are not affected.
+
+// Full-bleed white section escaping .margin-container insets (32 / 24 / 8px),
+// same breakout pattern as .mb-works in mb-works-why.scss.
+@mixin mb-bd-white-breakout {
+    width: calc(100% + 64px);
+    margin-left: -32px;
+    background: #fff;
+
+    @media screen and (max-width: 1200px) {
+        width: calc(100% + 48px);
+        margin-left: -24px;
+    }
+
+    @media screen and (max-width: 768px) {
+        width: calc(100% + 16px);
+        margin-left: -8px;
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Shared legacy-button remaps on the four owned pages
+// ---------------------------------------------------------------------------
+.mb-page.mb-blog-page,
+.mb-page.mb-inner-blog-page,
+.mb-page.mb-dynamic-page,
+.mb-page.mb-reviews-page {
+    .orange-filled-button {
+        > button,
+        a {
+            border-radius: var(--mb-radius-input);
+            color: #fff;
+
+            &:hover {
+                background: var(--mb-gold-dark);
+            }
+        }
+    }
+
+    // Legacy near-black #1a1d1f + white glow reads as dirt on slate
+    .black-orange-button {
+        > button,
+        a {
+            background: var(--mb-deep);
+            border: 1px solid var(--mb-border);
+            border-radius: var(--mb-radius-input);
+            box-shadow: none;
+
+            &:hover {
+                background: var(--mb-gold);
+                color: #fff;
+            }
+        }
+    }
+
+    .transparent-button.button-container.button-container {
+        > button,
+        a {
+            border-radius: var(--mb-radius-input);
+
+            &:hover {
+                color: #fff;
+            }
+        }
+    }
+}
+
+// ---------------------------------------------------------------------------
+// ContactSection remap — only on the owned pages that render it
+// ---------------------------------------------------------------------------
+.mb-page.mb-dynamic-page,
+.mb-page.mb-reviews-page {
+    .contact-container {
+        background: var(--mb-surface);
+        border: 1px solid var(--mb-border);
+        border-radius: var(--mb-radius-card);
+
+        > .content {
+            > .contactus-label {
+                color: var(--mb-gold);
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                font: 600 12px/1.4 'Inter', sans-serif;
+            }
+
+            > .title > .main-title {
+                color: #fff;
+                font-family: 'Playfair Display', Georgia, serif;
+                font-weight: 700;
+                line-height: 1.15;
+
+                > .accent {
+                    color: var(--mb-gold);
+                }
+            }
+
+            > .subtitle {
+                color: var(--mb-text-muted);
+            }
+
+            // ContactSection inputs never carry .has-error, but keep the guard
+            // so the shared form-mixin error state can never be outranked.
+            .input-container:not(.has-error) > input,
+            .textarea-container:not(.has-error) > textarea {
+                background: var(--mb-deep);
+                border-color: var(--mb-border);
+                border-radius: var(--mb-radius-input);
+                color: var(--mb-text);
+            }
+
+            .input-container > input::placeholder,
+            .textarea-container > textarea::placeholder {
+                color: var(--mb-text-muted);
+            }
+
+            > .adaptive {
+                background: var(--mb-deep);
+                border-radius: var(--mb-radius-card);
+
+                > .position-relative > div > .instructions {
+                    > .svg {
+                        background: var(--mb-surface);
+                    }
+
+                    > .title {
+                        color: var(--mb-text-muted);
+                    }
+
+                    > .body {
+                        color: var(--mb-text);
+
+                        > .tel {
+                            color: var(--mb-text);
+                        }
+                    }
+                }
+            }
+        }
+
+        .sms-toggle {
+            color: var(--mb-text-muted);
+        }
+
+        .google-map > iframe {
+            border-radius: var(--mb-radius-input);
+        }
+
+        // Legacy drops its own background at ≤768 and zeroes the padding;
+        // the surface card stays here, so give the content breathing room.
+        @media screen and (max-width: 768px) {
+            padding: 32px 12px;
+        }
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Blog list page (/blog)
+// ---------------------------------------------------------------------------
+.mb-page.mb-blog-page {
+    .blog-header {
+        padding: 88px 20px 56px;
+
+        h1 {
+            color: #fff;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 700;
+            line-height: 1.1;
+            font-size: clamp(36px, 4.6vw, 60px);
+            margin-bottom: 20px;
+
+            .accent {
+                color: var(--mb-gold);
+            }
+        }
+
+        .mb-blog-sub {
+            color: var(--mb-text-muted);
+            font: 400 18px/1.5 'Inter', sans-serif;
+            max-width: 520px;
+            margin: 0 auto 56px;
+        }
+
+        .blog-header-cards {
+            max-width: 1264px;
+
+            .blog-header-card {
+                display: flex;
+                flex-direction: column;
+                background: var(--mb-surface);
+                border: 1px solid var(--mb-border);
+                border-radius: var(--mb-radius-card);
+                color: var(--mb-text);
+                transition: all 0.3s;
+
+                &:hover {
+                    transform: translateY(-6px);
+                    background: var(--mb-deep);
+                }
+
+                img {
+                    height: 140px;
+                    border-radius: 12px;
+                }
+
+                h3 {
+                    flex-grow: 1;
+                    color: #fff;
+                    font: 600 14px/1.4 'Inter', sans-serif;
+                    margin-bottom: 16px;
+                    text-align: left;
+                }
+
+                .orange-filled-button {
+                    margin-top: auto;
+                }
+            }
+
+            @media screen and (max-width: 1200px) {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            padding: 56px 16px 40px;
+
+            .blog-header-cards {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+    }
+
+    .blog-cards-content {
+        max-width: 1264px;
+        padding: 24px 32px 96px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        margin-bottom: 0;
+
+        .blog-card {
+            flex-direction: column;
+            gap: 0;
+            background: var(--mb-surface);
+            border: 1px solid var(--mb-border);
+            border-radius: var(--mb-radius-card);
+            color: var(--mb-text);
+            transition: all 0.3s;
+
+            &:hover {
+                transform: translateY(-6px);
+                background: var(--mb-deep);
+            }
+
+            img {
+                width: 100%;
+                height: 208px;
+            }
+
+            .blog-card-content {
+                flex-grow: 1;
+                padding: 24px;
+
+                h3 {
+                    color: #fff;
+                    font: 600 20px/1.3 'Inter', sans-serif;
+                }
+
+                p {
+                    color: var(--mb-text-muted);
+                    font: 400 14px/1.6 'Inter', sans-serif;
+                }
+            }
+        }
+
+        @media screen and (max-width: 1024px) {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        @media screen and (max-width: 700px) {
+            grid-template-columns: minmax(0, 1fr);
+            padding: 8px 16px 64px;
+        }
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Inner blog article (/blog/:id) — white reading section, ink typography
+// ---------------------------------------------------------------------------
+.mb-page.mb-inner-blog-page {
+    .inner-blog-header {
+        padding: 72px 20px 40px;
+
+        img {
+            border-radius: var(--mb-radius-card);
+            max-height: 440px;
+            object-fit: cover;
+        }
+
+        h1 {
+            color: #fff;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 700;
+            line-height: 1.15;
+            font-size: clamp(32px, 3.8vw, 52px);
+            max-width: 920px;
+            margin: 0 auto;
+        }
+
+        @media screen and (max-width: 768px) {
+            padding: 40px 16px 24px;
+        }
+    }
+
+    .cards-container {
+        @include mb-bd-white-breakout;
+
+        border-radius: 0;
+        padding: 96px 32px;
+        margin-top: 48px;
+        margin-right: 0;
+        margin-bottom: 0;
+
+        // ~760px measure for long-form reading
+        .blog-block {
+            width: 100%;
+            max-width: 760px;
+            margin: 0 auto 28px;
+
+            .header,
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                color: var(--mb-ink);
+                font-family: 'Playfair Display', Georgia, serif;
+                font-weight: 700;
+                line-height: 1.25;
+            }
+
+            // Each EditorJS block is its own .blog-block, so headings only
+            // need extra space above; the block margin handles the rest.
+            h1 {
+                font-size: 34px;
+                margin-top: 24px;
+            }
+
+            h2 {
+                font-size: 30px;
+                margin-top: 24px;
+            }
+
+            h3,
+            h4,
+            h5,
+            h6 {
+                font-size: 24px;
+                margin-top: 16px;
+            }
+
+            p {
+                color: #334155;
+                font: 400 17px/1.75 'Inter', sans-serif;
+            }
+
+            a {
+                color: var(--mb-gold);
+                font-weight: 600;
+
+                &:hover {
+                    color: var(--mb-gold-dark);
+                }
+            }
+
+            b,
+            strong {
+                color: var(--mb-ink);
+            }
+
+            img {
+                border-radius: var(--mb-radius-input);
+            }
+
+            ul {
+                color: #334155;
+                font: 400 17px/1.75 'Inter', sans-serif;
+
+                li {
+                    margin-bottom: 8px;
+
+                    &::marker {
+                        color: var(--mb-gold);
+                    }
+                }
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            padding: 56px 16px;
+            margin-top: 32px;
+        }
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Dynamic SEO landing pages (dynamicPages.json)
+// ---------------------------------------------------------------------------
+.mb-page.mb-dynamic-page {
+    .content.main-page-header {
+        border-radius: var(--mb-radius-card);
+
+        > .video-wrapper {
+            background: var(--mb-deep);
+            border-radius: var(--mb-radius-card);
+
+            // Legacy ≤768 top fade (#111315) is replaced by the full overlay below
+            &::before {
+                content: none;
+            }
+
+            // Slate overlay above the video (same gradient as the homepage hero);
+            // HeaderContainer here is shared markup, so the overlay is a pseudo.
+            &::after {
+                content: '';
+                position: absolute;
+                inset: 0;
+                height: 100%;
+                z-index: 2;
+                background: linear-gradient(rgba(15, 23, 42, 0.72), rgba(15, 23, 42, 0.58));
+            }
+        }
+
+        > .blocks {
+            > .first-block {
+                // Legacy switches .blocks to display:block ≤1200, losing the
+                // flex gap — this margin keeps the title clear of the widget.
+                margin-bottom: 24px;
+
+                > p {
+                    display: block;
+                    color: #fff;
+                    font-family: 'Playfair Display', Georgia, serif;
+                    font-weight: 700;
+                    line-height: 1.1;
+                    font-size: clamp(34px, 3.6vw, 56px);
+                    text-align: center;
+                    max-width: 960px;
+                    margin: 0 auto;
+                }
+            }
+
+            > .second-block {
+                border-radius: var(--mb-radius-card);
+            }
+        }
+    }
+
+    // Quote widget card shell (SecondBlock / .flight-card-header — this page
+    // does not use OrderFly, so the .mb-orderfly-card skin does not apply).
+    .second-block.flight-card-header {
+        background: var(--mb-surface);
+        border: 1px solid var(--mb-border);
+        border-radius: var(--mb-radius-card);
+        padding: 32px;
+
+        @media screen and (max-width: 768px) {
+            padding: 20px 16px;
+        }
+
+        > .content {
+            > .d-flex {
+                .v-select {
+                    background: var(--mb-deep);
+                    border-color: var(--mb-border);
+                    border-radius: var(--mb-radius-input);
+
+                    > ul {
+                        background: var(--mb-deep);
+                        border-color: var(--mb-border);
+
+                        > li {
+                            color: var(--mb-text-muted);
+
+                            &:hover {
+                                color: var(--mb-text);
+                                background: var(--mb-surface);
+                            }
+                        }
+                    }
+                }
+
+                > .adaptive-select-options-buttons {
+                    background: var(--mb-deep);
+                    border-color: var(--mb-border);
+                    border-radius: var(--mb-radius-input);
+                }
+            }
+
+            > .search-flight {
+                background: var(--mb-deep);
+                border-radius: var(--mb-radius-input);
+
+                // Legacy border declaration carries !important — mirror it,
+                // guarding the error reds exactly like mb-hero.scss does.
+                &:not(.has-error) {
+                    border-color: var(--mb-border) !important;
+                }
+
+                &.first-active:not(.has-error),
+                &.second-active:not(.has-error) {
+                    background: var(--mb-deep);
+                    border-color: var(--mb-gold) !important;
+                }
+
+                .vs__search {
+                    color: var(--mb-text);
+                }
+
+                .vs__actions > .vs__spinner {
+                    border-color: var(--mb-border);
+                    border-top-color: var(--mb-gold);
+                }
+
+                > button.reverse {
+                    border-color: var(--mb-border);
+                }
+            }
+
+            > .calendar-buttons {
+                background: var(--mb-deep);
+                border-radius: var(--mb-radius-input);
+
+                &:not(.has-error) {
+                    border-color: var(--mb-border);
+                }
+
+                &.active:not(.has-error) {
+                    background: var(--mb-deep);
+                    border-color: var(--mb-gold);
+                }
+
+                &.round-trip::before {
+                    background: var(--mb-border);
+                }
+
+                > button:not(.has-error) {
+                    color: var(--mb-text);
+                }
+            }
+        }
+
+        .choose-cabin-type,
+        .choose-ammount-travelers {
+            background: var(--mb-deep);
+            border-color: var(--mb-border);
+
+            label {
+                color: var(--mb-text-muted);
+            }
+        }
+
+        .choose-cabin-type .cabin-buttons {
+            border-color: var(--mb-surface);
+
+            > button {
+                color: var(--mb-text-muted);
+
+                &.active {
+                    color: var(--mb-gold);
+                    background: var(--mb-surface);
+                }
+            }
+        }
+
+        .choose-ammount-travelers > .travelers-buttons {
+            > .adults {
+                color: var(--mb-text);
+            }
+
+            > .right-block {
+                > button {
+                    background: var(--mb-surface);
+
+                    &.minus {
+                        color: var(--mb-text-muted);
+                    }
+                }
+
+                > .ammount {
+                    color: var(--mb-text);
+                }
+            }
+        }
+
+        .input-container:not(.has-error) > input {
+            background: var(--mb-deep);
+            border-color: var(--mb-border);
+            border-radius: var(--mb-radius-input);
+            color: var(--mb-text);
+        }
+
+        .input-container > input::placeholder {
+            color: var(--mb-text-muted);
+        }
+
+        .select-options-adaptive {
+            background: var(--mb-deep);
+            border-color: var(--mb-border);
+            border-radius: var(--mb-radius-input);
+
+            > .form {
+                background: var(--mb-deep);
+                border-color: var(--mb-border);
+
+                > .choose-cabin-type,
+                > .choose-ammount-travelers {
+                    background: none;
+                }
+            }
+        }
+
+        // Legacy iti rules carry !important — mirror them, re-asserting the
+        // gold focus ring and leaving the .has-error red untouched.
+        .iti-group .iti__tel-input {
+            background: var(--mb-deep) !important;
+            border-radius: var(--mb-radius-input) !important;
+        }
+
+        .iti-group:not(.has-error) .iti__tel-input {
+            border-color: var(--mb-border) !important;
+
+            &:focus {
+                border-color: var(--mb-gold) !important;
+            }
+        }
+
+        .sms-toggle {
+            color: var(--mb-text-muted);
+        }
+    }
+
+    // About body — white reading section
+    .flight-description {
+        @include mb-bd-white-breakout;
+
+        padding: 96px 32px;
+        margin-bottom: 64px;
+
+        > .title {
+            margin-bottom: 24px;
+
+            > .main-title {
+                color: var(--mb-ink);
+                font-family: 'Playfair Display', Georgia, serif;
+                font-weight: 700;
+                line-height: 1.15;
+            }
+        }
+
+        > .content {
+            margin: 0 auto;
+            max-width: 900px;
+            color: #334155;
+            font-size: 16px;
+            line-height: 1.75;
+        }
+
+        @media screen and (max-width: 1440px) {
+            // The legacy block-title mixin forces 32px !important here
+            > .title > .main-title {
+                font-size: 34px !important;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            padding: 56px 16px;
+            margin-bottom: 40px;
+
+            > .title > .main-title {
+                font-size: 26px !important;
+            }
+        }
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Reviews page (/reviews)
+// ---------------------------------------------------------------------------
+.mb-page.mb-reviews-page {
+    .content.reviews-header-container {
+        background: var(--mb-surface);
+        border-radius: var(--mb-radius-card);
+        min-height: unset;
+
+        > .reviews-header-content {
+            position: static;
+            top: auto;
+            left: auto;
+            transform: none;
+            width: 100%;
+            min-height: unset;
+            padding: 88px 32px 72px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .reviews-tittle {
+            width: 100%;
+
+            > .title {
+                margin-bottom: 24px;
+
+                > .main-title {
+                    color: #fff;
+                    font-family: 'Playfair Display', Georgia, serif;
+                    font-weight: 700;
+                    line-height: 1.15;
+                    font-size: clamp(34px, 3.4vw, 52px);
+
+                    > .accent {
+                        color: var(--mb-gold);
+                    }
+                }
+            }
+
+            > .subtitle-block {
+                margin-bottom: 40px;
+            }
+
+            @media screen and (max-width: 1440px) {
+                // The legacy block-title mixin forces 32px !important here
+                > .title .main-title {
+                    font-size: 40px !important;
+                }
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            > .reviews-header-content {
+                width: 100%;
+                margin: 0;
+                padding: 56px 16px 48px;
+
+                > .reviews-tittle > .title {
+                    margin-bottom: 16px;
+
+                    .main-title {
+                        font-size: 28px !important;
+                    }
+                }
+            }
+        }
+    }
+
+    // Review cards — white section with the homepage mb-reviews card look
+    .reviews-cards-container {
+        @include mb-bd-white-breakout;
+
+        padding: 96px 32px;
+        margin-bottom: 0;
+        background-image: none;
+
+        > .reviews-content {
+            max-width: 1264px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+
+            > .review-card-container {
+                margin: 0;
+            }
+        }
+
+        > .button-container {
+            display: block;
+            margin-top: 48px;
+        }
+
+        @media screen and (max-width: 1024px) {
+            > .reviews-content {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media screen and (max-width: 700px) {
+            padding: 56px 16px;
+
+            > .reviews-content {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+    }
+
+    .review-card-container {
+        background: #f8fafc;
+        border: 1px solid #f1f5f9;
+        border-radius: var(--mb-radius-card);
+        padding: 32px;
+        width: 100%;
+        color: var(--mb-ink);
+
+        > .review-card-header {
+            > .avatar {
+                color: #fff;
+            }
+
+            > .info-container {
+                margin-left: 12px;
+
+                > p {
+                    color: var(--mb-ink);
+                }
+
+                > .stars {
+                    gap: 2px;
+
+                    .star-container svg {
+                        width: 18px;
+                        height: 18px;
+                        color: var(--mb-gold);
+                    }
+                }
+            }
+        }
+
+        > .review-card-body {
+            > .topic {
+                color: var(--mb-ink);
+                font-size: 15px;
+            }
+
+            > .comment {
+                color: #334155;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            padding: 24px;
+        }
+    }
+}

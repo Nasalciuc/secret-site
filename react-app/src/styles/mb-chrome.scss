@@ -1,0 +1,543 @@
+// Moodboard global chrome + overlays (slate + gold).
+// Everything here portals or position-fixes OUTSIDE page roots (document.body /
+// App shell), so it is skinned GLOBALLY rather than under .mb-page: burger menu,
+// coupon / call-us / disclaimer popups, status toast, quote loader, sticky
+// contact button, the mobile quote dialog, and the portaled calendar popups.
+// Visual re-skin only — positioning / display mechanics (.vs-open, popper
+// transforms, fixed insets) stay in mixins.scss / legacy files untouched.
+// Imported last from general.scss, so equal-specificity rules here win;
+// !important appears only where the legacy rule already carries it.
+
+// ---------------------------------------------------------------------------
+// Burger menu (full-screen mobile nav) — slate panel matching the new header
+// ---------------------------------------------------------------------------
+.burgher-menu {
+    background: var(--mb-bg);
+
+    > .burgher-header {
+        border-bottom: 1px solid var(--mb-border);
+
+        > button svg path {
+            fill: var(--mb-text-muted);
+        }
+    }
+
+    > .content {
+        > .links > a {
+            background: var(--mb-surface);
+            border: 1px solid var(--mb-border);
+            border-radius: var(--mb-radius-input);
+            color: var(--mb-text);
+
+            // The legacy 4px gold strip under every link fights the new card
+            // treatment — the gold accent moves to the 24/7 eyebrow + tel pill
+            &::after {
+                content: none;
+            }
+
+            &.router-link-exact-active {
+                color: #fff;
+            }
+        }
+
+        > .footer {
+            > p {
+                color: var(--mb-gold);
+                letter-spacing: 2px;
+            }
+
+            > .tel {
+                background: var(--mb-gold);
+                color: #fff;
+                font-size: 14px;
+                transition: background 0.2s ease-in;
+
+                &:hover {
+                    background: var(--mb-gold-dark);
+                }
+            }
+        }
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Coupon popup (.modal-overlay / .modal-content) — slate card, gold CTA.
+// Lead / intl-tel-input logic untouched; classes and structure identical.
+// ---------------------------------------------------------------------------
+.modal-overlay.coupon-modal-overlay,
+.coupon-modal-overlay {
+    background: rgba(15, 23, 42, 0.82);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 10050;
+
+    .modal-content {
+        background: var(--mb-surface);
+        border: 1px solid var(--mb-border);
+        border-radius: var(--mb-radius-card);
+    }
+
+    .close-button {
+        color: var(--mb-text);
+        background: rgba(15, 23, 42, 0.55);
+        border-radius: 50%;
+    }
+
+    .modal-image {
+        img {
+            border-radius: var(--mb-radius-card) 0 0 var(--mb-radius-card);
+
+            @media screen and (max-width: 768px) {
+                border-radius: var(--mb-radius-card) var(--mb-radius-card) 0 0;
+            }
+        }
+
+        .image-overlay {
+            padding: 36px 28px 32px 36px;
+            background: linear-gradient(transparent, rgba(15, 23, 42, 0.85));
+
+            .badge {
+                background: var(--mb-gold);
+                color: #fff;
+                border-radius: 999px;
+            }
+
+            .image-title {
+                font-family: 'Playfair Display', Georgia, serif;
+            }
+
+            .image-subtitle {
+                color: rgba(255, 255, 255, 0.85);
+            }
+        }
+    }
+
+    .modal-form {
+        h2 {
+            color: #fff;
+            font-family: 'Playfair Display', Georgia, serif;
+        }
+
+        .lead {
+            color: var(--mb-text-muted);
+        }
+
+        .promo-card {
+            background: var(--mb-deep);
+            border: 1px dashed var(--mb-border);
+            border-radius: var(--mb-radius-input);
+
+            .promo-card-label {
+                color: var(--mb-text-muted);
+            }
+
+            .promo-card-row {
+                align-items: center;
+                gap: 12px;
+
+                .copy-btn {
+                    flex-shrink: 0;
+                    border-color: var(--mb-gold);
+                    border-radius: 999px;
+                    min-height: 32px;
+                    padding: 6px 14px;
+
+                    &:hover {
+                        background: var(--mb-gold);
+                        color: #fff;
+                    }
+                }
+            }
+        }
+
+        .form-group {
+            input {
+                background: var(--mb-deep);
+                border-color: var(--mb-border);
+                border-radius: var(--mb-radius-input);
+                color: var(--mb-text);
+
+                &::placeholder {
+                    color: var(--mb-text-muted);
+                }
+
+                &:focus {
+                    border-color: var(--mb-gold);
+                }
+            }
+
+            // Re-assert the legacy error state these overrides would outrank
+            &.has-error input {
+                border-color: #ff6a55;
+            }
+        }
+
+        .terms {
+            color: var(--mb-text-muted);
+            margin: 8px 0 22px;
+
+            input[type='checkbox'] {
+                border-color: var(--mb-border);
+                background: var(--mb-deep);
+
+                &:checked {
+                    background: var(--mb-gold);
+                    border-color: var(--mb-gold);
+
+                    &::after {
+                        border-color: #fff;
+                    }
+                }
+            }
+
+            a {
+                color: var(--mb-gold);
+            }
+        }
+
+        .submit-button {
+            // Dark ink on gold — readable Claim CTA (white-on-gold was muddy).
+            background: var(--mb-gold);
+            color: var(--mb-ink);
+            border-radius: var(--mb-radius-input);
+            box-shadow: 0 8px 24px rgba(180, 133, 59, 0.28);
+            font-weight: 700;
+
+            &:not(:disabled):hover {
+                background: var(--mb-gold-dark);
+                color: #fff;
+                box-shadow: 0 12px 28px rgba(180, 133, 59, 0.3);
+            }
+
+            // Gold-but-waiting — not slate/blue-grey (reads as broken).
+            &:disabled {
+                background: var(--mb-gold);
+                color: var(--mb-ink);
+                opacity: 0.45;
+                box-shadow: none;
+            }
+        }
+    }
+
+    // Prefer growing the modal over an awkward internal scrollbar when content fits.
+    .modal-content {
+        max-height: min(92vh, 820px);
+        overflow-x: hidden;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: var(--mb-border) transparent;
+
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: var(--mb-border);
+            border-radius: 999px;
+        }
+    }
+
+    .modal-form {
+        padding: 28px 28px 24px;
+    }
+
+    .modal-image {
+        min-height: 0;
+    }
+
+    // intl-tel-input inside the coupon card — legacy iti-dark.scss carries
+    // !important on every declaration, so these must too
+    .iti-group .iti__tel-input {
+        background: var(--mb-deep) !important;
+        border-color: var(--mb-border) !important;
+        border-radius: var(--mb-radius-input) !important;
+        color: var(--mb-text) !important;
+    }
+
+    .iti-group .iti__tel-input::placeholder {
+        color: var(--mb-text-muted) !important;
+    }
+
+    .iti-group .iti__tel-input:focus {
+        border-color: var(--mb-gold) !important;
+    }
+
+    .iti-group.has-error .iti__tel-input {
+        border-color: #ff6a55 !important;
+    }
+
+    .iti-group .iti__selected-dial-code {
+        color: var(--mb-text) !important;
+    }
+
+    .iti__country-list,
+    .iti__dropdown-content {
+        background: var(--mb-deep) !important;
+        background-color: var(--mb-deep) !important;
+        border-color: var(--mb-border) !important;
+        border-radius: var(--mb-radius-input) !important;
+    }
+
+    .iti__search-input-wrapper {
+        background: var(--mb-deep) !important;
+    }
+
+    .iti__search-input,
+    input.iti__search-input {
+        background: var(--mb-deep) !important;
+        border-color: var(--mb-border) !important;
+        -webkit-box-shadow: 0 0 0 1000px var(--mb-deep) inset !important;
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Call-us popup — slate card, gold pill
+// ---------------------------------------------------------------------------
+.call-us-modal-overlay {
+    background: rgba(15, 23, 42, 0.7);
+}
+
+.call-us-modal-content {
+    background: var(--mb-surface);
+    border: 1px solid var(--mb-border);
+    border-radius: var(--mb-radius-card);
+    padding: 32px;
+}
+
+.call-us-modal-header {
+    color: #fff;
+}
+
+.call-us-button {
+    background-color: var(--mb-gold);
+    color: #fff;
+    border-radius: 999px;
+    transition: background 0.2s ease-in;
+
+    &:hover {
+        background-color: var(--mb-gold-dark);
+    }
+}
+
+.call-us-close-button {
+    color: var(--mb-text-muted);
+}
+
+// ---------------------------------------------------------------------------
+// Disclaimer popup — legacy overlay background carries !important
+// ---------------------------------------------------------------------------
+.disclaimer-modal-overlay {
+    background-color: rgba(15, 23, 42, 0.65) !important;
+}
+
+.disclaimer-modal-content {
+    background-color: var(--mb-surface);
+    border: 1px solid var(--mb-border);
+    border-radius: var(--mb-radius-card);
+}
+
+.disclaimer-modal-title {
+    font-family: 'Playfair Display', Georgia, serif;
+}
+
+.disclaimer-modal-body {
+    color: var(--mb-text);
+}
+
+.disclaimer-modal-close {
+    border-radius: 999px;
+
+    &:hover {
+        background-color: var(--mb-gold-dark);
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Status toast (.modal-status) — surface card; error body keeps red.
+// z-index raised above the coupon overlay (10050) so validation toasts
+// triggered from inside popups are not dimmed behind them.
+// ---------------------------------------------------------------------------
+.modal-status {
+    z-index: 10100;
+    background: var(--mb-surface);
+    border: 1px solid var(--mb-border);
+    border-radius: var(--mb-radius-input);
+    padding: 12px;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.45);
+
+    > .d-flex .info {
+        .title {
+            color: #fff;
+        }
+
+        .body {
+            color: var(--mb-text-muted);
+        }
+    }
+
+    &.variant-error > .d-flex .info .body {
+        color: #ff6a55;
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Quote loader (full-screen search overlay) — deep slate, gold accents
+// (the plane + progress gradient in the inline SVG are already gold)
+// ---------------------------------------------------------------------------
+.loader-quote {
+    background: var(--mb-deep);
+
+    > .content {
+        > .globe {
+            background: radial-gradient(43.41% 41.52% at 52.72% 44.98%, #64748b 0%, #334155 100%);
+
+            > .percent {
+                color: var(--mb-text-muted);
+            }
+        }
+
+        > .from,
+        > .to {
+            color: var(--mb-surface);
+        }
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Sticky "Call Us" button — slate pill with gold ring (glow already gold)
+// ---------------------------------------------------------------------------
+.btn-container {
+    background-color: var(--mb-surface);
+    border: 1px solid var(--mb-gold);
+    border-radius: 999px;
+    z-index: 40;
+
+    a {
+        color: #fff;
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+    }
+}
+
+// Keep WhatsApp clear of the Search Flight CTA + mobile Call Us pill.
+@media screen and (max-width: 767px) {
+    #wa-btn {
+        right: 16px !important;
+        bottom: 160px !important;
+        width: 48px !important;
+        height: 48px !important;
+        z-index: 45 !important;
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Mobile quote dialog (DialogForm) — slate panel; the OrderFly inside is
+// re-skinned by mb-hero.scss via the .mb-page + .mb-orderfly-card wrapper
+// ---------------------------------------------------------------------------
+.dialog-overlay {
+    background: rgba(15, 23, 42, 0.6);
+}
+
+.dialog-content {
+    background-color: var(--mb-bg);
+
+    > .close svg {
+        fill: var(--mb-text);
+    }
+
+    .form-header {
+        color: #fff;
+    }
+
+    .call-block {
+        a {
+            background-color: var(--mb-deep);
+            border: 1px solid var(--mb-border);
+            border-radius: var(--mb-radius-input);
+            color: var(--mb-gold);
+            box-shadow: none;
+        }
+    }
+
+    .call-block__head {
+        color: var(--mb-text);
+    }
+
+    .separator {
+        color: var(--mb-text-muted);
+
+        &::before,
+        &::after {
+            background-color: var(--mb-border);
+        }
+    }
+
+    > .mb-orderfly-card {
+        background: var(--mb-surface);
+        border: 1px solid var(--mb-border);
+        border-radius: var(--mb-radius-card);
+        padding: 24px 16px;
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Portaled calendar popups (.calendar / .single-calendar → document.body).
+// Colors / borders / radii only — the @include calendar positioning mechanics
+// (.vs-open, z-index 1100, popper transforms) live in mixins.scss untouched.
+// ---------------------------------------------------------------------------
+.calendar,
+.single-calendar {
+    > div {
+        background: var(--mb-surface);
+        border: 1px solid var(--mb-border);
+        border-radius: var(--mb-radius-input);
+        box-shadow: 0 24px 48px rgba(15, 23, 42, 0.45);
+    }
+
+    .rdp-root {
+        --rdp-accent-color: var(--mb-gold);
+        --rdp-accent-background-color: rgba(180, 133, 59, 0.25);
+        --rdp-range_middle-background-color: rgba(180, 133, 59, 0.15);
+        color: var(--mb-text);
+    }
+
+    .rdp-month_caption,
+    .rdp-weekday,
+    .rdp-day_button {
+        color: var(--mb-text);
+    }
+
+    .rdp-weekday {
+        color: var(--mb-text-muted);
+    }
+
+    .rdp-day_button:hover {
+        background: var(--mb-deep);
+    }
+
+    .rdp-selected .rdp-day_button,
+    .rdp-range_start .rdp-day_button,
+    .rdp-range_end .rdp-day_button {
+        background: var(--mb-gold);
+        color: #fff;
+    }
+
+    .rdp-button_previous,
+    .rdp-button_next {
+        border-radius: 50%;
+        background: var(--mb-deep);
+        color: var(--mb-text);
+    }
+}
+
+// --- Floating-chrome yield rule ---------------------------------------------
+// When any full-screen overlay is up (chat dialog or coupon modal), the
+// floating buttons (WhatsApp FAB, sticky Call Us pill, chat trigger circle)
+// disappear entirely instead of peeking half-covered from under panel
+// corners (mixed layers read as broken, not as depth).
+body:has(.dialog-overlay) #wa-btn,
+body:has(.dialog-overlay) .btn-container,
+body:has(.coupon-modal-overlay) #wa-btn,
+body:has(.coupon-modal-overlay) .btn-container {
+    visibility: hidden;
+}

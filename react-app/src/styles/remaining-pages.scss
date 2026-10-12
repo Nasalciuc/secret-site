@@ -28,10 +28,6 @@
             padding: 24px !important;
             border-radius: 16px;
             background: #1a1d1f;
-
-            > .second-block {
-                padding: 0;
-            }
         }
 
         > .first-block-best-deals > .v-select {
@@ -149,7 +145,6 @@
             > span {
                 color: #fff;
                 font-family: 'SSP-bold', sans-serif;
-                text-transform: capitalize;
             }
         }
 
@@ -318,19 +313,26 @@
     .airline-details {
         display: flex;
         justify-content: flex-end;
-        width: 50%;
+        max-width: 800px;
+        width: auto;
+        padding: 0;
+        border-radius: 0;
+        background: transparent;
+        color: #001b47;
     }
 
     .second-block {
         width: 35%;
         height: 30%;
+        border-radius: 16px;
     }
 
     .promo-container {
         max-width: 800px;
         padding: 62px;
-        border-radius: 12px;
+        border-radius: 16px;
         background-color: #f9f6f3;
+        color: #001b47;
         font-family: 'Inter', sans-serif;
     }
 
@@ -434,74 +436,3 @@
     }
 }
 
-.seasonal-sale-page {
-    .regions-friday {
-        padding-top: 7%;
-        margin-right: 0 !important;
-        margin-left: 0 !important;
-    }
-
-    .container-friday {
-        display: flex;
-        flex-direction: row;
-        min-height: 100vh;
-        padding-top: 5%;
-    }
-
-    .left-image-friday,
-    .right-component {
-        flex: 1;
-    }
-
-    .left-image-friday img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .right-component {
-        padding: 20px;
-    }
-
-    .review-friday {
-        margin-top: -10%;
-    }
-
-    &--xmas {
-        .right-component {
-            max-width: 35%;
-            margin-top: 7%;
-            padding: 0;
-        }
-
-        .review-friday {
-            margin-top: -2%;
-        }
-    }
-
-    @media (max-width: 768px) {
-        .container-friday {
-            flex-direction: column;
-            height: auto;
-            padding-top: 5%;
-        }
-
-        .left-image-friday {
-            height: 50vh;
-            margin-left: 5%;
-        }
-
-        .right-component {
-            padding: 10px;
-        }
-
-        &--xmas .right-component {
-            max-width: 100%;
-            padding: 10px;
-        }
-
-        .review-friday {
-            padding-top: 30%;
-        }
-    }
-}

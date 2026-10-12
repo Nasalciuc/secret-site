@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
+import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
 import intlTelInput from 'intl-tel-input/intlTelInputWithUtils'
 import 'intl-tel-input/styles'
 import { useAppStore } from '@/store/useAppStore'
 import { sendCouponLead } from '@/services/api'
+import couponHeroImg from '@/assets/images/static/about-image.webp'
 
 export default function CouponForm({ autoOpen = false }) {
     const { setModal } = useAppStore()
@@ -20,11 +22,37 @@ export default function CouponForm({ autoOpen = false }) {
     const phoneRef = useRef(null)
     const itiRef = useRef(null)
 
+    // Opens immediately when mounted with auto-open. App.jsx decides when to
+    // mount it (24h frequency cap plus intent trigger): do not add a delay here.
     useEffect(() => {
-        if (!autoOpen) return undefined
-        const timer = setTimeout(() => setShowModal(true), 5000)
-        return () => clearTimeout(timer)
+        if (autoOpen) setShowModal(true)
     }, [autoOpen])
+
+    // Lock page scroll / hide chrome that can paint above the dimmer.
+    useEffect(() => {
+        if (!showModal) return undefined
+
+        const html = document.documentElement
+        const body = document.body
+        const prevHtmlOverflow = html.style.overflow
+        const prevBodyOverflow = body.style.overflow
+        const prevBodyPaddingRight = body.style.paddingRight
+        const scrollbarGap = window.innerWidth - html.clientWidth
+
+        html.style.overflow = 'hidden'
+        body.style.overflow = 'hidden'
+        if (scrollbarGap > 0) {
+            body.style.paddingRight = `${scrollbarGap}px`
+        }
+        body.classList.add('coupon-modal-open')
+
+        return () => {
+            html.style.overflow = prevHtmlOverflow
+            body.style.overflow = prevBodyOverflow
+            body.style.paddingRight = prevBodyPaddingRight
+            body.classList.remove('coupon-modal-open')
+        }
+    }, [showModal])
 
     useEffect(() => {
         if (!showModal) {
@@ -42,6 +70,7 @@ export default function CouponForm({ autoOpen = false }) {
             if (!phoneRef.current || itiRef.current) return
             inputEl = phoneRef.current
 
+            // Match Vue: utils bundled so isValidNumber works immediately.
             itiRef.current = intlTelInput(inputEl, {
                 initialCountry: 'us',
                 countryOrder: ['us', 'gb', 'ca', 'au'],
@@ -176,8 +205,8 @@ export default function CouponForm({ autoOpen = false }) {
 
     if (!showModal) return null
 
-    return (
-        <div className="modal-overlay" onClick={closeModal}>
+    return createPortal(
+        <div className="modal-overlay coupon-modal-overlay" onClick={closeModal}>
             <div
                 className="modal-content"
                 role="dialog"
@@ -194,7 +223,7 @@ export default function CouponForm({ autoOpen = false }) {
                 <div className="modal-columns">
                     <div className="modal-image">
                         <img
-                            src="https://i.imgur.com/VcWTka1.jpeg"
+                            src={couponHeroImg}
                             alt="Business Class Discount"
                             loading="lazy"
                             decoding="async"
@@ -285,6 +314,7 @@ export default function CouponForm({ autoOpen = false }) {
                     </div>
                 </div>
             </div>
-        </div>
+        </div>,
+        document.body,
     )
 }

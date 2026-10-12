@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import SecondBlock from '@/components/HeaderForm/FlightCard/SecondBlock'
-import mobilePoster from '@/assets/video/background-mobile-poster.jpg'
-import desktopPoster from '@/assets/video/background-desktop-poster.jpg'
+const mobilePoster = '/hero-poster-mobile.jpg'
+const desktopPoster = '/hero-poster-desktop.jpg'
 import mobileVideo from '@/assets/video/background-mobile.mp4'
 import desktopVideo from '@/assets/video/background-desktop.mp4'
 
@@ -39,7 +39,7 @@ export default function HeaderContainer({ title = 'Business Class Flight Deals' 
                 <video loop muted playsInline autoPlay preload="metadata" poster={videoPoster} ref={videoRef} />
             </div>
             <div className="blocks">
-                <div className="first-block xyz-in">
+                <div className="first-block xyz-in" xyz="fade left-50% duration-15 delay-5">
                     <p>{title}</p>
                 </div>
                 <div className="second-block">

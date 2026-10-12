@@ -2,6 +2,8 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useBlogStore } from '@/store/useBlogStore'
 import AirlinesLogos from '@/components/Footer/AirlinesLogos'
+import BlackWithOrangeTextButton from '@/components/common/Buttons/BlackWithOrangeTextButton'
+import OrangeFilledButton from '@/components/common/Buttons/OrangeFilledButton'
 
 const BACK = import.meta.env.VITE_BACK || ''
 
@@ -19,16 +21,21 @@ export default function BlogPage() {
     }, [blogsIsLoaded, getBlogs])
 
     return (
-        <>
+        <div className="mb-page mb-blog-page">
             <div className="header-content">
                 <div className="blog-header">
-                    <h1>Business Class Travel Blog</h1>
+                    <span className="mb-eyebrow">Travel journal</span>
+                    <h1 className="mb-serif">
+                        Business Class <span className="accent">Travel Blog</span>
+                    </h1>
+                    <p className="mb-blog-sub">Guides, tips and inspiration for flying business class for less.</p>
                     <div className="blog-header-cards">
                         {(blogs || []).slice(0, 5).map((blog) => (
-                            <Link key={blog.id} to={`/blog/${blog.id}`} className="blog-header-card">
+                            <div key={blog.id} className="blog-header-card">
                                 <img src={storageUrl(blog.image)} alt={blog.name} loading="lazy" decoding="async" />
                                 <h3>{blog.name}</h3>
-                            </Link>
+                                <OrangeFilledButton buttonText="Read more" link={`/blog/${blog.id}`} />
+                            </div>
                         ))}
                     </div>
                 </div>
@@ -36,15 +43,18 @@ export default function BlogPage() {
             <AirlinesLogos />
             <div className="blog-cards-content">
                 {(blogs || []).map((blog) => (
-                    <Link key={blog.id} to={`/blog/${blog.id}`} className="blog-card">
-                        <img src={storageUrl(blog.image)} alt={blog.name} loading="lazy" decoding="async" />
+                    <div key={blog.id} className="blog-card">
+                        <Link to={`/blog/${blog.id}`} aria-label={`Open ${blog.name}`}>
+                            <img src={storageUrl(blog.image)} alt={blog.name} loading="lazy" decoding="async" />
+                        </Link>
                         <div className="blog-card-content">
                             <h3>{blog.name}</h3>
                             <p>{blog.description}</p>
+                            <BlackWithOrangeTextButton buttonText="Read More" link={`/blog/${blog.id}`} />
                         </div>
-                    </Link>
+                    </div>
                 ))}
             </div>
-        </>
+        </div>
     )
 }

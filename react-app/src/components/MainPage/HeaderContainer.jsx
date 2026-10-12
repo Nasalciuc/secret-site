@@ -1,14 +1,22 @@
 import { useEffect, useRef, useState } from 'react'
 import OrderFly from './OrderFly'
+import { useReviewsStore } from '@/store/useReviewsStore'
 
-import mobilePoster from '@/assets/video/background-mobile-poster.jpg'
-import desktopPoster from '@/assets/video/background-desktop-poster.jpg'
+const mobilePoster = '/hero-poster-mobile.jpg'
+const desktopPoster = '/hero-poster-desktop.jpg'
 import mobileVideo from '@/assets/video/background-mobile.mp4'
 import desktopVideo from '@/assets/video/background-desktop.mp4'
 
 export default function HeaderContainer() {
     const [videoPoster, setVideoPoster] = useState(mobilePoster)
     const videoRef = useRef(null)
+    const score = useReviewsStore((state) => state.score)
+    const reviewsIsLoaded = useReviewsStore((state) => state.reviewsIsLoaded)
+    const getReviews = useReviewsStore((state) => state.getReviews)
+
+    useEffect(() => {
+        if (!reviewsIsLoaded) getReviews()
+    }, [reviewsIsLoaded, getReviews])
 
     useEffect(() => {
         const updateVideoBackgroundSource = () => {
@@ -67,14 +75,23 @@ export default function HeaderContainer() {
                     ref={videoRef}
                 />
             </div>
+            <div className="mb-hero-overlay" />
             <div className="blocks">
                 <div className="first-block xyz-in" xyz="fade left-50% duration-15 delay-5">
-                    <h1>
-                        <span className="weight-700">Cheap Business Class</span> Airline Tickets <br />
-                        & <span className="weight-700">Flight Deals</span> — Save up to 60%
+                    {score > 0 && (
+                        <div className="mb-hero-badge">
+                            <span className="dot" />
+                            <span>Trusted by travelers worldwide • {score}/5 on Trustpilot</span>
+                        </div>
+                    )}
+                    <h1 className="mb-serif">
+                        Save up to <span className="accent">60%</span> on Business Class flights
                     </h1>
+                    <p className="mb-hero-subtitle">Cheap business class airline tickets and flight deals. Access exclusive unpublished fares.</p>
                 </div>
                 <div className="second-block">
+                    <h3 className="mb-hero-card-title">Find your perfect deal</h3>
+                    <p className="mb-hero-card-sub">Get a personalized quote from a real consultant.</p>
                     <OrderFly />
                 </div>
             </div>

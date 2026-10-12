@@ -10,7 +10,6 @@ export const useAppStore = create((set, get) => ({
     burgherMenu: false,
     aboutUs: {},
     aboutUsIsLoaded: false,
-    scrollToAboutUs: false,
     allowModal: true,
     destinationsFlights: {},
     settings: {},
@@ -38,9 +37,38 @@ export const useAppStore = create((set, get) => ({
         set({ quoteLoading: { loading: Boolean(value) } })
     },
     stopQuoteLoading: () => set({ quoteLoading: { loading: false } }),
-    setModal: (modal) => set({ modal }),
+    setModal: (modal) => {
+        const state = get()
+        if ((modal?.display && state.modal?.display) || !state.allowModal) {
+            get().hideModal()
+        }
+
+        if (state.modalTimeout) clearTimeout(state.modalTimeout)
+
+        const timeoutMs = Number(import.meta.env.VITE_MODAL_TIMEOUT) || 2000
+        const modalTimeout = setTimeout(() => {
+            get().hideModal()
+        }, timeoutMs)
+
+        set({
+            allowModal: false,
+            modal: modal ?? {},
+            modalTimeout,
+        })
+    },
+    hideModal: () => {
+        const state = get()
+        if (state.modalTimeout) clearTimeout(state.modalTimeout)
+        set({
+            modal: { ...state.modal, display: false },
+            allowModal: false,
+            modalTimeout: null,
+        })
+        setTimeout(() => {
+            set({ allowModal: true })
+        }, 600)
+    },
     setAllowModal: (allow) => set({ allowModal: allow }),
-    setScrollToAboutUs: (value) => set({ scrollToAboutUs: value }),
     setAboutUs: (data) => set({ aboutUs: data, aboutUsIsLoaded: true }),
     setDestinationsFlights: (data) => set({ destinationsFlights: data }),
     setSettings: (settings) => set({ settings }),

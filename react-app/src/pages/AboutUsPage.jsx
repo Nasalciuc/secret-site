@@ -21,7 +21,7 @@ export default function AboutUsPage() {
     }, [])
 
     return (
-        <div>
+        <div className="mb-page mb-about">
             <FirstBlock />
             <SecondBlock />
             <ThirdBlock />

@@ -1,17 +1,41 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { useAppStore } from '@/store/useAppStore'
+import BlackWithOrangeTextButton from '@/components/common/Buttons/BlackWithOrangeTextButton'
+
+// Moodboard homepage steps: keep the real production copy from the legacy layout below.
+const mbSteps = [
+    { number: '01', title: 'Request a quote', body: 'Request a FREE quote by completing the form above.' },
+    { number: '02', title: 'Fill in your information', body: 'Fill in your personal and contact information.' },
+    { number: '03', title: 'Find the best deal', body: 'A friendly travel concierge will quickly find the best deals for you.' },
+    { number: '04', title: 'Book your flight', body: 'Book your flight and save up to 60% OFF retail prices.', gold: true },
+]
 
 export default function WorksContainer() {
+    const location = useLocation()
     const { appWidth } = useAppStore()
     const [displayPlaneAdaptive, setDisplayPlaneAdaptive] = useState(false)
     const [visible, setVisible] = useState(false)
     const rootRef = useRef(null)
+    // Match Vue: `$route.fullPath === '/' ? '' : '/'`
+    const isHome = `${location.pathname}${location.search}${location.hash}` === '/'
+    // Moodboard variant renders on any page carrying the .mb-home/.mb-page scope;
+    // pages not yet redesigned keep the legacy dark layout styled by main-page.scss.
+    const [isMbHome, setIsMbHome] = useState(location.pathname === '/')
+
+    useLayoutEffect(() => {
+        setIsMbHome(Boolean(rootRef.current?.closest('.mb-home, .mb-page')))
+    }, [location.pathname])
 
     useEffect(() => {
         setDisplayPlaneAdaptive(appWidth <= 420)
     }, [appWidth])
 
     useEffect(() => {
+        // Re-attach when the mb/legacy variant flips: the flip swaps the root DOM
+        // node, and an observer bound to the detached node never fires (steps
+        // would stay at opacity 0 on non-homepage .mb-page routes).
+        if (visible) return
         const el = rootRef.current
         if (!el) return
         const observer = new IntersectionObserver(
@@ -25,10 +49,46 @@ export default function WorksContainer() {
         )
         observer.observe(el)
         return () => observer.disconnect()
-    }, [])
+    }, [isMbHome, visible])
 
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+
+    const scrollToOrderFly = () => {
+        const el = document.getElementById('order-fly')
+        if (el) {
+            el.scrollIntoView({ behavior: 'smooth' })
+        } else {
+            scrollToTop()
+        }
+    }
+
+    if (isMbHome) {
+        return (
+            <section className={`mb-works${visible ? ' is-visible' : ''}`} id="how-it-works" ref={rootRef}>
+                <div className="mb-works__inner">
+                    <span className="mb-eyebrow">Simple process</span>
+                    <h2 className="mb-works__title">How does this work?</h2>
+                    <p className="mb-works__sub">We do the hard work so you can enjoy the journey.</p>
+                    <div className="mb-works__grid">
+                        {mbSteps.map((step) => (
+                            <div className="mb-works__step" key={step.number}>
+                                <div className={`mb-works__num${step.gold ? ' gold' : ''}`}>{step.number}</div>
+                                <p className="mb-works__step-title">{step.title}</p>
+                                <p className="mb-works__step-body">{step.body}</p>
+                            </div>
+                        ))}
+                    </div>
+                    <button type="button" className="mb-works__cta" onClick={scrollToOrderFly}>
+                        Start your journey now
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M4 12H20M20 12L13 5M20 12L13 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+            </section>
+        )
     }
 
     const xyzIn = visible ? ' xyz-in' : ''
@@ -73,7 +133,7 @@ export default function WorksContainer() {
                     </svg>
                     <div className="info">
                         <p className="step-title">Find the best deal</p>
-                        <p className="step-body">A friendly travel concierge will quicky find the best deals for you.</p>
+                        <p className="step-body">A friendly travel concierge will quickly find the best deals for you.</p>
                     </div>
                     <svg width="71" height="103" viewBox="0 0 71 103" fill="none" xmlns="http://www.w3.org/2000/svg" className="number">
                         <path d="M32.3075 102.44C20.2115 102.44 9.2675 98.696 0.9155 91.64L5.3795 84.872C11.8595 87.752 19.6355 89.48 26.2595 89.48C37.7795 89.48 44.9795 82.856 44.9795 72.488C44.9795 60.536 35.9075 54.344 19.7795 54.344L18.6275 46.136C34.4675 44.696 42.3875 38.792 42.3875 28.28C42.3875 20.648 37.2035 15.608 29.2835 15.608C22.9475 15.608 16.1795 18.344 7.8275 24.392L3.0755 18.056C12.1475 7.256 24.5315 0.919992 36.6275 0.919992C55.4915 0.919992 68.1635 11.432 68.1635 26.84C68.1635 36.632 62.1155 44.408 50.7395 49.304C63.4115 54.056 70.8995 62.552 70.8995 73.352C70.8995 90.488 54.9155 102.44 32.3075 102.44Z" fill="#1A1D1F" />
@@ -112,9 +172,11 @@ export default function WorksContainer() {
                     )}
                 </div>
             </div>
-            <button className="black-orange-button" onClick={scrollToTop}>
-                Book your Flight Now
-            </button>
+            <BlackWithOrangeTextButton
+                buttonText="Book your Flight Now"
+                link={isHome ? '' : '/'}
+                click={scrollToTop}
+            />
         </div>
     )
 }

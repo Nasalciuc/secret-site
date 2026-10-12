@@ -1,18 +1,22 @@
 import { useEffect } from 'react'
 import { useAppStore } from '@/store/useAppStore'
 
-// Components
+// Components (moodboard redesign: hero, stats, deals, how-it-works, why-us, reviews,
+// then the live-site content sections restyled: regions, SEO copy, FAQ, newsletter,
+// contact — they carry SEO weight, internal links, and extra lead capture)
 import HeaderContainer from '@/components/MainPage/HeaderContainer'
-import WorksContainer from '@/components/MainPage/WorksContainer'
+import StatsStrip from '@/components/MainPage/StatsStrip'
+import FeaturedRoutes from '@/components/MainPage/FeaturedRoutes'
 import BestSelling from '@/components/MainPage/BestSelling'
+import WorksContainer from '@/components/MainPage/WorksContainer'
+import WhyUs from '@/components/MainPage/WhyUs'
 import ReviewsSection from '@/components/MainPage/ReviewsSection'
-import GoogleReview from '@/components/MainPage/GoogleReview'
 import RegionsSection from '@/components/MainPage/RegionsSection'
 import SeoContent from '@/components/MainPage/SeoContent'
 import FaqSection from '@/components/MainPage/FaqSection'
 import NewsletterBanner from '@/components/MainPage/NewsletterBanner'
+import CtaBanner from '@/components/MainPage/CtaBanner'
 import ContactSection from '@/components/MainPage/ContactSection'
-import AirlinesLogos from '@/components/Footer/AirlinesLogos'
 
 export default function MainPage() {
     const { getAboutUs } = useAppStore()
@@ -62,19 +66,21 @@ export default function MainPage() {
     }, [])
 
     return (
-        <div className="main-page">
+        <div className="main-page mb-home">
             <div className="header-content">
                 <HeaderContainer />
             </div>
-            <AirlinesLogos />
-            <WorksContainer />
+            <StatsStrip />
+            <FeaturedRoutes />
             <BestSelling />
+            <WorksContainer />
+            <WhyUs />
             <ReviewsSection />
-            <GoogleReview />
             <RegionsSection />
             <SeoContent />
             <FaqSection />
             <NewsletterBanner />
+            <CtaBanner />
             <ContactSection />
         </div>
     )

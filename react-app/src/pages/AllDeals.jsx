@@ -65,7 +65,14 @@ export default function AllDeals() {
     }, [navigate, setModal])
 
     return (
-        <div className="all-deals-page">
+        <div className="all-deals-page mb-page">
+            <div className="mb-cl-hero">
+                <span className="mb-eyebrow">Featured deals</span>
+                <h1 className="mb-serif">All business class <span className="gold">deals</span></h1>
+                <p className="mb-cl-hero__sub">
+                    Hand-picked business class fares to destinations worldwide — save up to 60% OFF retail prices.
+                </p>
+            </div>
             {regionsArr !== null && (
                 <div className="all-deals-content">
                     <div className="deals-container">
@@ -73,6 +80,7 @@ export default function AllDeals() {
                             {regionsArr.map((item) => (
                                 <OfferCard
                                     key={item.id}
+                                    variant="mb"
                                     imgUrl={item.image}
                                     title={item.name}
                                     price={item.price_today}

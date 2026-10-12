@@ -8,6 +8,8 @@
         <link rel="icon" href="/favicon-32x32.png" sizes="32x32" />
         <link rel="icon" href="/favicon-192x192.png" sizes="192x192" />
         <link rel="apple-touch-icon" href="/favicon-180x180.png" />
+        <link rel="preload" as="image" href="/hero-poster-mobile.jpg" media="(max-width: 767px)" />
+        <link rel="preload" as="image" href="/hero-poster-desktop.jpg" media="(min-width: 768px)" />
         <meta name="msapplication-TileImage" content="/favicon-270x270.png" />
         <title>Business Class Flight Deals - Save Up To 60% on Air Tickets</title>
         <meta
@@ -40,13 +42,13 @@
         <link
             rel="preload"
             as="style"
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap"
             onload="this.onload=null;this.rel='stylesheet'"
         />
         <noscript>
             <link
                 rel="stylesheet"
-                href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap"
+                href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap"
             />
         </noscript>
 
@@ -65,8 +67,8 @@
                 "url": "https://buybusinessclass.com/",
                 "potentialAction": {
                     "@type": "SearchAction",
-                    "target": "{search_term_string}",
-                    "query-input": "required name=search_term_string"
+                    "target": "https://buybusinessclass.com/flight?fly_from={fly_from}&fly_to={fly_to}",
+                    "query-input": ["required name=fly_from", "required name=fly_to"]
                 }
             }
         </script>
@@ -101,7 +103,9 @@
             aria-label="Chat on WhatsApp"
             style="
                 position: fixed;
-                right: 26px;
+                /* Bottom-left: the right edge belongs to the external bbc-widget
+                   launcher/panel, which used to half-cover this button. */
+                left: 26px;
                 bottom: 100px;
                 width: 56px;
                 height: 56px;
@@ -110,7 +114,7 @@
                 align-items: center;
                 justify-content: center;
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-                z-index: 9999;
+                z-index: 45;
                 text-decoration: none;
                 display: none;
             "

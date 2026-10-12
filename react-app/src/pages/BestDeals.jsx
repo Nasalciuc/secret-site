@@ -1,12 +1,14 @@
-import { useEffect, useMemo, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
-import { getBestDeal } from '@/services/api'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { getBestDeal, getMeta } from '@/services/api'
 import { useRegionStore } from '@/store/useRegionStore'
+import { withBrandTitle } from '@/utils/brandTitle'
 import AirlinesLogos from '@/components/Footer/AirlinesLogos'
 import FlightCards from '@/components/Flight/FlightCards'
+import FirstBlock from '@/components/Flight/FirstBlock'
 import RegionVue from '@/components/Flight/RegionVue'
 import TransparentSelect from '@/components/Flight/TransparentSelect'
-import SecondBlock from '@/components/HeaderForm/FlightCard/SecondBlock'
+import OrangeFilledButton from '@/components/common/Buttons/OrangeFilledButton'
 import WorksContainer from '@/components/MainPage/WorksContainer'
 import ContactSection from '@/components/MainPage/ContactSection'
 
@@ -19,6 +21,19 @@ const storageUrl = (path) => {
 }
 
 const formatPrice = (price) => (price !== null && price !== undefined ? `$${price}*` : '')
+
+const applyNamedMetaTags = (metaObj) => {
+    Object.entries(metaObj ?? {}).forEach(([name, content]) => {
+        if (content === null || content === undefined) return
+        let tag = document.querySelector(`meta[name="${name}"]`)
+        if (!tag) {
+            tag = document.createElement('meta')
+            tag.setAttribute('name', name)
+            document.head.appendChild(tag)
+        }
+        tag.setAttribute('content', String(content))
+    })
+}
 
 function FirstBlockBestDeals({ name = '', price, selector = {} }) {
     const params = useParams()
@@ -46,17 +61,16 @@ function FirstBlockBestDeals({ name = '', price, selector = {} }) {
                     Best <span>deals</span> starting <br />
                     <span>{regionName}</span> at {formatPrice(price) && <span>{formatPrice(price)}</span>}
                 </p>
-                <div className="orange-filled-button button-container">
-                    <Link to={`/flight/region/${regionName.toLowerCase()}/${flightRegionId}`}>
-                        View Offer Details
-                    </Link>
-                </div>
+                <OrangeFilledButton
+                    buttonText="View Offer Details"
+                    link={`/flight/region/${String(regionName).toLowerCase()}/${flightRegionId}`}
+                />
             </div>
         </div>
     )
 }
 
-function HeaderContainer({ onCards }) {
+function HeaderContainer({ dealMetaAppliedRef }) {
     const params = useParams()
     const [flights, setFlights] = useState({})
     const image = useMemo(() => storageUrl(flights.image), [flights.image])
@@ -69,19 +83,13 @@ function HeaderContainer({ onCards }) {
             if (cancelled || error !== null || !result) return
 
             setFlights(result)
-            onCards?.(result.bestDeals ?? [])
 
-            if (result.meta?.title) document.title = result.meta.title
-            Object.entries(result.meta?.meta ?? {}).forEach(([name, content]) => {
-                if (content === null || content === undefined) return
-                let tag = document.querySelector(`meta[name="${name}"]`)
-                if (!tag) {
-                    tag = document.createElement('meta')
-                    tag.setAttribute('name', name)
-                    document.head.appendChild(tag)
-                }
-                tag.setAttribute('content', content)
-            })
+            // Prefer deal-specific meta over CMS getMeta('/best-deals') defaults.
+            if (result.meta) {
+                if (result.meta.title) document.title = withBrandTitle(result.meta.title)
+                applyNamedMetaTags(result.meta.meta)
+                if (dealMetaAppliedRef) dealMetaAppliedRef.current = true
+            }
         }
 
         loadDeal()
@@ -89,7 +97,7 @@ function HeaderContainer({ onCards }) {
         return () => {
             cancelled = true
         }
-    }, [onCards, params.id])
+    }, [dealMetaAppliedRef, params.id])
 
     return (
         <div className="content best-deals-content" style={image ? { backgroundImage: `url(${image})` } : undefined}>
@@ -100,9 +108,12 @@ function HeaderContainer({ onCards }) {
                     price={flights?.minPrice?.price_today}
                     selector={flights.selector ?? {}}
                 />
-                <div className="imported-second-block">
-                    <SecondBlock propTo={params.region} />
-                </div>
+                <FirstBlock
+                    className="imported-second-block"
+                    price={flights?.minPrice?.price_today ?? null}
+                    destination={params.region}
+                    departure={flights?.bestDeals ?? []}
+                />
             </div>
         </div>
     )
@@ -110,9 +121,23 @@ function HeaderContainer({ onCards }) {
 
 export default function BestDeals() {
     const params = useParams()
-    const [cards, setCards] = useState([])
+    const dealMetaAppliedRef = useRef(false)
 
     useEffect(() => {
+        dealMetaAppliedRef.current = false
+        let cancelled = false
+
+        // CMS defaults for /best-deals (Vue BestDeals.vue). Skip if deal meta already won.
+        const loadCmsMeta = async () => {
+            const [meta, error] = await getMeta('/best-deals')
+            if (cancelled || error !== null || !meta || dealMetaAppliedRef.current) return
+
+            if (meta.title?.title) document.title = withBrandTitle(meta.title.title)
+            applyNamedMetaTags(meta.meta)
+        }
+
+        loadCmsMeta()
+
         let canonicalLink = document.querySelector('link[rel="canonical"]')
         if (!canonicalLink) {
             canonicalLink = document.createElement('link')
@@ -120,15 +145,19 @@ export default function BestDeals() {
             document.head.appendChild(canonicalLink)
         }
         canonicalLink.href = `https://buybusinessclass.com/best-deals/${params.region}/${params.id}`
+
+        return () => {
+            cancelled = true
+        }
     }, [params.id, params.region])
 
     return (
-        <div className="best-deals-page">
+        <div className="best-deals-page mb-page">
             <div className="header-content">
-                <HeaderContainer onCards={setCards} />
+                <HeaderContainer dealMetaAppliedRef={dealMetaAppliedRef} />
             </div>
             <AirlinesLogos />
-            <FlightCards arr={cards} />
+            <FlightCards />
             <WorksContainer />
             <ContactSection />
         </div>

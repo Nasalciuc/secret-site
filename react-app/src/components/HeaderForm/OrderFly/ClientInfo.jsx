@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import intlTelInput from 'intl-tel-input/intlTelInputWithUtils'
+import intlTelInput from 'intl-tel-input'
 import 'intl-tel-input/styles'
 import OrangeFilledButton from '@/components/common/Buttons/OrangeFilledButton'
 import ChooseProperties from './ChooseProperties'
@@ -18,6 +18,7 @@ export default function ClientInfo({ errors, onButtonClick }) {
         if (!phoneRef.current || itiRef.current) return
 
         itiRef.current = intlTelInput(phoneRef.current, {
+            loadUtils: () => import('intl-tel-input/utils'),
             initialCountry: 'us',
             countryOrder: ['us', 'gb', 'ca', 'au'],
             separateDialCode: true,
@@ -28,12 +29,18 @@ export default function ClientInfo({ errors, onButtonClick }) {
         const refresh = () => {
             const iti = itiRef.current
             if (!iti) return
-            setValid(iti.isValidNumber())
+            try {
+                // utils load async; calling before ready throws and unmounts Multi City
+                setValid(iti.isValidNumber())
+            } catch {
+                setValid(null)
+            }
         }
 
         phoneRef.current.addEventListener('countrychange', refresh)
         phoneRef.current.addEventListener('input', refresh)
-        refresh()
+        // Avoid sync isValidNumber before utils finish loading
+        Promise.resolve(itiRef.current?.promise).finally(refresh)
 
         return () => {
             phoneRef.current?.removeEventListener('countrychange', refresh)

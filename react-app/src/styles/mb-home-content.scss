@@ -1,0 +1,259 @@
+// Moodboard homepage content sections (slate + gold):
+//   - Destinations link grid (MainPage/RegionsSection -> .mb-regions)
+//   - Long-form SEO copy (MainPage/SeoContent -> .seo-content.home-seo)
+// Scoped under .mb-home only. Note: BusinessFlights renders its OWN SeoContent
+// component (.seo-content.business-seo) which is already skinned by
+// mb-business-promo.scss under .business-flights.mb-page — keeping these rules
+// out of .mb-page avoids fighting that file (this one imports later and would
+// win ties). The legacy .regions-container / .seo-content rules in
+// main-page.scss stay untouched for pages not yet redesigned.
+
+.mb-home {
+    // ------------------------------------------------------------------
+    // Destinations — dark section: eyebrow + title, three link cards
+    // (Region / Countries / City), accordion below 1200px (JS toggles
+    // .show / .hide on .mb-region-group)
+    // ------------------------------------------------------------------
+    .mb-regions {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 64px 32px 80px;
+
+        @media screen and (max-width: 768px) {
+            padding: 40px 16px 56px;
+        }
+    }
+
+    .mb-regions-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+
+        @media screen and (max-width: 1200px) {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 16px;
+        }
+    }
+
+    .mb-region-group {
+        min-width: 0;
+        background: var(--mb-surface);
+        border: 1px solid var(--mb-border);
+        border-radius: var(--mb-radius-card);
+        padding: 28px;
+    }
+
+    .mb-region-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+
+    .mb-region-label {
+        color: #fff;
+        font: 600 20px/1.3 'Inter', sans-serif;
+    }
+
+    // Chevron only matters in the accordion; points down while collapsed
+    .mb-region-chevron {
+        display: none;
+        flex-shrink: 0;
+        transform: rotate(180deg);
+        transition: transform 0.2s ease-in;
+    }
+
+    .mb-region-links {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .mb-region-link {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 7px 0;
+        color: var(--mb-text-muted);
+        font: 500 14px/1.5 'Inter', sans-serif;
+        transition: color 0.2s ease-in;
+
+        > svg {
+            flex-shrink: 0;
+            opacity: 0;
+            transform: translateX(-6px);
+            transition:
+                opacity 0.2s ease-in,
+                transform 0.2s ease-in;
+        }
+
+        &:hover {
+            color: #fff;
+
+            > svg {
+                opacity: 1;
+                transform: none;
+            }
+        }
+    }
+
+    .mb-region-more {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 16px;
+        color: var(--mb-gold);
+        font: 600 14px/1.4 'Inter', sans-serif;
+        transition: color 0.2s ease-in;
+
+        > svg {
+            flex-shrink: 0;
+        }
+
+        &:hover {
+            color: var(--mb-gold-dark);
+        }
+    }
+
+    @media screen and (max-width: 1200px) {
+        .mb-region-group {
+            padding: 0 24px;
+        }
+
+        .mb-region-head {
+            margin: 0;
+            padding: 20px 0;
+            cursor: pointer;
+        }
+
+        .mb-region-chevron {
+            display: block;
+        }
+
+        .mb-region-group.show .mb-region-chevron {
+            transform: none;
+        }
+
+        .mb-region-group.hide .mb-region-links {
+            display: none;
+        }
+
+        .mb-region-links {
+            padding-bottom: 20px;
+        }
+    }
+
+    // ------------------------------------------------------------------
+    // Long-form SEO copy — full-bleed white reading section; breaks out of
+    // .margin-container insets (same pattern as mb-works-why.scss)
+    // ------------------------------------------------------------------
+    .seo-content {
+        width: calc(100% + 64px);
+        margin-left: -32px;
+        background: #fff;
+        padding: 96px 32px;
+        color: #334155;
+        font: 400 16px/1.7 'Inter', sans-serif;
+
+        @media screen and (max-width: 1200px) {
+            width: calc(100% + 48px);
+            margin-left: -24px;
+        }
+
+        @media screen and (max-width: 768px) {
+            width: calc(100% + 16px);
+            margin-left: -8px;
+            padding: 64px 16px;
+            font-size: 15px;
+        }
+
+        .seo-inner {
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            margin: 0 0 24px;
+            color: var(--mb-ink);
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 40px;
+            font-weight: 700;
+            line-height: 1.15;
+            text-align: left;
+
+            .accent {
+                color: var(--mb-gold);
+            }
+
+            @media screen and (max-width: 768px) {
+                font-size: 30px;
+            }
+        }
+
+        h3 {
+            margin: 48px 0 16px;
+            color: var(--mb-ink);
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 26px;
+            font-weight: 700;
+            line-height: 1.25;
+
+            @media screen and (max-width: 768px) {
+                margin-top: 36px;
+                font-size: 22px;
+            }
+        }
+
+        p {
+            margin: 0 0 16px;
+        }
+
+        strong {
+            color: var(--mb-ink);
+            font-weight: 600;
+        }
+
+        .seo-list {
+            margin: 0 0 16px;
+            padding-left: 22px;
+
+            li {
+                margin-bottom: 8px;
+
+                &::marker {
+                    color: var(--mb-gold);
+                }
+            }
+        }
+
+        // 'Why Travelers Choose' — two-column checklist with gold check
+        // icons (inline SVGs added in SeoContent.jsx; copy untouched)
+        .seo-checklist {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px 32px;
+            margin: 24px 0 8px;
+            padding: 0;
+            list-style: none;
+
+            li {
+                position: relative;
+                min-width: 0;
+                margin: 0;
+                padding-left: 32px;
+
+                > svg {
+                    position: absolute;
+                    top: 3px;
+                    left: 0;
+                }
+            }
+
+            @media screen and (max-width: 768px) {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 12px;
+            }
+        }
+    }
+}
