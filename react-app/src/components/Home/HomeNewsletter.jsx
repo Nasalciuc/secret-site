@@ -1,14 +1,11 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import Barcode from '@/components/common/Barcode'
-import { PLANE_D } from '@/components/MainPage/planeShape'
 
 const API_URL = import.meta.env.VITE_API_URL
 
-// The newsletter as a golden ticket: the offer, the e-mail field, the button and the consent on the
-// ticket, and a stub that holds seat 1A behind a perforated tear line. Same request as before (POST
-// /contacts/subscribe with the consent and the marketing source); consent is required.
+// Newsletter as a plain offer: the line, the e-mail, the button, the consent. Same request as before
+// (POST /contacts/subscribe with the consent and the marketing source); consent is required.
 export default function HomeNewsletter() {
     const [email, setEmail] = useState('')
     const [consent, setConsent] = useState(false)
@@ -69,16 +66,10 @@ export default function HomeNewsletter() {
             <div className="hp-wrap">
                 <div className="hp-ticket">
                     <div className="hp-ticket__main">
-                        <svg className="hp-ticket__watermark" viewBox="-11 -10 22 20" aria-hidden="true" focusable="false">
-                            <path d={PLANE_D} />
-                        </svg>
                         <h2 className="hp-ticket__title" id="hp-news-title">
-                            Get exclusive business class flight deals first
+                            Unpublished fares, by email
                         </h2>
-                        <p className="hp-ticket__sub">
-                            Join our newsletter to get first access to our latest sales and exclusive business class offers you won&apos;t find
-                            online.
-                        </p>
+                        <p className="hp-ticket__sub">New business class offers from the fares our consultants book.</p>
                         <form className="hp-ticket__form" onSubmit={onSubmit} noValidate>
                             <div className="hp-ticket__row">
                                 <label className="sr-only" htmlFor="hp-news-email">
@@ -113,23 +104,6 @@ export default function HomeNewsletter() {
                                 </p>
                             )}
                         </form>
-                    </div>
-                    <div className="hp-ticket__stub" aria-hidden="true">
-                        <span className="hp-ticket__brand">
-                            <svg viewBox="-11 -10 22 20" focusable="false">
-                                <path d={PLANE_D} />
-                            </svg>
-                            First access
-                        </span>
-                        <span className="hp-ticket__field">
-                            <span className="hp-ticket__label">Class</span>
-                            <span className="hp-ticket__value">Business</span>
-                        </span>
-                        <span className="hp-ticket__field">
-                            <span className="hp-ticket__label">Seat</span>
-                            <span className="hp-ticket__value">1A</span>
-                        </span>
-                        <Barcode className="hp-ticket__barcode" seed="first access seat 1A" />
                     </div>
                 </div>
             </div>

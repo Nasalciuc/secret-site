@@ -5,26 +5,49 @@
 // the live dot and its breathing ring come from mb-homepage-soul.scss. Scoped under .hp.
 .hp {
     .mb-why {
-        padding-block: 112px 104px;
+        padding-block: 96px 80px;
 
         @media screen and (max-width: 768px) {
-            padding-block: 72px 64px;
+            padding-block: 64px 56px;
         }
     }
 
+    // One grid: the case takes the first two columns, the window the last two,
+    // and each reason sits in a column of that same grid.
     .mb-why__inner {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(0, 540px);
-        gap: 64px;
-        align-items: center;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        column-gap: 24px;
+        row-gap: 48px;
+        align-items: stretch;
 
         @media screen and (max-width: 1100px) {
-            grid-template-columns: minmax(0, 1fr);
-            gap: 48px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            row-gap: 40px;
         }
 
-        @media screen and (max-width: 768px) {
-            gap: 28px;
+        @media screen and (max-width: 700px) {
+            grid-template-columns: minmax(0, 1fr);
+            row-gap: 32px;
+        }
+    }
+
+    .mb-why__intro {
+        display: flex;
+        flex-direction: column;
+        grid-column: 1 / 3;
+        min-width: 0;
+        padding-block: 12px;
+
+        @media screen and (max-width: 1100px) {
+            grid-column: 1 / -1;
+            padding-block: 0;
+        }
+    }
+
+    .mb-why__intro .mb-why__experts {
+        @media screen and (max-width: 1100px) {
+            margin-top: 28px;
         }
     }
 
@@ -47,8 +70,7 @@
     }
 
     .mb-why__text {
-        max-width: 480px;
-        margin: 24px 0 0;
+        margin: 16px 0 0;
         color: var(--mb-text-muted);
         font: 400 18px/1.6 var(--mb-font-text);
     }
@@ -56,8 +78,8 @@
     .mb-why__actions {
         display: flex;
         flex-wrap: wrap;
-        gap: 16px;
-        margin-top: 36px;
+        gap: 12px;
+        margin-top: 24px;
 
         // the kit9 buttons: softly rounded, not pills
         .mb-btn-gold {
@@ -89,9 +111,8 @@
         display: flex;
         align-items: center;
         gap: 16px;
-        max-width: 480px;
-        margin-top: 44px;
-        padding-top: 28px;
+        margin-top: auto;
+        padding-top: 24px;
         border-top: 1px solid var(--mb-border);
     }
 
@@ -137,11 +158,15 @@
     .mb-why__visual {
         position: relative;
         display: flex;
+        grid-column: 3 / 5;
+        align-items: center;
         justify-content: center;
-        padding: 24px 0;
+        width: min(100%, 400px);
+        align-self: center;
+        justify-self: center;
 
-        @media screen and (max-width: 768px) {
-            padding: 12px 0;
+        @media screen and (max-width: 1100px) {
+            grid-column: 1 / -1;
         }
 
         &::before {
@@ -155,7 +180,7 @@
 
     .mb-why__window {
         position: relative;
-        width: min(100%, 392px);
+        width: 100%;
         aspect-ratio: 392 / 540;
         padding: 14px;
         border-radius: 38% / 28%;
@@ -242,26 +267,25 @@
     .mb-why__cards {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 20px;
-        margin: 88px 0 0;
+        grid-column: 1 / -1;
+        gap: 24px;
+        margin: 0;
         padding: 0;
         list-style: none;
 
         @media screen and (max-width: 1100px) {
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            margin-top: 64px;
         }
 
         @media screen and (max-width: 600px) {
             grid-template-columns: minmax(0, 1fr);
             gap: 12px;
-            margin-top: 48px;
         }
     }
 
     .mb-why__card {
         position: relative;
-        padding: 28px 24px 30px;
+        padding: 22px 22px 24px;
         border: 1px solid var(--mb-border);
         border-radius: 16px;
         background: var(--mb-surface);
@@ -296,7 +320,7 @@
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
-        margin-bottom: 24px;
+        margin-bottom: 16px;
     }
 
     .mb-why__icon {
@@ -341,9 +365,10 @@
         }
 
         .mb-why__experts {
-            margin-top: 36px;
+            margin-top: 28px;
         }
 
+        .mb-why__visual,
         .mb-why__window {
             width: min(100%, 300px);
         }

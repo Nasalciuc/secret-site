@@ -2,17 +2,13 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useRegionStore } from '@/store/useRegionStore'
 import { getBestDeal, searchFlight } from '@/services/api'
-import { PLANE_D } from '@/components/MainPage/planeShape'
 import { ArrowIcon, scrollToQuote } from './homeShared'
 
-// Betty's "Featured Business Class Deals": her four routes as four cards, each one a ticket: the
-// destination's photo with her discount on a white pill (58% / 51% / 63% / 47% OFF, as in her design),
-// the two airport codes with the flight between them, the live fare and a full-width "View deal". The fares are live: the round-trip business fare from the same
-// /flights/search the quote funnel uses, cached for the session; a route the search does not price
-// shows "Fare on request". "View deal" fills the quote form with the route and brings it into view.
-// On phones the four tickets become a sideways row (the next one peeks in).
-// Photos are the city records in the CMS (getOne), not the region tiles from getMain: London and
-// Dubai are not in that short list, so a region match was showing Europe and the Middle East.
+// Four routes as photo cards: the city picture, then a paper sheet over its lower edge with her
+// discount (58 / 51 / 63 / 47), the cities and the live round-trip fare. "View deal" fills the
+// quote form with the route and brings it into view. Fares come from the same /flights/search
+// the quote funnel uses, cached for the session; a route the search does not price shows
+// "On request". Photos are the city records in the CMS (getOne), not the region tiles.
 const ROUTES = [
     { from: 'JFK', to: 'LHR', fromLabel: 'New York', toLabel: 'London', off: 58, dealId: 23 },
     { from: 'LAX', to: 'NRT', fromLabel: 'Los Angeles', toLabel: 'Tokyo', off: 51, dealId: 283 },
@@ -52,20 +48,6 @@ function returnImgUrl(url) {
 }
 
 const keyOf = (route) => `${route.from}-${route.to}`
-
-// The flight between the two codes: a dotted arc with the plane at its top.
-function FlightArc() {
-    return (
-        <span className="hp-route__flight" aria-hidden="true">
-            <svg className="hp-route__arc" viewBox="0 0 120 30" preserveAspectRatio="none" focusable="false">
-                <path d="M3 27C30 3 90 3 117 27" vectorEffect="non-scaling-stroke" />
-            </svg>
-            <svg className="hp-route__plane" viewBox="-11 -10 22 20" focusable="false">
-                <path d={PLANE_D} />
-            </svg>
-        </span>
-    )
-}
 
 export default function HomeDeals() {
     const bestSelling = useRegionStore((state) => state.bestSelling)
@@ -142,9 +124,8 @@ export default function HomeDeals() {
             <div className="hp-wrap">
                 <div className="hp-head hp-head--split">
                     <div>
-                        <p className="hp-eyebrow">Live fares</p>
                         <h2 className="hp-h2" id="hp-deals-title">
-                            Featured Business Class Deals
+                            Four business class routes
                         </h2>
                     </div>
                     <Link to="/all-deals" className="hp-link">
@@ -160,66 +141,44 @@ export default function HomeDeals() {
                         return (
                             <li key={keyOf(route)}>
                                 {!prices ? (
-                                    <div className="hp-route is-loading" aria-hidden="true">
-                                        <span className="hp-route__media" />
-                                        <span className="hp-route__body">
+                                    <div className="hp-fare is-loading" aria-hidden="true">
+                                        <span className="hp-fare__photo" />
+                                        <span className="hp-fare__sheet">
                                             <span className="hp-skel" />
                                             <span className="hp-skel hp-skel--short" />
-                                            <span className="hp-skel hp-skel--button" />
                                         </span>
                                     </div>
                                 ) : (
                                     <button
                                         type="button"
-                                        className="hp-route"
+                                        className="hp-fare"
                                         onClick={() => viewDeal(route)}
-                                        aria-label={`${route.fromLabel} (${route.from}) to ${route.toLabel} (${route.to}), business class round trip, ${route.off}% off, ${
+                                        aria-label={`${route.fromLabel} (${route.from}) to ${route.toLabel} (${route.to}), business class round trip, save ${route.off}%, ${
                                             fare ? `from ${fare}` : 'fare on request'
                                         }. View deal`}
                                     >
-                                        <span className="hp-route__media">
+                                        <span className="hp-fare__photo">
                                             {image ? (
                                                 <img src={image} alt="" loading="lazy" decoding="async" />
                                             ) : (
-                                                <span className="hp-route__placeholder" aria-hidden="true">
-                                                    <svg viewBox="-11 -10 22 20" focusable="false">
-                                                        <path d={PLANE_D} />
-                                                    </svg>
-                                                </span>
+                                                <span className="hp-fare__empty" aria-hidden="true" />
                                             )}
-                                            <span className="hp-route__tag" aria-hidden="true">
-                                                {route.off}% OFF
-                                            </span>
                                         </span>
-                                        <span className="hp-route__body">
-                                            <span className="hp-route__route">
-                                                <span className="hp-route__end">
-                                                    <span className="hp-route__code">{route.from}</span>
-                                                    <span className="hp-route__city">{route.fromLabel}</span>
-                                                </span>
-                                                <FlightArc />
-                                                <span className="hp-route__end hp-route__end--to">
-                                                    <span className="hp-route__code">{route.to}</span>
-                                                    <span className="hp-route__city">{route.toLabel}</span>
+                                        <span className="hp-fare__sheet">
+                                            <span className="hp-fare__off">Save {route.off}%</span>
+                                            <span className="hp-fare__cities">
+                                                {route.fromLabel} to {route.toLabel}
+                                            </span>
+                                            <span className={`hp-fare__price${fare ? '' : ' is-request'}`}>
+                                                {fare || 'On request'}
+                                                <span className="hp-fare__codes">
+                                                    {route.from}
+                                                    <span aria-hidden="true"> – </span>
+                                                    {route.to}
                                                 </span>
                                             </span>
-                                            {fare ? (
-                                                <span className="hp-route__fare">
-                                                    <span className="hp-route__live">
-                                                        <span className="dot" />
-                                                        Live fare from
-                                                    </span>
-                                                    <span className="hp-route__price">{fare}</span>
-                                                </span>
-                                            ) : (
-                                                <span className="hp-route__fare">
-                                                    <span className="hp-route__live">Today&rsquo;s fare</span>
-                                                    <span className="hp-route__price is-request">On request</span>
-                                                </span>
-                                            )}
-                                            <span className="hp-route__cta">
-                                                View deal
-                                                <ArrowIcon size={14} />
+                                            <span className="hp-fare__go" aria-hidden="true">
+                                                <ArrowIcon size={18} />
                                             </span>
                                         </span>
                                     </button>

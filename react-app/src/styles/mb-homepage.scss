@@ -479,7 +479,7 @@
     }
 
     // ---------------------------------------------------------------------------------------------
-    // Featured deals: four route tickets (the tickets are in the soul sheet)
+    // Featured deals: four fares (the fare itself is in the soul sheet)
     // ---------------------------------------------------------------------------------------------
     .hp-deals {
         padding-block: 72px 64px;
@@ -488,13 +488,14 @@
     .hp-deals__grid {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 24px;
+        gap: 28px;
         margin: 0;
         padding: 0;
         list-style: none;
 
         > li {
             display: flex;
+            align-items: flex-start;
             min-width: 0;
         }
     }

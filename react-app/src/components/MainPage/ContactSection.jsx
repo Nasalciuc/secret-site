@@ -138,9 +138,8 @@ function HomeContact({ form }) {
         <section className="hp-section hp-contact" aria-labelledby="hp-contact-title">
             <div className="hp-wrap hp-contact__grid">
                 <div className="hp-contact__info">
-                    <p className="hp-eyebrow">Contact us</p>
                     <h2 className="hp-h2" id="hp-contact-title">
-                        Still have questions or want to leave us a message?
+                        Send a message
                     </h2>
                     <p className="hp-sub">Send us your request and one of our Travel Consultants will contact you back directly.</p>
                     <div className="hp-desk__head">
@@ -245,10 +244,7 @@ export default function ContactSection({ variant }) {
         <div className="contact-container">
             <div className="content">
                 <div className="title">
-                    <p className="main-title">
-                        Still have questions or want to{' '}
-                        leave us a message?
-                    </p>
+                    <p className="main-title">Send a message</p>
                 </div>
                 <div className="subtitle">
                     Submit your request in the box below and one of our Travel Consultants will contact you back

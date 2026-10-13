@@ -69,12 +69,10 @@ export default function WorksContainer() {
         return (
             <section className={`mb-works${visible ? ' is-visible' : ''}`} id="how-it-works" ref={rootRef}>
                 <div className="mb-works__inner">
-                    <p className="mb-eyebrow">Simple process</p>
-                    <h2 className="mb-works__title">How does this work?</h2>
-                    <p className="mb-works__sub">We do the hard work so you can enjoy the journey.</p>
+                    <h2 className="mb-works__title">How it works</h2>
                     <WorksRoute steps={mbSteps} />
                     <button type="button" className="mb-works__cta" onClick={scrollToOrderFly}>
-                        Start your journey now
+                        Get your quote
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path d="M4 12H20M20 12L13 5M20 12L13 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>

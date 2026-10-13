@@ -24,18 +24,14 @@ function Faq() {
     return (
         <div className="hp-faq">
             <div className="hp-faq__intro">
-                <p className="hp-eyebrow">Good to know</p>
                 <h2 className="hp-h2" id="hp-guide-title">
                     Frequently asked questions
                 </h2>
                 <div className="hp-faq__agent">
                     <img src={agentImg} alt="" width="56" height="56" loading="lazy" decoding="async" />
                     <div>
-                        <p className="hp-faq__agent-title">Still have a question?</p>
-                        <p className="hp-faq__agent-text">
-                            <span className="hp-faq__online" aria-hidden="true" />
-                            Our travel managers answer 24/7.
-                        </p>
+                        <p className="hp-faq__agent-title">Call a travel manager</p>
+                        <p className="hp-faq__agent-text">The desk is staffed 24/7.</p>
                     </div>
                 </div>
                 <div className="hp-actions">

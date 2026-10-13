@@ -96,7 +96,6 @@ export default function RegionsSection() {
     return (
         <section className="mb-regions" aria-labelledby="mb-regions-title" ref={sectionRef}>
             <div className="mb-regions__head">
-                <p className="mb-eyebrow">Destinations</p>
                 <h2 className="mb-section-title" id="mb-regions-title">
                     Fly business class worldwide
                 </h2>

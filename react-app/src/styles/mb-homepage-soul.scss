@@ -370,239 +370,130 @@
     }
 
     // ---------------------------------------------------------------------------------------------
-    // Featured deals: route tickets — the destination's photo with the discount on a white pill, the
-    // two codes with the flight between them, the live fare, a full-width button
+    // Featured deals: a photo with a paper sheet across its lower edge. The saving, the cities
+    // and the fare sit on the sheet; an arrow marks the card as a control.
     // ---------------------------------------------------------------------------------------------
-    .hp-route {
-        --edge: var(--mb-border);
-
-        position: relative;
+    .hp-fare {
         display: flex;
         flex-direction: column;
-        align-items: stretch; // buttons default to flex-start
+        align-items: stretch;
         width: 100%;
         min-width: 0;
-        padding: 0;
-        overflow: hidden;
-        color: var(--mb-text);
+        padding: 0 0 8px;
+        color: var(--mb-ink);
         text-align: left;
-        background: var(--mb-surface);
-        border: 1px solid var(--edge);
-        border-radius: var(--hp-radius);
+        background: transparent;
+        border: 0;
         font: inherit;
         cursor: pointer;
-        transition:
-            transform 0.25s ease,
-            box-shadow 0.25s ease,
-            border-color 0.25s ease;
 
-        &:hover {
-            --edge: var(--mb-border-strong);
-
-            transform: translateY(-6px);
-            box-shadow: 0 26px 50px -26px rgb(var(--mb-shade-rgb) / 0.85);
+        &:focus-visible {
+            outline: 2px solid var(--mb-gold-light);
+            outline-offset: 4px;
         }
 
         &.is-loading {
             cursor: default;
-
-            &:hover {
-                transform: none;
-                box-shadow: none;
-            }
         }
     }
 
-    .hp-route__media {
+    .hp-fare__photo {
         position: relative;
         display: block;
         width: 100%;
-        aspect-ratio: 16 / 10;
+        aspect-ratio: 3 / 2;
         overflow: hidden;
-        background: linear-gradient(135deg, var(--mb-raised), var(--mb-deep));
+        border-radius: 20px 20px 0 0;
+        background: var(--mb-raised);
 
-        > img {
+        > img,
+        > .hp-fare__empty {
             position: absolute;
             inset: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
         }
     }
 
-    .hp-route:hover .hp-route__media > img {
-        transform: scale(1.05);
-    }
-
-    .hp-route__placeholder {
-        position: absolute;
-        inset: 0;
-        display: grid;
-        place-items: center;
-
-        > svg {
-            width: 44px;
-            height: 40px;
-            fill: rgb(var(--mb-text-rgb) / 0.25);
-        }
-    }
-
-    // the saving, as in Betty's design: a white pill with the discount in green
-    .hp-route__tag {
-        position: absolute;
-        top: 16px;
-        right: 16px;
-        z-index: 1;
-        padding: 4px 12px;
-        color: var(--mb-green-ink);
-        background: var(--mb-paper);
-        border-radius: 12px;
-        box-shadow: 0 6px 16px -8px rgb(var(--mb-shade-rgb) / 0.6);
-        font: 700 12px/16px var(--mb-font-text);
-        white-space: nowrap;
-    }
-
-    .hp-route__body {
-        display: flex;
-        flex: 1;
-        flex-direction: column;
-        gap: 18px;
-        padding: 22px;
-    }
-
-    .hp-route__route {
-        display: flex;
-        align-items: flex-start;
-        gap: 10px;
-    }
-
-    .hp-route__end {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-        min-width: 0;
-
-        &--to {
-            align-items: flex-end;
-            text-align: right;
-        }
-    }
-
-    .hp-route__code {
-        color: var(--mb-text-strong);
-        font: 700 26px/1 var(--mb-font-text);
-        letter-spacing: 0.03em;
-    }
-
-    .hp-route__city {
-        color: var(--mb-text-muted);
-        font: 400 13px/1.3 var(--mb-font-text);
-        white-space: nowrap;
-    }
-
-    .hp-route__flight {
+    .hp-fare__sheet {
         position: relative;
-        flex: 1;
-        min-width: 36px;
-        height: 28px;
-        margin-top: -2px;
-    }
-
-    .hp-route__arc {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        overflow: visible;
-        fill: none;
-        stroke: var(--mb-gold);
-        stroke-dasharray: 1 6;
-        stroke-linecap: round;
-        stroke-width: 1.8;
-    }
-
-    .hp-route__plane {
-        position: absolute;
-        top: -6px;
-        left: 50%;
-        width: 22px;
-        height: 20px;
-        fill: var(--mb-gold-light);
-        transform: translateX(-50%);
-        transition: transform 0.6s cubic-bezier(0.3, 1.3, 0.5, 1);
-    }
-
-    .hp-route:hover .hp-route__plane {
-        transform: translate(calc(-50% + 16px), 4px) rotate(14deg);
-    }
-
-    .hp-route__fare {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-        margin-top: auto;
-    }
-
-    .hp-route__live {
-        display: inline-flex;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
         align-items: center;
-        gap: 6px;
-        color: var(--mb-text-muted);
-        font: 600 12px/1.2 var(--mb-font-text);
-
-        > .dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--mb-green);
-        }
+        row-gap: 4px;
+        column-gap: 12px;
+        margin-top: -36px;
+        padding: 16px 16px 16px 18px;
+        background: var(--mb-paper);
+        border-radius: 18px;
+        box-shadow: 0 18px 36px -24px rgb(var(--mb-shade-rgb) / 0.85);
     }
 
-    .hp-route__price {
-        color: var(--mb-text-strong);
-        font: 700 30px/1.05 var(--mb-font-text);
-        font-variant-numeric: normal; // the site-wide [class*='price'] rule sets tabular figures
+    .hp-fare__off {
+        grid-column: 1;
+        color: var(--mb-green-ink);
+        font: 600 13px/1.3 var(--mb-font-text);
+    }
+
+    .hp-fare__cities {
+        grid-column: 1;
+        color: var(--mb-ink);
+        font: 650 17px/1.25 var(--mb-font-text);
+        text-wrap: balance;
+    }
+
+    .hp-fare__price {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 8px;
+        grid-column: 1;
+        margin-top: 2px;
+        color: var(--mb-ink);
+        font: 700 22px/1.1 var(--mb-font-text);
+        font-variant-numeric: tabular-nums;
 
         &.is-request {
-            font-size: 22px;
-            line-height: 1.2;
+            font-size: 16px;
+            font-weight: 600;
         }
     }
 
-    .hp-route__cta {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
-        width: 100%;
-        min-height: 44px;
-        color: var(--mb-text-strong);
-        border: 1px solid var(--mb-border-strong);
-        border-radius: 999px;
-        font: 600 13px/1 var(--mb-font-text);
-        transition:
-            border-color 0.2s ease,
-            background-color 0.2s ease,
-            color 0.2s ease;
+    .hp-fare__codes {
+        color: var(--mb-ink-muted);
+        font: 500 13px/1.2 var(--mb-font-text);
+        letter-spacing: 0.04em;
+    }
+
+    .hp-fare__go {
+        display: grid;
+        grid-row: 1 / span 3;
+        grid-column: 2;
+        place-items: center;
+        color: var(--mb-ink-muted);
 
         > svg {
-            transition: transform 0.2s ease;
+            transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
         }
     }
 
-    .hp-route:hover .hp-route__cta {
+    .hp-fare:hover .hp-fare__go,
+    .hp-fare:focus-visible .hp-fare__go {
         color: var(--mb-ink);
-        background: var(--mb-gold);
-        border-color: var(--mb-gold);
 
         > svg {
             transform: translateX(3px);
         }
     }
 
-    .hp-route.is-loading .hp-route__body {
-        gap: 0;
+    .hp-fare.is-loading .hp-fare__photo {
+        min-height: 140px;
+    }
+
+    .hp-fare.is-loading .hp-fare__sheet .hp-skel {
+        background: var(--mb-paper-2);
     }
 
     // ---------------------------------------------------------------------------------------------
@@ -654,22 +545,10 @@
     // The closing call to action on an evening sky: our airliner climbs out of a sunset
     // ---------------------------------------------------------------------------------------------
     .hp-cta {
-        // the evening sky (illustration colours, used only here)
-        --sky-top: #0c1a30;
-        --sky-mid: #122546;
-        --sky-low: #22305a;
-        --sky-horizon: #3a3a5e;
-        --sun-core: #fff6e0;
-        --sun-warm: 255 190 110;
-        --sun-glow: 255 176 104;
-        --sun-rose: 232 128 96;
-        --cloud-lit: 255 214 176;
-        --cloud-dark: 40 36 70;
-
         position: relative;
-        isolation: isolate;
         overflow: hidden;
-        background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 46%, var(--sky-low) 76%, var(--sky-horizon) 100%);
+        background: var(--mb-surface);
+        border-top: 1px solid var(--mb-border);
     }
 
     .hp-cta__sky {
@@ -749,11 +628,14 @@
         }
     }
 
-    // the plane glides in when the band comes into view, then cruises
+    // the plane sits in the open half of the band and glides in when the section comes into view
     .hp-cta__flight {
+        position: absolute;
+        z-index: 0;
         top: 64px;
         right: 3%;
         width: min(600px, 46%);
+        pointer-events: none;
         transform: rotate(-7deg);
         transition:
             transform 2s cubic-bezier(0.16, 0.84, 0.3, 1),
@@ -801,6 +683,7 @@
 
     .hp-cta__inner {
         position: relative;
+        z-index: 1;
         padding-block: 120px;
 
         > .hp-h2 {
@@ -1153,27 +1036,11 @@
 
     .hp-ticket {
         position: relative;
-        isolation: isolate;
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) 260px;
-        overflow: hidden;
+        display: block;
+        max-width: 720px;
         color: var(--mb-ink);
-        // never darker than the brand gold, so the ink copy keeps 5:1 everywhere on the ticket
-        background: linear-gradient(120deg, var(--mb-gold-light) 0%, var(--mb-gold) 72%);
+        background: var(--mb-paper);
         border-radius: var(--hp-radius);
-        box-shadow:
-            inset 0 1px 0 rgb(255 255 255 / 0.35),
-            0 30px 60px -34px rgb(var(--mb-shade-rgb) / 0.8);
-
-        // the fine engraving of a ticket
-        &::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            z-index: -1;
-            background: repeating-linear-gradient(135deg, rgb(255 255 255 / 0.06) 0 1px, transparent 1px 9px);
-            pointer-events: none;
-        }
     }
 
     .hp-ticket__main {
@@ -1199,7 +1066,7 @@
         max-width: 620px;
         margin: 0 0 12px;
         color: var(--mb-ink);
-        font: 700 34px/1.15 var(--mb-font-text);
+        font: var(--mb-display-weight) 40px/1.15 var(--mb-font-display);
         letter-spacing: -0.015em;
         text-wrap: balance;
     }
@@ -1229,15 +1096,15 @@
         min-width: 0;
         min-height: 48px;
         padding: 0 20px;
-        color: var(--mb-ink);
-        background: var(--mb-paper);
-        border: 1px solid transparent;
+        color: var(--mb-text);
+        background: var(--mb-deep);
+        border: 1px solid var(--mb-border);
         border-radius: 999px;
         box-shadow: inset 0 1px 2px rgb(var(--mb-shade-rgb) / 0.12);
         font: 400 15px/1.4 var(--mb-font-text);
 
         &::placeholder {
-            color: var(--mb-ink-muted);
+            color: var(--mb-text-muted);
         }
 
         &[aria-invalid='true'] {
@@ -1752,50 +1619,15 @@
         }
     }
 
-    // phones: the four route tickets in a sideways row, edge to edge, the next one peeking in
+    // phones: the four photo cards in one column
     @media screen and (max-width: 640px) {
         .hp-deals__grid {
-            display: flex;
-            gap: 14px;
-            margin: 0 calc(-1 * var(--hp-gutter));
-            padding: 6px var(--hp-gutter) 10px;
-            overflow-x: auto;
-            overscroll-behavior-x: contain;
-            scroll-snap-type: x mandatory;
-            scroll-padding-inline-start: var(--hp-gutter);
-            scrollbar-width: none;
-
-            &::-webkit-scrollbar {
-                display: none;
-            }
-
-            // keeps the last ticket clear of the screen edge
-            &::after {
-                content: '';
-                flex: 0 0 1px;
-            }
-
-            > li {
-                flex: 0 0 84%;
-                scroll-snap-align: start;
-            }
+            grid-template-columns: minmax(0, 1fr);
+            gap: 22px;
         }
 
-        .hp-route:hover {
-            transform: none;
-        }
-
-        .hp-route__body {
-            gap: 16px;
-            padding: 18px;
-        }
-
-        .hp-route__code {
-            font-size: 23px;
-        }
-
-        .hp-route__price {
-            font-size: 26px;
+        .hp-fare__cities {
+            font-size: 18px;
         }
 
         .hp-cta .hp-actions {
@@ -1824,10 +1656,6 @@
             offset-distance: 100%;
         }
 
-        .hp-route:hover {
-            transform: none;
-        }
-
         .hp-cta:not(.is-visible) .hp-cta__flight {
             opacity: 1;
             transform: rotate(-7deg);
@@ -1838,7 +1666,6 @@
         .hp-cta__cloud,
         .hp-cta .mb-air__trails,
         .hp-stat__live::after,
-        .hp-route__live > .dot::after,
         .mb-why__online::after,
         .hp-faq__online::after,
         .hp-desk__live > .dot::after,

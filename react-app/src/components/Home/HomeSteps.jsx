@@ -17,16 +17,14 @@ export default function HomeSteps() {
         <section className="hp-section hp-band hp-steps" id="how-it-works" aria-labelledby="hp-steps-title">
             <div className="hp-wrap">
                 <div className="hp-head hp-head--center">
-                    <p className="hp-eyebrow">Simple process</p>
                     <h2 className="hp-h2" id="hp-steps-title">
-                        How it works in 4 simple steps
+                        How it works
                     </h2>
-                    <p className="hp-sub">We do the hard work so you can enjoy the journey.</p>
                 </div>
                 <WorksRoute steps={STEPS} />
                 <div className="hp-steps__action">
                     <button type="button" className="hp-btn hp-btn--ink" onClick={scrollToQuote}>
-                        Start your journey now
+                        Get your quote
                         <ArrowIcon />
                     </button>
                 </div>

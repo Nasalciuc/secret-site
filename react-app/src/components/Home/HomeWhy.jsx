@@ -142,7 +142,6 @@ export default function HomeWhy() {
                             </div>
                         )}
                     </div>
-                </div>
                 <ul className="mb-why__cards">
                     {REASONS.map((reason, index) => (
                         <li className="mb-why__card" key={reason.title}>
@@ -157,6 +156,7 @@ export default function HomeWhy() {
                         </li>
                     ))}
                 </ul>
+                </div>
             </div>
         </section>
     )
