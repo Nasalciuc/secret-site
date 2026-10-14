@@ -32,9 +32,8 @@ export default function AirlinesPage() {
     return (
         <div className="mb-page mb-airlines">
             <div className="title-section mb-airlines-hero">
-                <span className="mb-eyebrow">Our airline partners</span>
                 <h1 className="title mb-serif">
-                    Premium Airlines Selected by <span className="accent">BuyBusinessClass</span>
+                    Premium Airlines Selected by BuyBusinessClass
                 </h1>
                 <p className="second-title">Scroll to Explore Our Top Airlines</p>
             </div>

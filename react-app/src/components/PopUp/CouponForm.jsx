@@ -240,7 +240,6 @@ export default function CouponForm({ autoOpen = false }) {
                     </div>
 
                     <div className="modal-form">
-                        <span className="eyebrow">Exclusive offer</span>
                         <h2 id="coupon-title">
                             Save Extra <span className="amount">$100</span> Now
                         </h2>

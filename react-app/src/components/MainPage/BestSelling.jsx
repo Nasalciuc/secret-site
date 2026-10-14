@@ -41,7 +41,8 @@ export default function BestSelling() {
         }
     }, [appWidth])
 
-    const chunkSize = columns * rows
+    // the homepage shows one row per slide (the moodboard's single row of deals); other pages keep two
+    const chunkSize = columns * (mbHome ? 1 : rows)
     const slides = useMemo(() => {
         const totalItems = Math.ceil(bestSelling.length / chunkSize)
         return Array.from({ length: totalItems }, (_, index) =>
@@ -95,13 +96,13 @@ export default function BestSelling() {
         <div className="best-selling-container" ref={rootRef}>
             {mbHome ? (
                 <div className="mb-deals-head">
-                    <span className="mb-eyebrow">Destinations</span>
                     <h2 className="mb-section-title">Explore more destinations</h2>
+                    <p className="mb-deals-sub">Hand-picked business class fares to destinations worldwide.</p>
                 </div>
             ) : (
                 <div className="title">
                     <h2 className="main-title">
-                        <span className="accent">Discounted</span> Business Class <span className="accent">Flights</span>
+                        Discounted Business Class Flights
                     </h2>
                     <p className="subtitle">Save up to 60%</p>
                 </div>
@@ -123,6 +124,7 @@ export default function BestSelling() {
                                                 key={item.id}
                                                 title={item.name}
                                                 price={item.minPrice?.price_today ?? item.price_today}
+                                                oldPrice={item.minPrice?.old_price ?? item.old_price}
                                                 imgUrl={returnImgUrl(item.image)}
                                                 extraInfo={item.extra_info ?? (mbHome ? '' : '60% off on business class flights')}
                                                 to={cardTo(item)}

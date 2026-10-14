@@ -1,12 +1,22 @@
 import { Link } from 'react-router-dom'
 
-export default function OfferCard({ title, price, imgUrl, extraInfo = '', to, variant }) {
-    // Moodboard homepage variant: image on top, white % badge, outline CTA.
-    // Only rendered when explicitly requested (BestSelling on .mb-home); every
-    // other usage (AllDeals, FlightCards, DynamicPage) keeps the legacy markup.
+const money = (value) => {
+    const n = Number(value)
+    return Number.isFinite(n) ? n.toLocaleString('en-US') : value
+}
+
+export default function OfferCard({ title, price, oldPrice, imgUrl, extraInfo = '', to, variant }) {
+    // Moodboard variant: the destination's photo on top with the saving on a white pill (only when the
+    // deal carries the previous fare), then the name, the fare and a full-width button. Only rendered when explicitly
+    // requested (BestSelling, FlightCards and AllDeals on .mb-home / .mb-page); every other usage
+    // keeps the legacy markup.
     if (variant === 'mb') {
+        const now = Number(price)
+        const before = Number(oldPrice)
+        const saving = Number.isFinite(now) && Number.isFinite(before) && before > now ? Math.round((1 - now / before) * 100) : 0
         const percentMatch = /\d+\s*%/.exec(extraInfo)
-        const badgeText = percentMatch ? `${percentMatch[0].replace(/\s+/g, '')} OFF` : null
+        const badgeText = saving >= 5 ? `Save ${saving}%` : percentMatch ? `${percentMatch[0].replace(/\s+/g, '')} OFF` : null
+        const meta = extraInfo && !percentMatch ? extraInfo : ''
 
         return (
             <div className="mb-deal-card">
@@ -16,10 +26,21 @@ export default function OfferCard({ title, price, imgUrl, extraInfo = '', to, va
                 </div>
                 <div className="mb-deal-card__body">
                     <p className="mb-deal-card__title">{title}</p>
-                    <p className="mb-deal-card__price">from ${price}</p>
+                    <p className="mb-deal-card__price">
+                        <span className="mb-deal-card__from">from</span> ${money(price)}
+                        {saving >= 5 ? (
+                            <s className="mb-deal-card__old">
+                                <span className="sr-only">was </span>${money(before)}
+                            </s>
+                        ) : null}
+                    </p>
+                    {meta ? <p className="mb-deal-card__meta">{meta}</p> : null}
                     {to ? (
                         <Link className="mb-deal-card__cta" aria-label={`View ${title} page`} to={to}>
                             View deal
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                                <path d="M4 12h15m0 0-6-6m6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
                         </Link>
                     ) : null}
                 </div>

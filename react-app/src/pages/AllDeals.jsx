@@ -67,8 +67,7 @@ export default function AllDeals() {
     return (
         <div className="all-deals-page mb-page">
             <div className="mb-cl-hero">
-                <span className="mb-eyebrow">Featured deals</span>
-                <h1 className="mb-serif">All business class <span className="gold">deals</span></h1>
+                <h1 className="mb-serif">All business class deals</h1>
                 <p className="mb-cl-hero__sub">
                     Hand-picked business class fares to destinations worldwide — save up to 60% OFF retail prices.
                 </p>
@@ -84,6 +83,7 @@ export default function AllDeals() {
                                     imgUrl={item.image}
                                     title={item.name}
                                     price={item.price_today}
+                                    oldPrice={item.old_price}
                                     to={`/best-deals/${item.name.toLowerCase()}/${item.id}`}
                                 />
                             ))}

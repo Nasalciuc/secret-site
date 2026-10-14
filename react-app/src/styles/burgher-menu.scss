@@ -18,7 +18,7 @@
 }
 
 .burgher-menu {
-    background: #1a1d1f;
+    background: var(--mb-surface);
     height: 100vh;
     height: 100dvh;
     width: 100vw;
@@ -40,7 +40,7 @@
     > .burgher-header {
         display: flex;
         padding: 16px 32px;
-        border-bottom: 1px solid #000;
+        border-bottom: 1px solid var(--mb-border);
         justify-content: space-between;
         > button {
             background: none;
@@ -62,12 +62,12 @@
                 text-decoration: none;
                 text-align: center;
                 padding: 12px;
-                color: #6f767e;
+                color: var(--mb-text-muted);
                 display: block;
-                background: #272b30;
+                background: var(--mb-raised);
                 margin-inline: -16px;
                 font: {
-                    family: 'Inter', sans-serif;
+                    family: var(--mb-font-text);
                     weight: 600;
                     size: 24px;
                 }
@@ -84,17 +84,17 @@
                 }
 
                 &.router-link-exact-active {
-                    color: #fcfcfc;
+                    color: var(--mb-text-strong);
                 }
             }
         }
         > .footer {
             text-align: center;
             > p {
-                color: #fff;
+                color: var(--mb-text-strong);
                 margin-bottom: 10px;
                 font: {
-                    family: 'Inter', sans-serif;
+                    family: var(--mb-font-text);
                     weight: 600;
                     size: 13px;
                 }
@@ -103,11 +103,11 @@
                 display: block;
                 width: 100%;
                 padding: 16px 0;
-                background: #f4f4f4;
-                color: #111315;
+                background: var(--mb-paper-2);
+                color: var(--mb-ink);
                 border-radius: 48px;
                 font: {
-                    family: 'Inter', sans-serif;
+                    family: var(--mb-font-text);
                     weight: 600;
                     size: 12px;
                 }

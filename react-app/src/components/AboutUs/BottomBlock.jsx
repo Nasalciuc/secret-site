@@ -10,7 +10,7 @@ export default function BottomBlock() {
             <section className="mb-about-closing">
                 <div className="mb-about-closing__block">
                     <h2 className="mb-serif mb-about-closing__title">
-                        Our <span className="accent">Promise</span>
+                        Our Promise
                     </h2>
                     <p className="mb-about-closing__text">
                         We promise to deliver <b>fast, reliable customer service,</b> the{' '}
@@ -21,7 +21,7 @@ export default function BottomBlock() {
                 </div>
                 <div className="mb-about-closing__block">
                     <h2 className="mb-serif mb-about-closing__title">
-                        Join Thousands of <span className="accent">Happy Clients</span>
+                        Join Thousands of Happy Clients
                     </h2>
                     <p className="mb-about-closing__text">
                         Ready to experience the best in Business Class travel? Contact us today to get a personalized quote
@@ -35,7 +35,7 @@ export default function BottomBlock() {
                 </div>
                 <div className="mb-about-closing__block">
                     <h2 className="mb-serif mb-about-closing__title">
-                        Trust and <span className="accent">Recognition</span>
+                        Trust and Recognition
                     </h2>
                     <p className="mb-about-closing__text">
                         We take pride in the trust our clients place in us. Over the years, Buy Business Class has garnered

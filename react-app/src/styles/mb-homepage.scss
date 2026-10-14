@@ -1,0 +1,1056 @@
+// The homepage: Betty's design (HTML new version of site/buybusinessclass-new-homepage (4).html) in
+// the navy tokens; the site's soul on it (the pass, the board, the tickets, the sky, the map) lives in
+// mb-homepage-soul.scss. Her roles map onto ours: page #334155 -> --mb-bg, cards #1e293b -> --mb-surface,
+// fields #0f172a -> --mb-deep, hairlines #475569 -> --mb-border, gold #b4853b -> --mb-gold, white
+// bands -> --mb-paper. Her sizes are kept: 1536 px wide content with 32 px gutters, 24 px cards,
+// pill buttons, 12 px uppercase eyebrows, 36 px bold section titles (48 px on the white bands).
+// Text on gold is ink and gold text on white is --mb-gold-ink, so every pair stays AA.
+// Everything is scoped under .hp (the homepage root) except the page frame and the bar on '/'.
+
+// On the homepage the page runs edge to edge (no frame): the bar on top, the hero under it.
+.margin-container.is-home {
+    --mb-frame: 0px;
+
+    margin: 0;
+
+    > .header-container.margin-layout:not(.fixed) {
+        border-radius: 0;
+    }
+}
+
+.hp {
+    --hp-bar: 76px; // the bar's height (header.scss)
+    --hp-gutter: 32px;
+    --hp-max: 1536px;
+    --hp-radius: 24px;
+    --hp-paper-soft: color-mix(in srgb, var(--mb-paper-2) 45%, var(--mb-paper));
+
+    padding-top: var(--hp-bar);
+    background: var(--mb-bg);
+    color: var(--mb-text);
+    font-family: var(--mb-font-text);
+
+    @media screen and (max-width: 1200px) {
+        --hp-bar: 68px;
+    }
+
+    @media screen and (max-width: 768px) {
+        --hp-bar: 64px;
+        --hp-gutter: 20px;
+    }
+
+    @media screen and (max-width: 360px) {
+        --hp-gutter: 16px;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Building blocks
+    // ---------------------------------------------------------------------------------------------
+    .hp-wrap {
+        width: 100%;
+        max-width: var(--hp-max);
+        margin-inline: auto;
+        padding-inline: var(--hp-gutter);
+    }
+
+    .hp-section {
+        padding-block: 64px;
+    }
+
+    // White bands (how it works, reviews, the guide): ink text, and gold text in the paper-safe gold.
+    .hp-band {
+        --mb-accent-text: var(--mb-gold-ink);
+
+        background: var(--mb-paper);
+        color: var(--mb-ink);
+    }
+
+    .hp-eyebrow {
+        margin: 0 0 12px;
+        color: var(--mb-accent-text);
+        font: 600 12px/1.3 var(--mb-font-text);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+    }
+
+    .hp-h2 {
+        margin: 0;
+        color: var(--mb-text-strong);
+        font: 700 36px/1.15 var(--mb-font-text);
+        letter-spacing: -0.015em;
+        text-wrap: balance;
+    }
+
+    .hp-band .hp-h2 {
+        color: var(--mb-ink);
+        font-size: 48px;
+        line-height: 1.1;
+    }
+
+    .hp-sub {
+        margin: 12px 0 0;
+        color: var(--mb-text-body);
+        font: 400 18px/1.55 var(--mb-font-text);
+    }
+
+    .hp-band .hp-sub {
+        color: var(--mb-ink-muted);
+    }
+
+    .hp-lead {
+        margin: 24px 0 0;
+        color: var(--mb-text-body);
+        font: 400 18px/1.6 var(--mb-font-text);
+    }
+
+    .hp-head {
+        margin-bottom: 36px;
+    }
+
+    .hp-head--split {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 16px 32px;
+    }
+
+    .hp-head--center {
+        max-width: 760px;
+        margin: 0 auto 56px;
+        text-align: center;
+
+        .hp-sub {
+            max-width: 28rem;
+            margin-inline: auto;
+        }
+    }
+
+    .hp-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 0;
+        color: var(--mb-gold-light);
+        background: none;
+        border: 0;
+        font: 600 15px/1.4 var(--mb-font-text);
+        cursor: pointer;
+        transition: color 0.2s ease-in;
+
+        svg {
+            flex: none;
+            transition: translate 0.2s ease-in;
+        }
+
+        &:hover {
+            color: var(--mb-text-strong);
+
+            svg {
+                translate: 3px 0;
+            }
+        }
+    }
+
+    .hp-band .hp-link {
+        color: var(--mb-gold-ink);
+
+        &:hover {
+            color: var(--mb-ink);
+        }
+    }
+
+    .hp-note {
+        margin: 24px 0 0;
+        color: var(--mb-text-muted);
+        font: 400 13px/1.5 var(--mb-font-text);
+    }
+
+    // Betty's buttons: pills, 14 px semibold. Gold carries ink text (white on gold is 3.3:1).
+    .hp-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 48px;
+        padding: 0 32px;
+        border: 1px solid transparent;
+        border-radius: 999px;
+        font: 600 14px/1.2 var(--mb-font-text);
+        text-align: center;
+        white-space: nowrap;
+        cursor: pointer;
+        transition:
+            background-color 0.2s ease-in,
+            border-color 0.2s ease-in,
+            color 0.2s ease-in;
+
+        &:disabled {
+            cursor: default;
+            opacity: 0.7;
+        }
+    }
+
+    .hp-btn--gold {
+        background: var(--mb-gold);
+        color: var(--mb-ink);
+
+        &:hover:not(:disabled) {
+            background: var(--mb-gold-light);
+        }
+    }
+
+    .hp-btn--line {
+        background: none;
+        color: var(--mb-text-strong);
+        border-color: var(--mb-border-strong);
+
+        &:hover {
+            border-color: var(--mb-text-muted);
+        }
+    }
+
+    .hp-band .hp-btn--line {
+        color: var(--mb-ink);
+        border-color: var(--mb-paper-line);
+
+        &:hover {
+            border-color: var(--mb-ink-muted);
+        }
+    }
+
+    .hp-btn--ink {
+        background: var(--mb-ink);
+        color: var(--mb-paper);
+
+        &:hover {
+            background: var(--mb-raised);
+        }
+    }
+
+    .hp-btn--lg {
+        min-height: 56px;
+        padding: 0 40px;
+        font-size: 16px;
+    }
+
+    .hp-btn--block {
+        width: 100%;
+    }
+
+    .hp-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-top: 32px;
+    }
+
+    .hp-card {
+        background: var(--mb-surface);
+        border: 1px solid var(--mb-border);
+        border-radius: var(--hp-radius);
+    }
+
+    .hp-skel {
+        display: block;
+        height: 14px;
+        margin-bottom: 12px;
+        border-radius: 8px;
+        background: var(--mb-raised);
+        animation: hp-pulse 1.6s ease-in-out infinite;
+    }
+
+    .hp-band .hp-skel {
+        background: var(--mb-paper-2);
+    }
+
+    .hp-skel--short {
+        width: 55%;
+    }
+
+    .hp-skel--button {
+        height: 38px;
+        margin: 16px 0 0;
+        border-radius: 16px;
+    }
+
+    .hp-input {
+        width: 100%;
+        min-height: 48px;
+        padding: 12px 16px;
+        color: var(--mb-text);
+        background: var(--mb-deep);
+        border: 1px solid var(--mb-border-strong);
+        border-radius: 16px;
+        font: 400 15px/1.4 var(--mb-font-text);
+        transition: border-color 0.2s ease-in;
+
+        &:hover {
+            border-color: var(--mb-text-muted);
+        }
+
+        &:focus {
+            border-color: var(--mb-gold);
+        }
+
+        &[aria-invalid='true'] {
+            border-color: #ff6a55;
+        }
+    }
+
+    textarea.hp-input {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    .hp-check {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-top: 14px;
+        color: var(--mb-text-muted);
+        font: 400 12px/1.55 var(--mb-font-text);
+        cursor: pointer;
+
+        > input {
+            flex: none;
+            width: 18px;
+            height: 18px;
+            margin: 1px 0 0;
+            accent-color: var(--mb-gold);
+            cursor: pointer;
+        }
+
+        a {
+            color: var(--mb-text);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+
+            &:hover {
+                color: var(--mb-gold-light);
+            }
+        }
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Hero: the cabin under a navy veil, the promise left (7/12), the quote card right (5/12)
+    // ---------------------------------------------------------------------------------------------
+    // (no overflow: hidden here: a scroll container would stop "get a quote" at the hero's top edge)
+    .hp-hero {
+        position: relative;
+        isolation: isolate;
+        display: flex;
+        align-items: center;
+        min-height: 720px;
+        background: var(--mb-deep);
+
+        &::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background:
+                linear-gradient(180deg, rgb(var(--mb-deep-rgb) / 0.35) 0%, transparent 22%, transparent 70%, rgb(var(--mb-bg-rgb) / 0.9) 100%),
+                linear-gradient(90deg, rgb(var(--mb-deep-rgb) / 0.88) 0%, rgb(var(--mb-deep-rgb) / 0.72) 50%, rgb(var(--mb-deep-rgb) / 0.5) 100%);
+        }
+    }
+
+    .hp-hero__grid {
+        display: grid;
+        grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+        align-items: center;
+        gap: 56px;
+        padding-block: 72px 80px;
+    }
+
+    .hp-hero__pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 24px;
+        padding: 6px 20px;
+        color: var(--mb-text-strong);
+        background: rgb(var(--mb-text-strong-rgb) / 0.1);
+        border: 1px solid rgb(var(--mb-text-strong-rgb) / 0.2);
+        border-radius: 999px;
+        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
+        font: 400 14px/1.4 var(--mb-font-text);
+    }
+
+    .hp-hero__dot {
+        flex: none;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--mb-green);
+        box-shadow: 0 0 0 3px rgb(52 211 153 / 0.22);
+    }
+
+    .hp-hero__title {
+        margin: 0 0 24px;
+        color: var(--mb-text-strong);
+        font-family: var(--mb-font-display);
+        font-size: 72px;
+        font-weight: 600;
+        font-stretch: var(--mb-display-stretch);
+        line-height: 1.06;
+        letter-spacing: var(--mb-display-tracking);
+        text-wrap: balance;
+    }
+
+    .hp-gold {
+        color: var(--mb-gold-light);
+    }
+
+    .hp-hero__lead {
+        max-width: 32rem;
+        margin: 0;
+        color: rgb(var(--mb-text-strong-rgb) / 0.9);
+        font: 400 20px/1.5 var(--mb-font-text);
+    }
+
+    .hp-hero__card {
+        min-width: 0;
+        // "Get a quote" anywhere on the page scrolls here: beside the promise the whole hero is
+        // already the target (the large margin keeps the page at the top); stacked, the card.
+        scroll-margin-top: 400px;
+    }
+
+    .hp-hero__card-title {
+        margin: 0 0 4px;
+        color: var(--mb-text-strong);
+        font: 600 24px/1.3 var(--mb-font-text);
+    }
+
+    .hp-hero__card-sub {
+        margin: 0 0 24px;
+        color: var(--mb-text-muted);
+        font: 400 14px/1.45 var(--mb-font-text);
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Figures: four cards (the split-flap tiles are in the soul sheet)
+    // ---------------------------------------------------------------------------------------------
+    .hp-stats {
+        padding-block: 56px 24px;
+    }
+
+    .hp-stats__grid {
+        display: grid;
+        grid-template-columns: repeat(var(--hp-stats, 4), minmax(0, 1fr));
+        gap: 24px;
+        margin-block: 0;
+        list-style: none;
+    }
+
+    .hp-stat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+        padding: 28px 16px 24px;
+        text-align: center;
+        background: var(--mb-surface);
+        border: 1px solid var(--mb-border);
+        border-radius: var(--hp-radius);
+    }
+
+    .hp-stat__value {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        min-height: 42px;
+    }
+
+    .hp-stat__prefix {
+        color: var(--mb-text-muted);
+        font: 600 12px/1.2 var(--mb-font-text);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .hp-stat__label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--mb-text-muted);
+        font: 500 14px/1.4 var(--mb-font-text);
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Featured deals: four fares (the fare itself is in the soul sheet)
+    // ---------------------------------------------------------------------------------------------
+    .hp-deals {
+        padding-block: 72px 64px;
+    }
+
+    .hp-deals__grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 28px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        > li {
+            display: flex;
+            align-items: flex-start;
+            min-width: 0;
+        }
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // How it works (white band): the four numbered stops of the flown route (WorksRoute, styled with
+    // the inner pages in mb-home-kit7.scss) and one dark button
+    // ---------------------------------------------------------------------------------------------
+    .hp-steps {
+        padding-block: 96px;
+    }
+
+    .hp-steps__action {
+        margin-top: 48px;
+        text-align: center;
+    }
+
+    // Why us: the kit9 version (the cabin through an aircraft window, four numbered reasons in a
+    // row) lives in mb-homepage-why.scss.
+
+    // ---------------------------------------------------------------------------------------------
+    // The shared sections on the homepage (the reviews as passes, the route map): Betty's headings
+    // and the homepage's width
+    // ---------------------------------------------------------------------------------------------
+    .mb-eyebrow {
+        margin-bottom: 12px;
+        letter-spacing: 0.2em;
+    }
+
+    .mb-reviews {
+        width: auto;
+        margin-left: 0;
+        padding-inline: 0;
+    }
+
+    .mb-reviews-inner {
+        max-width: var(--hp-max);
+        padding: 96px var(--hp-gutter);
+    }
+
+    // the reviews keep the kit9 heading (restored on request): the serif title of mb-home-soul.scss,
+    // without an eyebrow
+
+    .mb-regions .mb-section-title {
+        margin-bottom: 12px;
+        color: var(--mb-text-strong);
+        font: 700 36px/1.15 var(--mb-font-text);
+        letter-spacing: -0.015em;
+    }
+
+
+    // ---------------------------------------------------------------------------------------------
+    // The guide (white band): the FAQ and the long read
+    // ---------------------------------------------------------------------------------------------
+    .hp-guide {
+        padding-block: 96px;
+    }
+
+    .hp-faq {
+        display: grid;
+        grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+        align-items: start;
+        gap: 48px;
+    }
+
+    .hp-faq__list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .hp-faq__item {
+        background: var(--hp-paper-soft);
+        border: 1px solid var(--mb-paper-line);
+        border-radius: 16px;
+        transition: border-color 0.2s ease-in;
+
+        &.is-open {
+            border-color: var(--mb-ink-muted);
+        }
+    }
+
+    .hp-faq__q {
+        margin: 0;
+
+        > button {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            width: 100%;
+            padding: 18px 20px;
+            color: var(--mb-ink);
+            text-align: left;
+            background: none;
+            border: 0;
+            border-radius: 16px;
+            font: 600 16px/1.4 var(--mb-font-text);
+            cursor: pointer;
+        }
+    }
+
+    .hp-faq__no {
+        flex: none;
+        min-width: 22px;
+        color: var(--mb-gold-ink);
+        font: 700 13px/1 var(--mb-font-text);
+        font-variant-numeric: tabular-nums;
+        letter-spacing: 0.04em;
+    }
+
+    .hp-faq__text {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .hp-faq__icon {
+        position: relative;
+        flex: none;
+        width: 28px;
+        height: 28px;
+        border: 1px solid var(--mb-paper-line);
+        border-radius: 50%;
+
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 12px;
+            height: 2px;
+            background: var(--mb-ink);
+            border-radius: 1px;
+            translate: -50% -50%;
+        }
+
+        &::after {
+            rotate: 90deg;
+            transition: rotate 0.2s ease-in;
+        }
+    }
+
+    .hp-faq__item.is-open .hp-faq__icon::after {
+        rotate: 0deg;
+    }
+
+    .hp-faq__a {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.25s ease;
+
+        > div {
+            overflow: hidden;
+        }
+
+        p {
+            margin: 0;
+            padding: 0 20px 20px;
+            color: var(--mb-ink-muted);
+            font: 400 15px/1.65 var(--mb-font-text);
+        }
+    }
+
+    .hp-faq__item.is-open .hp-faq__a {
+        grid-template-rows: 1fr;
+    }
+
+    .hp-article {
+        max-width: 760px;
+        margin: 72px auto 0;
+        padding-top: 56px;
+        border-top: 1px solid var(--mb-paper-line);
+
+        h2 {
+            margin: 0 0 20px;
+            color: var(--mb-ink);
+            font: 700 30px/1.2 var(--mb-font-text);
+            letter-spacing: -0.01em;
+            text-wrap: balance;
+        }
+
+        h3 {
+            margin: 32px 0 12px;
+            color: var(--mb-ink);
+            font: 700 20px/1.3 var(--mb-font-text);
+        }
+
+        p {
+            margin: 0 0 16px;
+            color: var(--mb-ink-muted);
+            font: 400 16px/1.7 var(--mb-font-text);
+        }
+
+        // keyword stuffing stays in the source, not in the reader's face
+        strong {
+            color: inherit;
+            font-weight: inherit;
+        }
+    }
+
+    .hp-article__body {
+        max-height: 440px;
+        overflow: hidden;
+        mask-image: linear-gradient(#000 55%, transparent);
+    }
+
+    .hp-article.is-open .hp-article__body {
+        max-height: none;
+        mask-image: none;
+    }
+
+    .hp-article__checks {
+        margin: 0 0 16px;
+        padding: 0;
+        list-style: none;
+
+        > li {
+            position: relative;
+            margin-bottom: 10px;
+            padding-left: 32px;
+            color: var(--mb-ink-muted);
+            font: 400 16px/1.6 var(--mb-font-text);
+
+            &::before {
+                content: '';
+                position: absolute;
+                top: 3px;
+                left: 0;
+                width: 20px;
+                height: 20px;
+                background: color-mix(in srgb, var(--mb-gold) 18%, var(--mb-paper));
+                border-radius: 50%;
+            }
+
+            &::after {
+                content: '';
+                position: absolute;
+                top: 7px;
+                left: 7px;
+                width: 6px;
+                height: 10px;
+                border: solid var(--mb-gold-ink);
+                border-width: 0 2px 2px 0;
+                rotate: 45deg;
+            }
+        }
+    }
+
+    .hp-article__routes {
+        display: grid;
+        gap: 8px;
+        margin: 0 0 16px;
+        padding: 0;
+        list-style: none;
+
+        > li {
+            padding: 12px 16px;
+            color: var(--mb-ink-muted);
+            border: 1px solid var(--mb-paper-line);
+            border-radius: 12px;
+            font: 400 15px/1.5 var(--mb-font-text);
+        }
+    }
+
+    .hp-article__from {
+        color: var(--mb-ink);
+        font-weight: 600;
+    }
+
+    .hp-article__toggle {
+        margin-top: 12px;
+
+        svg {
+            rotate: 90deg;
+        }
+    }
+
+    .hp-article.is-open .hp-article__toggle svg {
+        rotate: -90deg;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+
+    // ---------------------------------------------------------------------------------------------
+    // Contact: the ways to reach us left, the form card right
+    // ---------------------------------------------------------------------------------------------
+    .hp-contact {
+        padding-block: 64px 112px;
+    }
+
+    // the form card runs as tall as the column beside it; its message box takes the extra height
+    .hp-contact__grid {
+        display: grid;
+        grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+        gap: 48px;
+    }
+
+    .hp-contact__ways {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        > li {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 18px;
+            background: rgb(var(--mb-deep-rgb) / 0.45);
+            border: 1px solid var(--mb-border);
+            border-radius: 16px;
+            transition: border-color 0.2s ease-in;
+
+            &:hover {
+                border-color: var(--mb-border-strong);
+            }
+        }
+    }
+
+    .hp-contact__icon {
+        display: grid;
+        flex: none;
+        place-items: center;
+        width: 44px;
+        height: 44px;
+        color: var(--mb-gold);
+        background: var(--mb-surface);
+        border: 1px solid var(--mb-border);
+        border-radius: 14px;
+    }
+
+    .hp-contact__text {
+        min-width: 0;
+    }
+
+    .hp-contact__label {
+        display: block;
+        margin-bottom: 4px;
+        color: var(--mb-text-muted);
+        font: 600 12px/1.4 var(--mb-font-text);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .hp-contact__value {
+        display: block;
+        color: var(--mb-text-strong);
+        font: 600 16px/1.45 var(--mb-font-text);
+        overflow-wrap: anywhere;
+    }
+
+    a.hp-contact__value:hover {
+        color: var(--mb-gold-light);
+    }
+
+    .hp-contact__form {
+        display: grid;
+        grid-template-rows: auto auto 1fr auto auto;
+        gap: 16px;
+        padding: 32px;
+
+        > .hp-check {
+            margin-top: 0;
+        }
+    }
+
+    .hp-field {
+        display: grid;
+        gap: 6px;
+
+        > label {
+            color: var(--mb-text);
+            font: 600 13px/1.4 var(--mb-font-text);
+        }
+    }
+
+    .hp-field--message {
+        grid-template-rows: auto 1fr;
+    }
+
+    .hp-field-row {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Widths (Betty: md 768, lg 1024; ours add the phone sizes)
+    // ---------------------------------------------------------------------------------------------
+    @media screen and (max-width: 1280px) {
+        .hp-hero__title {
+            font-size: 60px;
+        }
+    }
+
+    @media screen and (max-width: 1200px) {
+        .hp-deals__grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @media screen and (max-width: 1024px) {
+        .hp-hero {
+            min-height: 0;
+        }
+
+        .hp-hero__grid {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 40px;
+            padding-block: 56px 48px;
+        }
+
+        .hp-hero__card {
+            scroll-margin-top: calc(var(--hp-bar) + 16px);
+        }
+
+        .hp-faq,
+        .hp-contact__grid {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 40px;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .hp-section {
+            padding-block: 56px;
+        }
+
+        .hp-steps,
+        .hp-guide {
+            padding-block: 64px;
+        }
+
+        .hp-stats {
+            padding-block: 40px 8px;
+        }
+
+        .hp-deals {
+            padding-block: 56px 48px;
+        }
+
+        .hp-h2,
+        .mb-regions .mb-section-title {
+            font-size: 30px;
+        }
+
+        .hp-band .hp-h2 {
+            font-size: 34px;
+        }
+
+        .mb-reviews-inner {
+            padding-block: 64px;
+        }
+
+        .hp-sub,
+        .hp-lead {
+            font-size: 17px;
+        }
+
+        .hp-hero::after {
+            background:
+                linear-gradient(180deg, rgb(var(--mb-deep-rgb) / 0.82) 0%, rgb(var(--mb-deep-rgb) / 0.66) 60%, rgb(var(--mb-bg-rgb) / 0.95) 100%);
+        }
+
+        .hp-hero__grid {
+            padding-block: 40px 32px;
+        }
+
+        .hp-hero__title {
+            font-size: 44px;
+        }
+
+        .hp-hero__lead {
+            font-size: 17px;
+        }
+
+        .hp-stats__grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .hp-stat {
+            gap: 10px;
+            padding: 20px 8px 18px;
+        }
+
+        .hp-stat__label {
+            font-size: 13px;
+        }
+
+        .hp-contact {
+            padding-block: 40px 96px;
+        }
+
+        .hp-contact__form {
+            padding: 24px 20px;
+        }
+
+        .hp-article {
+            margin-top: 56px;
+            padding-top: 48px;
+
+            h2 {
+                font-size: 26px;
+            }
+        }
+    }
+
+    // phones: the form's paired fields stack
+    @media screen and (max-width: 640px) {
+        .hp-field-row {
+            grid-template-columns: minmax(0, 1fr);
+        }
+    }
+
+    // phones: buttons share their row, and a button alone on its row runs the full width
+    @media screen and (max-width: 480px) {
+        .hp-hero__pill-long {
+            display: none;
+        }
+
+        .hp-hero__title {
+            font-size: 40px;
+        }
+
+        .hp-actions > .hp-btn {
+            flex: 1 1 auto;
+        }
+    }
+
+    @media screen and (max-width: 360px) {
+        .hp-hero__title {
+            font-size: 36px;
+        }
+
+        .hp-contact__ways > li {
+            gap: 12px;
+            padding: 14px;
+        }
+
+        .hp-contact__icon {
+            width: 40px;
+            height: 40px;
+        }
+
+        .hp-contact__value {
+            font-size: 15px;
+        }
+    }
+}
+
+@keyframes hp-pulse {
+    50% {
+        opacity: 0.55;
+    }
+}

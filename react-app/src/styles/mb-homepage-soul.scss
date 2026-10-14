@@ -1,0 +1,1680 @@
+// The soul of the live site on Betty's homepage: the cabin film behind the hero, the quote form as a
+// boarding pass, the figures on a departures board, the deals as route tickets, the travel managers'
+// faces, the reviews' row of passes, the evening sky with our airliner, the route map, the travel
+// manager beside the FAQ, the golden newsletter ticket and the contact desk with its night map.
+// Navy tokens only (the sky keeps its own illustration colours); every motion stops for
+// prefers-reduced-motion. Everything is scoped under .hp (the homepage root).
+
+@keyframes hp-ring {
+    0% {
+        opacity: 0.7;
+        transform: scale(1);
+    }
+
+    80%,
+    100% {
+        opacity: 0;
+        transform: scale(2.6);
+    }
+}
+
+// the live dots' ring (transform and opacity only, so it never repaints the page)
+@keyframes hp-live {
+    0% {
+        opacity: 0.55;
+        transform: scale(1);
+    }
+
+    70%,
+    100% {
+        opacity: 0;
+        transform: scale(2.8);
+    }
+}
+
+@keyframes hp-fly {
+    from {
+        offset-distance: 0%;
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    to {
+        offset-distance: 100%;
+        opacity: 1;
+    }
+}
+
+@keyframes hp-cruise {
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    50% {
+        transform: translate(6px, -10px) rotate(0.7deg);
+    }
+}
+
+@keyframes hp-shimmer {
+    from {
+        opacity: 0.68;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes hp-drift {
+    from {
+        translate: 0 0;
+    }
+
+    to {
+        translate: -56px 0;
+    }
+}
+
+@keyframes hp-twinkle {
+    0%,
+    100% {
+        opacity: 0.95;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes hp-pop {
+    from {
+        opacity: 0;
+        translate: 0 6px;
+    }
+
+    to {
+        opacity: 1;
+        translate: 0 0;
+    }
+}
+
+.hp {
+    // ---------------------------------------------------------------------------------------------
+    // Hero: the poster at once, the film over it when it plays; the accreditations under the promise
+    // ---------------------------------------------------------------------------------------------
+    .hp-hero__media {
+        position: absolute;
+        inset: 0;
+        z-index: -2;
+        overflow: hidden;
+
+        img,
+        video {
+            position: absolute;
+            inset: 0;
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        video {
+            opacity: 0;
+            transition: opacity 1.2s ease;
+
+            &.is-playing {
+                opacity: 1;
+            }
+        }
+    }
+
+    .hp-hero__trust.logos-items {
+        flex: none;
+        justify-content: flex-start;
+        gap: 28px;
+        margin: 36px 0 0;
+
+        .logos-item {
+            opacity: 0.9;
+
+            img,
+            svg {
+                height: 22px;
+            }
+
+            &.logo-bbb svg {
+                height: 32px !important;
+            }
+        }
+
+        .image-text {
+            color: var(--mb-text);
+            font-size: 11px;
+        }
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // The quote form as a boarding pass: glass with a gold edge, the tear line with its two notches,
+    // the stub with three facts of every quote; a dotted route brings a plane to it
+    // ---------------------------------------------------------------------------------------------
+    .hp-pass {
+        position: relative;
+        isolation: isolate;
+        padding: 24px 32px 0;
+        border-radius: var(--hp-radius);
+
+        // the notches are punched out of this layer only, so the form's dropdowns are never clipped
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            border: 1px solid rgb(var(--mb-text-strong-rgb) / 0.14);
+            border-radius: inherit;
+            background:
+                linear-gradient(90deg, transparent 12%, var(--mb-gold) 50%, transparent 88%) top / 100% 1px no-repeat,
+                rgb(var(--mb-surface-rgb) / 0.84);
+            -webkit-backdrop-filter: blur(18px) saturate(1.2);
+            backdrop-filter: blur(18px) saturate(1.2);
+            -webkit-mask:
+                radial-gradient(circle 13px at 0 calc(100% - 66px), transparent 96%, #000),
+                radial-gradient(circle 13px at 100% calc(100% - 66px), transparent 96%, #000);
+            -webkit-mask-composite: source-in;
+            mask:
+                radial-gradient(circle 13px at 0 calc(100% - 66px), transparent 96%, #000),
+                radial-gradient(circle 13px at 100% calc(100% - 66px), transparent 96%, #000);
+            mask-composite: intersect;
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -2;
+            border-radius: inherit;
+            box-shadow: 0 40px 80px -36px rgb(var(--mb-shade-rgb) / 0.75);
+            pointer-events: none;
+        }
+    }
+
+    .hp-pass__head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 18px;
+        color: var(--mb-text-muted);
+        font: 600 11px/1.2 var(--mb-font-text);
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+    }
+
+    .hp-pass__brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--mb-gold-light);
+
+        > svg {
+            width: 18px;
+            height: 16px;
+            fill: currentColor;
+        }
+    }
+
+    // not positioned, so the form's dropdowns open over it; the tear line is a background clipped to
+    // the content box
+    .hp-pass__stub {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        height: 66px;
+        margin: 24px -32px 0;
+        padding: 0 32px;
+        background: linear-gradient(90deg, rgb(var(--mb-text-rgb) / 0.2) 0 6px, transparent 6px 11px) left top / 11px 2px repeat-x content-box;
+
+        > dl {
+            display: flex;
+            gap: 28px;
+            margin: 0;
+        }
+
+        dt {
+            margin-bottom: 4px;
+            color: var(--mb-text-muted);
+            font: 600 10px/1.2 var(--mb-font-text);
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        dd {
+            margin: 0;
+            color: var(--mb-text-strong);
+            font: 600 14px/1.25 var(--mb-font-text);
+            white-space: nowrap;
+        }
+    }
+
+    .hp-pass__barcode {
+        flex-shrink: 0;
+        width: 72px;
+        height: 26px;
+        margin-left: auto;
+        fill: rgb(var(--mb-text-rgb) / 0.45);
+    }
+
+    // a dotted route from the copy to the pass; the plane flies it once and waits there
+    .hp-pass__route {
+        position: absolute;
+        top: 58%;
+        right: calc(100% + 4px);
+        width: 220px;
+        height: 140px;
+        pointer-events: none;
+    }
+
+    .hp-pass__route-line {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        fill: none;
+        stroke: var(--mb-gold-light);
+        stroke-dasharray: 1 8;
+        stroke-linecap: round;
+        stroke-width: 2;
+        opacity: 0.75;
+    }
+
+    .hp-pass__route-plane {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 24px;
+        height: 22px;
+        fill: var(--mb-gold-light);
+        filter: drop-shadow(0 4px 6px rgb(var(--mb-shade-rgb) / 0.5));
+        offset-anchor: center;
+        offset-rotate: auto;
+        animation: hp-fly 2.8s 0.9s cubic-bezier(0.45, 0, 0.2, 1) both;
+    }
+
+    // browsers without motion paths keep just the dotted line
+    @supports not (offset-path: path('M0 0')) {
+        .hp-pass__route-plane {
+            display: none;
+        }
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Figures: split-flap tiles, like a departures board
+    // ---------------------------------------------------------------------------------------------
+    .hp-flaps {
+        display: inline-flex;
+        gap: 3px;
+    }
+
+    .hp-flap {
+        position: relative;
+        display: inline-grid;
+        place-items: center;
+        width: 30px;
+        height: 42px;
+        border-radius: 5px;
+        background: linear-gradient(180deg, var(--mb-raised) 0 50%, color-mix(in srgb, var(--mb-raised) 80%, var(--mb-deep)) 50% 100%);
+        box-shadow:
+            inset 0 1px 0 rgb(var(--mb-text-strong-rgb) / 0.08),
+            0 2px 3px rgb(var(--mb-shade-rgb) / 0.5);
+        color: var(--mb-text-strong);
+        font: 600 25px/1 var(--mb-font-text);
+        font-variant-numeric: tabular-nums;
+
+        // the split between the two flaps
+        &::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 0;
+            left: 0;
+            height: 1px;
+            background: rgb(var(--mb-deep-rgb) / 0.95);
+        }
+
+        &--mark {
+            width: 20px;
+            color: var(--mb-gold-light);
+        }
+
+        &--wait {
+            width: 64px;
+            animation: hp-pulse 1.6s ease-in-out infinite;
+        }
+    }
+
+    .hp-stat__live {
+        flex: none;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--mb-green);
+    }
+
+    // Betty's 99% in green, as in her design
+    .hp-stat--green .hp-flap {
+        color: var(--mb-green);
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Featured deals: a photo with a paper sheet across its lower edge. The saving, the cities
+    // and the fare sit on the sheet; an arrow marks the card as a control.
+    // ---------------------------------------------------------------------------------------------
+    .hp-fare {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        min-width: 0;
+        padding: 0 0 8px;
+        color: var(--mb-ink);
+        text-align: left;
+        background: transparent;
+        border: 0;
+        font: inherit;
+        cursor: pointer;
+
+        &:focus-visible {
+            outline: 2px solid var(--mb-gold-light);
+            outline-offset: 4px;
+        }
+
+        &.is-loading {
+            cursor: default;
+        }
+    }
+
+    .hp-fare__photo {
+        position: relative;
+        display: block;
+        width: 100%;
+        aspect-ratio: 3 / 2;
+        overflow: hidden;
+        border-radius: 20px 20px 0 0;
+        background: var(--mb-raised);
+
+        > img,
+        > .hp-fare__empty {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .hp-fare__sheet {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        row-gap: 4px;
+        column-gap: 12px;
+        margin-top: -36px;
+        padding: 16px 16px 16px 18px;
+        background: var(--mb-paper);
+        border-radius: 18px;
+        box-shadow: 0 18px 36px -24px rgb(var(--mb-shade-rgb) / 0.85);
+    }
+
+    .hp-fare__off {
+        grid-column: 1;
+        color: var(--mb-green-ink);
+        font: 600 13px/1.3 var(--mb-font-text);
+    }
+
+    .hp-fare__cities {
+        grid-column: 1;
+        color: var(--mb-ink);
+        font: 650 17px/1.25 var(--mb-font-text);
+        text-wrap: balance;
+    }
+
+    .hp-fare__price {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 8px;
+        grid-column: 1;
+        margin-top: 2px;
+        color: var(--mb-ink);
+        font: 700 22px/1.1 var(--mb-font-text);
+        font-variant-numeric: tabular-nums;
+
+        &.is-request {
+            font-size: 16px;
+            font-weight: 600;
+        }
+    }
+
+    .hp-fare__codes {
+        color: var(--mb-ink-muted);
+        font: 500 13px/1.2 var(--mb-font-text);
+        letter-spacing: 0.04em;
+    }
+
+    .hp-fare__go {
+        display: grid;
+        grid-row: 1 / span 3;
+        grid-column: 2;
+        place-items: center;
+        color: var(--mb-ink-muted);
+
+        > svg {
+            transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+    }
+
+    .hp-fare:hover .hp-fare__go,
+    .hp-fare:focus-visible .hp-fare__go {
+        color: var(--mb-ink);
+
+        > svg {
+            transform: translateX(3px);
+        }
+    }
+
+    .hp-fare.is-loading .hp-fare__photo {
+        min-height: 140px;
+    }
+
+    .hp-fare.is-loading .hp-fare__sheet .hp-skel {
+        background: var(--mb-paper-2);
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // The live dots (the travel managers on call, the desk, the fares)
+    // ---------------------------------------------------------------------------------------------
+    .mb-why__online,
+    .hp-faq__online {
+        flex-shrink: 0;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--mb-green);
+    }
+
+    // the live dots breathe: a ring grows out of each and fades
+    .hp-stat__live,
+    .hp-route__live > .dot,
+    .mb-why__online,
+    .hp-faq__online,
+    .hp-desk__live > .dot {
+        position: relative;
+
+        &::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: var(--mb-green);
+            animation: hp-live 2s ease-out infinite;
+        }
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Reviews: the passes' row on tablets and phones runs out to the screen edges of the homepage
+    // ---------------------------------------------------------------------------------------------
+    @media screen and (max-width: 1024px) {
+        .mb-reviews-grid {
+            --mb-rv-bleed: var(--hp-gutter);
+
+            gap: 16px;
+
+            &::after {
+                flex-basis: calc(var(--hp-gutter) - 16px);
+            }
+        }
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // The closing call to action on an evening sky: our airliner climbs out of a sunset
+    // ---------------------------------------------------------------------------------------------
+    .hp-cta {
+        position: relative;
+        overflow: hidden;
+        background: var(--mb-surface);
+        border-top: 1px solid var(--mb-border);
+    }
+
+    .hp-cta__sky {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+
+        > span {
+            position: absolute;
+            display: block;
+        }
+    }
+
+    .hp-cta__stars {
+        inset: 0 34% 45% 0;
+        background-image:
+            radial-gradient(1.3px 1.3px at 12% 18%, rgb(255 255 255 / 0.75), transparent),
+            radial-gradient(1px 1px at 28% 9%, rgb(255 255 255 / 0.55), transparent),
+            radial-gradient(1.5px 1.5px at 47% 24%, rgb(255 255 255 / 0.6), transparent),
+            radial-gradient(1px 1px at 62% 8%, rgb(255 255 255 / 0.5), transparent),
+            radial-gradient(1.3px 1.3px at 79% 20%, rgb(255 255 255 / 0.55), transparent),
+            radial-gradient(1px 1px at 37% 40%, rgb(255 255 255 / 0.4), transparent),
+            radial-gradient(1.2px 1.2px at 92% 6%, rgb(255 255 255 / 0.45), transparent),
+            radial-gradient(1px 1px at 6% 52%, rgb(255 255 255 / 0.35), transparent);
+        animation: hp-twinkle 5.5s ease-in-out infinite;
+    }
+
+    .hp-cta__glow {
+        right: -10%;
+        bottom: -130px;
+        left: 30%;
+        height: 270px;
+        border-radius: 50%;
+        background: radial-gradient(closest-side, rgb(var(--sun-glow) / 0.55), rgb(var(--sun-rose) / 0.25) 55%, rgb(var(--sun-rose) / 0) 100%);
+    }
+
+    .hp-cta__sun {
+        right: 9%;
+        bottom: -64px;
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background: radial-gradient(closest-side, var(--sun-core) 0%, rgb(var(--sun-warm) / 0.9) 42%, rgb(var(--sun-warm) / 0.5) 70%, rgb(var(--sun-warm) / 0) 100%);
+    }
+
+    .hp-cta__cloud {
+        border-radius: 50%;
+        filter: blur(6px);
+        animation: hp-drift 28s ease-in-out infinite alternate;
+
+        &--low {
+            right: -8%;
+            bottom: -10px;
+            width: 720px;
+            height: 72px;
+            background: radial-gradient(closest-side, rgb(var(--cloud-dark) / 0.55), rgb(var(--cloud-dark) / 0));
+            animation-duration: 36s;
+        }
+
+        &--lit {
+            right: -6%;
+            bottom: 26px;
+            width: 560px;
+            height: 34px;
+            background: radial-gradient(closest-side, rgb(var(--cloud-lit) / 0.5), rgb(var(--cloud-lit) / 0));
+        }
+
+        &--far {
+            right: 26%;
+            bottom: 60px;
+            width: 380px;
+            height: 22px;
+            background: radial-gradient(closest-side, rgb(var(--cloud-lit) / 0.3), rgb(var(--cloud-lit) / 0));
+            animation-duration: 22s;
+            animation-direction: alternate-reverse;
+        }
+    }
+
+    // the plane sits in the open half of the band and glides in when the section comes into view
+    .hp-cta__flight {
+        position: absolute;
+        z-index: 0;
+        top: 64px;
+        right: 3%;
+        width: min(600px, 46%);
+        pointer-events: none;
+        transform: rotate(-7deg);
+        transition:
+            transform 2s cubic-bezier(0.16, 0.84, 0.3, 1),
+            opacity 1.2s ease;
+    }
+
+    .hp-cta:not(.is-visible) .hp-cta__flight {
+        opacity: 0;
+        transform: translate(-150px, 70px) rotate(-7deg);
+    }
+
+    .hp-cta__craft {
+        display: block;
+        animation: hp-cruise 7s ease-in-out infinite;
+    }
+
+    .hp-cta__plane {
+        display: block;
+        width: 100%;
+        height: auto;
+        filter: drop-shadow(0 18px 24px rgb(var(--mb-shade-rgb) / 0.35));
+    }
+
+    .hp-cta .mb-air__trails {
+        animation: hp-shimmer 3.2s ease-in-out infinite alternate;
+    }
+
+    // keeps the copy on calm, dark sky
+    .hp-cta__shade {
+        inset: 0;
+        background: linear-gradient(90deg, rgb(var(--mb-bg-rgb) / 0.92) 0%, rgb(var(--mb-bg-rgb) / 0.62) 34%, rgb(var(--mb-bg-rgb) / 0) 58%);
+    }
+
+    // the horizon the sun sets behind, brightest under the sun
+    .hp-cta::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 1px;
+        background: linear-gradient(90deg, rgb(var(--sun-glow) / 0) 25%, rgb(var(--sun-glow) / 0.7) 84%, rgb(var(--sun-glow) / 0) 100%);
+        pointer-events: none;
+    }
+
+    .hp-cta__inner {
+        position: relative;
+        z-index: 1;
+        padding-block: 120px;
+
+        > .hp-h2 {
+            max-width: 560px;
+            font-size: 44px;
+            line-height: 1.12;
+        }
+    }
+
+    .hp-cta__sub {
+        margin: 16px 0 0;
+        color: rgb(var(--mb-text-strong-rgb) / 0.8);
+        font: 400 20px/1.5 var(--mb-font-text);
+    }
+
+    .hp-cta .hp-actions {
+        margin-top: 36px;
+    }
+
+    .hp-btn--glass {
+        color: var(--mb-text-strong);
+        background: rgb(var(--mb-bg-rgb) / 0.35);
+        border-color: rgb(var(--mb-text-strong-rgb) / 0.45);
+        -webkit-backdrop-filter: blur(6px);
+        backdrop-filter: blur(6px);
+
+        &:hover {
+            border-color: var(--mb-text-strong);
+        }
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Destinations: a route explorer — the link lists on the left, the route map on the right
+    // ---------------------------------------------------------------------------------------------
+    .mb-regions {
+        max-width: var(--hp-max);
+        margin: 0 auto;
+        padding: 104px var(--hp-gutter) 96px;
+    }
+
+    .mb-regions__head {
+        max-width: 640px;
+        margin-bottom: 44px;
+    }
+
+    .mb-regions__sub {
+        margin: 0;
+        color: var(--mb-text-body);
+        font: 400 18px/1.55 var(--mb-font-text);
+    }
+
+    .mb-regions__layout {
+        display: grid;
+        grid-template-columns: minmax(0, 400px) minmax(0, 1fr);
+        align-items: center;
+        gap: 56px;
+    }
+
+    .mb-regions__explorer,
+    .mb-regions__map {
+        min-width: 0;
+    }
+
+    .mb-regions__tabs {
+        display: flex;
+        gap: 4px;
+        width: max-content;
+        max-width: 100%;
+        margin-bottom: 16px;
+        padding: 4px;
+        border: 1px solid var(--mb-border);
+        border-radius: 999px;
+    }
+
+    .mb-regions__tab {
+        flex: 1;
+        padding: 9px 18px;
+        color: var(--mb-text-muted);
+        background: none;
+        border: 0;
+        border-radius: 999px;
+        font: 600 14px/1.2 var(--mb-font-text);
+        white-space: nowrap;
+        cursor: pointer;
+        transition:
+            background 0.2s ease,
+            color 0.2s ease;
+
+        &:hover {
+            color: var(--mb-text-strong);
+        }
+
+        &[aria-selected='true'] {
+            color: var(--mb-text-strong);
+            background: var(--mb-raised);
+            box-shadow: inset 0 0 0 1px rgb(var(--mb-text-strong-rgb) / 0.06);
+        }
+    }
+
+    .mb-regions__panel[hidden] {
+        display: none;
+    }
+
+    .mb-regions__links {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        > li {
+            break-inside: avoid;
+        }
+    }
+
+    .mb-region-link {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 12px 2px 12px 0;
+        color: var(--mb-text-muted);
+        border-bottom: 1px solid rgb(var(--mb-text-rgb) / 0.08);
+        font: 500 15px/1.4 var(--mb-font-text);
+        transition: color 0.2s ease;
+
+        > svg {
+            flex-shrink: 0;
+            color: var(--mb-gold);
+            opacity: 0;
+            transform: translateX(-6px);
+            transition:
+                opacity 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        &:hover,
+        &.is-active {
+            color: var(--mb-text-strong);
+
+            > svg {
+                opacity: 1;
+                transform: none;
+            }
+        }
+    }
+
+    .mb-region-link__text {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .mb-region-link__dot {
+        flex-shrink: 0;
+        width: 9px;
+        height: 9px;
+        border: 1.5px solid color-mix(in srgb, var(--mb-gold) 70%, transparent);
+        border-radius: 50%;
+        transition:
+            background 0.2s ease,
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .mb-region-link.is-active .mb-region-link__dot {
+        background: var(--mb-gold-light);
+        border-color: var(--mb-gold-light);
+        box-shadow: 0 0 0 4px color-mix(in srgb, var(--mb-gold) 22%, transparent);
+    }
+
+    .mb-region-more {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 20px;
+        color: var(--mb-gold-light);
+        font: 600 15px/1.4 var(--mb-font-text);
+        transition: color 0.2s ease;
+
+        > svg {
+            flex-shrink: 0;
+        }
+
+        &:hover {
+            color: var(--mb-text-strong);
+        }
+    }
+
+    // the map (RouteMap.jsx): the dotted world painted once, the routes repainted while flying
+    .mb-routemap {
+        position: relative;
+        isolation: isolate;
+        aspect-ratio: 1032 / 497.67;
+        overflow: hidden;
+        background:
+            radial-gradient(70% 90% at 26% 34%, rgb(var(--mb-raised-rgb) / 0.7), transparent 70%),
+            var(--mb-surface);
+        border: 1px solid var(--mb-border);
+        border-radius: var(--hp-radius);
+    }
+
+    .mb-routemap__land,
+    .mb-routemap__svg {
+        position: absolute;
+        inset: 0;
+        display: block;
+        width: 100%;
+        height: 100%;
+        will-change: transform;
+    }
+
+    .mb-routemap__svg {
+        overflow: visible;
+    }
+
+    // nothing pulses while the map is off screen
+    .mb-routemap:not(.is-visible) :is(.mb-routemap__ping, .mb-routemap__hub-ring) {
+        animation-play-state: paused;
+    }
+
+    .mb-routemap__land path {
+        fill: none;
+        stroke: rgb(var(--mb-text-rgb) / 0.17);
+        stroke-linecap: round;
+        stroke-width: 46;
+    }
+
+    .mb-routemap__arcs path {
+        fill: none;
+        stroke: rgb(var(--mb-text-rgb) / 0.24);
+        stroke-dasharray: 3 5;
+        stroke-width: 1.25;
+        transition: stroke 0.3s ease;
+
+        &.is-active {
+            stroke: color-mix(in srgb, var(--mb-gold) 80%, transparent);
+            stroke-width: 1.5;
+        }
+    }
+
+    .mb-routemap__trail {
+        fill: none;
+        stroke: var(--mb-gold-light);
+        stroke-linecap: round;
+    }
+
+    .mb-routemap__stops circle {
+        fill: var(--mb-gold);
+        opacity: 0.75;
+        transition: opacity 0.3s ease;
+
+        &.is-active {
+            fill: var(--mb-gold-light);
+            opacity: 1;
+        }
+    }
+
+    .mb-routemap__ping,
+    .mb-routemap__hub-ring {
+        transform-box: fill-box;
+        transform-origin: center;
+        animation: hp-ring 2.4s ease-out infinite;
+    }
+
+    .mb-routemap__ping,
+    .mb-routemap__hub,
+    .mb-routemap__hub-ring {
+        fill: var(--mb-gold-light);
+    }
+
+    .mb-routemap__plane {
+        fill: var(--mb-gold-light);
+        filter: drop-shadow(0 2px 3px rgb(var(--mb-shade-rgb) / 0.7));
+    }
+
+    .mb-routemap__label {
+        position: absolute;
+        z-index: 1;
+        padding: 6px 12px;
+        color: var(--mb-ink);
+        background: var(--mb-paper);
+        border-radius: 999px;
+        box-shadow: 0 10px 24px -10px rgb(var(--mb-shade-rgb) / 0.8);
+        font: 600 12px/1.2 var(--mb-font-text);
+        white-space: nowrap;
+        pointer-events: none;
+        transform: translate(-50%, calc(-100% - 12px));
+        animation: hp-pop 0.35s ease-out both;
+
+        &.is-start {
+            transform: translate(-14px, calc(-100% - 12px));
+        }
+
+        &.is-end {
+            transform: translate(calc(-100% + 14px), calc(-100% - 12px));
+        }
+
+        &--hub {
+            color: var(--mb-text-strong);
+            background: var(--mb-raised);
+            box-shadow: none;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            transform: translate(-50%, 12px);
+            animation: none;
+        }
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // The guide: a travel manager beside the questions
+    // ---------------------------------------------------------------------------------------------
+    .hp-faq__agent {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        max-width: 420px;
+        margin-top: 24px;
+        padding: 14px 18px 14px 14px;
+        background: var(--hp-paper-soft);
+        border: 1px solid var(--mb-paper-line);
+        border-radius: 18px;
+
+        > img {
+            flex: none;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    }
+
+    .hp-faq__agent-title {
+        margin: 0 0 4px;
+        color: var(--mb-ink);
+        font: 600 15px/1.35 var(--mb-font-text);
+    }
+
+    .hp-faq__agent-text {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0;
+        color: var(--mb-ink-muted);
+        font: 400 14px/1.4 var(--mb-font-text);
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Newsletter: a golden ticket — the sign-up on the ticket, seat 1A on the stub
+    // ---------------------------------------------------------------------------------------------
+    .hp-news {
+        padding-block: 88px 24px;
+    }
+
+    .hp-ticket {
+        position: relative;
+        display: block;
+        max-width: 720px;
+        color: var(--mb-ink);
+        background: var(--mb-paper);
+        border-radius: var(--hp-radius);
+    }
+
+    .hp-ticket__main {
+        position: relative;
+        isolation: isolate;
+        padding: 56px 56px 48px;
+    }
+
+    // a big plane embossed into the ticket
+    .hp-ticket__watermark {
+        position: absolute;
+        top: 50%;
+        right: 6%;
+        z-index: -1;
+        width: 300px;
+        height: 270px;
+        fill: rgb(var(--mb-shade-rgb) / 0.07);
+        transform: translateY(-50%) rotate(-18deg);
+        pointer-events: none;
+    }
+
+    .hp-ticket__title {
+        max-width: 620px;
+        margin: 0 0 12px;
+        color: var(--mb-ink);
+        font: var(--mb-display-weight) 40px/1.15 var(--mb-font-display);
+        letter-spacing: -0.015em;
+        text-wrap: balance;
+    }
+
+    .hp-ticket__sub {
+        max-width: 580px;
+        margin: 0 0 28px;
+        color: var(--mb-ink);
+        font: 400 17px/1.55 var(--mb-font-text);
+    }
+
+    .hp-ticket__form {
+        max-width: 600px;
+    }
+
+    .hp-ticket__row {
+        display: flex;
+        gap: 10px;
+
+        > .hp-btn {
+            flex: none;
+        }
+    }
+
+    .hp-ticket__input {
+        flex: 1;
+        min-width: 0;
+        min-height: 48px;
+        padding: 0 20px;
+        color: var(--mb-text);
+        background: var(--mb-deep);
+        border: 1px solid var(--mb-border);
+        border-radius: 999px;
+        box-shadow: inset 0 1px 2px rgb(var(--mb-shade-rgb) / 0.12);
+        font: 400 15px/1.4 var(--mb-font-text);
+
+        &::placeholder {
+            color: var(--mb-text-muted);
+        }
+
+        &[aria-invalid='true'] {
+            border-color: #b42318;
+        }
+    }
+
+    .hp-ticket__check {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-top: 16px;
+        color: var(--mb-ink);
+        font: 400 12px/1.55 var(--mb-font-text);
+        cursor: pointer;
+
+        > input {
+            flex: none;
+            width: 18px;
+            height: 18px;
+            margin: 1px 0 0;
+            accent-color: var(--mb-ink);
+            cursor: pointer;
+        }
+
+        a {
+            font-weight: 600;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+    }
+
+    .hp-ticket__status {
+        display: inline-block;
+        margin: 14px 0 0;
+        padding: 8px 14px;
+        color: var(--mb-ink);
+        background: rgb(255 255 255 / 0.92);
+        border-radius: 12px;
+        font: 600 14px/1.4 var(--mb-font-text);
+
+        &.is-error {
+            color: #b42318;
+        }
+    }
+
+    // the stub, behind a perforated tear line with its two notches
+    .hp-ticket__stub {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 16px;
+        padding: 40px 32px;
+        border-left: 2px dashed rgb(var(--mb-shade-rgb) / 0.3);
+
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            left: -14px;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: var(--mb-bg);
+        }
+
+        &::before {
+            top: -13px;
+        }
+
+        &::after {
+            bottom: -13px;
+        }
+    }
+
+    .hp-ticket__brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--mb-ink);
+        font: 700 12px/1.2 var(--mb-font-text);
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+
+        > svg {
+            width: 18px;
+            height: 16px;
+            fill: currentColor;
+        }
+    }
+
+    .hp-ticket__field {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+    }
+
+    .hp-ticket__label {
+        color: var(--mb-ink);
+        font: 700 10.5px/1.2 var(--mb-font-text);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .hp-ticket__value {
+        color: var(--mb-ink);
+        font: var(--mb-display-weight) 30px/1.05 var(--mb-font-display);
+        font-stretch: var(--mb-display-stretch);
+    }
+
+    .hp-ticket__barcode {
+        width: 100%;
+        height: 42px;
+        fill: rgb(var(--mb-shade-rgb) / 0.78);
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Contact: the desk — live service, the three ways as tiles and a night map of the office
+    // ---------------------------------------------------------------------------------------------
+    .hp-desk__head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px;
+        margin: 32px 0 14px;
+    }
+
+    .hp-desk__live {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 6px 11px;
+        color: var(--mb-green);
+        background: rgb(52 211 153 / 0.12);
+        border-radius: 999px;
+        font: 700 11px/1 var(--mb-font-text);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+
+        > .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--mb-green);
+        }
+    }
+
+    .hp-desk__title {
+        margin: 0;
+        color: var(--mb-text-strong);
+        font: 600 18px/1.3 var(--mb-font-text);
+    }
+
+    // the office tile: the night map on top, the address under it, the whole tile opens Google Maps
+    .hp-contact__ways > li.hp-contact__office {
+        display: block;
+        padding: 0;
+        background: none;
+        border: 0;
+    }
+
+    .hp-desk__map {
+        --water: #2a5784;
+
+        display: block;
+        overflow: hidden;
+        background: rgb(var(--mb-deep-rgb) / 0.45);
+        border: 1px solid var(--mb-border);
+        border-radius: 16px;
+        transition: border-color 0.2s ease-in;
+
+        &:hover {
+            border-color: var(--mb-gold);
+        }
+    }
+
+    .hp-desk__view {
+        position: relative;
+        display: block;
+        height: 112px;
+        overflow: hidden;
+        background: var(--mb-deep);
+        border-bottom: 1px solid var(--mb-border);
+    }
+
+    // drawn at its own size (1200 x 200), anchored on the lake and centred on the office
+    .hp-desk__city {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        width: 1200px;
+        max-width: none;
+        height: 200px;
+        transform: translateY(-50%);
+    }
+
+    .hp-desk__place {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 16px 18px;
+    }
+
+    .hp-desk__open {
+        display: grid;
+        flex: none;
+        place-items: center;
+        width: 36px;
+        height: 36px;
+        margin-left: auto;
+        color: var(--mb-text-strong);
+        border: 1px solid var(--mb-border-strong);
+        border-radius: 50%;
+        transition:
+            color 0.2s ease-in,
+            background-color 0.2s ease-in,
+            border-color 0.2s ease-in;
+    }
+
+    .hp-desk__map:hover .hp-desk__open {
+        color: var(--mb-ink);
+        background: var(--mb-gold);
+        border-color: var(--mb-gold);
+    }
+
+    .hp-desk__lake {
+        fill: color-mix(in srgb, var(--water) 32%, var(--mb-deep));
+    }
+
+    .hp-desk__grid {
+        stroke: rgb(var(--mb-text-rgb) / 0.07);
+        stroke-width: 1;
+    }
+
+    .hp-desk__avenue {
+        stroke: rgb(var(--mb-text-rgb) / 0.14);
+        stroke-width: 2.5;
+    }
+
+    .hp-desk__river {
+        fill: none;
+        stroke: color-mix(in srgb, var(--water) 75%, var(--mb-deep));
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 5;
+    }
+
+    .hp-desk__blocks {
+        fill: rgb(var(--mb-text-rgb) / 0.035);
+    }
+
+    .hp-desk__water-label {
+        fill: rgb(var(--mb-text-rgb) / 0.4);
+        font: italic 400 8px/1 var(--mb-font-display);
+        letter-spacing: 0.06em;
+    }
+
+    .hp-desk__pin-ring {
+        fill: none;
+        stroke: var(--mb-gold);
+        stroke-width: 2;
+        transform-box: fill-box;
+        transform-origin: center;
+        animation: hp-ring 2.4s ease-out infinite;
+    }
+
+    .hp-desk__pin-dot {
+        fill: var(--mb-gold);
+        stroke: var(--mb-paper);
+        stroke-width: 2.5;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Widths
+    // ---------------------------------------------------------------------------------------------
+    @media screen and (max-width: 1200px) {
+        .hp-pass__route {
+            display: none;
+        }
+
+        .mb-regions__layout {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 28px;
+        }
+
+        .mb-regions__explorer {
+            order: 2;
+        }
+
+        .mb-regions__map {
+            order: 1;
+        }
+
+        .hp-cta__inner {
+            padding-block: 96px;
+        }
+
+        .hp-cta__flight {
+            right: -2%;
+            width: 50%;
+        }
+    }
+
+    @media screen and (min-width: 769px) and (max-width: 1200px) {
+        .mb-regions__links {
+            column-gap: 48px;
+            columns: 2;
+        }
+    }
+
+    @media screen and (max-width: 900px) {
+        .hp-ticket {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .hp-ticket__main {
+            padding: 44px 28px 36px;
+        }
+
+        .hp-ticket__watermark {
+            right: -40px;
+            width: 200px;
+            height: 180px;
+        }
+
+        .hp-ticket__stub {
+            display: grid;
+            grid-template-columns: repeat(3, auto);
+            align-items: end;
+            justify-content: space-between;
+            gap: 12px 20px;
+            padding: 24px 28px;
+            border-top: 2px dashed rgb(var(--mb-shade-rgb) / 0.3);
+            border-left: 0;
+
+            &::before,
+            &::after {
+                top: -14px;
+                bottom: auto;
+            }
+
+            &::before {
+                left: -13px;
+            }
+
+            &::after {
+                right: -13px;
+                left: auto;
+            }
+        }
+
+        .hp-ticket__brand {
+            grid-column: 1 / -1;
+        }
+
+        .hp-ticket__value {
+            font-size: 24px;
+        }
+
+        .hp-ticket__barcode {
+            width: 96px;
+            height: 34px;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .hp-hero__trust.logos-items {
+            flex-wrap: wrap;
+            gap: 12px 20px;
+            margin-top: 24px;
+
+            .logos-item {
+                img,
+                svg {
+                    height: 18px;
+                }
+
+                &.logo-bbb svg {
+                    height: 26px !important;
+                }
+            }
+
+            .img-with-text {
+                flex-direction: row;
+            }
+
+            // phones: the four marks on one line; the codes are on the badges' own pages
+            .image-text {
+                display: none;
+            }
+        }
+
+        .hp-pass {
+            padding: 20px 16px 0;
+        }
+
+        .hp-pass__stub {
+            gap: 12px;
+            margin: 20px -16px 0;
+            padding: 0 16px;
+
+            > dl {
+                gap: 18px;
+            }
+
+            dd {
+                font-size: 13px;
+            }
+        }
+
+        .hp-pass__barcode {
+            display: none;
+        }
+
+        .hp-flap {
+            width: 22px;
+            height: 32px;
+            border-radius: 4px;
+            font-size: 19px;
+
+            &--mark {
+                width: 14px;
+            }
+
+            &--wait {
+                width: 48px;
+            }
+        }
+
+        .hp-stat__value {
+            gap: 6px;
+            min-height: 32px;
+        }
+
+        .hp-stat__prefix {
+            font-size: 10px;
+        }
+
+        .hp-cta__inner {
+            padding-block: 56px 232px;
+            text-align: center;
+
+            > .hp-h2 {
+                margin-inline: auto;
+                font-size: 30px;
+            }
+        }
+
+        .hp-cta__sub {
+            font-size: 17px;
+        }
+
+        .hp-cta .hp-actions {
+            justify-content: center;
+        }
+
+        .hp-cta__stars {
+            inset: 0 0 55% 0;
+        }
+
+        .hp-cta__flight {
+            top: auto;
+            right: 3%;
+            bottom: 60px;
+            width: min(370px, 94%);
+        }
+
+        .hp-cta__sun {
+            right: 14%;
+        }
+
+        .hp-cta__shade {
+            background: linear-gradient(180deg, rgb(var(--mb-bg-rgb) / 0.88) 0%, rgb(var(--mb-bg-rgb) / 0.6) 48%, rgb(var(--mb-bg-rgb) / 0) 70%);
+        }
+
+        .mb-regions {
+            padding-block: 64px;
+        }
+
+        .mb-regions__head {
+            margin-bottom: 28px;
+        }
+
+        .mb-regions__tabs {
+            width: 100%;
+        }
+
+        .mb-regions__tab {
+            min-height: 44px;
+        }
+
+        .mb-routemap__land path {
+            stroke-width: 60;
+        }
+
+        .mb-routemap__label {
+            padding: 4px 9px;
+            font-size: 11px;
+        }
+
+        .hp-news {
+            padding-block: 56px 16px;
+        }
+
+        .hp-ticket__title {
+            font-size: 28px;
+        }
+
+        .hp-ticket__row {
+            flex-direction: column;
+        }
+    }
+
+    // phones: the four photo cards in one column
+    @media screen and (max-width: 640px) {
+        .hp-deals__grid {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 22px;
+        }
+
+        .hp-fare__cities {
+            font-size: 18px;
+        }
+
+        .hp-cta .hp-actions {
+            flex-direction: column;
+            align-items: stretch;
+        }
+    }
+
+    // small phones: the pass keeps its head on one line and its fields' words on theirs
+    @media screen and (max-width: 380px) {
+        .hp-pass__class {
+            display: none;
+        }
+
+        .hp-pass .choose-properties > .adaptive-select-options-buttons > button > span {
+            overflow: hidden;
+            padding-inline: 6px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .hp-pass__route-plane {
+            animation: none;
+            offset-distance: 100%;
+        }
+
+        .hp-cta:not(.is-visible) .hp-cta__flight {
+            opacity: 1;
+            transform: rotate(-7deg);
+        }
+
+        .hp-cta__craft,
+        .hp-cta__stars,
+        .hp-cta__cloud,
+        .hp-cta .mb-air__trails,
+        .hp-stat__live::after,
+        .mb-why__online::after,
+        .hp-faq__online::after,
+        .hp-desk__live > .dot::after,
+        .hp-desk__pin-ring,
+        .mb-routemap__ping,
+        .mb-routemap__hub-ring,
+        .hp-flap--wait,
+        .hp-skel {
+            animation: none;
+        }
+    }
+}

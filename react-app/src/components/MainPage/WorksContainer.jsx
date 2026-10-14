@@ -2,13 +2,14 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useAppStore } from '@/store/useAppStore'
 import BlackWithOrangeTextButton from '@/components/common/Buttons/BlackWithOrangeTextButton'
+import WorksRoute from './WorksRoute'
 
 // Moodboard homepage steps: keep the real production copy from the legacy layout below.
 const mbSteps = [
     { number: '01', title: 'Request a quote', body: 'Request a FREE quote by completing the form above.' },
     { number: '02', title: 'Fill in your information', body: 'Fill in your personal and contact information.' },
     { number: '03', title: 'Find the best deal', body: 'A friendly travel concierge will quickly find the best deals for you.' },
-    { number: '04', title: 'Book your flight', body: 'Book your flight and save up to 60% OFF retail prices.', gold: true },
+    { number: '04', title: 'Book your flight', body: 'Book your flight and save up to 60% OFF retail prices.' },
 ]
 
 export default function WorksContainer() {
@@ -68,20 +69,10 @@ export default function WorksContainer() {
         return (
             <section className={`mb-works${visible ? ' is-visible' : ''}`} id="how-it-works" ref={rootRef}>
                 <div className="mb-works__inner">
-                    <span className="mb-eyebrow">Simple process</span>
-                    <h2 className="mb-works__title">How does this work?</h2>
-                    <p className="mb-works__sub">We do the hard work so you can enjoy the journey.</p>
-                    <div className="mb-works__grid">
-                        {mbSteps.map((step) => (
-                            <div className="mb-works__step" key={step.number}>
-                                <div className={`mb-works__num${step.gold ? ' gold' : ''}`}>{step.number}</div>
-                                <p className="mb-works__step-title">{step.title}</p>
-                                <p className="mb-works__step-body">{step.body}</p>
-                            </div>
-                        ))}
-                    </div>
+                    <h2 className="mb-works__title">How it works</h2>
+                    <WorksRoute steps={mbSteps} />
                     <button type="button" className="mb-works__cta" onClick={scrollToOrderFly}>
-                        Start your journey now
+                        Get your quote
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path d="M4 12H20M20 12L13 5M20 12L13 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>

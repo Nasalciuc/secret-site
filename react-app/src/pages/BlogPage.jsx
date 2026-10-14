@@ -24,9 +24,8 @@ export default function BlogPage() {
         <div className="mb-page mb-blog-page">
             <div className="header-content">
                 <div className="blog-header">
-                    <span className="mb-eyebrow">Travel journal</span>
                     <h1 className="mb-serif">
-                        Business Class <span className="accent">Travel Blog</span>
+                        Business Class Travel Blog
                     </h1>
                     <p className="mb-blog-sub">Guides, tips and inspiration for flying business class for less.</p>
                     <div className="blog-header-cards">

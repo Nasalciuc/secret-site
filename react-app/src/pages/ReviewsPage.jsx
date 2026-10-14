@@ -26,7 +26,7 @@ function ReviewsTitle() {
         <div className="reviews-tittle">
             <div className="title">
                 <h3 className="main-title">
-                    <span className="accent">99%</span> of Travelers <span className="accent">Recommend</span> BuyBusinessClass
+                    99% of Travelers Recommend BuyBusinessClass
                 </h3>
             </div>
             <div className="subtitle-block">

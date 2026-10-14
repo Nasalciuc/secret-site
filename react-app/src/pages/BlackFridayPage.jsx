@@ -26,7 +26,7 @@ export default function BlackFridayPage() {
                     Limited-time offer
                 </span>
                 <h1 className="mb-serif">
-                    Black Friday <span className="accent">Business Class</span> Seat Sale
+                    Black Friday Business Class Seat Sale
                 </h1>
                 <p>Premium cabin fares from $999 — tell us your route and get a free quote before the sale ends.</p>
             </div>

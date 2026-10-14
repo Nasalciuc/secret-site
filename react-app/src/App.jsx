@@ -59,9 +59,9 @@ export default function App() {
         getSettings()
     }, [getSettings])
 
-    // Auto-close burger menu on desktop
+    // Auto-close burger menu on desktop (the bar shows its links above 1024 px)
     useEffect(() => {
-        if (appWidth > 1200) {
+        if (appWidth > 1024) {
             useAppStore.getState().setBurgherMenu(false)
         }
     }, [appWidth])

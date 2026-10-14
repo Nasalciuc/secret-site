@@ -6,7 +6,7 @@
     align-items: center;
     justify-content: center;
     position: fixed;
-    background: #111315;
+    background: var(--mb-bg);
     z-index: 100;
     > .content {
         width: fit-content;
@@ -20,7 +20,7 @@
             min-width: 208px;
             height: 208px;
             border-radius: 50%;
-            background: radial-gradient(43.41% 41.52% at 52.72% 44.98%, #545c68 0%, #33383f 100%);
+            background: radial-gradient(43.41% 41.52% at 52.72% 44.98%, var(--mb-border-strong) 0%, var(--mb-raised) 100%);
             > .map {
                 padding: 50%;
                 background-image: url('@/assets/images/static/map.webp');
@@ -41,11 +41,11 @@
                 animation-duration: 4s;
             }
             > .percent {
-                color: #6f767e;
+                color: var(--mb-text-muted);
                 text-align: center;
                 margin-top: 88px;
                 font: {
-                    family: 'Inter', sans-serif;
+                    family: var(--mb-font-text);
                     size: 10px;
                     weight: 700;
                 }
@@ -54,11 +54,11 @@
         > .from,
         > .to {
             text-transform: uppercase;
-            color: #1a1d1f;
+            color: var(--mb-ink);
             width: fit-content;
             flex-grow: 1;
             font: {
-                family: 'Inter', sans-serif;
+                family: var(--mb-font-text);
                 weight: 900;
                 size: 232px;
             }

@@ -2,6 +2,6 @@
     font-size: 38px;
     text-align: center;
     margin: 0 auto 20px;
-    color: #dadde0;
-    font-family: 'SSP-bold';
+    color: var(--mb-text);
+    font-family: var(--mb-font-display); font-weight: var(--mb-display-weight);
 }

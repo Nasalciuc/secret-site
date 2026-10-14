@@ -1,26 +1,69 @@
-// Moodboard redesign tokens (slate + gold, "buybusinessclass-new-homepage" mockup).
-// New homepage sections use these vars; scope overrides under .mb-home to avoid
-// leaking into pages that still use the legacy dark theme.
-:root {
-    --mb-bg: #334155; // page background, nav, footer
-    --mb-surface: #1e293b; // cards, panels
-    --mb-deep: #0f172a; // inputs, overlays, dark buttons, hover states
-    --mb-border: #475569;
-    --mb-text: #e2e8f0; // body text on dark
-    --mb-text-muted: #94a3b8; // secondary text on dark
-    --mb-gold: #b4853b;
-    --mb-gold-dark: #8f6a2e;
-    --mb-green: #34d399;
-    --mb-ink: #0f172a; // headings on white sections
-    --mb-ink-muted: #64748b; // secondary text on white sections
-    --mb-radius-card: 24px;
-    --mb-radius-input: 16px;
+// Type: version A · Editorial (chosen — Betty). Headings BBC Newsreader (serif), text BBC Schibsted Grotesk.
+@font-face {
+    font-family: 'BBC Newsreader';
+    src: url('@/assets/fonts/newsreader-latin-opsz-normal.woff2') format('woff2');
+    font-weight: 200 800;
+    font-style: normal;
+    font-display: swap;
 }
 
-.main-page.mb-home {
-    background: var(--mb-bg);
-    // Clearance for the sticky Call Us pill at the bottom of the viewport.
-    padding-bottom: 72px;
+@font-face {
+    font-family: 'BBC Schibsted';
+    src: url('@/assets/fonts/schibsted-grotesk-latin-wght-normal.woff2') format('woff2');
+    font-weight: 400 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+// BBC Navy — the night ramp (one hue, OKLCH h≈256). Elevation = lighter:
+// deep (wells: inputs, selects) < bg (page) < surface (cards) < raised (hover, popovers).
+// Every colour on the site comes from here; components never use hex for theme colours.
+:root {
+    --mb-deep: #040f20; // wells: inputs, selects, dropdown lists, inset panels
+    --mb-bg: #0b1829; // page ground, nav, footer — BBC Navy
+    --mb-surface: #112239; // cards, panels, sections
+    --mb-raised: #1b2e48; // hover, chips, popovers, active tabs
+    --mb-border: #31435c; // hairlines, card borders, dividers
+    --mb-border-strong: #69778b; // input outlines, focusable boundaries (3:1 on deep/bg/surface)
+    --mb-text-strong: #ffffff; // headings, numbers
+    --mb-text: #e1e7ee; // primary text on navy
+    --mb-text-body: #c4cdda; // long-form paragraphs on navy
+    --mb-text-muted: #a1adc0; // secondary text (6:1 even on raised)
+    --mb-gold: #b4853b; // fills: buttons, badges, icons — text on gold is always --mb-ink
+    --mb-gold-dark: #8f6a2e;
+    --mb-gold-light: #cfa96d; // light gold: gradient highlight, small gold text on raised navy
+    --mb-gold-ink: #8a6427; // gold as text on paper
+    --mb-accent-text: var(--mb-gold); // gold TEXT (eyebrows, numbers); light bands flip it to --mb-gold-ink
+    --mb-green: #34d399;
+    --mb-green-ink: #047857; // green text on paper (the deals' discount pills): 5.5:1 on white
+    --mb-paper: #ffffff; // light bands and white cards (brand colours were designed on white)
+    --mb-paper-2: #eef2f7; // quiet light surfaces: cards and inputs on paper
+    --mb-paper-line: #dae0e8; // borders on paper
+    --mb-ink: #0c1c33; // text on paper and on gold
+    --mb-ink-muted: #4f5c6f; // secondary text on paper
+    // rgb triplets for transparency: rgb(var(--mb-shade-rgb) / 0.5)
+    --mb-shade-rgb: 3 8 20; // shadows and scrims (navy-black, never pure black)
+    --mb-deep-rgb: 4 15 32;
+    --mb-bg-rgb: 11 24 41;
+    --mb-surface-rgb: 17 34 57;
+    --mb-raised-rgb: 27 46 72;
+    --mb-text-rgb: 225 231 238;
+    --mb-text-strong-rgb: 255 255 255;
+    --mb-radius-card: 20px; // the moodboard's soft cards; buttons are pills (999px)
+    --mb-radius-input: 12px;
+    // type: one display face for headings, one text face for everything else
+    --mb-font-display: 'BBC Newsreader', Georgia, serif;
+    --mb-font-text: 'BBC Schibsted', system-ui, sans-serif;
+    --mb-display-weight: 500;
+    --mb-display-stretch: 100%;
+    --mb-display-tracking: -0.012em;
+}
+
+
+// Light bands: gold text inside them switches to the paper-safe gold (3.3:1 -> 5.3:1).
+:is(.mb-works, .mb-reviews, .mb-about-services) {
+    --mb-accent-text: var(--mb-gold-ink);
 }
 
 #root,
@@ -41,11 +84,12 @@ body {
 .mb-page {
     background: var(--mb-bg);
     color: var(--mb-text);
-    font-family: 'Inter', sans-serif;
+    font-family: var(--mb-font-text);
+}
 
-    a {
-        color: inherit;
-    }
+// Zero-specificity link reset: component rules (.orange-filled-button a, .mb-btn-gold) always win.
+:where(.mb-page) a {
+    color: inherit;
 }
 
 // Low-specificity global skins for shared sections no workstream owns.
@@ -61,7 +105,7 @@ body {
 
     .main-title,
     .main-title .accent {
-        color: #fff;
+        color: inherit;
     }
 
     .subtitle {
@@ -86,7 +130,7 @@ body {
     .header,
     h2,
     h3 {
-        color: #fff;
+        color: var(--mb-text-strong);
     }
 
     p {
@@ -107,55 +151,31 @@ body {
 }
 
 .mb-serif {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-weight: 700;
+    font-family: var(--mb-font-display);
+    font-weight: var(--mb-display-weight);
     line-height: 1.1;
+    font-stretch: var(--mb-display-stretch);
+    letter-spacing: var(--mb-display-tracking);
 }
 
-.mb-eyebrow {
-    display: block;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font: 600 12px/1.4 'Inter', sans-serif;
-    color: var(--mb-gold);
-    margin-bottom: 12px;
-}
 
-.mb-btn-gold {
+.mb-btn-gold,
+.mb-page a.mb-btn-gold {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
     background: var(--mb-gold);
-    color: #fff;
+    color: var(--mb-ink);
     border: none;
-    border-radius: 24px;
+    border-radius: 999px;
     padding: 14px 32px;
     cursor: pointer;
     transition: background 0.2s ease-in;
-    font: 600 14px/1.4 'Inter', sans-serif;
+    font: 600 14px/1.4 var(--mb-font-text);
 
     &:hover {
-        background: var(--mb-gold-dark);
-    }
-}
-
-.mb-btn-outline {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    background: none;
-    color: #fff;
-    border: 1px solid var(--mb-border);
-    border-radius: 24px;
-    padding: 14px 24px;
-    cursor: pointer;
-    transition: border-color 0.2s ease-in;
-    font: 600 14px/1.4 'Inter', sans-serif;
-
-    &:hover {
-        border-color: var(--mb-text-muted);
+        background: var(--mb-gold-light);
     }
 }
 
@@ -169,12 +189,82 @@ body {
     }
 }
 
+// The moodboard's eyebrow: a short gold label over a section title.
+.mb-eyebrow {
+    display: block;
+    margin: 0 0 14px;
+    color: var(--mb-accent-text);
+    font: 600 12px/1.3 var(--mb-font-text);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
 .mb-section-title {
-    color: #fff;
-    font: 700 36px/1.15 'Inter', sans-serif;
+    color: var(--mb-text-strong);
+    font: var(--mb-display-weight) 36px/1.15 var(--mb-font-display);
     margin-bottom: 36px;
+    font-stretch: var(--mb-display-stretch);
+    letter-spacing: var(--mb-display-tracking);
 
     @media screen and (max-width: 768px) {
         font-size: 28px;
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Kit rules (Impeccable polish). These are policies, not page overrides.
+// ---------------------------------------------------------------------------
+
+// Headings speak in one colour; emphasis comes from the type, never from gold words.
+:is(.mb-home, .mb-page) :is(h1, h2, h3, .main-title, .mb-serif) .accent {
+    color: inherit;
+}
+
+// Prices line up: tabular figures wherever money is shown.
+:is(.mb-home, .mb-page) :is([class*='price'], [class*='Price'], .from-text, td) {
+    font-variant-numeric: tabular-nums;
+}
+
+// Long reading text keeps a comfortable measure.
+:is(.mb-home, .mb-page) :is(.seo-content, .seo-inner, .flight-description .content) p {
+    max-width: 68ch;
+}
+
+// Keyword stuffing in SEO copy stays in the source, not in the reader's face.
+:is(.mb-home, .mb-page) .seo-content :is(strong, b) {
+    font-weight: inherit;
+}
+
+// Browser surfaces carry the design too.
+::selection {
+    background: var(--mb-gold);
+    color: var(--mb-ink);
+}
+
+html {
+    accent-color: var(--mb-gold);
+    caret-color: var(--mb-gold);
+    scrollbar-color: var(--mb-border-strong) var(--mb-deep);
+}
+
+::placeholder {
+    color: color-mix(in srgb, currentColor 62%, transparent);
+    opacity: 1;
+}
+
+// Keyboard focus is always visible (14 legacy rules remove the outline on :focus).
+:focus-visible {
+    outline: 2px solid var(--mb-gold) !important;
+    outline-offset: 3px !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
 }

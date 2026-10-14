@@ -10,9 +10,9 @@
         right: 10px;
         top: 50%;
         transform: translateY(-50%);
-        color: #fff;
+        color: var(--mb-text-strong);
         font: {
-            family: 'Inter', sans-serif;
+            family: var(--mb-font-text);
             size: 13px;
         }
     }
@@ -31,20 +31,20 @@
     position: relative;
     border-radius: 16px;
     min-width: 250px;
-    background: #111315;
-    border: 1px solid #6f767e;
+    background: var(--mb-bg);
+    border: 1px solid var(--mb-border-strong);
     z-index: 300;
 
     > .cabin-buttons {
         margin-top: 8px;
-        border: 1px solid #1a1d1f;
+        border: 1px solid var(--mb-border);
         width: fit-content;
         border-radius: 12px;
         display: flex;
         gap: 8px;
 
         > button {
-            color: #a5aaaf;
+            color: var(--mb-text-muted);
             border-radius: 12px;
             padding: 8px;
             transition: background-color 0.2s ease-in;
@@ -54,19 +54,19 @@
 
             &.active {
                 color: #b4853b;
-                background: #272b30;
+                background: var(--mb-raised);
             }
         }
     }
 
     label {
-        color: #6f767e;
+        color: var(--mb-text-muted);
         font-weight: 700;
         font-size: 12px;
     }
 
     * {
-        font-family: 'Inter', sans-serif;
+        font-family: var(--mb-font-text);
     }
 }
 
@@ -74,8 +74,8 @@
     transition: 0.4s ease-in;
     border-radius: 16px;
     min-width: 250px;
-    background: #111315;
-    border: 1px solid #6f767e;
+    background: var(--mb-bg);
+    border: 1px solid var(--mb-border-strong);
     z-index: 300;
 
     > .travelers-buttons {
@@ -84,7 +84,7 @@
         align-items: center;
 
         > .adults {
-            color: #efefef;
+            color: var(--mb-text-strong);
             font-weight: 600;
         }
 
@@ -94,7 +94,7 @@
             align-items: center;
 
             > button {
-                background: #272b30;
+                background: var(--mb-raised);
                 border-radius: 50%;
                 width: 32px;
                 height: 32px;
@@ -102,7 +102,7 @@
                 padding-bottom: 12px;
 
                 &.minus {
-                    color: #6f767e;
+                    color: var(--mb-text-muted);
                 }
 
                 &.plus {
@@ -111,7 +111,7 @@
             }
 
             > .ammount {
-                color: #efefef;
+                color: var(--mb-text-strong);
                 font-weight: 600;
             }
         }
@@ -123,13 +123,13 @@
     }
 
     label {
-        color: #6f767e;
+        color: var(--mb-text-muted);
         font-weight: 700;
         font-size: 12px;
     }
 
     * {
-        font-family: 'Inter', sans-serif;
+        font-family: var(--mb-font-text);
     }
 }
 
@@ -166,7 +166,7 @@
         width: 0;
         flex-grow: 1;
         height: 56px;
-        border: 1px solid #33383f;
+        border: 1px solid var(--mb-border);
         border-radius: 8px;
 
         > button {
@@ -174,7 +174,7 @@
             height: 100%;
             text-align: left;
             background: none;
-            color: #efefef;
+            color: var(--mb-text-strong);
 
             > svg {
                 margin-left: 18px;
@@ -222,10 +222,10 @@
         > button {
             flex: 1;
             height: 56px;
-            border: 1px solid #33383f;
+            border: 1px solid var(--mb-border);
             border-radius: 8px;
             background: none;
-            color: #efefef;
+            color: var(--mb-text-strong);
         }
     }
 
@@ -235,8 +235,8 @@
         left: 0;
         right: 0;
         z-index: 300;
-        background: #111315;
-        border: 1px solid #6f767e;
+        background: var(--mb-bg);
+        border: 1px solid var(--mb-border-strong);
         border-radius: 16px;
         padding: 16px;
         display: flex;

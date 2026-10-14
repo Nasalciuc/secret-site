@@ -54,7 +54,7 @@ export default function DescriptionVue({ text = null }) {
         <div className="flight-description">
             <div className="title">
                 <h2 className="main-title">
-                    <span className="accent">Business Class Flights to</span>
+                    Business Class Flights to
                     <span className="capitalize">{destination}</span>
                 </h2>
             </div>

@@ -11,6 +11,12 @@ export default defineConfig({
     },
     server: {
         port: 8080,
+        // The CMS host in .env does not resolve on this machine. Same-origin /api and /storage
+        // are forwarded to the public site so destination photos load in local dev.
+        proxy: {
+            '/api': { target: 'https://buybusinessclass.com', changeOrigin: true },
+            '/storage': { target: 'https://buybusinessclass.com', changeOrigin: true },
+        },
     },
     css: {
         preprocessorOptions: {
@@ -35,7 +41,11 @@ export default defineConfig({
                     if (
                         path.includes('/react-dom/') ||
                         path.includes('/react/') ||
-                        path.includes('/scheduler/')
+                        path.includes('/scheduler/') ||
+                        path.includes('loose-envify') ||
+                        path.includes('react-transition-group') ||
+                        path.includes('/zustand/') ||
+                        path.includes('use-sync-external-store')
                     ) {
                         return 'vendor-react'
                     }

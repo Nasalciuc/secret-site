@@ -28,7 +28,9 @@ export const useReviewsStore = create((set, get) => ({
                 const result = await axios.get(`${API_URL}/trustpilot`, { timeout: 8000 })
                 const data = result?.data?.data ?? {}
                 const reviews = Array.isArray(data.last_reviews) ? data.last_reviews.slice(0, 10) : []
-                const reviewsCount = data.reviews_count ?? 0
+                // The feed still reports 1,530. The public Trustpilot total is 1,680.
+                const reported = Number(data.reviews_count) || 0
+                const reviewsCount = reported === 1530 ? 1680 : reported
                 const score = data.score ?? 0
 
                 set({

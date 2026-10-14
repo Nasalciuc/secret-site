@@ -4,9 +4,8 @@ export default function FirstBlock() {
     return (
         <div className="xyz-in" xyz="fade duration-15 delay-5">
             <section className="mb-about-hero">
-                <span className="mb-eyebrow">Premium travel experts</span>
                 <h1 className="mb-serif mb-about-hero__title">
-                    About <span className="accent">Buy Business Class</span>
+                    About Buy Business Class
                 </h1>
                 <h2 className="mb-about-hero__subtitle">Elevate Your Travel Experience</h2>
                 <p className="mb-about-hero__text">

@@ -73,7 +73,7 @@
                             > .date {
                                 color: #b4853b;
                                 font: {
-                                    family: 'Inter', sans-serif;
+                                    family: var(--mb-font-text);
                                     size: 12px;
                                     weight: 500;
                                 }
@@ -92,17 +92,17 @@
                                         color: #b4853b;
                                         line-height: 32px;
                                         font: {
-                                            family: 'Inter', sans-serif;
+                                            family: var(--mb-font-text);
                                             size: 20px;
                                             weight: 500;
                                         }
                                     }
                                     > .city {
-                                        color: #dadde0;
+                                        color: var(--mb-text);
                                         white-space: nowrap;
                                         text-transform: capitalize;
                                         font: {
-                                            family: 'SSP-bold', sans-serif;
+                                            family: var(--mb-font-display); font-weight: var(--mb-display-weight);
                                             size: 16px;
                                         }
                                     }
@@ -120,14 +120,14 @@
                     > * {
                         position: relative;
                         padding: 12px 16px;
-                        border: 2px solid #8e969e;
+                        border: 2px solid var(--mb-border-strong);
                         border-radius: 8px;
                         > p {
-                            color: #fcfcfc;
+                            color: var(--mb-text-strong);
                             white-space: nowrap;
                             width: fit-content;
                             font: {
-                                family: 'Inter', sans-serif;
+                                family: var(--mb-font-text);
                                 size: 12px;
                                 weight: 400;
                             }
@@ -140,7 +140,7 @@
                                 font: {
                                     weight: 700;
                                     size: 15px;
-                                    family: 'Inter', sans-serif;
+                                    family: var(--mb-font-text);
                                 }
                                 > span {
                                     top: -4px;
@@ -148,14 +148,14 @@
                                     margin-top: -4px;
                                     position: relative;
                                     font: {
-                                        family: 'OpenSans', sans-serif;
+                                        family: var(--mb-font-text);
                                         weight: 700;
                                         size: 10px;
                                     }
                                 }
                             }
                             > .checkbox {
-                                border: 2px solid #8e969e;
+                                border: 2px solid var(--mb-border-strong);
                                 transition: 0.4s ease-in;
                                 border-radius: 50%;
                                 width: 20px;
@@ -182,9 +182,9 @@
                             content: 'Best Deal';
                             position: absolute;
                             font-size: 12px;
-                            font-family: 'Inter', sans-serif;
+                            font-family: var(--mb-font-text);
                             font-weight: 500;
-                            color: #111315;
+                            color: var(--mb-ink);
                             padding: 0 8px 1px 8px;
                             background: #b4853b;
                             border-radius: 12px;
@@ -195,7 +195,7 @@
                         &.active {
                             border-color: #b4853b;
                             .checkbox {
-                                background: #ffffff;
+                                background: var(--mb-paper);
                                 border-color: transparent;
                                 > svg {
                                     opacity: 1;
@@ -205,7 +205,7 @@
                     }
                 }
                 > .flight-null {
-                    background: #1a1d1f;
+                    background: var(--mb-surface);
                     border-radius: 16px;
                     height: fit-content;
                     padding: 24px;
@@ -213,16 +213,16 @@
                     gap: 16px;
                     > .info {
                         line-height: 24px;
-                        color: #efefef;
+                        color: var(--mb-text-strong);
                         font: {
-                            family: 'Inter', sans-serif;
+                            family: var(--mb-font-text);
                             size: 14px;
                             weight: 400;
                         }
                     }
                 }
                 > * {
-                    background: #1a1d1f;
+                    background: var(--mb-surface);
                 }
             }
         }
@@ -246,24 +246,24 @@
         > .content {
             padding: 16px 24px;
             border-radius: 16px;
-            background: rgba(26, 29, 31, 0.56);
+            background: rgb(var(--mb-surface-rgb) / 0.56);
             > .title-thank {
                 color: #b4853b;
                 padding: 24px 24px 0 24px;
                 margin-bottom: 24px;
                 font: {
-                    family: 'OpenSans', sans-serif;
+                    family: var(--mb-font-text);
                     size: 32px;
                     weight: 700;
                 }
             }
             > .subtitle {
                 padding: 0 24px;
-                color: #dadde0;
+                color: var(--mb-text);
                 line-height: 16px;
                 margin-bottom: 24px;
                 font: {
-                    family: 'Inter', sans-serif;
+                    family: var(--mb-font-text);
                     size: 13px;
                     weight: 400;
                 }
@@ -274,7 +274,7 @@
             > .line {
                 width: 100%;
                 height: 1px;
-                background: #6f767e;
+                background: var(--mb-border-strong);
             }
             > .personal-assistant {
                 background: none;
@@ -367,7 +367,7 @@
                                 .date {
                                     color: #b4853b;
                                     font: {
-                                        family: 'Inter', sans-serif;
+                                        family: var(--mb-font-text);
                                         size: 11px;
                                         weight: 500;
                                     }
@@ -388,17 +388,17 @@
                                         color: #b4853b;
                                         line-height: 32px;
                                         font: {
-                                            family: 'Inter', sans-serif;
+                                            family: var(--mb-font-text);
                                             size: 14px;
                                             weight: 500;
                                         }
                                     }
                                     > .city {
-                                        color: #dadde0;
+                                        color: var(--mb-text);
                                         white-space: nowrap;
                                         text-transform: capitalize;
                                         font: {
-                                            family: 'Inter', sans-serif;
+                                            family: var(--mb-font-text);
                                             size: 14px;
                                         }
                                     }

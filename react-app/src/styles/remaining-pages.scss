@@ -27,7 +27,7 @@
             margin-top: unset;
             padding: 24px !important;
             border-radius: 16px;
-            background: #1a1d1f;
+            background: var(--mb-surface);
         }
 
         > .first-block-best-deals > .v-select {
@@ -42,7 +42,7 @@
         width: 100%;
         height: 100%;
         border-radius: inherit;
-        background-color: rgba(8, 9, 12, 0.72);
+        background-color: rgb(var(--mb-shade-rgb) / 0.72);
     }
 
     @media screen and (max-width: 1440px) {
@@ -136,15 +136,15 @@
     > .description {
         > p {
             margin-bottom: 32px;
-            color: #c2c7cc;
+            color: var(--mb-text-body);
             text-align: left;
-            font-family: 'SSP-regular', sans-serif;
+            font-family: var(--mb-font-text);
             font-size: 56px;
             line-height: 64px;
 
             > span {
-                color: #fff;
-                font-family: 'SSP-bold', sans-serif;
+                color: var(--mb-text-strong);
+                font-family: var(--mb-font-display); font-weight: var(--mb-display-weight);
             }
         }
 
@@ -173,25 +173,25 @@
             padding: 24px;
 
             > .title {
-                color: #fff;
+                color: var(--mb-text-strong);
                 text-align: left;
                 font-weight: 400;
                 font-size: 24px;
-                font-family: 'SSP-regular', sans-serif;
+                font-family: var(--mb-font-text);
             }
 
             > .price {
-                color: #fff;
+                color: var(--mb-text-strong);
                 text-align: left;
                 margin-bottom: 12px;
-                font-family: 'OpenSans', sans-serif;
+                font-family: var(--mb-font-text);
                 font-weight: 700;
                 font-size: 24px;
             }
 
             > .extra-info {
-                color: #fff;
-                font-family: 'Inter', sans-serif;
+                color: var(--mb-text-strong);
+                font-family: var(--mb-font-text);
                 font-size: 13px;
             }
         }
@@ -229,12 +229,12 @@
         margin: 0 296px 80px;
         padding: 40px 88px 80px;
         border-radius: 16px;
-        background: linear-gradient(135deg, #1a1d1f 0%, rgba(26, 29, 31, 0) 100%);
+        background: linear-gradient(135deg, var(--mb-surface) 0%, rgb(var(--mb-surface-rgb) / 0) 100%);
 
         > .title {
             margin-bottom: 48px;
-            color: #8e969e;
-            font-family: 'SSP-bold', sans-serif;
+            color: var(--mb-text-muted);
+            font-family: var(--mb-font-display); font-weight: var(--mb-display-weight);
             font-size: 16px;
             font-weight: 700;
         }
@@ -245,12 +245,12 @@
             &.header {
                 margin-top: 48px;
                 color: #b4853b;
-                font-family: 'SSP-bold', sans-serif;
+                font-family: var(--mb-font-display); font-weight: var(--mb-display-weight);
             }
 
             &.text {
-                color: #c2c7cc;
-                font-family: 'Inter', sans-serif;
+                color: var(--mb-text-body);
+                font-family: var(--mb-font-text);
                 font-size: 14px;
                 font-weight: 300;
                 letter-spacing: -0.15px;
@@ -318,7 +318,7 @@
         padding: 0;
         border-radius: 0;
         background: transparent;
-        color: #001b47;
+        color: var(--mb-ink);
     }
 
     .second-block {
@@ -331,14 +331,14 @@
         max-width: 800px;
         padding: 62px;
         border-radius: 16px;
-        background-color: #f9f6f3;
-        color: #001b47;
-        font-family: 'Inter', sans-serif;
+        background-color: var(--mb-paper-2);
+        color: var(--mb-ink);
+        font-family: var(--mb-font-text);
     }
 
     .promo-title {
         margin-bottom: 12px;
-        color: #001b47;
+        color: var(--mb-ink);
         font-size: 34px;
         font-weight: 700;
         line-height: 1.4;
@@ -351,7 +351,7 @@
 
     .promo-description {
         margin-bottom: 20px;
-        color: #444;
+        color: var(--mb-ink-muted);
         font-size: 15px;
     }
 
@@ -369,7 +369,7 @@
     }
 
     .price-amount {
-        color: #001b47;
+        color: var(--mb-ink);
         font-size: 36px;
         font-weight: 700;
         line-height: 1;
@@ -382,7 +382,7 @@
 
     .price-note {
         margin-top: 4px;
-        color: #444;
+        color: var(--mb-ink-muted);
         font-size: 14px;
     }
 
